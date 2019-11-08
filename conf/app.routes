@@ -1,0 +1,4 @@
+# microservice specific routes
+GET        /customs-offices                                   controllers.ReferenceDataController.customsOffices
+GET        /country-code-full-list                            controllers.ReferenceDataController.countryCodeFullList
+GET        /transit-country-code-list                         controllers.ReferenceDataController.transitCountryCodeList

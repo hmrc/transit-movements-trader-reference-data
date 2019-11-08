@@ -1,0 +1,22 @@
+{
+  "CUSTOMS_OFFICES":[
+    {
+      "CUST_OFF_ID":"GB000000",
+      "CUST_OFF_NAM":"Test",
+      "CUSTOMS_OFFICE_ROLES":[
+        "TRA",
+        "DEP",
+        "DES"
+      ]
+    },
+    {
+      "CUST_OFF_ID":"GB000011",
+      "CUST_OFF_NAM":"Birmingham Airport",
+      "CUSTOMS_OFFICE_ROLES":[
+        "TRA",
+        "DEP",
+        "DES"
+      ]
+    }
+  ]
+}

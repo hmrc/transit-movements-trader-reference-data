@@ -1,0 +1,14 @@
+{
+  "countryCodes":[
+    {
+      "code":"GB",
+      "state":"valid",
+      "description":"United Kingdom"
+    },
+    {
+      "code":"AD",
+      "state":"valid",
+      "description":"Andorra"
+    }
+  ]
+}

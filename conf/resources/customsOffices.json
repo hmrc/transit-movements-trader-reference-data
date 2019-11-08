@@ -1,0 +1,969 @@
+[
+  {
+    "CUST_OFF_ID":"GB000001",
+    "CUST_OFF_NAM":"Central Community Transit Office",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000011",
+    "CUST_OFF_NAM":"Birmingham Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000014",
+    "CUST_OFF_NAM":"Belfast International Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000029",
+    "CUST_OFF_NAM":"UKBF, Bristol International Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000033",
+    "CUST_OFF_NAM":"AVONMOUTH 1",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000040",
+    "CUST_OFF_NAM":"Dover (OTS) Freight Clearance",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000041",
+    "CUST_OFF_NAM":"FOLKESTONE",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000043",
+    "CUST_OFF_NAM":"MANSTON AIRPORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000045",
+    "CUST_OFF_NAM":"SHEERNESS",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000047",
+    "CUST_OFF_NAM":"Ramsgate",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000049",
+    "CUST_OFF_NAM":"NEWPORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000051",
+    "CUST_OFF_NAM":"Felixstowe",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000052",
+    "CUST_OFF_NAM":"HARWICH",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000053",
+    "CUST_OFF_NAM":"IPSWICH PORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000054",
+    "CUST_OFF_NAM":"GREAT YARMOUTH",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000055",
+    "CUST_OFF_NAM":"KING'S LYNN",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000057",
+    "CUST_OFF_NAM":"Rosyth",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000058",
+    "CUST_OFF_NAM":"NORWICH AIRPORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000059",
+    "CUST_OFF_NAM":"Grangemouth",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000060",
+    "CUST_OFF_NAM":"Dover/Folkestone Eurotunnel Freight",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000062",
+    "CUST_OFF_NAM":"Scrabster",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000063",
+    "CUST_OFF_NAM":"Scotland Inland Auth. Cee/Cor",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000067",
+    "CUST_OFF_NAM":"Scotland Frontier",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000070",
+    "CUST_OFF_NAM":"Prestwick Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000072",
+    "CUST_OFF_NAM":"Hull",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000073",
+    "CUST_OFF_NAM":"GRIMSBY",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000074",
+    "CUST_OFF_NAM":"Immingham",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000080",
+    "CUST_OFF_NAM":"Liverpool",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000081",
+    "CUST_OFF_NAM":"UK North Auth Consignor/nees",
+    "CUSTOMS_OFFICE_ROLES":[
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000084",
+    "CUST_OFF_NAM":"London Heathrow Cargo",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000085",
+    "CUST_OFF_NAM":"London Gatwick Airport Cargo Dist.",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000087",
+    "CUST_OFF_NAM":"Leeds Bradford Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000091",
+    "CUST_OFF_NAM":"SOUTHEND AIRPORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000093",
+    "CUST_OFF_NAM":"Tilbury",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000098",
+    "CUST_OFF_NAM":"Newcastle Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000099",
+    "CUST_OFF_NAM":"THAMES EUROPORT (DIFT)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000102",
+    "CUST_OFF_NAM":"Luton Airport FCT",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000108",
+    "CUST_OFF_NAM":"FALMOUTH",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000119",
+    "CUST_OFF_NAM":"NORTHOLT AIRPORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000120",
+    "CUST_OFF_NAM":"London Heathrow Airport (Baggage)",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000121",
+    "CUST_OFF_NAM":"Stansted Airport FCT",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000122",
+    "CUST_OFF_NAM":"Cardiff International Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000123",
+    "CUST_OFF_NAM":"SWANSEA",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000124",
+    "CUST_OFF_NAM":"HOLYHEAD",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000125",
+    "CUST_OFF_NAM":"Barry Dock",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000126",
+    "CUST_OFF_NAM":"PEMBROKE DOCK",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000128",
+    "CUST_OFF_NAM":"Edinburgh Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000130",
+    "CUST_OFF_NAM":"London City Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000140",
+    "CUST_OFF_NAM":"George Best (Belfast City)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000142",
+    "CUST_OFF_NAM":"Belfast EPU",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000149",
+    "CUST_OFF_NAM":"PURFLEET THAMES TERMINAL",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000150",
+    "CUST_OFF_NAM":"Thamesport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000155",
+    "CUST_OFF_NAM":"Reading",
+    "CUSTOMS_OFFICE_ROLES":[
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000170",
+    "CUST_OFF_NAM":"London Gateway Port",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000191",
+    "CUST_OFF_NAM":"Manchester",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000218",
+    "CUST_OFF_NAM":"Newcastle-Upon-Tyne",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000219",
+    "CUST_OFF_NAM":"Teesport",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000244",
+    "CUST_OFF_NAM":"BOSTON",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000245",
+    "CUST_OFF_NAM":"UKBA East Midlands Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000246",
+    "CUST_OFF_NAM":"UK South Auth Consignor/nees",
+    "CUSTOMS_OFFICE_ROLES":[
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000250",
+    "CUST_OFF_NAM":"PLYMOUTH",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000290",
+    "CUST_OFF_NAM":"Southampton",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000291",
+    "CUST_OFF_NAM":"Poole Ferry Terminal",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000292",
+    "CUST_OFF_NAM":"Portsmouth",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000297",
+    "CUST_OFF_NAM":"EXETER AIRPORT",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000328",
+    "CUST_OFF_NAM":"Cardiff",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000383",
+    "CUST_OFF_NAM":"Salford National Clearance Hub",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000392",
+    "CUST_OFF_NAM":"London South Bank",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000411",
+    "CUST_OFF_NAM":"Aberdeen Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000416",
+    "CUST_OFF_NAM":"PETERHEAD",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000434",
+    "CUST_OFF_NAM":"Aberdeen",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000450",
+    "CUST_OFF_NAM":"Isle of Man Customs & Excise",
+    "CUSTOMS_OFFICE_ROLES":[
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000461",
+    "CUST_OFF_NAM":"Guernsey Customs & Excise",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000465",
+    "CUST_OFF_NAM":"Jersey Customs & Immigration",
+    "CUSTOMS_OFFICE_ROLES":[
+      "TRA",
+      "DEP",
+      "DES"
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000480",
+    "CUST_OFF_NAM":"Chatham",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000500",
+    "CUST_OFF_NAM":"COVENTRY INTERNATIONAL HUB",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000501",
+    "CUST_OFF_NAM":"HWDC LANGLEY",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB000921",
+    "CUST_OFF_NAM":"FORDS JETTY",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB001016",
+    "CUST_OFF_NAM":"LERWICK",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003010",
+    "CUST_OFF_NAM":"Barrow in Furness",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003020",
+    "CUST_OFF_NAM":"Berwick upon Tweed",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003030",
+    "CUST_OFF_NAM":"Blackpool International Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003040",
+    "CUST_OFF_NAM":"Glasgow Docks",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003050",
+    "CUST_OFF_NAM":"Plymouth Docks",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003060",
+    "CUST_OFF_NAM":"Bournmouth (Hurn) Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003070",
+    "CUST_OFF_NAM":"Brize Norton",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003080",
+    "CUST_OFF_NAM":"Cambridge Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003090",
+    "CUST_OFF_NAM":"Southampton (Eastleigh) Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003100",
+    "CUST_OFF_NAM":"Dundee (Sea)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003110",
+    "CUST_OFF_NAM":"Farnborough Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003120",
+    "CUST_OFF_NAM":"Gloucester (Staverton) Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003130",
+    "CUST_OFF_NAM":"Humberside International Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003140",
+    "CUST_OFF_NAM":"Hartlepool",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003150",
+    "CUST_OFF_NAM":"Inverness",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003160",
+    "CUST_OFF_NAM":"Kemble Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003170",
+    "CUST_OFF_NAM":"Kirkwall (Orkney Islands)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003180",
+    "CUST_OFF_NAM":"Durham Tees Valley (Teeside Apt)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003190",
+    "CUST_OFF_NAM":"Liverpool John Lennon Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003200",
+    "CUST_OFF_NAM":"London Ashford (Lydd) Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003210",
+    "CUST_OFF_NAM":"Londonderry",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003220",
+    "CUST_OFF_NAM":"Manchester Docks",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003230",
+    "CUST_OFF_NAM":"Oxford (Kidlington) Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003240",
+    "CUST_OFF_NAM":"Portree (Isle of Skye)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003250",
+    "CUST_OFF_NAM":"Newhaven",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003260",
+    "CUST_OFF_NAM":"Stornoway (Isle of Lewis)",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003270",
+    "CUST_OFF_NAM":"Stornoway Airport",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003280",
+    "CUST_OFF_NAM":"Workington",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB003290",
+    "CUST_OFF_NAM":"BIGGIN HILL",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB004098",
+    "CUST_OFF_NAM":"GLASGOW",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005010",
+    "CUST_OFF_NAM":"Appledore",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005020",
+    "CUST_OFF_NAM":"Bridgwater",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005030",
+    "CUST_OFF_NAM":"Dagenham",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005040",
+    "CUST_OFF_NAM":"Dartford",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005050",
+    "CUST_OFF_NAM":"Greenock",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005060",
+    "CUST_OFF_NAM":"Langstone",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005070",
+    "CUST_OFF_NAM":"London",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005080",
+    "CUST_OFF_NAM":"Middlesbrough",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005090",
+    "CUST_OFF_NAM":"Neath",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005100",
+    "CUST_OFF_NAM":"Penrhyn",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005110",
+    "CUST_OFF_NAM":"Ridham",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005120",
+    "CUST_OFF_NAM":"Rochester",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005130",
+    "CUST_OFF_NAM":"Shoreham",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005140",
+    "CUST_OFF_NAM":"South Shields",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005160",
+    "CUST_OFF_NAM":"Warrenpoint",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005170",
+    "CUST_OFF_NAM":"Killingholme",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005180",
+    "CUST_OFF_NAM":"Montrose",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005190",
+    "CUST_OFF_NAM":"Portbury",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GB005200",
+    "CUST_OFF_NAM":"Fishguard",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GBEORI01",
+    "CUST_OFF_NAM":"EORI TEAM HMRC",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  },
+  {
+    "CUST_OFF_ID":"GBSOU001",
+    "CUST_OFF_NAM":"SOUTHEND DIRECT EXPORTS",
+    "CUSTOMS_OFFICE_ROLES":[
+
+    ]
+  }
+]
