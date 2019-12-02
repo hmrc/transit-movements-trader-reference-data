@@ -16,7 +16,8 @@
 
 package base
 
-import org.scalatest.{FreeSpec, OptionValues}
+import org.scalatest.FreeSpec
+import org.scalatest.OptionValues
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Configuration
 import play.api.inject.guice.GuiceApplicationBuilder

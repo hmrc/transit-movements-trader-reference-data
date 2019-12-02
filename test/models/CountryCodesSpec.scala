@@ -18,9 +18,13 @@ package models
 
 import generators.ModelGenerators
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalatest.{FreeSpec, MustMatchers}
+import org.scalatest.FreeSpec
+import org.scalatest.MustMatchers
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
-import play.api.libs.json.{JsError, JsPath, Json, JsonValidationError}
+import play.api.libs.json.JsError
+import play.api.libs.json.JsPath
+import play.api.libs.json.Json
+import play.api.libs.json.JsonValidationError
 
 class CountryCodesSpec extends FreeSpec with MustMatchers with ScalaCheckDrivenPropertyChecks with ModelGenerators {
 
@@ -36,9 +40,10 @@ class CountryCodesSpec extends FreeSpec with MustMatchers with ScalaCheckDrivenP
 
     "must serialise and deserialize to and from json" in {
 
-      forAll(arbitrary[CountryCodes]) {countryCodes =>
-        val json = Json.toJson(countryCodes)
-        json.as[CountryCodes] mustBe countryCodes
+      forAll(arbitrary[CountryCodes]) {
+        countryCodes =>
+          val json = Json.toJson(countryCodes)
+          json.as[CountryCodes] mustBe countryCodes
       }
     }
 
@@ -50,8 +55,7 @@ class CountryCodesSpec extends FreeSpec with MustMatchers with ScalaCheckDrivenP
 
   val countryCodes = CountryCodes(List(CountryCode("valid", "GB", "United Kingdom"), CountryCode("valid", "AD", "Andorra")))
 
-  val json = Json.parse(
-    """
+  val json = Json.parse("""
       |{"countryCodes":[
       |    {
       |      "code":"GB",

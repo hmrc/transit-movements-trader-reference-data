@@ -15,7 +15,8 @@ lazy val microservice = Project(appName, file("."))
   )
   .settings(
     majorVersion := 0,
-    libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test
+    libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
+    scalafmtOnCompile in ThisBuild := true
   )
   .settings(publishingSettings: _*)
   .configs(IntegrationTest)
@@ -42,7 +43,7 @@ lazy val scoverageSettings = {
 }
 
 lazy val testSettings: Seq[Def.Setting[_]] = Seq(
-  fork        := true,
+  fork := true,
   javaOptions ++= Seq(
     "-Dconfig.resource=test.application.conf"
   )
