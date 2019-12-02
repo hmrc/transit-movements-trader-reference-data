@@ -17,11 +17,9 @@
 package config
 
 import com.google.inject.AbstractModule
-import services.{
-  CountryCodesService,
-  CustomsOfficesService,
-  TransitCountryCodesService
-}
+import services.CountryCodesService
+import services.CustomsOfficesService
+import services.TransitCountryCodesService
 
 class Modules extends AbstractModule {
   override def configure(): Unit = {

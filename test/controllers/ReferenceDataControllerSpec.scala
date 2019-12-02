@@ -17,20 +17,20 @@
 package controllers
 
 import base.SpecBase
-import models.{CountryCode, CustomsOffice}
+import models.CountryCode
+import models.CustomsOffice
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito.when
 import play.api.test.FakeRequest
 import play.api.inject.bind
 import play.api.libs.json.Json
-import play.api.test.Helpers.{route, status, _}
+import play.api.test.Helpers.route
+import play.api.test.Helpers.status
+import play.api.test.Helpers._
 import services._
 
-class ReferenceDataControllerSpec
-    extends SpecBase
-    with MustMatchers
-    with MockitoSugar {
+class ReferenceDataControllerSpec extends SpecBase with MustMatchers with MockitoSugar {
 
   private val customsOffices = Seq(
     CustomsOffice(
@@ -41,8 +41,8 @@ class ReferenceDataControllerSpec
   )
   private val countryCodes = Seq(CountryCode("valid", "GB", "United Kingdom"))
 
-  private val countryCodesService = mock[CountryCodesService]
-  private val customsOfficesService = mock[CustomsOfficesService]
+  private val countryCodesService        = mock[CountryCodesService]
+  private val customsOfficesService      = mock[CustomsOfficesService]
   private val transitCountryCodesService = mock[TransitCountryCodesService]
 
   when(customsOfficesService.customsOffices).thenReturn(customsOffices)

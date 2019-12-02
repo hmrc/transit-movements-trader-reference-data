@@ -24,18 +24,18 @@ import play.api.libs.json.Json
 
 import scala.io.Source
 
-class CustomsOfficesService @Inject()(env: Environment,
-                                      config: ResourceConfig) {
+class CustomsOfficesService @Inject()(env: Environment, config: ResourceConfig) {
 
   private val customsOfficeFile = config.customsOffice
 
   val customsOffices: Seq[CustomsOffice] =
     env
       .resourceAsStream(customsOfficeFile)
-      .map { inputStream =>
-        val rawCustomsOffices = Source.fromInputStream(inputStream).mkString
+      .map {
+        inputStream =>
+          val rawCustomsOffices = Source.fromInputStream(inputStream).mkString
 
-        Json.parse(rawCustomsOffices).as[List[CustomsOffice]]
+          Json.parse(rawCustomsOffices).as[List[CustomsOffice]]
       }
       .getOrElse(throw new Exception(s"File not found for $customsOfficeFile"))
 

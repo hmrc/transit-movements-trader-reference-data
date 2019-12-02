@@ -17,7 +17,8 @@
 package generators
 
 import models._
-import org.scalacheck.{Arbitrary, Gen}
+import org.scalacheck.Arbitrary
+import org.scalacheck.Gen
 import org.scalacheck.Arbitrary.arbitrary
 
 trait ModelGenerators {
@@ -25,7 +26,7 @@ trait ModelGenerators {
   implicit lazy val arbitraryCustomsOffice: Arbitrary[CustomsOffice] =
     Arbitrary {
       for {
-        id  <- Gen.alphaNumStr
+        id    <- Gen.alphaNumStr
         name  <- Gen.alphaNumStr
         roles <- Gen.listOf(Gen.alphaNumStr)
       } yield CustomsOffice(id, name, roles)
@@ -34,16 +35,16 @@ trait ModelGenerators {
   implicit lazy val arbitraryCountryCodes: Arbitrary[CountryCodes] =
     Arbitrary {
       for {
-        countryCodes  <- arbitrary[Seq[CountryCode]]
+        countryCodes <- arbitrary[Seq[CountryCode]]
       } yield CountryCodes(countryCodes)
     }
 
   implicit lazy val arbitraryCountryCode: Arbitrary[CountryCode] =
     Arbitrary {
       for {
-        state  <- Gen.alphaNumStr
-        code  <- Gen.alphaNumStr
-        description  <- Gen.alphaNumStr
+        state       <- Gen.alphaNumStr
+        code        <- Gen.alphaNumStr
+        description <- Gen.alphaNumStr
       } yield CountryCode(state, code, description)
     }
 }

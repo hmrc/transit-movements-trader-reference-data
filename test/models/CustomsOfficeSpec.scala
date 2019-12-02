@@ -19,12 +19,12 @@ package models
 import generators.ModelGenerators
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
-import org.scalatest.{FreeSpec, MustMatchers}
+import org.scalatest.FreeSpec
+import org.scalatest.MustMatchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json._
 
 class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
-
 
   "Customs Office model" - {
     "must deserialize from json to a valid model" in {
@@ -40,20 +40,22 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
     }
 
     "must serialize to json and deserialize to a valid model" in {
-      forAll(arbitrary[CustomsOffice]) { customsOffice =>
-        val json = validCustomsOfficeJson(customsOffice)
-        json.as[CustomsOffice] mustBe customsOffice
+      forAll(arbitrary[CustomsOffice]) {
+        customsOffice =>
+          val json = validCustomsOfficeJson(customsOffice)
+          json.as[CustomsOffice] mustBe customsOffice
       }
     }
 
     "must fail to deserialize" in {
 
       val invalidJsonGenerator: Gen[JsObject] = for {
-        invalidKey <- arbitrary[String]
+        invalidKey   <- arbitrary[String]
         invalidValue <- arbitrary[String]
       } yield Json.obj(invalidKey -> invalidValue)
 
-      forAll(invalidJsonGenerator) { invalidJson =>
+      forAll(invalidJsonGenerator) {
+        invalidJson =>
           intercept[JsResultException](invalidJson.as[CustomsOffice])
       }
     }
@@ -75,7 +77,7 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
 
     "must serialize to json and deserialize to a valid model" in {
       val emptyCustomsOfficeList = CustomsOffices(Nil)
-      val json = customsOfficesJson(emptyCustomsOfficeList)
+      val json                   = customsOfficesJson(emptyCustomsOfficeList)
       json.as[CustomsOffices] mustBe emptyCustomsOfficeList
     }
 
@@ -84,13 +86,13 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
     }
   }
 
-  val customsOffice = CustomsOffice("GB000074", "Immingham", Seq("TRA", "DEP", "DES"))
+  val customsOffice  = CustomsOffice("GB000074", "Immingham", Seq("TRA", "DEP", "DES"))
   val customsOffice1 = CustomsOffice("GB000000", "name", Seq("ABC", "DEP", "SDS"))
   val customsOffices = CustomsOffices(Seq(customsOffice, customsOffice1))
 
   def expectedCustomsOfficeJson(office: CustomsOffice = customsOffice): JsValue = Json.obj(
-    "id" -> office.id,
-    "name" -> office.name,
+    "id"    -> office.id,
+    "name"  -> office.name,
     "roles" -> Json.toJson(office.roles)
   )
 
@@ -98,8 +100,7 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
     Json.obj("customsOffices" -> customsOffices.customsOffices.map(expectedCustomsOfficeJson))
   }
 
-  def validCustomsOfficeJson(office: CustomsOffice): JsValue = Json.parse(
-    s"""
+  def validCustomsOfficeJson(office: CustomsOffice): JsValue = Json.parse(s"""
        |{
        |  "CUST_OFF_ID":"${office.id}",
        |  "CUST_OFF_NAM":"${office.name}",

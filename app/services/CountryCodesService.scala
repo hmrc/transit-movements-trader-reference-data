@@ -31,10 +31,11 @@ class CountryCodesService @Inject()(env: Environment, config: ResourceConfig) {
   val countryCodes: Seq[CountryCode] =
     env
       .resourceAsStream(countryCodesFile)
-      .map { inputStream =>
-        val rawCountryCodes = Source.fromInputStream(inputStream).mkString
+      .map {
+        inputStream =>
+          val rawCountryCodes = Source.fromInputStream(inputStream).mkString
 
-        Json.parse(rawCountryCodes).as[List[CountryCode]]
+          Json.parse(rawCountryCodes).as[List[CountryCode]]
       }
       .getOrElse(throw new Exception(s"File not found for $countryCodesFile"))
 
