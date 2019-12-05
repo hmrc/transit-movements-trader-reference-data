@@ -21,6 +21,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
+import services.AdditionalInformationService
 import services.CountryCodesService
 import services.CustomsOfficesService
 import services.TransitCountryCodesService
@@ -30,7 +31,8 @@ class ReferenceDataController @Inject()(
   cc: ControllerComponents,
   countryCodesService: CountryCodesService,
   customsOfficesService: CustomsOfficesService,
-  transitCountryCodesService: TransitCountryCodesService
+  transitCountryCodesService: TransitCountryCodesService,
+  additionalInformationService: AdditionalInformationService
 ) extends BackendController(cc) {
 
   def customsOffices(): Action[AnyContent] = Action {
@@ -46,4 +48,7 @@ class ReferenceDataController @Inject()(
     Ok(Json.toJson(transitCountryCodesService.transitCountryCodes))
   }
 
+  def additionalInformation(): Action[AnyContent] = Action {
+    Ok(Json.toJson(additionalInformationService.additionalInformation))
+  }
 }

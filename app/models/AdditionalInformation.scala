@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package config
+package models
 
-import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import play.api.libs.json.Format
+import play.api.libs.json.Json
 
-class ResourceConfig @Inject()(config: Configuration) {
+case class AdditionalInformation(code: String, description: String)
 
-  val customsOffice: String =
-    config.get[String]("customsOffices.file")
+object AdditionalInformation {
 
-  val countryCodes: String =
-    config.get[String]("countryCodesFullList.file")
-
-  val transitCountryCodes: String =
-    config.get[String]("transitCountryCodesFullList.file")
-
-  val additionalInformation: String =
-    config.get[String]("additionalInformation.file")
+  implicit lazy val format: Format[AdditionalInformation] =
+    Json.format[AdditionalInformation]
 }

@@ -1,0 +1,18 @@
+[
+  {
+    "code": "10600",
+    "description": "Negotiable Bill of lading 'to order blank endorsed'"
+  },
+  {
+    "code": "DG0",
+    "description": "Export subject to restriction"
+  },
+  {
+    "code": "DG1",
+    "description": "Export subject to duties"
+  },
+  {
+    "code": "DG2",
+    "description": "EXPORT"
+  }
+]

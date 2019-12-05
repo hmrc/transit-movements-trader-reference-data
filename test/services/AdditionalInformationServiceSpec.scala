@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-package config
+package services
 
-import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import base.SpecBase
+import models.AdditionalInformation
+import org.scalatest.MustMatchers
 
-class ResourceConfig @Inject()(config: Configuration) {
+class AdditionalInformationServiceSpec extends SpecBase with MustMatchers {
 
-  val customsOffice: String =
-    config.get[String]("customsOffices.file")
+  "must return additional information" in {
+    val service = app.injector.instanceOf[AdditionalInformationService]
 
-  val countryCodes: String =
-    config.get[String]("countryCodesFullList.file")
+    val expectedFirstItem = AdditionalInformation("10600", "Negotiable Bill of lading 'to order blank endorsed'")
 
-  val transitCountryCodes: String =
-    config.get[String]("transitCountryCodesFullList.file")
-
-  val additionalInformation: String =
-    config.get[String]("additionalInformation.file")
+    service.additionalInformation.head mustEqual expectedFirstItem
+  }
 }
