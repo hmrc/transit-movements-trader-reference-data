@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package config
+package services
 
+import config.ResourceConfig
 import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import models.KindOfPackage
+import play.api.Environment
+import play.api.libs.json.Json
 
-class ResourceConfig @Inject()(config: Configuration) {
+import scala.io.Source
 
-  val customsOffice: String =
-    config.get[String]("customsOffices.file")
+class KindOfPackageService @Inject()(env: Environment, config: ResourceConfig) {
 
-  val countryCodes: String =
-    config.get[String]("countryCodesFullList.file")
+  private val dataFile = config.kindOfPackage
 
-  val transitCountryCodes: String =
-    config.get[String]("transitCountryCodesFullList.file")
-
-  val additionalInformation: String =
-    config.get[String]("additionalInformation.file")
-
-  val kindOfPackage: String =
-    config.get[String]("kindOfPackage.file")
+  val kindsOfPackage: Seq[KindOfPackage] =
+    env
+      .resourceAsStream(dataFile)
+      .map {
+        inputStream =>
+          val rawData = Source.fromInputStream(inputStream).mkString
+          Json.parse(rawData).as[Seq[KindOfPackage]]
+      }
+      .getOrElse(throw new Exception(s"File not found for $dataFile"))
 }

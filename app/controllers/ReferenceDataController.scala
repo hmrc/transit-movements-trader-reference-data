@@ -24,6 +24,7 @@ import play.api.mvc.ControllerComponents
 import services.AdditionalInformationService
 import services.CountryCodesService
 import services.CustomsOfficesService
+import services.KindOfPackageService
 import services.TransitCountryCodesService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
@@ -32,7 +33,8 @@ class ReferenceDataController @Inject()(
   countryCodesService: CountryCodesService,
   customsOfficesService: CustomsOfficesService,
   transitCountryCodesService: TransitCountryCodesService,
-  additionalInformationService: AdditionalInformationService
+  additionalInformationService: AdditionalInformationService,
+  kindOfPackagesService: KindOfPackageService
 ) extends BackendController(cc) {
 
   def customsOffices(): Action[AnyContent] = Action {
@@ -50,5 +52,9 @@ class ReferenceDataController @Inject()(
 
   def additionalInformation(): Action[AnyContent] = Action {
     Ok(Json.toJson(additionalInformationService.additionalInformation))
+  }
+
+  def kindsOfPackage(): Action[AnyContent] = Action {
+    Ok(Json.toJson(kindOfPackagesService.kindsOfPackage))
   }
 }

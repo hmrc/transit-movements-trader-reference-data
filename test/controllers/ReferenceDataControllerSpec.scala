@@ -20,6 +20,7 @@ import base.SpecBase
 import models.AdditionalInformation
 import models.CountryCode
 import models.CustomsOffice
+import models.KindOfPackage
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito.when
@@ -44,15 +45,19 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val additionalInformation = Seq(AdditionalInformation("abc", "info description"))
 
+  private val kindsOfPackage = Seq(KindOfPackage("name", "description"))
+
   private val countryCodesService          = mock[CountryCodesService]
   private val customsOfficesService        = mock[CustomsOfficesService]
   private val transitCountryCodesService   = mock[TransitCountryCodesService]
   private val additionalInformationService = mock[AdditionalInformationService]
+  private val kindOfPackageService         = mock[KindOfPackageService]
 
   when(customsOfficesService.customsOffices).thenReturn(customsOffices)
   when(countryCodesService.countryCodes).thenReturn(countryCodes)
   when(transitCountryCodesService.transitCountryCodes).thenReturn(countryCodes)
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
+  when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
 
   private def appBuilder =
     applicationBuilder()
@@ -60,7 +65,8 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
         bind[CountryCodesService].toInstance(countryCodesService),
         bind[CustomsOfficesService].toInstance(customsOfficesService),
         bind[TransitCountryCodesService].toInstance(transitCountryCodesService),
-        bind[AdditionalInformationService].toInstance(additionalInformationService)
+        bind[AdditionalInformationService].toInstance(additionalInformationService),
+        bind[KindOfPackageService].toInstance(kindOfPackageService)
       )
 
   "ReferenceDataController" - {
@@ -119,6 +125,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(additionalInformation)
+      app.stop()
+    }
+
+    "must fetch kinds of package" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.kindsOfPackage().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(kindsOfPackage)
       app.stop()
     }
   }

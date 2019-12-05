@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-package config
+package services
 
-import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import base.SpecBase
+import models.KindOfPackage
+import org.scalatest.MustMatchers
 
-class ResourceConfig @Inject()(config: Configuration) {
+class KindOfPackageServiceSpec extends SpecBase with MustMatchers {
 
-  val customsOffice: String =
-    config.get[String]("customsOffices.file")
+  "must return kinds of package" in {
+    val service = app.injector.instanceOf[KindOfPackageService]
 
-  val countryCodes: String =
-    config.get[String]("countryCodesFullList.file")
+    val expectedFirstValue = KindOfPackage("1A", "Drum, steel")
 
-  val transitCountryCodes: String =
-    config.get[String]("transitCountryCodesFullList.file")
-
-  val additionalInformation: String =
-    config.get[String]("additionalInformation.file")
-
-  val kindOfPackage: String =
-    config.get[String]("kindOfPackage.file")
+    service.kindsOfPackage.head mustEqual expectedFirstValue
+  }
 }
