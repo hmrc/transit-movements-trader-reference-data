@@ -4,3 +4,4 @@ GET        /country-code-full-list                            controllers.Refere
 GET        /transit-country-code-list                         controllers.ReferenceDataController.transitCountryCodeList
 GET        /additional-information                            controllers.ReferenceDataController.additionalInformation
 GET        /kinds-of-package                                  controllers.ReferenceDataController.kindsOfPackage
+GET        /document-types                                    controllers.ReferenceDataController.documentTypes

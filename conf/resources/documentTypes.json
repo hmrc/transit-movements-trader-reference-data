@@ -1,0 +1,387 @@
+[
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "18",
+    "transportDocument": false,
+    "description": "Movement certificate A.TR.1"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "2",
+    "transportDocument": false,
+    "description": "Certificate of conformity"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "235",
+    "transportDocument": true,
+    "description": "Container list"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "271",
+    "transportDocument": true,
+    "description": "Packing list"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "3",
+    "transportDocument": false,
+    "description": "Certificate of quality"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "325",
+    "transportDocument": false,
+    "description": "Proforma invoice"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "380",
+    "transportDocument": false,
+    "description": "Commercial invoice"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "703",
+    "transportDocument": true,
+    "description": "House waybill"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "704",
+    "transportDocument": true,
+    "description": "Master bill of lading"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "705",
+    "transportDocument": true,
+    "description": "Bill of lading"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "714",
+    "transportDocument": false,
+    "description": "House bill of lading"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "720",
+    "transportDocument": true,
+    "description": "CIM consignment note (rail)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "720a",
+    "transportDocument": false,
+    "description": "NCTS rail test movement"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "722",
+    "transportDocument": true,
+    "description": "Road list-SMGS"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "730",
+    "transportDocument": true,
+    "description": "Road consignment note"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "740",
+    "transportDocument": true,
+    "description": "Air waybill"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "741",
+    "transportDocument": true,
+    "description": "Master air waybill"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2019-05-18",
+    "code": "750",
+    "transportDocument": true,
+    "description": "Despatch note (post parcels)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "760",
+    "transportDocument": true,
+    "description": "Multimodal/combined transport doc."
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "785",
+    "transportDocument": true,
+    "description": "Cargo manifest"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "787",
+    "transportDocument": true,
+    "description": "Bordereau"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "820",
+    "transportDocument": false,
+    "description": "Despatch note model T"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "821",
+    "transportDocument": false,
+    "description": "Despatch note model T1"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "822",
+    "transportDocument": false,
+    "description": "Despatch note model T2"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "823",
+    "transportDocument": false,
+    "description": "Control document T5"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "825",
+    "transportDocument": false,
+    "description": "Despatch note model T2L"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "830",
+    "transportDocument": false,
+    "description": "Goods declaration for exportation"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "851",
+    "transportDocument": false,
+    "description": "Phytosanitary certificate"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "852",
+    "transportDocument": false,
+    "description": "Sanitary certificate"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "853",
+    "transportDocument": false,
+    "description": "Veterinary certificate"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "861",
+    "transportDocument": false,
+    "description": "Certificate of origin"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "862",
+    "transportDocument": false,
+    "description": "Declaration of origin"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "864",
+    "transportDocument": false,
+    "description": "Preference certificate of origin"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "865",
+    "transportDocument": false,
+    "description": "Certificate of origin form GSP"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "911",
+    "transportDocument": false,
+    "description": "Import licence"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "933",
+    "transportDocument": false,
+    "description": "Cargo declaration (arrival)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "941",
+    "transportDocument": false,
+    "description": "Embargo permit"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "951",
+    "transportDocument": false,
+    "description": "TIF form"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "952",
+    "transportDocument": true,
+    "description": "TIR carnet"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "954",
+    "transportDocument": false,
+    "description": "EUR 1 certificate of origin"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "955",
+    "transportDocument": true,
+    "description": "ATA carnet"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "C641",
+    "transportDocument": false,
+    "description": "Dissostichus - catch document import"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "C656",
+    "transportDocument": false,
+    "description": "Dissostichus - Catch document export"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "C673",
+    "transportDocument": false,
+    "description": "Catch certificate"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y022",
+    "transportDocument": false,
+    "description": "Consignor / exporter (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y023",
+    "transportDocument": false,
+    "description": "Consignee (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y024",
+    "transportDocument": false,
+    "description": "Declarant (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y025",
+    "transportDocument": false,
+    "description": "Representative (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y026",
+    "transportDocument": false,
+    "description": "Principal (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y027",
+    "transportDocument": false,
+    "description": "Warehousekeeper (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y028",
+    "transportDocument": false,
+    "description": "Carrier (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y029",
+    "transportDocument": false,
+    "description": "Other authorised economic operator (AEO certificate number)"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y031",
+    "transportDocument": false,
+    "description": "This certificate code may be used to indicate that shipments are coming from or going to an Authorised Economic Operator (AEO) in a third country with which the European Union (EU) has concluded a mutual recognition agreement regarding AEO programmes. In addition to the certificate code (Y031) the identification code of this third country AEO must"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2018-02-27",
+    "code": "Y927",
+    "transportDocument": false,
+    "description": "The declared goods are not concerned by Council Regulation (EC) No. 1005/2008"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "ZZZ",
+    "transportDocument": false,
+    "description": "other"
+  }
+]
