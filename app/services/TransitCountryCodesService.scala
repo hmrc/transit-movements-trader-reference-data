@@ -24,19 +24,8 @@ import play.api.libs.json.Json
 
 import scala.io.Source
 
-class TransitCountryCodesService @Inject()(env: Environment, config: ResourceConfig) {
-
-  private val countryCodes = config.countryCodes
+class TransitCountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val transitCountryCodes: Seq[CountryCode] =
-    env
-      .resourceAsStream(countryCodes)
-      .map {
-        inputStream =>
-          val rawCustomsOffices = Source.fromInputStream(inputStream).mkString
-
-          Json.parse(rawCustomsOffices).as[List[CountryCode]]
-      }
-      .getOrElse(throw new Exception(s"File not found for $countryCodes"))
-
+    getData[CountryCode](config.transitCountryCodes)
 }

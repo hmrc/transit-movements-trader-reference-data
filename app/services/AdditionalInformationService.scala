@@ -20,22 +20,9 @@ import config.ResourceConfig
 import javax.inject.Inject
 import models.AdditionalInformation
 import play.api.Environment
-import play.api.libs.json.Json
 
-import scala.io.Source
-
-class AdditionalInformationService @Inject()(env: Environment, config: ResourceConfig) {
-
-  private val dataFile = config.additionalInformation
+class AdditionalInformationService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val additionalInformation: Seq[AdditionalInformation] =
-    env
-      .resourceAsStream(dataFile)
-      .map {
-        inputStream =>
-          val rawData = Source.fromInputStream(inputStream).mkString
-
-          Json.parse(rawData).as[Seq[AdditionalInformation]]
-      }
-      .getOrElse(throw new Exception(s"File not found for $dataFile"))
+    getData[AdditionalInformation](config.additionalInformation)
 }

@@ -24,17 +24,8 @@ import play.api.libs.json.Json
 
 import scala.io.Source
 
-class KindOfPackageService @Inject()(env: Environment, config: ResourceConfig) {
-
-  private val dataFile = config.kindsOfPackage
+class KindOfPackageService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val kindsOfPackage: Seq[KindOfPackage] =
-    env
-      .resourceAsStream(dataFile)
-      .map {
-        inputStream =>
-          val rawData = Source.fromInputStream(inputStream).mkString
-          Json.parse(rawData).as[Seq[KindOfPackage]]
-      }
-      .getOrElse(throw new Exception(s"File not found for $dataFile"))
+    getData[KindOfPackage](config.kindsOfPackage)
 }
