@@ -2,3 +2,5 @@
 GET        /customs-offices                                   controllers.ReferenceDataController.customsOffices
 GET        /country-code-full-list                            controllers.ReferenceDataController.countryCodeFullList
 GET        /transit-country-code-list                         controllers.ReferenceDataController.transitCountryCodeList
+GET        /additional-information                            controllers.ReferenceDataController.additionalInformation
+GET        /kinds-of-package                                  controllers.ReferenceDataController.kindsOfPackage

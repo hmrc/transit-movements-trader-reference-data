@@ -26,6 +26,8 @@ import play.api.libs.json._
 
 class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
 
+  private val customsOffice = CustomsOffice("GB000074", "Immingham", Seq("TRA", "DEP", "DES"))
+
   "Customs Office model" - {
     "must deserialize from json to a valid model" in {
       val result = validCustomsOfficeJson(customsOffice).as[CustomsOffice]
@@ -61,44 +63,11 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
     }
   }
 
-  "Customs Offices model" - {
-    "must deserialize from json to a valid model" in {
-
-      val result = customsOfficesJson(customsOffices).as[CustomsOffices]
-
-      result mustBe customsOffices
-    }
-
-    "must serialize to json from valid json model" in {
-      val result: JsValue = Json.toJson[CustomsOffices](customsOffices)
-
-      result mustBe expectedCustomsOfficesJson
-    }
-
-    "must serialize to json and deserialize to a valid model" in {
-      val emptyCustomsOfficeList = CustomsOffices(Nil)
-      val json                   = customsOfficesJson(emptyCustomsOfficeList)
-      json.as[CustomsOffices] mustBe emptyCustomsOfficeList
-    }
-
-    "must fail to deserialize" in {
-      Json.fromJson[CustomsOffices](Json.obj()) must be(JsError(List((JsPath \ "CUSTOMS_OFFICES", List(JsonValidationError(List("error.path.missing")))))))
-    }
-  }
-
-  val customsOffice  = CustomsOffice("GB000074", "Immingham", Seq("TRA", "DEP", "DES"))
-  val customsOffice1 = CustomsOffice("GB000000", "name", Seq("ABC", "DEP", "SDS"))
-  val customsOffices = CustomsOffices(Seq(customsOffice, customsOffice1))
-
   def expectedCustomsOfficeJson(office: CustomsOffice = customsOffice): JsValue = Json.obj(
     "id"    -> office.id,
     "name"  -> office.name,
     "roles" -> Json.toJson(office.roles)
   )
-
-  val expectedCustomsOfficesJson: JsValue = {
-    Json.obj("customsOffices" -> customsOffices.customsOffices.map(expectedCustomsOfficeJson))
-  }
 
   def validCustomsOfficeJson(office: CustomsOffice): JsValue = Json.parse(s"""
        |{
@@ -107,10 +76,4 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
        |  "CUSTOMS_OFFICE_ROLES":${Json.toJson(office.roles)}
        |  }
        |""".stripMargin)
-
-  def customsOfficesJson(offices: CustomsOffices): JsValue = {
-    val result: Seq[JsValue] = offices.customsOffices.map(validCustomsOfficeJson)
-    Json.obj("CUSTOMS_OFFICES" -> result)
-  }
-
 }

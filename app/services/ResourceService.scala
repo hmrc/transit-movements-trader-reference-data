@@ -16,13 +16,24 @@
 
 package services
 
-import config.ResourceConfig
-import javax.inject.Inject
-import models.CountryCode
 import play.api.Environment
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
 
-class CountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+import scala.io.Source
 
-  val countryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.countryCodes)
+trait ResourceService {
+
+  val env: Environment
+
+  protected def getData[A](dataFile: String)(implicit ev: Reads[A]): Seq[A] =
+    env
+      .resourceAsStream(dataFile)
+      .map {
+        inputStream =>
+          val rawData = Source.fromInputStream(inputStream).mkString
+
+          Json.parse(rawData).as[Seq[A]]
+      }
+      .getOrElse(throw new Exception(s"Could not find file $dataFile"))
 }

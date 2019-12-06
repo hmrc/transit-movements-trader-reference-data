@@ -18,11 +18,11 @@ package services
 
 import config.ResourceConfig
 import javax.inject.Inject
-import models.CountryCode
+import models.AdditionalInformation
 import play.api.Environment
 
-class CountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class AdditionalInformationService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val countryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.countryCodes)
+  val additionalInformation: Seq[AdditionalInformation] =
+    getData[AdditionalInformation](config.additionalInformation)
 }

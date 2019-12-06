@@ -23,12 +23,17 @@ import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 class ResourceConfig @Inject()(config: Configuration) {
 
   val customsOffice: String =
-    config.get[String]("customsOffices.file")
+    config.get[String]("resourceFiles.customsOffices")
 
   val countryCodes: String =
-    config.get[String]("countryCodesFullList.file")
+    config.get[String]("resourceFiles.countryCodesFullList")
 
   val transitCountryCodes: String =
-    config.get[String]("transitCountryCodesFullList.file")
+    config.get[String]("resourceFiles.transitCountryCodesFullList")
 
+  val additionalInformation: String =
+    config.get[String]("resourceFiles.additionalInformation")
+
+  val kindsOfPackage: String =
+    config.get[String]("resourceFiles.kindsOfPackage")
 }

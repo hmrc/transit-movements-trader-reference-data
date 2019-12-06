@@ -17,8 +17,10 @@
 package controllers
 
 import base.SpecBase
+import models.AdditionalInformation
 import models.CountryCode
 import models.CustomsOffice
+import models.KindOfPackage
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito.when
@@ -41,24 +43,36 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
   )
   private val countryCodes = Seq(CountryCode("valid", "GB", "United Kingdom"))
 
-  private val countryCodesService        = mock[CountryCodesService]
-  private val customsOfficesService      = mock[CustomsOfficesService]
-  private val transitCountryCodesService = mock[TransitCountryCodesService]
+  private val additionalInformation = Seq(AdditionalInformation("abc", "info description"))
+
+  private val kindsOfPackage = Seq(KindOfPackage("name", "description"))
+
+  private val countryCodesService          = mock[CountryCodesService]
+  private val customsOfficesService        = mock[CustomsOfficesService]
+  private val transitCountryCodesService   = mock[TransitCountryCodesService]
+  private val additionalInformationService = mock[AdditionalInformationService]
+  private val kindOfPackageService         = mock[KindOfPackageService]
 
   when(customsOfficesService.customsOffices).thenReturn(customsOffices)
   when(countryCodesService.countryCodes).thenReturn(countryCodes)
   when(transitCountryCodesService.transitCountryCodes).thenReturn(countryCodes)
+  when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
+  when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
+
+  private def appBuilder =
+    applicationBuilder()
+      .overrides(
+        bind[CountryCodesService].toInstance(countryCodesService),
+        bind[CustomsOfficesService].toInstance(customsOfficesService),
+        bind[TransitCountryCodesService].toInstance(transitCountryCodesService),
+        bind[AdditionalInformationService].toInstance(additionalInformationService),
+        bind[KindOfPackageService].toInstance(kindOfPackageService)
+      )
 
   "ReferenceDataController" - {
     "must fetch customs offices" in {
 
-      lazy val app = applicationBuilder()
-        .overrides(
-          bind[CountryCodesService].toInstance(countryCodesService),
-          bind[CustomsOfficesService].toInstance(customsOfficesService),
-          bind[TransitCountryCodesService].toInstance(transitCountryCodesService)
-        )
-        .build()
+      lazy val app = appBuilder.build()
 
       val request =
         FakeRequest(GET, routes.ReferenceDataController.customsOffices().url)
@@ -71,13 +85,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
     "must fetch country code full list" in {
 
-      lazy val app = applicationBuilder()
-        .overrides(
-          bind[CountryCodesService].toInstance(countryCodesService),
-          bind[CustomsOfficesService].toInstance(customsOfficesService),
-          bind[TransitCountryCodesService].toInstance(transitCountryCodesService)
-        )
-        .build()
+      lazy val app = appBuilder.build()
 
       val request = FakeRequest(
         GET,
@@ -92,13 +100,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
     "must fetch transit country codes" in {
 
-      lazy val app = applicationBuilder()
-        .overrides(
-          bind[CountryCodesService].toInstance(countryCodesService),
-          bind[CustomsOfficesService].toInstance(customsOfficesService),
-          bind[TransitCountryCodesService].toInstance(transitCountryCodesService)
-        )
-        .build()
+      lazy val app = appBuilder.build()
 
       val request = FakeRequest(
         GET,
@@ -108,6 +110,36 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(countryCodes)
+      app.stop()
+    }
+
+    "must fetch additional information" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.additionalInformation().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(additionalInformation)
+      app.stop()
+    }
+
+    "must fetch kinds of package" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.kindsOfPackage().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(kindsOfPackage)
       app.stop()
     }
   }

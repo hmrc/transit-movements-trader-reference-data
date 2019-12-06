@@ -18,11 +18,14 @@ package services
 
 import config.ResourceConfig
 import javax.inject.Inject
-import models.CountryCode
+import models.KindOfPackage
 import play.api.Environment
+import play.api.libs.json.Json
 
-class CountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+import scala.io.Source
 
-  val countryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.countryCodes)
+class KindOfPackageService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+
+  val kindsOfPackage: Seq[KindOfPackage] =
+    getData[KindOfPackage](config.kindsOfPackage)
 }

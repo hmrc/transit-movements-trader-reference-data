@@ -16,13 +16,17 @@
 
 package services
 
-import config.ResourceConfig
-import javax.inject.Inject
-import models.CountryCode
-import play.api.Environment
+import base.SpecBase
+import models.KindOfPackage
+import org.scalatest.MustMatchers
 
-class CountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class KindOfPackageServiceSpec extends SpecBase with MustMatchers {
 
-  val countryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.countryCodes)
+  "must return kinds of package" in {
+    val service = app.injector.instanceOf[KindOfPackageService]
+
+    val expectedFirstValue = KindOfPackage("1A", "Drum, steel")
+
+    service.kindsOfPackage.head mustEqual expectedFirstValue
+  }
 }
