@@ -26,6 +26,5 @@ import scala.io.Source
 
 class KindOfPackageService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val kindsOfPackage: Seq[KindOfPackage] =
-    getData[KindOfPackage](config.kindsOfPackage)
+  val kindsOfPackage: Seq[KindOfPackage] = getData[KindOfPackage](config.kindsOfPackage)
 }

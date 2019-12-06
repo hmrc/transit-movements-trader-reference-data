@@ -23,6 +23,5 @@ case class AdditionalInformation(code: String, description: String)
 
 object AdditionalInformation {
 
-  implicit lazy val format: Format[AdditionalInformation] =
-    Json.format[AdditionalInformation]
+  implicit lazy val format: Format[AdditionalInformation] = Json.format[AdditionalInformation]
 }

@@ -23,6 +23,5 @@ case class KindOfPackage(code: String, description: String)
 
 object KindOfPackage {
 
-  implicit lazy val format: Format[KindOfPackage] =
-    Json.format[KindOfPackage]
+  implicit lazy val format: Format[KindOfPackage] = Json.format[KindOfPackage]
 }

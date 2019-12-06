@@ -28,17 +28,15 @@ import services.KindOfPackageService
 import services.TransitCountryCodesService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class ReferenceDataController @Inject()(
-  cc: ControllerComponents,
-  countryCodesService: CountryCodesService,
-  customsOfficesService: CustomsOfficesService,
-  transitCountryCodesService: TransitCountryCodesService,
-  additionalInformationService: AdditionalInformationService,
-  kindOfPackagesService: KindOfPackageService
-) extends BackendController(cc) {
+class ReferenceDataController @Inject()(cc: ControllerComponents,
+                                        countryCodesService: CountryCodesService,
+                                        customsOfficesService: CustomsOfficesService,
+                                        transitCountryCodesService: TransitCountryCodesService,
+                                        additionalInformationService: AdditionalInformationService,
+                                        kindOfPackagesService: KindOfPackageService)
+    extends BackendController(cc) {
 
   def customsOffices(): Action[AnyContent] = Action {
-
     Ok(Json.toJson(customsOfficesService.customsOffices))
   }
 

@@ -24,8 +24,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 
 class SpecBase extends FreeSpec with GuiceOneAppPerSuite with OptionValues {
 
-  protected def applicationBuilder(): GuiceApplicationBuilder =
-    new GuiceApplicationBuilder()
-      .configure(Configuration("metrics.enabled" -> "false"))
+  protected def applicationBuilder(): GuiceApplicationBuilder = new GuiceApplicationBuilder().configure(Configuration("metrics.enabled" -> "false"))
 
 }

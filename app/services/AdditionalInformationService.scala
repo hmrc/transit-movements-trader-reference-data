@@ -23,6 +23,5 @@ import play.api.Environment
 
 class AdditionalInformationService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val additionalInformation: Seq[AdditionalInformation] =
-    getData[AdditionalInformation](config.additionalInformation)
+  val additionalInformation: Seq[AdditionalInformation] = getData[AdditionalInformation](config.additionalInformation)
 }

@@ -25,8 +25,7 @@ class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
   "must return customs office list" in {
     val service = app.injector.instanceOf[CustomsOfficesService]
 
-    val customsOffice =
-      CustomsOffice("GB000001", "Central Community Transit Office", List("TRA", "DEP", "DES"))
+    val customsOffice = CustomsOffice("GB000001", "Central Community Transit Office", List("TRA", "DEP", "DES"))
 
     service.customsOffices.head mustBe customsOffice
   }

@@ -26,6 +26,5 @@ import scala.io.Source
 
 class TransitCountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val transitCountryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.transitCountryCodes)
+  val transitCountryCodes: Seq[CountryCode] = getData[CountryCode](config.transitCountryCodes)
 }

@@ -20,20 +20,12 @@ import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 
-case class CustomsOffice(
-  id: String,
-  name: String,
-  roles: Seq[String]
-)
+case class CustomsOffice(id: String, name: String, roles: Seq[String])
 
 object CustomsOffice {
 
   implicit def reads: Reads[CustomsOffice] =
-    (
-      (__ \ "CUST_OFF_ID").read[String] and
-        (__ \ "CUST_OFF_NAM").read[String] and
-        (__ \ "CUSTOMS_OFFICE_ROLES").read[Seq[String]]
-    )(CustomsOffice.apply _)
+    ((__ \ "CUST_OFF_ID").read[String] and (__ \ "CUST_OFF_NAM").read[String] and (__ \ "CUSTOMS_OFFICE_ROLES").read[Seq[String]])(CustomsOffice.apply _)
 
   implicit def writes: Writes[CustomsOffice] = Json.writes[CustomsOffice]
 }

@@ -26,6 +26,5 @@ import scala.io.Source
 
 class CustomsOfficesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val customsOffices: Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice)
+  val customsOffices: Seq[CustomsOffice] = getData[CustomsOffice](config.customsOffice)
 }

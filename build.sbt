@@ -34,11 +34,11 @@ lazy val scoverageSettings = {
       "config.*",
       ".*(BuildInfo|Routes).*"
     ).mkString(";"),
-    ScoverageKeys.coverageMinimum := 85.00,
+    ScoverageKeys.coverageMinimum       := 85.00,
     ScoverageKeys.coverageExcludedFiles := "<empty>;.*javascript.*;.*Routes.*;",
     ScoverageKeys.coverageFailOnMinimum := true,
-    ScoverageKeys.coverageHighlighting := true,
-    parallelExecution in Test := false
+    ScoverageKeys.coverageHighlighting  := true,
+    parallelExecution in Test           := false
   )
 }
 
