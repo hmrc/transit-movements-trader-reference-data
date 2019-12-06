@@ -26,7 +26,7 @@ import scala.io.Source
 
 class KindOfPackageService @Inject()(env: Environment, config: ResourceConfig) {
 
-  private val dataFile = config.kindOfPackage
+  private val dataFile = config.kindsOfPackage
 
   val kindsOfPackage: Seq[KindOfPackage] =
     env
