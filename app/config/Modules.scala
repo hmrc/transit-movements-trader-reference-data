@@ -17,16 +17,16 @@
 package config
 
 import com.google.inject.AbstractModule
-import services.CountryCodesService
+import services.CountryService
 import services.CustomsOfficesService
-import services.TransitCountryCodesService
+import services.TransitCountryService
 
 class Modules extends AbstractModule {
   override def configure(): Unit = {
     bind(classOf[AppConfig]).asEagerSingleton()
     bind(classOf[ResourceConfig]).asEagerSingleton()
-    bind(classOf[CountryCodesService]).asEagerSingleton()
+    bind(classOf[CountryService]).asEagerSingleton()
     bind(classOf[CustomsOfficesService]).asEagerSingleton()
-    bind(classOf[TransitCountryCodesService]).asEagerSingleton()
+    bind(classOf[TransitCountryService]).asEagerSingleton()
   }
 }

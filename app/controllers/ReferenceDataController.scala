@@ -26,9 +26,9 @@ import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 class ReferenceDataController @Inject()(
   cc: ControllerComponents,
-  countryCodesService: CountryCodesService,
+  countryService: CountryService,
   customsOfficesService: CustomsOfficesService,
-  transitCountryCodesService: TransitCountryCodesService,
+  transitCountryService: TransitCountryService,
   additionalInformationService: AdditionalInformationService,
   kindOfPackagesService: KindOfPackageService,
   documentTypeService: DocumentTypeService
@@ -39,12 +39,12 @@ class ReferenceDataController @Inject()(
     Ok(Json.toJson(customsOfficesService.customsOffices))
   }
 
-  def countryCodeFullList(): Action[AnyContent] = Action {
-    Ok(Json.toJson(countryCodesService.countryCodes))
+  def countriesFullList(): Action[AnyContent] = Action {
+    Ok(Json.toJson(countryService.countries))
   }
 
-  def transitCountryCodeList(): Action[AnyContent] = Action {
-    Ok(Json.toJson(transitCountryCodesService.transitCountryCodes))
+  def transitCountries(): Action[AnyContent] = Action {
+    Ok(Json.toJson(transitCountryService.transitCountryCodes))
   }
 
   def additionalInformation(): Action[AnyContent] = Action {

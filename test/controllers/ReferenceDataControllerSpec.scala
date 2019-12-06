@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import models.AdditionalInformation
-import models.CountryCode
+import models.Country
 import models.CustomsOffice
 import models.DocumentType
 import models.KindOfPackage
@@ -42,7 +42,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
       List("TRA", "DEP", "DES")
     )
   )
-  private val countryCodes = Seq(CountryCode("valid", "GB", "United Kingdom"))
+  private val countries = Seq(Country("valid", "GB", "United Kingdom"))
 
   private val additionalInformation = Seq(AdditionalInformation("abc", "info description"))
 
@@ -50,16 +50,16 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val documentTypes = Seq(DocumentType("code", "description", transportDocument = true))
 
-  private val countryCodesService          = mock[CountryCodesService]
+  private val countryService               = mock[CountryService]
   private val customsOfficesService        = mock[CustomsOfficesService]
-  private val transitCountryCodesService   = mock[TransitCountryCodesService]
+  private val transitCountryService        = mock[TransitCountryService]
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
   private val documentTypeService          = mock[DocumentTypeService]
 
   when(customsOfficesService.customsOffices).thenReturn(customsOffices)
-  when(countryCodesService.countryCodes).thenReturn(countryCodes)
-  when(transitCountryCodesService.transitCountryCodes).thenReturn(countryCodes)
+  when(countryService.countries).thenReturn(countries)
+  when(transitCountryService.transitCountryCodes).thenReturn(countries)
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
   when(documentTypeService.documentTypes).thenReturn(documentTypes)
@@ -67,9 +67,9 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
   private def appBuilder =
     applicationBuilder()
       .overrides(
-        bind[CountryCodesService].toInstance(countryCodesService),
+        bind[CountryService].toInstance(countryService),
         bind[CustomsOfficesService].toInstance(customsOfficesService),
-        bind[TransitCountryCodesService].toInstance(transitCountryCodesService),
+        bind[TransitCountryService].toInstance(transitCountryService),
         bind[AdditionalInformationService].toInstance(additionalInformationService),
         bind[KindOfPackageService].toInstance(kindOfPackageService),
         bind[DocumentTypeService].toInstance(documentTypeService)
@@ -89,33 +89,33 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
       app.stop()
     }
 
-    "must fetch country code full list" in {
+    "must fetch country full list" in {
 
       lazy val app = appBuilder.build()
 
       val request = FakeRequest(
         GET,
-        routes.ReferenceDataController.countryCodeFullList().url
+        routes.ReferenceDataController.countriesFullList().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(countryCodes)
+      contentAsJson(result) mustBe Json.toJson(countries)
       app.stop()
     }
 
-    "must fetch transit country codes" in {
+    "must fetch transit countries" in {
 
       lazy val app = appBuilder.build()
 
       val request = FakeRequest(
         GET,
-        routes.ReferenceDataController.transitCountryCodeList().url
+        routes.ReferenceDataController.transitCountries().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(countryCodes)
+      contentAsJson(result) mustBe Json.toJson(countries)
       app.stop()
     }
 

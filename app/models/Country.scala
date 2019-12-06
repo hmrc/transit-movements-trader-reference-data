@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package services
+package models
 
-import config.ResourceConfig
-import javax.inject.Inject
-import models.CountryCode
-import play.api.Environment
+import play.api.libs.json.Json
+import play.api.libs.json.Format
 
-class CountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+case class Country(state: String, code: String, description: String)
 
-  val countryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.countryCodes)
+object Country {
+
+  implicit val format: Format[Country] = Json.format[Country]
 }

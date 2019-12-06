@@ -16,16 +16,17 @@
 
 package services
 
-import config.ResourceConfig
-import javax.inject.Inject
-import models.CountryCode
-import play.api.Environment
-import play.api.libs.json.Json
+import base.SpecBase
+import models.Country
+import org.scalatest.MustMatchers
 
-import scala.io.Source
+class TransitCountryServiceSpec extends SpecBase with MustMatchers {
 
-class TransitCountryCodesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+  "must return transit countries" in {
+    val service = app.injector.instanceOf[TransitCountryService]
 
-  val transitCountryCodes: Seq[CountryCode] =
-    getData[CountryCode](config.transitCountryCodes)
+    val countryCode = Country("valid", "GB", "United Kingdom")
+
+    service.transitCountryCodes.head mustBe countryCode
+  }
 }
