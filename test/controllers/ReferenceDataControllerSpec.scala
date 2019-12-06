@@ -20,6 +20,7 @@ import base.SpecBase
 import models.AdditionalInformation
 import models.CountryCode
 import models.CustomsOffice
+import models.DocumentType
 import models.KindOfPackage
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -47,17 +48,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val kindsOfPackage = Seq(KindOfPackage("name", "description"))
 
+  private val documentTypes = Seq(DocumentType("code", "description", transportDocument = true))
+
   private val countryCodesService          = mock[CountryCodesService]
   private val customsOfficesService        = mock[CustomsOfficesService]
   private val transitCountryCodesService   = mock[TransitCountryCodesService]
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
+  private val documentTypeService          = mock[DocumentTypeService]
 
   when(customsOfficesService.customsOffices).thenReturn(customsOffices)
   when(countryCodesService.countryCodes).thenReturn(countryCodes)
   when(transitCountryCodesService.transitCountryCodes).thenReturn(countryCodes)
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
+  when(documentTypeService.documentTypes).thenReturn(documentTypes)
 
   private def appBuilder =
     applicationBuilder()
@@ -66,7 +71,8 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
         bind[CustomsOfficesService].toInstance(customsOfficesService),
         bind[TransitCountryCodesService].toInstance(transitCountryCodesService),
         bind[AdditionalInformationService].toInstance(additionalInformationService),
-        bind[KindOfPackageService].toInstance(kindOfPackageService)
+        bind[KindOfPackageService].toInstance(kindOfPackageService),
+        bind[DocumentTypeService].toInstance(documentTypeService)
       )
 
   "ReferenceDataController" - {
@@ -140,6 +146,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(kindsOfPackage)
+      app.stop()
+    }
+
+    "must fetch document types" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.documentTypes().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(documentTypes)
       app.stop()
     }
   }

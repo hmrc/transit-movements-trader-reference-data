@@ -36,4 +36,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val kindsOfPackage: String =
     config.get[String]("resourceFiles.kindsOfPackage")
+
+  val documentTypes: String =
+    config.get[String]("resourceFiles.documentTypes")
 }
