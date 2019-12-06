@@ -17,15 +17,11 @@
 package models
 
 import play.api.libs.json.Json
+import play.api.libs.json.Format
 
 case class CountryCode(state: String, code: String, description: String)
 
 object CountryCode {
-  implicit val format = Json.format[CountryCode]
-}
 
-case class CountryCodes(countryCodes: Seq[CountryCode])
-
-object CountryCodes {
-  implicit val format = Json.format[CountryCodes]
+  implicit val format: Format[CountryCode] = Json.format[CountryCode]
 }

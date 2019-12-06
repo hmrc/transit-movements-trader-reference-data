@@ -32,13 +32,6 @@ trait ModelGenerators {
       } yield CustomsOffice(id, name, roles)
     }
 
-  implicit lazy val arbitraryCountryCodes: Arbitrary[CountryCodes] =
-    Arbitrary {
-      for {
-        countryCodes <- arbitrary[Seq[CountryCode]]
-      } yield CountryCodes(countryCodes)
-    }
-
   implicit lazy val arbitraryCountryCode: Arbitrary[CountryCode] =
     Arbitrary {
       for {

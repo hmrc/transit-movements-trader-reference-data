@@ -37,13 +37,3 @@ object CustomsOffice {
 
   implicit def writes: Writes[CustomsOffice] = Json.writes[CustomsOffice]
 }
-
-case class CustomsOffices(customsOffices: Seq[CustomsOffice])
-
-object CustomsOffices {
-
-  implicit def reads: Reads[CustomsOffices] = (__ \ "CUSTOMS_OFFICES").read[Seq[CustomsOffice]] fmap CustomsOffices.apply
-
-  implicit def writes: Writes[CustomsOffices] = Json.writes[CustomsOffices]
-
-}
