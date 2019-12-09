@@ -16,17 +16,13 @@
 
 package services
 
-import base.SpecBase
-import models.CountryCode
-import org.scalatest.MustMatchers
+import config.ResourceConfig
+import javax.inject.Inject
+import models.Country
+import play.api.Environment
 
-class CountryCodesServiceSpec extends SpecBase with MustMatchers {
+class CountryService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  "must return country code list" in {
-    val service = app.injector.instanceOf[CountryCodesService]
-
-    val countryCode = CountryCode("valid", "GB", "United Kingdom")
-
-    service.countryCodes.head mustBe countryCode
-  }
+  val countries: Seq[Country] =
+    getData[Country](config.countryCodes)
 }

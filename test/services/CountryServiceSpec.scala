@@ -17,16 +17,16 @@
 package services
 
 import base.SpecBase
-import models.CountryCode
+import models.Country
 import org.scalatest.MustMatchers
 
-class TransitCountryCodesServiceSpec extends SpecBase with MustMatchers {
+class CountryServiceSpec extends SpecBase with MustMatchers {
 
-  "must return transit country code full list" in {
-    val service = app.injector.instanceOf[TransitCountryCodesService]
+  "must return countries" in {
+    val service = app.injector.instanceOf[CountryService]
 
-    val countryCode = CountryCode("valid", "GB", "United Kingdom")
+    val countryCode = Country("valid", "GB", "United Kingdom")
 
-    service.transitCountryCodes.head mustBe countryCode
+    service.countries.head mustBe countryCode
   }
 }

@@ -1,7 +1,7 @@
 # microservice specific routes
 GET        /customs-offices                                   controllers.ReferenceDataController.customsOffices
-GET        /country-code-full-list                            controllers.ReferenceDataController.countryCodeFullList
-GET        /transit-country-code-list                         controllers.ReferenceDataController.transitCountryCodeList
+GET        /countries-full-list                               controllers.ReferenceDataController.countriesFullList
+GET        /transit-countries                                 controllers.ReferenceDataController.transitCountries
 GET        /additional-information                            controllers.ReferenceDataController.additionalInformation
 GET        /kinds-of-package                                  controllers.ReferenceDataController.kindsOfPackage
 GET        /document-types                                    controllers.ReferenceDataController.documentTypes
