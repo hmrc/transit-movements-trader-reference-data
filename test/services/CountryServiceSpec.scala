@@ -25,7 +25,7 @@ class CountryServiceSpec extends SpecBase with MustMatchers {
   "must return countries" in {
     val service = app.injector.instanceOf[CountryService]
 
-    val countryCode = Country("valid", "GB", "United Kingdom")
+    val countryCode = Country("valid", "AD", "Andorra")
 
     service.countries.head mustBe countryCode
   }
