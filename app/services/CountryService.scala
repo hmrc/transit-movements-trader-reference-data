@@ -24,5 +24,5 @@ import play.api.Environment
 class CountryService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val countries: Seq[Country] =
-    getData[Country](config.countryCodes)
+    getData[Country](config.countryCodes).sortBy(_.description)
 }

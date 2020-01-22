@@ -20,12 +20,9 @@ import config.ResourceConfig
 import javax.inject.Inject
 import models.CustomsOffice
 import play.api.Environment
-import play.api.libs.json.Json
-
-import scala.io.Source
 
 class CustomsOfficesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val customsOffices: Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice)
+    getData[CustomsOffice](config.customsOffice).sortBy(_.name)
 }
