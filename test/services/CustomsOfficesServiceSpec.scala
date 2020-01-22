@@ -23,7 +23,7 @@ import org.scalatest.MustMatchers
 class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
 
   "must return customs office list" in {
-    val service = applicationBuilder().injector.instanceOf[CustomsOfficesService]
+    val service = app.injector.instanceOf[CustomsOfficesService]
 
     val firstCustomsOffice =
       CustomsOffice("GB000011", "Birmingham Airport", List("TRA", "DEP", "DES"))
