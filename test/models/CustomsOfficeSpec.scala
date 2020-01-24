@@ -70,24 +70,18 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
     "roles"       -> Json.toJson(office.roles)
   )
 
-  def validCustomsOfficeJson(office: CustomsOffice): JsValue = office.phoneNumber match {
-    case Some(telephone) =>
-      Json.parse(s"""
-                    |{
-                    |  "CUST_OFF_ID":"${office.id}",
-                    |  "CUST_OFF_NAM":"${office.name}",
-                    |  "PHONE_NUMBER":"$telephone",
-                    |  "CUSTOMS_OFFICE_ROLES":${Json.toJson(office.roles)}
-                    |  }
-                    |""".stripMargin)
-    case None =>
-      Json.parse(s"""
-                    |{
-                    |  "CUST_OFF_ID":"${office.id}",
-                    |  "CUST_OFF_NAM":"${office.name}",
-                    |  "CUSTOMS_OFFICE_ROLES":${Json.toJson(office.roles)}
-                    |  }
-                    |""".stripMargin)
+  def validCustomsOfficeJson(office: CustomsOffice): JsValue = {
+
+    val phoneNumber: String = office.phoneNumber.fold("")(telephone => s""""PHONE_NUMBER":"$telephone",""")
+
+    Json.parse(s"""
+         |{
+         |  "CUST_OFF_ID":"${office.id}",
+         |  "CUST_OFF_NAM":"${office.name}",
+         |  $phoneNumber
+         |  "CUSTOMS_OFFICE_ROLES":${Json.toJson(office.roles)}
+         |  }
+         |""".stripMargin)
   }
 
 }
