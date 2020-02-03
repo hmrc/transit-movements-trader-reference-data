@@ -13,6 +13,7 @@ lazy val microservice = Project(appName, file("."))
     SbtDistributablesPlugin,
     SbtArtifactory
   )
+  .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     majorVersion := 0,
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
