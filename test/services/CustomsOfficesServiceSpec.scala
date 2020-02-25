@@ -22,16 +22,17 @@ import org.scalatest.MustMatchers
 
 class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
 
+  val customsOffice1: CustomsOffice =
+    CustomsOffice("GB000011", "Birmingham Airport", None, List("TRA", "DEP", "DES"))
+
+  val customsOffice2: CustomsOffice =
+    CustomsOffice("GB003280", "Workington", None, List.empty)
+
   "must return customs office list" in {
     val service = app.injector.instanceOf[CustomsOfficesService]
 
-    val firstCustomsOffice =
-      CustomsOffice("GB000011", "Birmingham Airport", None, List("TRA", "DEP", "DES"))
-    val lastCustomsOffice =
-      CustomsOffice("GB003280", "Workington", None, List.empty)
-
-    service.customsOffices.head mustBe firstCustomsOffice
-    service.customsOffices.last mustBe lastCustomsOffice
+    service.customsOffices.head mustBe customsOffice1
+    service.customsOffices.last mustBe customsOffice2
   }
 
   "getCustomsOffice" - {
@@ -39,15 +40,11 @@ class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
     "must return some customs office when given a valid id" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val customsOffice =
-        CustomsOffice("GB000001", "Central Community Transit Office", List("TRA", "DEP", "DES"))
-
-      service.getCustomsOffice(customsOffice.id).value mustBe customsOffice
+      service.getCustomsOffice(customsOffice1.id).value mustBe customsOffice1
     }
 
     "must return None when given an invalid id" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
-
+      val service   = app.injector.instanceOf[CustomsOfficesService]
       val invalidId = "123"
 
       service.getCustomsOffice(invalidId) mustBe None

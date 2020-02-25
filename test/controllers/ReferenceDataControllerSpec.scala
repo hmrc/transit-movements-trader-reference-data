@@ -45,6 +45,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
     CustomsOffice(
       "GB000002",
       "Central Community Transit Office",
+      None,
       List("TRA", "DEP", "DES")
     )
   )
@@ -88,21 +89,17 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
     "getCustomsOffice" - {
 
-      "must fetch some customs office when value can be found" in {
+      "must fetch some customs office" in {
 
         lazy val app = appBuilder.build()
 
-        val expectedResult: CustomsOffice = CustomsOffice(
-          "GB000001",
-          "Central Community Transit Office",
-          List("TRA", "DEP", "DES")
-        )
+        val customsOffice = customsOffices.head
 
-        val request = FakeRequest(GET, routes.ReferenceDataController.getCustomsOffice(expectedResult.id).url)
+        val request = FakeRequest(GET, routes.ReferenceDataController.getCustomsOffice(customsOffice.id).url)
         val result  = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(expectedResult)
+        contentAsJson(result) mustBe Json.toJson(customsOffice)
         app.stop()
       }
     }
