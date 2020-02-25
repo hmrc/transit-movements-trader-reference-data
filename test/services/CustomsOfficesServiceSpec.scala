@@ -30,4 +30,25 @@ class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
 
     service.customsOffices.head mustBe customsOffice
   }
+
+  "getCustomsOffice" - {
+
+    "must return some customs office when given a valid id" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      val customsOffice =
+        CustomsOffice("GB000001", "Central Community Transit Office", List("TRA", "DEP", "DES"))
+
+      service.getCustomsOffice(customsOffice.id).value mustBe customsOffice
+    }
+
+    "must return None when given an invalid id" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      val invalidId = "123"
+
+      service.getCustomsOffice(invalidId) mustBe None
+    }
+
+  }
 }

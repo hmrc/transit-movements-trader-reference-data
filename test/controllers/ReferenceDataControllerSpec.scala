@@ -40,9 +40,16 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
       "GB000001",
       "Central Community Transit Office",
       List("TRA", "DEP", "DES")
+    ),
+    CustomsOffice(
+      "GB000002",
+      "Central Community Transit Office",
+      List("TRA", "DEP", "DES")
     )
   )
-  private val countries = Seq(Country("valid", "GB", "United Kingdom"))
+
+  private val customsOfficeId = customsOffices.head.id
+  private val countries       = Seq(Country("valid", "GB", "United Kingdom"))
 
   private val additionalInformation = Seq(AdditionalInformation("abc", "info description"))
 
@@ -58,6 +65,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
   private val documentTypeService          = mock[DocumentTypeService]
 
   when(customsOfficesService.customsOffices).thenReturn(customsOffices)
+  when(customsOfficesService.getCustomsOffice(customsOfficeId)).thenReturn(Some(customsOffices.head))
   when(countryService.countries).thenReturn(countries)
   when(transitCountryService.transitCountryCodes).thenReturn(countries)
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
@@ -76,6 +84,28 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
       )
 
   "ReferenceDataController" - {
+
+    "getCustomsOffice" - {
+
+      "must fetch some customs office when value can be found" in {
+
+        lazy val app = appBuilder.build()
+
+        val expectedResult: CustomsOffice = CustomsOffice(
+          "GB000001",
+          "Central Community Transit Office",
+          List("TRA", "DEP", "DES")
+        )
+
+        val request = FakeRequest(GET, routes.ReferenceDataController.getCustomsOffice(expectedResult.id).url)
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(expectedResult)
+        app.stop()
+      }
+    }
+
     "must fetch customs offices" in {
 
       lazy val app = appBuilder.build()

@@ -39,6 +39,10 @@ class ReferenceDataController @Inject()(
     Ok(Json.toJson(customsOfficesService.customsOffices))
   }
 
+  def getCustomsOffice(officeId: String): Action[AnyContent] = Action {
+    Ok(Json.toJson(customsOfficesService.getCustomsOffice(officeId)))
+  }
+
   def countriesFullList(): Action[AnyContent] = Action {
     Ok(Json.toJson(countryService.countries))
   }
