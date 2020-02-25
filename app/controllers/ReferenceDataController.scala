@@ -34,11 +34,6 @@ class ReferenceDataController @Inject()(
   documentTypeService: DocumentTypeService
 ) extends BackendController(cc) {
 
-  def customsOffices(): Action[AnyContent] = Action {
-
-    Ok(Json.toJson(customsOfficesService.customsOffices))
-  }
-
   def countriesFullList(): Action[AnyContent] = Action {
     Ok(Json.toJson(countryService.countries))
   }
