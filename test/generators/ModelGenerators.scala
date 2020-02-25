@@ -26,10 +26,11 @@ trait ModelGenerators {
   implicit lazy val arbitraryCustomsOffice: Arbitrary[CustomsOffice] =
     Arbitrary {
       for {
-        id    <- Gen.alphaNumStr
-        name  <- Gen.alphaNumStr
-        roles <- Gen.listOf(Gen.alphaNumStr)
-      } yield CustomsOffice(id, name, roles)
+        id        <- Gen.alphaNumStr
+        name      <- Gen.alphaNumStr
+        telephone <- Gen.option(Gen.alphaNumStr)
+        roles     <- Gen.listOf(Gen.alphaNumStr)
+      } yield CustomsOffice(id, name, telephone, roles)
     }
 
   implicit lazy val arbitraryCountry: Arbitrary[Country] =

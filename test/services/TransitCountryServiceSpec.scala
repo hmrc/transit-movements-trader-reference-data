@@ -25,8 +25,10 @@ class TransitCountryServiceSpec extends SpecBase with MustMatchers {
   "must return transit countries" in {
     val service = app.injector.instanceOf[TransitCountryService]
 
-    val countryCode = Country("valid", "GB", "United Kingdom")
+    val firstCountryCode = Country("valid", "AD", "Andorra")
+    val lastCountryCode  = Country("valid", "GB", "United Kingdom")
 
-    service.transitCountryCodes.head mustBe countryCode
+    service.transitCountryCodes.head mustBe firstCountryCode
+    service.transitCountryCodes.last mustBe lastCountryCode
   }
 }

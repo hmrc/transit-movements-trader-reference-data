@@ -39,6 +39,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
     CustomsOffice(
       "GB000001",
       "Central Community Transit Office",
+      Some("+44 (0)3000 999 982"),
       List("TRA", "DEP", "DES")
     ),
     CustomsOffice(
