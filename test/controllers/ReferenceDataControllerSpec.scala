@@ -34,22 +34,16 @@ import services._
 
 class ReferenceDataControllerSpec extends SpecBase with MustMatchers with MockitoSugar {
 
-  private val countries = Seq(Country("valid", "GB", "United Kingdom"))
-
   private val additionalInformation = Seq(AdditionalInformation("abc", "info description"))
 
   private val kindsOfPackage = Seq(KindOfPackage("name", "description"))
 
   private val documentTypes = Seq(DocumentType("code", "description", transportDocument = true))
 
-  private val countryService               = mock[CountryService]
-  private val transitCountryService        = mock[TransitCountryService]
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
   private val documentTypeService          = mock[DocumentTypeService]
 
-  when(countryService.countries).thenReturn(countries)
-  when(transitCountryService.transitCountryCodes).thenReturn(countries)
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
   when(documentTypeService.documentTypes).thenReturn(documentTypes)
@@ -57,44 +51,12 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
   private def appBuilder =
     applicationBuilder()
       .overrides(
-        bind[CountryService].toInstance(countryService),
-        bind[TransitCountryService].toInstance(transitCountryService),
         bind[AdditionalInformationService].toInstance(additionalInformationService),
         bind[KindOfPackageService].toInstance(kindOfPackageService),
         bind[DocumentTypeService].toInstance(documentTypeService)
       )
 
   "ReferenceDataController" - {
-
-    "must fetch country full list" in {
-
-      lazy val app = appBuilder.build()
-
-      val request = FakeRequest(
-        GET,
-        routes.ReferenceDataController.countriesFullList().url
-      )
-      val result = route(app, request).value
-
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(countries)
-      app.stop()
-    }
-
-    "must fetch transit countries" in {
-
-      lazy val app = appBuilder.build()
-
-      val request = FakeRequest(
-        GET,
-        routes.ReferenceDataController.transitCountries().url
-      )
-      val result = route(app, request).value
-
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(countries)
-      app.stop()
-    }
 
     "must fetch additional information" in {
 

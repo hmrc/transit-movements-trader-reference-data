@@ -24,22 +24,17 @@ import play.api.mvc.ControllerComponents
 import services._
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class ReferenceDataController @Inject()(
+class CountryController @Inject()(
   cc: ControllerComponents,
-  additionalInformationService: AdditionalInformationService,
-  kindOfPackagesService: KindOfPackageService,
-  documentTypeService: DocumentTypeService
+  countryService: CountryService,
+  transitCountryService: TransitCountryService
 ) extends BackendController(cc) {
 
-  def additionalInformation(): Action[AnyContent] = Action {
-    Ok(Json.toJson(additionalInformationService.additionalInformation))
+  def countriesFullList(): Action[AnyContent] = Action {
+    Ok(Json.toJson(countryService.countries))
   }
 
-  def kindsOfPackage(): Action[AnyContent] = Action {
-    Ok(Json.toJson(kindOfPackagesService.kindsOfPackage))
-  }
-
-  def documentTypes(): Action[AnyContent] = Action {
-    Ok(Json.toJson(documentTypeService.documentTypes))
+  def transitCountries(): Action[AnyContent] = Action {
+    Ok(Json.toJson(transitCountryService.transitCountryCodes))
   }
 }
