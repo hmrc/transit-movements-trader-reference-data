@@ -17,10 +17,8 @@
 package controllers
 
 import base.SpecBase
-import models.AdditionalInformation
 import models.Country
-import models.DocumentType
-import models.KindOfPackage
+import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -34,51 +32,105 @@ import services._
 
 class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar {
 
-  private val countries = Seq(Country("valid", "GB", "United Kingdom"))
+  private val ukCountry = Country("valid", "GB", "United Kingdom")
+  private val countries = Seq(ukCountry)
 
   private val countryService        = mock[CountryService]
   private val transitCountryService = mock[TransitCountryService]
 
-  when(countryService.countries).thenReturn(countries)
-  when(transitCountryService.transitCountryCodes).thenReturn(countries)
-
-  private def appBuilder =
-    applicationBuilder()
-      .overrides(
-        bind[CountryService].toInstance(countryService),
-        bind[TransitCountryService].toInstance(transitCountryService)
-      )
-
   "CountryController" - {
 
-    "must fetch country full list" in {
+    "countriesFullList" - {
+      "must fetch country full list" in {
 
-      lazy val app = appBuilder.build()
+        when(countryService.countries).thenReturn(countries)
 
-      val request = FakeRequest(
-        GET,
-        routes.CountryController.countriesFullList().url
-      )
-      val result = route(app, request).value
+        val app = applicationBuilder()
+          .overrides(
+            bind[CountryService].toInstance(countryService)
+          )
+          .build()
 
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(countries)
-      app.stop()
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.countriesFullList().url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+        app.stop()
+      }
     }
 
-    "must fetch transit countries" in {
+    "transitCountries" - {
+      "must fetch transit countries" in {
 
-      lazy val app = appBuilder.build()
+        when(transitCountryService.transitCountryCodes).thenReturn(countries)
 
-      val request = FakeRequest(
-        GET,
-        routes.CountryController.transitCountries().url
-      )
-      val result = route(app, request).value
+        val app = applicationBuilder()
+          .overrides(
+            bind[TransitCountryService].toInstance(transitCountryService)
+          )
+          .build()
 
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(countries)
-      app.stop()
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.transitCountries().url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+        app.stop()
+      }
+    }
+
+    "getCountry" - {
+      "must get correct country and return Ok" in {
+
+        when(countryService.getCountryByCode(any())).thenReturn(Some(ukCountry))
+
+        val app = applicationBuilder()
+          .overrides(
+            bind[CountryService].toInstance(countryService)
+          )
+          .build()
+
+        val validCountryCode = "GB"
+
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.getCountry(validCountryCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(ukCountry)
+        app.stop()
+      }
+
+      "must return NotFound when no country is found" in {
+
+        when(countryService.getCountryByCode(any())).thenReturn(None)
+
+        val app = applicationBuilder()
+          .overrides(
+            bind[CountryService].toInstance(countryService)
+          )
+          .build()
+
+        val invalidCountryCode = "Invalid"
+
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.getCountry(invalidCountryCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
+        app.stop()
+      }
     }
   }
 }

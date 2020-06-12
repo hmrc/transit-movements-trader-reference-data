@@ -25,4 +25,7 @@ class CountryService @Inject()(override val env: Environment, config: ResourceCo
 
   val countries: Seq[Country] =
     getData[Country](config.countryCodes).sortBy(_.description)
+
+  def getCountryByCode(code: String): Option[Country] =
+    getData[Country](config.countryCodes).find(_.code == code)
 }

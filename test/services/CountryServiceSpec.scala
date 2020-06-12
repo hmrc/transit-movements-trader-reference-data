@@ -22,13 +22,29 @@ import org.scalatest.MustMatchers
 
 class CountryServiceSpec extends SpecBase with MustMatchers {
 
-  "must return countries" in {
-    val service = app.injector.instanceOf[CountryService]
+  val service = app.injector.instanceOf[CountryService]
 
-    val firstCountryCode = Country("valid", "AD", "Andorra")
-    val lastCountryCode  = Country("valid", "GB", "United Kingdom")
+  "countries" - {
+    "must return full list of countries" in {
+      val firstCountryCode = Country("valid", "AD", "Andorra")
+      val lastCountryCode  = Country("valid", "GB", "United Kingdom")
 
-    service.countries.head mustBe firstCountryCode
-    service.countries.last mustBe lastCountryCode
+      service.countries.head mustBe firstCountryCode
+      service.countries.last mustBe lastCountryCode
+    }
   }
+
+  "getCountryByCode" - {
+    "must return correct country by country code" in {
+      val expectedResult = Country("valid", "GB", "United Kingdom")
+
+      service.getCountryByCode("GB").value mustBe expectedResult
+    }
+
+    "must return None when country cannot be found" in {
+
+      service.getCountryByCode("Invalid country code") mustBe None
+    }
+  }
+
 }

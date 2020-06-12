@@ -37,4 +37,17 @@ class CountryController @Inject()(
   def transitCountries(): Action[AnyContent] = Action {
     Ok(Json.toJson(transitCountryService.transitCountryCodes))
   }
+
+  def getCountry(code: String): Action[AnyContent] = Action {
+
+    countryService
+      .getCountryByCode(code)
+      .map {
+        country =>
+          Ok(Json.toJson(country))
+      }
+      .getOrElse {
+        NotFound
+      }
+  }
 }
