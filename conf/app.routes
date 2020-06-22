@@ -2,7 +2,7 @@
 GET        /customs-offices                                   controllers.CustomsOfficeController.customsOffices
 GET        /customs-office/:id                                controllers.CustomsOfficeController.getCustomsOffice(id)
 
-GET        /country/:code                                     controllers.CountryController.getCountry(code)
+GET        /countries/:code                                   controllers.CountryController.getCountry(code)
 GET        /countries-full-list                               controllers.CountryController.countriesFullList
 GET        /transit-countries                                 controllers.CountryController.transitCountries
 
