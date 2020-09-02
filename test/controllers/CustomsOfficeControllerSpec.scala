@@ -44,12 +44,14 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
     CustomsOffice(
       customsOfficeId,
       "Central Community Transit Office",
+      "GB",
       Some("+44 (0)3000 999 982"),
       List("TRA", "DEP", "DES")
     ),
     CustomsOffice(
       "GB000002",
       "Central Community Transit Office",
+      "GB",
       None,
       List("TRA", "DEP", "DES")
     )
@@ -108,6 +110,23 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(customsOffices)
+    }
+
+    "must return return customs offices of the input country" in {
+
+      when(mockCustomsOfficesService.getCustomsOfficesOfTheCountry(any())).thenReturn(customsOffices)
+
+      lazy val app = application.build()
+
+      val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry(customsOfficeId).url)
+
+      val result: Future[Result] = route(app, request).value
+
+      status(result) mustEqual OK
+
+      contentAsJson(result) mustBe Json.toJson(customsOffices)
+
+      app.stop()
     }
   }
 

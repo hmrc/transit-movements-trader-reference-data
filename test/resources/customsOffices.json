@@ -2,6 +2,7 @@
   {
     "CUST_OFF_ID": "GB000000",
     "CUST_OFF_NAM": "Test",
+    "COUNTRY_ID": "GB",
     "CUSTOMS_OFFICE_ROLES": [
       "TRA",
       "DEP",
@@ -11,6 +12,7 @@
   {
     "CUST_OFF_ID":"GB003280",
     "CUST_OFF_NAM":"Workington",
+    "COUNTRY_ID": "AU",
     "CUSTOMS_OFFICE_ROLES":[
 
     ]
@@ -18,6 +20,7 @@
   {
     "CUST_OFF_ID": "GB000011",
     "CUST_OFF_NAM": "Birmingham Airport",
+    "COUNTRY_ID": "GB",
     "CUSTOMS_OFFICE_ROLES": [
       "TRA",
       "DEP",

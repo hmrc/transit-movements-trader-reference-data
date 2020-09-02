@@ -28,4 +28,7 @@ class CustomsOfficesService @Inject()(override val env: Environment, config: Res
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
+
+  def getCustomsOfficesOfTheCountry(countryId: String): Seq[CustomsOffice] =
+    getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
 }

@@ -26,7 +26,7 @@ import play.api.libs.json._
 
 class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
 
-  private val customsOffice = CustomsOffice("GB000074", "Immingham", Some("+44 (0)3000 999 982"), Seq("TRA", "DEP", "DES"))
+  private val customsOffice = CustomsOffice("GB000074", "Immingham", "GB", Some("+44 (0)3000 999 982"), Seq("TRA", "DEP", "DES"))
 
   "Customs Office model" - {
     "must deserialize from json to a valid model" in {
@@ -66,6 +66,7 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
   def expectedCustomsOfficeJson(office: CustomsOffice = customsOffice): JsValue = Json.obj(
     "id"          -> office.id,
     "name"        -> office.name,
+    "countryId"   -> office.countryId,
     "phoneNumber" -> office.phoneNumber,
     "roles"       -> Json.toJson(office.roles)
   )
@@ -78,6 +79,7 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
          |{
          |  "CUST_OFF_ID":"${office.id}",
          |  "CUST_OFF_NAM":"${office.name}",
+         |  "COUNTRY_ID":"${office.countryId}",
          |  $phoneNumber
          |  "CUSTOMS_OFFICE_ROLES":${Json.toJson(office.roles)}
          |  }

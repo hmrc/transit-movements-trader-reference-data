@@ -34,6 +34,11 @@ class CustomsOfficeController @Inject()(
     Ok(Json.toJson(customsOfficesService.customsOffices))
   }
 
+  def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] = Action {
+
+    Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode)))
+  }
+
   def getCustomsOffice(officeId: String): Action[AnyContent] = Action {
 
     customsOfficesService

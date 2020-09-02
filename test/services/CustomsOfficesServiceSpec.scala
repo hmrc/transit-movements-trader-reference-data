@@ -22,11 +22,13 @@ import org.scalatest.MustMatchers
 
 class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
 
+  val countryId = "GB"
+
   val customsOffice1: CustomsOffice =
-    CustomsOffice("GB000011", "Birmingham Airport", None, List("TRA", "DEP", "DES"))
+    CustomsOffice("GB000011", "Birmingham Airport", countryId, None, List("TRA", "DEP", "DES"))
 
   val customsOffice2: CustomsOffice =
-    CustomsOffice("GB003280", "Workington", None, List.empty)
+    CustomsOffice("GB003280", "Workington", "AU", None, List.empty)
 
   "must return customs office list" in {
     val service = app.injector.instanceOf[CustomsOfficesService]
@@ -48,6 +50,25 @@ class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
       val invalidId = "123"
 
       service.getCustomsOffice(invalidId) mustBe None
+    }
+
+  }
+
+  "getCustomsOfficesForTheCountry" - {
+
+    "must return customs office list for the input country code" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      val customsOffices = service.getCustomsOfficesOfTheCountry(countryId)
+      customsOffices.head mustBe customsOffice1
+      customsOffices.length mustBe 2
+    }
+
+    "must return empty list when given an invalid country code" in {
+      val service   = app.injector.instanceOf[CustomsOfficesService]
+      val countryId = "xy"
+
+      service.getCustomsOfficesOfTheCountry(countryId) mustBe Seq.empty
     }
 
   }
