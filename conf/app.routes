@@ -1,5 +1,6 @@
 # microservice specific routes
 GET        /customs-offices                                   controllers.CustomsOfficeController.customsOffices
+GET        /customs-offices/:code                             controllers.CustomsOfficeController.customsOfficesOfTheCountry(code)
 GET        /customs-office/:id                                controllers.CustomsOfficeController.getCustomsOffice(id)
 
 GET        /countries/:code                                   controllers.CountryController.getCountry(code)

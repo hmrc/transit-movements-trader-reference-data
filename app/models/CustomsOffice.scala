@@ -23,6 +23,7 @@ import play.api.libs.functional.syntax._
 case class CustomsOffice(
   id: String,
   name: String,
+  countryId: String,
   phoneNumber: Option[String],
   roles: Seq[String]
 )
@@ -33,6 +34,7 @@ object CustomsOffice {
     (
       (__ \ "CUST_OFF_ID").read[String] and
         (__ \ "CUST_OFF_NAM").read[String] and
+        (__ \ "COUNTRY_ID").read[String] and
         (__ \ "PHONE_NUMBER").readNullable[String] and
         (__ \ "CUSTOMS_OFFICE_ROLES").read[Seq[String]]
     )(CustomsOffice.apply _)
