@@ -39,4 +39,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val documentTypes: String =
     config.get[String]("resourceFiles.documentTypes")
+
+  val transportModes: String =
+    config.get[String]("resourceFiles.transportModes")
 }
