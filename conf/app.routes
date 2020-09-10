@@ -10,3 +10,6 @@ GET        /transit-countries                                 controllers.Countr
 GET        /additional-information                            controllers.ReferenceDataController.additionalInformation
 GET        /kinds-of-package                                  controllers.ReferenceDataController.kindsOfPackage
 GET        /document-types                                    controllers.ReferenceDataController.documentTypes
+
+GET        /transport-modes                                   controllers.TransportModeController.transportModes
+GET        /transport-mode/:code                              controllers.TransportModeController.getTransportMode(code)
