@@ -28,7 +28,6 @@ class TransportModeService @Inject()(override val env: Environment, config: Reso
     getData[TransportMode](config.transportModes)
   }
 
-  def getTransportModeByCode(code: String): Option[TransportMode] = {
+  def getTransportModeByCode(code: String): Option[TransportMode] =
     getData[TransportMode](config.transportModes).find(_.code == code)
-  }
 }

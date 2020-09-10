@@ -28,8 +28,8 @@ class TransportModeServiceSpec extends SpecBase with MustMatchers {
 
   "TransportModeService" - {
     "must return transport modes" in {
-      service.transportModes.head mustBe transportMode
-      service.transportModes.last mustBe transportMode1
+      service.transportModes.headOption.value mustBe transportMode
+      service.transportModes.lastOption.value mustBe transportMode1
     }
 
     "getTransportMode" - {
