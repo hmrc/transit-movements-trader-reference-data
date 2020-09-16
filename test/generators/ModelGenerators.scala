@@ -33,6 +33,14 @@ trait ModelGenerators {
       } yield CustomsOffice(id, name, countryId, telephone, roles)
     }
 
+  implicit lazy val arbitraryOfficeOfTransit: Arbitrary[OfficeOfTransit] =
+    Arbitrary {
+      for {
+        value <- Gen.alphaNumStr
+        text  <- Gen.alphaNumStr
+      } yield OfficeOfTransit(value, text)
+    }
+
   implicit lazy val arbitraryCountry: Arbitrary[Country] =
     Arbitrary {
       for {

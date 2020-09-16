@@ -43,6 +43,6 @@ class ResourceConfig @Inject()(config: Configuration) {
   val transportModes: String =
     config.get[String]("resourceFiles.transportModes")
 
-  val transitOffices: String =
-    config.get[String]("resourceFiles.transitOffices")
+  val officeOfTransit: String =
+    config.get[String]("resourceFiles.officesOfTransit")
 }
