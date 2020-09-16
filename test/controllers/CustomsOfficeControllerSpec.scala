@@ -111,7 +111,7 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
       contentAsJson(result) mustBe Json.toJson(customsOffices)
     }
 
-    "must return return customs offices of the input country" in {
+    "must return customs offices of the input country" in {
 
       when(mockCustomsOfficesService.getCustomsOfficesOfTheCountry(any())).thenReturn(customsOffices)
 

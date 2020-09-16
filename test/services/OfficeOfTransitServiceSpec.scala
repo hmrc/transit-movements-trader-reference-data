@@ -23,7 +23,7 @@ import org.scalatest.MustMatchers
 class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
 
   val officeValue = "AD000001"
-  val officeText = "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA (AD000001)"
+  val officeText  = "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA (AD000001)"
 
   val officeOfTransit1: OfficeOfTransit =
     OfficeOfTransit(officeValue, officeText)
@@ -61,7 +61,7 @@ class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
 
     "must return None for an invalid office text" in {
 
-      val service = app.injector.instanceOf[OfficeOfTransitService]
+      val service     = app.injector.instanceOf[OfficeOfTransitService]
       val invalidText = "frank"
 
       service.getOfficesOfTransitByText(invalidText) mustBe None

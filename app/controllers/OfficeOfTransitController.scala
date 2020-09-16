@@ -17,12 +17,35 @@
 package controllers
 
 import javax.inject.Inject
+import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
+import services.OfficeOfTransitService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class OfficeOfTransitController @Inject()(cc: ControllerComponents) extends BackendController(cc) {
+class OfficeOfTransitController @Inject()(officeOfTransitService: OfficeOfTransitService, cc: ControllerComponents) extends BackendController(cc) {
 
-  def transitOffices(): Action[AnyContent] = ???
+  def officesOfTransit(): Action[AnyContent] = Action {
+
+    Ok(Json.toJson(officeOfTransitService.officesOfTransit))
+  }
+
+  def getOfficeOfTransitByText(text: String): Action[AnyContent] = Action {
+
+    Ok(Json.toJson(officeOfTransitService.getOfficesOfTransitByText(text)))
+  }
+
+  def getOfficeOfTransit(value: String): Action[AnyContent] = Action {
+
+    officeOfTransitService
+      .getOfficeOfTransit(value)
+      .map {
+        officesOfTransit =>
+          Ok(Json.toJson(officesOfTransit))
+      }
+      .getOrElse {
+        NotFound
+      }
+  }
 }
