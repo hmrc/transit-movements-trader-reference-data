@@ -13,3 +13,6 @@ GET        /document-types                                    controllers.Refere
 
 GET        /transport-modes                                   controllers.TransportModeController.transportModes
 GET        /transport-mode/:code                              controllers.TransportModeController.getTransportMode(code)
+
+GET        /office-transit                                    controllers.OfficeOfTransitController.officesOfTransit
+GET        /office-transit/:id                                controllers.OfficeOfTransitController.getOfficeOfTransit(id)

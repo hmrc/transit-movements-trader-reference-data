@@ -26,7 +26,6 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.Application
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
@@ -112,7 +111,7 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
       contentAsJson(result) mustBe Json.toJson(customsOffices)
     }
 
-    "must return return customs offices of the input country" in {
+    "must return customs offices of the input country" in {
 
       when(mockCustomsOfficesService.getCustomsOfficesOfTheCountry(any())).thenReturn(customsOffices)
 
