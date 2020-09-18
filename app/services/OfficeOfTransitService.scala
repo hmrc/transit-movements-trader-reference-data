@@ -24,7 +24,7 @@ import play.api.Environment
 class OfficeOfTransitService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val officesOfTransit: Seq[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.name)
+    getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.id)
 
   def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
     getData[OfficeOfTransit](config.officeOfTransit).find(_.id == officeId)
