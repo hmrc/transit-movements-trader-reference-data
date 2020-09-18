@@ -65,17 +65,16 @@ class OfficeOfTransitSpec extends FreeSpec with ScalaCheckPropertyChecks with Mo
   }
 
   def expectedOfficesOfTransitJson(officeOfTransit: OfficeOfTransit = officesOfTransit): JsValue = Json.obj(
-    "value"    -> officeOfTransit.value,
-    "text"     -> officeOfTransit.text,
-    "selected" -> officeOfTransit.selected
+    "id"   -> officeOfTransit.id,
+    "name" -> officeOfTransit.name
   )
 
   def validOfficeOfTransitsJson(office: OfficeOfTransit): JsValue =
     Json.parse(s"""
                   |{
-                  |  "value": "${office.value}",
-                  |  "text": "${office.text}",
-                  |  "selected": ${JsBoolean(office.selected)}
+                  |  "ID":"${office.id}",
+                  |  "NAME":"${office.name}"
                   |  }
                   |""".stripMargin)
+
 }

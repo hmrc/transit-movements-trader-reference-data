@@ -27,21 +27,21 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.guice.GuiceApplicationBuilder
-import services.OfficeOfTransitService
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.OfficeOfTransitService
 
 import scala.concurrent.Future
 
 class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach with BeforeAndAfterAll {
 
-  val officeValue = "AD000001"
+  val officeId = "AD000001"
 
   private val officesOfTransit = Seq(
-    OfficeOfTransit(officeValue, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA (AD000001)"),
+    OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA (AD000001)"),
     OfficeOfTransit("AD000002", "Central Community Transit Office")
   )
 
@@ -59,13 +59,13 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
 
     "must return ok and fetch some offices of transit" in {
 
-      when(mockOfficeOfTransitService.getOfficeOfTransit(eqTo(officeValue))).thenReturn(Some(officesOfTransit.head))
+      when(mockOfficeOfTransitService.getOfficeOfTransit(eqTo(officeId))).thenReturn(Some(officesOfTransit.head))
 
       lazy val app = application.build()
 
       val officeOfTransit = officesOfTransit.head
 
-      val request = FakeRequest(GET, routes.OfficeOfTransitController.getOfficeOfTransit(officeValue).url)
+      val request = FakeRequest(GET, routes.OfficeOfTransitController.getOfficeOfTransit(officeId).url)
 
       val result: Future[Result] = route(app, request).value
 

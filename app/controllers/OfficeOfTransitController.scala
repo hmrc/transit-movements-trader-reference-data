@@ -31,15 +31,10 @@ class OfficeOfTransitController @Inject()(officeOfTransitService: OfficeOfTransi
     Ok(Json.toJson(officeOfTransitService.officesOfTransit))
   }
 
-  def getOfficeOfTransitByText(text: String): Action[AnyContent] = Action {
-
-    Ok(Json.toJson(officeOfTransitService.getOfficesOfTransitByText(text)))
-  }
-
-  def getOfficeOfTransit(value: String): Action[AnyContent] = Action {
+  def getOfficeOfTransit(id: String): Action[AnyContent] = Action {
 
     officeOfTransitService
-      .getOfficeOfTransit(value)
+      .getOfficeOfTransit(id)
       .map {
         officesOfTransit =>
           Ok(Json.toJson(officesOfTransit))

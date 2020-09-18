@@ -22,14 +22,13 @@ import org.scalatest.MustMatchers
 
 class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
 
-  val officeValue = "AD000001"
-  val officeText  = "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA (AD000001)"
+  val officeId = "AD000001"
 
   val officeOfTransit1: OfficeOfTransit =
-    OfficeOfTransit(officeValue, officeText)
+    OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA")
 
   val officeOfTransit2: OfficeOfTransit =
-    OfficeOfTransit("TR590100", "TEKİRDAĞ, TEKİRDAĞ GÜMRÜK MÜDÜRLÜĞÜ (TR590100)")
+    OfficeOfTransit("DE006302", "Heiligenhafen, Heiligenhafen")
 
   "must return offices of transit list" in {
     val service = app.injector.instanceOf[OfficeOfTransitService]
@@ -40,10 +39,10 @@ class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
 
   "get office of transit" - {
 
-    "must return some office of transit for a valid office value" in {
+    "must return some office of transit for a valid office id" in {
       val service = app.injector.instanceOf[OfficeOfTransitService]
 
-      service.getOfficeOfTransit(officeValue).value mustBe officeOfTransit1
+      service.getOfficeOfTransit(officeId).value mustBe officeOfTransit1
     }
 
     "must return None for an invalid office value" in {
@@ -53,19 +52,6 @@ class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
       service.getOfficeOfTransit(invalidOfficeValue) mustBe None
     }
 
-    "must return some office of transit for a valid text" in {
-      val service = app.injector.instanceOf[OfficeOfTransitService]
-
-      service.getOfficesOfTransitByText(officeText).value mustBe officeOfTransit1
-    }
-
-    "must return None for an invalid office text" in {
-
-      val service     = app.injector.instanceOf[OfficeOfTransitService]
-      val invalidText = "frank"
-
-      service.getOfficesOfTransitByText(invalidText) mustBe None
-    }
   }
 
 }

@@ -24,12 +24,9 @@ import play.api.Environment
 class OfficeOfTransitService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val officesOfTransit: Seq[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.value)
+    getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.id)
 
-  def getOfficeOfTransit(officeValue: String): Option[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit).find(_.value == officeValue)
-
-  def getOfficesOfTransitByText(officeOfTransitText: String): Option[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit).find(_.text == officeOfTransitText)
+  def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
+    getData[OfficeOfTransit](config.officeOfTransit).find(_.id == officeId)
 
 }

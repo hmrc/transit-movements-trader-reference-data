@@ -22,14 +22,13 @@ import play.api.libs.json.Reads
 import play.api.libs.json.Writes
 import play.api.libs.json.__
 
-case class OfficeOfTransit(value: String, text: String, selected: Boolean = false)
+case class OfficeOfTransit(id: String, name: String)
 
 object OfficeOfTransit {
 
   implicit def reads: Reads[OfficeOfTransit] =
-    ((__ \ "value").read[String] and
-      (__ \ "text").read[String] and
-      (__ \ "selected").read[Boolean])(OfficeOfTransit.apply _)
+    ((__ \ "ID").read[String] and
+      (__ \ "NAME").read[String])(OfficeOfTransit.apply _)
 
   implicit def writes: Writes[OfficeOfTransit] = Json.writes[OfficeOfTransit]
 }
