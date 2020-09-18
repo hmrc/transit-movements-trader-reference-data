@@ -36,9 +36,9 @@ trait ModelGenerators {
   implicit lazy val arbitraryOfficeOfTransit: Arbitrary[OfficeOfTransit] =
     Arbitrary {
       for {
-        value <- Gen.alphaNumStr
-        text  <- Gen.alphaNumStr
-      } yield OfficeOfTransit(value, text)
+        id   <- Gen.alphaNumStr
+        name <- Gen.alphaNumStr
+      } yield OfficeOfTransit(id, name)
     }
 
   implicit lazy val arbitraryCountry: Arbitrary[Country] =
