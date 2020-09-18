@@ -22,13 +22,13 @@ import org.scalatest.MustMatchers
 
 class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
 
-  val officeId = "AD000001"
+  val officeId = "CH001631"
 
   val officeOfTransit1: OfficeOfTransit =
-    OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA")
+    OfficeOfTransit("CH001631", "AARAU, AARAU")
 
   val officeOfTransit2: OfficeOfTransit =
-    OfficeOfTransit("DE006302", "Heiligenhafen, Heiligenhafen")
+    OfficeOfTransit("CZ630203", "Žďár nad Sázavou, Celní, Žďár nad Sázavou")
 
   "must return offices of transit list" in {
     val service = app.injector.instanceOf[OfficeOfTransitService]

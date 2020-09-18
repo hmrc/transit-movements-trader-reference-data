@@ -26,7 +26,7 @@ import play.api.libs.json._
 
 class OfficeOfTransitSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
 
-  private val officesOfTransit = OfficeOfTransit("DE009583", "Stuttgart, Stuttgart-Hauptbahnhof (DE009583)")
+  private val officesOfTransit = OfficeOfTransit("DE009583", "Stuttgart, Stuttgart-Hauptbahnhof")
 
   "Transit Office model" - {
 

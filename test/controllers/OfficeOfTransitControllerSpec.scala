@@ -41,7 +41,7 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
   val officeId = "AD000001"
 
   private val officesOfTransit = Seq(
-    OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA (AD000001)"),
+    OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA"),
     OfficeOfTransit("AD000002", "Central Community Transit Office")
   )
 
