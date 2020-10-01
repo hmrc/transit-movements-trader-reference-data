@@ -10,24 +10,14 @@
     "description":"Andorra"
   },
   {
-    "code":"AE",
-    "state":"valid",
-    "description":"United Arab Emirates"
+    "code": "BE",
+    "state": "valid",
+    "description": "Belgium"
   },
   {
-    "code":"GD",
-    "state":"valid",
-    "description":"Grenada"
-  },
-  {
-    "code":"GE",
-    "state":"valid",
-    "description":"Georgia"
-  },
-  {
-    "code":"GF",
-    "state":"valid",
-    "description":"French Guyana"
+    "code": "FR",
+    "state": "valid",
+    "description": "France"
   },
   {
     "code":"GG",
@@ -35,23 +25,8 @@
     "description":"Guernsey"
   },
   {
-    "code":"GH",
-    "state":"valid",
-    "description":"Ghana"
-  },
-  {
-    "code":"GI",
-    "state":"valid",
-    "description":"Gibraltar"
-  },
-  {
-    "code":"GL",
-    "state":"valid",
-    "description":"Greenland"
-  },
-  {
-    "code":"ZW",
-    "state":"valid",
-    "description":"Zimbabwe"
+    "code": "IT",
+    "state": "valid",
+    "description": "Italy"
   }
 ]
