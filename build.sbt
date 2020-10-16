@@ -19,6 +19,7 @@ lazy val microservice = Project(appName, file("."))
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     scalafmtOnCompile in ThisBuild := true
   )
+  .settings(scalaVersion := "2.12.12")
   .settings(publishingSettings: _*)
   .configs(IntegrationTest)
   .settings(inConfig(Test)(testSettings): _*)
