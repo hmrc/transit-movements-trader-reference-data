@@ -1,0 +1,92 @@
+[
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T1",
+    "description": "Document T1"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2F",
+    "description": "Internal Community transit Declaration"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "CO",
+    "description": "SAD - Community goods subject"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "IM",
+    "description": "Single Administrative Document"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "EU",
+    "description": "Single Administrative Document"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "EX",
+    "description": "Single Administrative Document"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2",
+    "description": "T2"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2ATA",
+    "description": "T2ATA"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2CIM",
+    "description": "T2CIM"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2L",
+    "description": "T2L"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-07-01",
+    "code": "T2LF",
+    "description": "T2LF"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2SM",
+    "description": "T2SM"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "T2TIR",
+    "description": "T2TIR"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "Test",
+    "description": "Test Description"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "Test2",
+    "description": "Test2 Description"
+  }
+]

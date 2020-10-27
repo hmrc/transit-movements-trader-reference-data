@@ -45,4 +45,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val officeOfTransit: String =
     config.get[String]("resourceFiles.officesOfTransit")
+
+  val previousDocumentTypes: String =
+    config.get[String]("resourceFiles.previousDocumentTypes")
 }
