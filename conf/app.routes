@@ -16,3 +16,6 @@ GET        /transport-mode/:code                              controllers.Transp
 
 GET        /office-transit                                    controllers.OfficeOfTransitController.officesOfTransit
 GET        /office-transit/:id                                controllers.OfficeOfTransitController.getOfficeOfTransit(id)
+
+GET        /previous-document-type                            controllers.PreviousDocumentTypeController.previousDocumentTypes
+GET        /previous-document-type/:code                      controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
