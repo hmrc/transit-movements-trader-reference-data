@@ -28,7 +28,8 @@ class ReferenceDataController @Inject()(
   cc: ControllerComponents,
   additionalInformationService: AdditionalInformationService,
   kindOfPackagesService: KindOfPackageService,
-  documentTypeService: DocumentTypeService
+  documentTypeService: DocumentTypeService,
+  specialMentionService: SpecialMentionService
 ) extends BackendController(cc) {
 
   def additionalInformation(): Action[AnyContent] = Action {
@@ -41,5 +42,9 @@ class ReferenceDataController @Inject()(
 
   def documentTypes(): Action[AnyContent] = Action {
     Ok(Json.toJson(documentTypeService.documentTypes))
+  }
+
+  def specialMention(): Action[AnyContent] = Action {
+    Ok(Json.toJson(specialMentionService.specialMention))
   }
 }

@@ -17,10 +17,7 @@
 package controllers
 
 import base.SpecBase
-import models.AdditionalInformation
-import models.Country
-import models.DocumentType
-import models.KindOfPackage
+import models._
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -40,20 +37,25 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val documentTypes = Seq(DocumentType("code", "description", transportDocument = true))
 
+  private val specialMention = Seq(SpecialMention("code", "description"))
+
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
   private val documentTypeService          = mock[DocumentTypeService]
+  private val specialMentionService        = mock[SpecialMentionService]
 
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
   when(documentTypeService.documentTypes).thenReturn(documentTypes)
+  when(specialMentionService.specialMention).thenReturn(specialMention)
 
   private def appBuilder =
     applicationBuilder()
       .overrides(
         bind[AdditionalInformationService].toInstance(additionalInformationService),
         bind[KindOfPackageService].toInstance(kindOfPackageService),
-        bind[DocumentTypeService].toInstance(documentTypeService)
+        bind[DocumentTypeService].toInstance(documentTypeService),
+        bind[SpecialMentionService].toInstance(specialMentionService)
       )
 
   "ReferenceDataController" - {
@@ -100,6 +102,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(documentTypes)
+      app.stop()
+    }
+
+    "must fetch special mention" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.specialMention().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(specialMention)
       app.stop()
     }
   }

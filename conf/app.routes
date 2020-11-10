@@ -19,3 +19,5 @@ GET        /office-transit/:id                                controllers.Office
 
 GET        /previous-document-type                            controllers.PreviousDocumentTypeController.previousDocumentTypes
 GET        /previous-document-type/:code                      controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
+
+GET        /special-mention                                   controllers.ReferenceDataController.specialMention
