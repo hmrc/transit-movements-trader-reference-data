@@ -19,13 +19,19 @@ package controllers
 import base.SpecBase
 import models.PreviousDocumentType
 import org.mockito.Matchers.any
-import org.mockito.Mockito.{reset, when}
-import org.scalatest.{BeforeAndAfterEach, MustMatchers}
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.when
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.MustMatchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, contentAsJson, route, status, _}
+import play.api.test.Helpers.GET
+import play.api.test.Helpers.contentAsJson
+import play.api.test.Helpers.route
+import play.api.test.Helpers.status
+import play.api.test.Helpers._
 import services.PreviousDocumentTypeService
 
 class PreviousDocumentTypeControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach {

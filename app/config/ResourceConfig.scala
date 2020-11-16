@@ -48,4 +48,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val previousDocumentTypes: String =
     config.get[String]("resourceFiles.previousDocumentTypes")
+
+  val specialMention: String =
+    config.get[String]("resourceFiles.specialMention")
 }
