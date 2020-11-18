@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.Country
+import javax.inject.Inject
+import play.api.Environment
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class CountryService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+
+  val countries: Seq[Country] =
+    getData[Country](config.countryCodes).sortBy(_.description)
+
+  def getCountryByCode(code: String): Option[Country] =
+    getData[Country](config.countryCodes).find(_.code == code)
 }

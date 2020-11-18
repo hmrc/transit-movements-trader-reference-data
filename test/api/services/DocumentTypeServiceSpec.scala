@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.DocumentType
+import base.SpecBase
+import org.scalatest.MustMatchers
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class DocumentTypeServiceSpec extends SpecBase with MustMatchers {
+
+  "must return document types" in {
+    val service = app.injector.instanceOf[DocumentTypeService]
+
+    val expectedFirstItem = DocumentType("18", "Movement certificate A.TR.1", transportDocument = false)
+
+    service.documentTypes.head mustEqual expectedFirstItem
+  }
 }

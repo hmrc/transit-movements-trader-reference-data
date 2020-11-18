@@ -14,11 +14,26 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import play.api.Environment
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+import scala.io.Source
+
+trait ResourceService {
+
+  val env: Environment
+
+  protected def getData[A](dataFile: String)(implicit ev: Reads[A]): Seq[A] =
+    env
+      .resourceAsStream(dataFile)
+      .map {
+        inputStream =>
+          val rawData = Source.fromInputStream(inputStream).mkString
+
+          Json.parse(rawData).as[Seq[A]]
+      }
+      .getOrElse(throw new Exception(s"Could not find file $dataFile"))
 }

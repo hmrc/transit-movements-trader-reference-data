@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package config
+package api.models
 
-import com.google.inject.AbstractModule
+import play.api.libs.json.Json
+import play.api.libs.json.Format
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+case class Country(state: String, code: String, description: String)
+
+object Country {
+
+  implicit val format: Format[Country] = Json.format[Country]
 }

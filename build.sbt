@@ -5,6 +5,8 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "transit-movements-trader-reference-data"
 
+val silencerVersion = "1.7.0"
+
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(
     play.sbt.PlayScala,
@@ -27,6 +29,18 @@ lazy val microservice = Project(appName, file("."))
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(PlayKeys.playDefaultPort := 9482)
   .settings(scoverageSettings: _*)
+  .settings(
+    // ***************
+    // Use the silencer plugin to suppress warnings
+    scalacOptions += "-P:silencer:pathFilters=routes",
+    libraryDependencies ++= Seq(
+      compilerPlugin(
+        "com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full
+      ),
+      "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
+    )
+    // ***************
+  )
 
 lazy val scoverageSettings = {
   Seq(

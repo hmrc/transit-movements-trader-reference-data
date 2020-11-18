@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.Country
+import base.SpecBase
+import org.scalatest.MustMatchers
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class TransitCountryServiceSpec extends SpecBase with MustMatchers {
+
+  "must return transit countries" in {
+    val service = app.injector.instanceOf[TransitCountryService]
+
+    val firstCountryCode = Country("valid", "AD", "Andorra")
+    val lastCountryCode  = Country("valid", "GB", "United Kingdom")
+
+    service.transitCountryCodes.head mustBe firstCountryCode
+    service.transitCountryCodes.last mustBe lastCountryCode
+  }
 }

@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package config
+package api.models
 
-import com.google.inject.AbstractModule
+import play.api.libs.json.Format
+import play.api.libs.json.Json
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+final case class DocumentType(code: String, description: String, transportDocument: Boolean)
+
+object DocumentType {
+
+  implicit lazy val format: Format[DocumentType] =
+    Json.format[DocumentType]
 }
