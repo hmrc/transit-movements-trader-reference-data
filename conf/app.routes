@@ -21,3 +21,5 @@ GET        /previous-document-type                            api.controllers.Pr
 GET        /previous-document-type/:code                      api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
 GET        /special-mention                                   api.controllers.ReferenceDataController.specialMention
+
+GET        /method-of-payment                                 api.controllers.ReferenceDataController.methodOfPayment
