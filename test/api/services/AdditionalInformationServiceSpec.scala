@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.AdditionalInformation
+import base.SpecBase
+import org.scalatest.MustMatchers
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class AdditionalInformationServiceSpec extends SpecBase with MustMatchers {
+
+  "must return additional information" in {
+    val service = app.injector.instanceOf[AdditionalInformationService]
+
+    val expectedFirstItem = AdditionalInformation("10600", "Negotiable Bill of lading 'to order blank endorsed'")
+
+    service.additionalInformation.head mustEqual expectedFirstItem
+  }
 }

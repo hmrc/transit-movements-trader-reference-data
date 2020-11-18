@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-package config
+package api.models
 
-import com.google.inject.AbstractModule
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
+import play.api.libs.json.Writes
+import play.api.libs.json.__
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+case class OfficeOfTransit(id: String, name: String)
+
+object OfficeOfTransit {
+
+  implicit def reads: Reads[OfficeOfTransit] =
+    ((__ \ "ID").read[String] and
+      (__ \ "NAME").read[String])(OfficeOfTransit.apply _)
+
+  implicit def writes: Writes[OfficeOfTransit] = Json.writes[OfficeOfTransit]
 }

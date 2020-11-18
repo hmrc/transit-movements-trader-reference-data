@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.OfficeOfTransit
+import javax.inject.Inject
+import play.api.Environment
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class OfficeOfTransitService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+
+  val officesOfTransit: Seq[OfficeOfTransit] =
+    getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.id)
+
+  def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
+    getData[OfficeOfTransit](config.officeOfTransit).find(_.id == officeId)
+
 }

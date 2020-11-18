@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.DocumentType
+import javax.inject.Inject
+import play.api.Environment
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class DocumentTypeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+
+  val documentTypes: Seq[DocumentType] =
+    getData[DocumentType](config.documentTypes)
 }
