@@ -21,3 +21,4 @@ GET        /previous-document-type                            controllers.Previo
 GET        /previous-document-type/:code                      controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
 GET        /special-mention                                   controllers.ReferenceDataController.specialMention
+GET        /method-of-payment                                  controllers.ReferenceDataController.methodOfPayment

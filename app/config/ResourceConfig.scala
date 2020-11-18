@@ -51,4 +51,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val specialMention: String =
     config.get[String]("resourceFiles.specialMention")
+
+  val methodOfPayment: String =
+    config.get[String]("resourceFiles.methodOfPayment")
 }

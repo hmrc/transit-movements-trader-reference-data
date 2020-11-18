@@ -39,15 +39,19 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val specialMention = Seq(SpecialMention("code", "description"))
 
+  private val methodOfPayment = Seq(MethodOfPayment("code", "description"))
+
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
   private val documentTypeService          = mock[DocumentTypeService]
   private val specialMentionService        = mock[SpecialMentionService]
+  private val methodOfPaymentService       = mock[MethodOfPaymentService]
 
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
   when(documentTypeService.documentTypes).thenReturn(documentTypes)
   when(specialMentionService.specialMention).thenReturn(specialMention)
+  when(methodOfPaymentService.methodOfPayment).thenReturn(methodOfPayment)
 
   private def appBuilder =
     applicationBuilder()
@@ -55,7 +59,8 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
         bind[AdditionalInformationService].toInstance(additionalInformationService),
         bind[KindOfPackageService].toInstance(kindOfPackageService),
         bind[DocumentTypeService].toInstance(documentTypeService),
-        bind[SpecialMentionService].toInstance(specialMentionService)
+        bind[SpecialMentionService].toInstance(specialMentionService),
+        bind[MethodOfPaymentService].toInstance(methodOfPaymentService)
       )
 
   "ReferenceDataController" - {
@@ -117,6 +122,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(specialMention)
+      app.stop()
+    }
+
+    "must fetch method of payment" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.methodOfPayment().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(methodOfPayment)
       app.stop()
     }
   }
