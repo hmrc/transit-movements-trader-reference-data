@@ -20,6 +20,7 @@ import api.models.AdditionalInformation
 import api.models.DocumentType
 import api.models.KindOfPackage
 import api.models.SpecialMention
+import api.models.MethodOfPayment
 import base.SpecBase
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers

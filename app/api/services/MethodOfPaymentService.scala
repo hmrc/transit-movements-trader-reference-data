@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package services
+package api.services
 
-import config.ResourceConfig
+import api.models.MethodOfPayment
 import javax.inject.Inject
-import models.MethodOfPayment
 import play.api.Environment
 
 class MethodOfPaymentService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {

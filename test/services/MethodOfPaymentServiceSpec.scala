@@ -16,9 +16,9 @@
 
 package services
 
+import api.models.MethodOfPayment
+import api.services.MethodOfPaymentService
 import base.SpecBase
-import models.MethodOfPayment
-import models.SpecialMention
 import org.scalatest.MustMatchers
 
 class MethodOfPaymentServiceSpec extends SpecBase with MustMatchers {
