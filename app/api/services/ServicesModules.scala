@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
 import com.google.inject.AbstractModule
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class ServicesModules extends AbstractModule {
+  override def configure(): Unit = {
+    bind(classOf[ResourceConfig]).asEagerSingleton()
+    bind(classOf[CountryService]).asEagerSingleton()
+    bind(classOf[CustomsOfficesService]).asEagerSingleton()
+    bind(classOf[TransitCountryService]).asEagerSingleton()
+  }
 }

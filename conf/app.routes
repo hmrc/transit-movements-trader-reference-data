@@ -1,23 +1,23 @@
 # microservice specific routes
-GET        /customs-offices                                   controllers.CustomsOfficeController.customsOffices
-GET        /customs-offices/:code                             controllers.CustomsOfficeController.customsOfficesOfTheCountry(code)
-GET        /customs-office/:id                                controllers.CustomsOfficeController.getCustomsOffice(id)
+GET        /customs-offices                                   api.controllers.CustomsOfficeController.customsOffices
+GET        /customs-offices/:code                             api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code)
+GET        /customs-office/:id                                api.controllers.CustomsOfficeController.getCustomsOffice(id)
 
-GET        /countries/:code                                   controllers.CountryController.getCountry(code)
-GET        /countries-full-list                               controllers.CountryController.countriesFullList
-GET        /transit-countries                                 controllers.CountryController.transitCountries
+GET        /countries/:code                                   api.controllers.CountryController.getCountry(code)
+GET        /countries-full-list                               api.controllers.CountryController.countriesFullList
+GET        /transit-countries                                 api.controllers.CountryController.transitCountries
 
-GET        /additional-information                            controllers.ReferenceDataController.additionalInformation
-GET        /kinds-of-package                                  controllers.ReferenceDataController.kindsOfPackage
-GET        /document-types                                    controllers.ReferenceDataController.documentTypes
+GET        /additional-information                            api.controllers.ReferenceDataController.additionalInformation
+GET        /kinds-of-package                                  api.controllers.ReferenceDataController.kindsOfPackage
+GET        /document-types                                    api.controllers.ReferenceDataController.documentTypes
 
-GET        /transport-modes                                   controllers.TransportModeController.transportModes
-GET        /transport-mode/:code                              controllers.TransportModeController.getTransportMode(code)
+GET        /transport-modes                                   api.controllers.TransportModeController.transportModes
+GET        /transport-mode/:code                              api.controllers.TransportModeController.getTransportMode(code)
 
-GET        /office-transit                                    controllers.OfficeOfTransitController.officesOfTransit
-GET        /office-transit/:id                                controllers.OfficeOfTransitController.getOfficeOfTransit(id)
+GET        /office-transit                                    api.controllers.OfficeOfTransitController.officesOfTransit
+GET        /office-transit/:id                                api.controllers.OfficeOfTransitController.getOfficeOfTransit(id)
 
-GET        /previous-document-type                            controllers.PreviousDocumentTypeController.previousDocumentTypes
-GET        /previous-document-type/:code                      controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
+GET        /previous-document-type                            api.controllers.PreviousDocumentTypeController.previousDocumentTypes
+GET        /previous-document-type/:code                      api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
-GET        /special-mention                                   controllers.ReferenceDataController.specialMention
+GET        /special-mention                                   api.controllers.ReferenceDataController.specialMention

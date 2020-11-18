@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package config
+package api.models
 
-import com.google.inject.AbstractModule
+import play.api.libs.json.Json
+import play.api.libs.json.OFormat
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+case class TransportMode(state: State, activeFrom: String, code: String, description: String)
+
+object TransportMode {
+  implicit val format: OFormat[TransportMode] = Json.format[TransportMode]
 }

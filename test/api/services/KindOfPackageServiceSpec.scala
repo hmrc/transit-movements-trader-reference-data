@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.KindOfPackage
+import base.SpecBase
+import org.scalatest.MustMatchers
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class KindOfPackageServiceSpec extends SpecBase with MustMatchers {
+
+  "must return kinds of package" in {
+    val service = app.injector.instanceOf[KindOfPackageService]
+
+    val expectedFirstValue = KindOfPackage("1A", "Drum, steel")
+
+    service.kindsOfPackage.head mustEqual expectedFirstValue
+  }
 }

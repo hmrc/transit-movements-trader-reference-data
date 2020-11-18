@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package config
+package api.services
 
-import com.google.inject.AbstractModule
+import api.models.SpecialMention
+import base.SpecBase
+import org.scalatest.MustMatchers
 
-class Modules extends AbstractModule {
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+class SpecialMentionServiceSpec extends SpecBase with MustMatchers {
+
+  "must return special mention" in {
+    val service = app.injector.instanceOf[SpecialMentionService]
+
+    val expectedFirstItem = SpecialMention("10600", "Negotiable Bill of lading 'to order blank endorsed'")
+
+    service.specialMention.head mustEqual expectedFirstItem
+  }
 }
