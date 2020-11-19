@@ -17,10 +17,11 @@
 package api.controllers
 
 import api.models.AdditionalInformation
+import api.models.DangerousGoodsCode
 import api.models.DocumentType
 import api.models.KindOfPackage
-import api.models.SpecialMention
 import api.models.MethodOfPayment
+import api.models.SpecialMention
 import base.SpecBase
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers
@@ -45,17 +46,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val methodOfPayment = Seq(MethodOfPayment("code", "description"))
 
+  private val dangerousGoodsCode = Seq(DangerousGoodsCode("code", "description"))
+
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
   private val documentTypeService          = mock[DocumentTypeService]
   private val specialMentionService        = mock[SpecialMentionService]
   private val methodOfPaymentService       = mock[MethodOfPaymentService]
+  private val dangerousGoodsCodeService    = mock[DangerousGoodsCodeService]
 
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
   when(documentTypeService.documentTypes).thenReturn(documentTypes)
   when(specialMentionService.specialMention).thenReturn(specialMention)
   when(methodOfPaymentService.methodOfPayment).thenReturn(methodOfPayment)
+  when(dangerousGoodsCodeService.dangerousGoodsCode).thenReturn(dangerousGoodsCode)
 
   private def appBuilder =
     applicationBuilder()
@@ -64,7 +69,8 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
         bind[KindOfPackageService].toInstance(kindOfPackageService),
         bind[DocumentTypeService].toInstance(documentTypeService),
         bind[SpecialMentionService].toInstance(specialMentionService),
-        bind[MethodOfPaymentService].toInstance(methodOfPaymentService)
+        bind[MethodOfPaymentService].toInstance(methodOfPaymentService),
+        bind[DangerousGoodsCodeService].toInstance(dangerousGoodsCodeService)
       )
 
   "ReferenceDataController" - {
@@ -141,6 +147,21 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(methodOfPayment)
+      app.stop()
+    }
+
+    "must fetch dangerous goods code" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.dangerousGoodsCode().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(dangerousGoodsCode)
       app.stop()
     }
   }

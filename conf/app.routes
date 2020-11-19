@@ -23,3 +23,5 @@ GET        /previous-document-type/:code                      api.controllers.Pr
 GET        /special-mention                                   api.controllers.ReferenceDataController.specialMention
 
 GET        /method-of-payment                                 api.controllers.ReferenceDataController.methodOfPayment
+
+GET        /dangerous-goods-code                              api.controllers.ReferenceDataController.dangerousGoodsCode

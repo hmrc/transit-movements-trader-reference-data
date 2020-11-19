@@ -30,7 +30,8 @@ class ReferenceDataController @Inject()(
   kindOfPackagesService: KindOfPackageService,
   documentTypeService: DocumentTypeService,
   specialMentionService: SpecialMentionService,
-  methodOfPaymentService: MethodOfPaymentService
+  methodOfPaymentService: MethodOfPaymentService,
+  dangerousGoodsCodeService: DangerousGoodsCodeService
 ) extends BackendController(cc) {
 
   def additionalInformation(): Action[AnyContent] = Action {
@@ -51,5 +52,9 @@ class ReferenceDataController @Inject()(
 
   def methodOfPayment(): Action[AnyContent] = Action {
     Ok(Json.toJson(methodOfPaymentService.methodOfPayment))
+  }
+
+  def dangerousGoodsCode(): Action[AnyContent] = Action {
+    Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCode))
   }
 }
