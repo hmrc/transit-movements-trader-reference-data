@@ -17,10 +17,11 @@
 package api.controllers
 
 import api.models.AdditionalInformation
+import api.models.DangerousGoodsCode
 import api.models.DocumentType
 import api.models.KindOfPackage
-import api.models.SpecialMention
 import api.models.MethodOfPayment
+import api.models.SpecialMention
 import base.SpecBase
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers
@@ -32,6 +33,7 @@ import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
 import api.services._
+import org.mockito.Matchers.any
 
 class ReferenceDataControllerSpec extends SpecBase with MustMatchers with MockitoSugar {
 
@@ -45,17 +47,23 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val methodOfPayment = Seq(MethodOfPayment("code", "description"))
 
+  private def dangerousGoodsCode = DangerousGoodsCode("code", "description")
+
+  private val dangerousGoodsCodes = Seq(dangerousGoodsCode)
+
   private val additionalInformationService = mock[AdditionalInformationService]
   private val kindOfPackageService         = mock[KindOfPackageService]
   private val documentTypeService          = mock[DocumentTypeService]
   private val specialMentionService        = mock[SpecialMentionService]
   private val methodOfPaymentService       = mock[MethodOfPaymentService]
+  private val dangerousGoodsCodeService    = mock[DangerousGoodsCodeService]
 
   when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
   when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
   when(documentTypeService.documentTypes).thenReturn(documentTypes)
   when(specialMentionService.specialMention).thenReturn(specialMention)
   when(methodOfPaymentService.methodOfPayment).thenReturn(methodOfPayment)
+  when(dangerousGoodsCodeService.dangerousGoodsCodes).thenReturn(dangerousGoodsCodes)
 
   private def appBuilder =
     applicationBuilder()
@@ -64,7 +72,8 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
         bind[KindOfPackageService].toInstance(kindOfPackageService),
         bind[DocumentTypeService].toInstance(documentTypeService),
         bind[SpecialMentionService].toInstance(specialMentionService),
-        bind[MethodOfPaymentService].toInstance(methodOfPaymentService)
+        bind[MethodOfPaymentService].toInstance(methodOfPaymentService),
+        bind[DangerousGoodsCodeService].toInstance(dangerousGoodsCodeService)
       )
 
   "ReferenceDataController" - {
@@ -142,6 +151,68 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(methodOfPayment)
       app.stop()
+    }
+
+    "must fetch dangerous goods code" in {
+
+      lazy val app = appBuilder.build()
+
+      val request = FakeRequest(
+        GET,
+        routes.ReferenceDataController.dangerousGoodsCodes().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(dangerousGoodsCodes)
+      app.stop()
+    }
+
+    "getDangerousGoodsCodeByCode" - {
+      "must dangerous goods code and return Ok" in {
+
+        when(dangerousGoodsCodeService.getDangerousGoodsCodeByCode(any())).thenReturn(Some(dangerousGoodsCode))
+
+        val app = applicationBuilder()
+          .overrides(
+            bind[DangerousGoodsCodeService].toInstance(dangerousGoodsCodeService)
+          )
+          .build()
+
+        val code = "0004"
+
+        val request = FakeRequest(
+          GET,
+          routes.ReferenceDataController.getDangerousGoodsCode(code).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(dangerousGoodsCode)
+        app.stop()
+      }
+
+      "must return NotFound when no dangerous goods code is found" in {
+
+        when(dangerousGoodsCodeService.getDangerousGoodsCodeByCode(any())).thenReturn(None)
+
+        val app = applicationBuilder()
+          .overrides(
+            bind[DangerousGoodsCodeService].toInstance(dangerousGoodsCodeService)
+          )
+          .build()
+
+        val invalidCode = "Invalid"
+
+        val request = FakeRequest(
+          GET,
+          routes.ReferenceDataController.getDangerousGoodsCode(invalidCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
+        app.stop()
+      }
     }
   }
 }

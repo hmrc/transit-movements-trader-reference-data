@@ -53,4 +53,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val methodOfPayment: String =
     config.get[String]("resourceFiles.methodOfPayment")
+
+  val dangerousGoodsCode: String =
+    config.get[String]("resourceFiles.dangerousGoodsCode")
 }

@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package services
+package api.services
 
-import api.models.MethodOfPayment
-import api.services.MethodOfPaymentService
+import api.models.DangerousGoodsCode
 import base.SpecBase
 import org.scalatest.MustMatchers
 
-class MethodOfPaymentServiceSpec extends SpecBase with MustMatchers {
+class DangerousGoodsCodeServiceSpec extends SpecBase with MustMatchers {
 
-  "must return special mention" in {
-    val service = app.injector.instanceOf[MethodOfPaymentService]
+  "must return dangerous goods code" in {
+    val service = app.injector.instanceOf[DangerousGoodsCodeService]
 
-    val expectedFirstItem = MethodOfPayment("A", "Payment in cash")
+    val expectedFirstItem = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")
 
-    service.methodOfPayment.head mustEqual expectedFirstItem
+    service.dangerousGoodsCodes.head mustEqual expectedFirstItem
   }
 }
