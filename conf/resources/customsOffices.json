@@ -1,1546 +1,1606 @@
 [
-      {
-        "CUST_OFF_ID": "GB000001",
-        "CUST_OFF_NAM": "Central Community Transit Office",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich, Essex. FAX 00443000 575993",
-        "CUSTOMS_OFFICE_ROLES": [
-          "AUT",
-          "CAE",
-          "CAU",
-          "CCA",
-          "CND",
-          "DEP",
-          "DES",
-          "ENQ",
-          "EXP",
-          "GUA",
-          "REC",
-          "RSS",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000011",
-        "CUST_OFF_NAM": "Birmingham Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)121 781 7850",
-        "CITY": "BIRMINGHAM",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "GUA",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000014",
-        "CUST_OFF_NAM": "Belfast International Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000029",
-        "CUST_OFF_NAM": "UKBF, Bristol International Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1275 476500 / 6520 / 3121",
-        "CITY": "Bristol",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000033",
-        "CUST_OFF_NAM": "AVONMOUTH 1",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000040",
-        "CUST_OFF_NAM": "Dover (OTS) Freight Clearance",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000041",
-        "CUST_OFF_NAM": "FOLKESTONE",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000043",
-        "CUST_OFF_NAM": "MANSTON AIRPORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000045",
-        "CUST_OFF_NAM": "SHEERNESS",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000047",
-        "CUST_OFF_NAM": "Ramsgate",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 515831",
-        "CITY": "RAMSGATE",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000049",
-        "CUST_OFF_NAM": "NEWPORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000051",
-        "CUST_OFF_NAM": "Felixstowe",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1394 303023 / 24 / 26",
-        "CITY": "FELIXSTOWE",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000052",
-        "CUST_OFF_NAM": "HARWICH",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000053",
-        "CUST_OFF_NAM": "IPSWICH PORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000054",
-        "CUST_OFF_NAM": "GREAT YARMOUTH",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000055",
-        "CUST_OFF_NAM": "KING'S LYNN",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000057",
-        "CUST_OFF_NAM": "Rosyth",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000058",
-        "CUST_OFF_NAM": "NORWICH AIRPORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000059",
-        "CUST_OFF_NAM": "Grangemouth",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000060",
-        "CUST_OFF_NAM": "Dover/Folkestone Eurotunnel Freight",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 515831",
-        "CITY": "DOVER",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000062",
-        "CUST_OFF_NAM": "Scrabster",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000063",
-        "CUST_OFF_NAM": "Scotland Inland Auth. Cee/Cor",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1224 401231",
-        "CITY": "Aberdeen",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000067",
-        "CUST_OFF_NAM": "Scotland Frontier",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)141 847 4855",
-        "CITY": "PAISLEY",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000070",
-        "CUST_OFF_NAM": "Prestwick Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000072",
-        "CUST_OFF_NAM": "Hull",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1482 785861",
-        "CITY": "HULL",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000073",
-        "CUST_OFF_NAM": "GRIMSBY",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000074",
-        "CUST_OFF_NAM": "Immingham",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1469 553 732",
-        "CITY": "IMMINGHAM",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000080",
-        "CUST_OFF_NAM": "Liverpool",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)151 934 1201",
-        "CITY": "LIVERPOOL",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000081",
-        "CUST_OFF_NAM": "UK North Auth Consignor/nees",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0) 3000 565 511",
-        "CITY": "LEEDS",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000084",
-        "CUST_OFF_NAM": "London Heathrow Cargo",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)20 3014 5600 / 5601",
-        "CITY": "HOUNSLOW",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000085",
-        "CUST_OFF_NAM": "London Gatwick Airport Cargo Dist.",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1293 721418",
-        "CITY": "GATWICK AIRPORT",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000087",
-        "CUST_OFF_NAM": "Leeds Bradford Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)113 250 4246",
-        "CITY": "LEEDS",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000091",
-        "CUST_OFF_NAM": "SOUTHEND AIRPORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000093",
-        "CUST_OFF_NAM": "Tilbury",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1375 853228",
-        "CITY": "TILBURY",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000098",
-        "CUST_OFF_NAM": "Newcastle Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000099",
-        "CUST_OFF_NAM": "THAMES EUROPORT (DIFT)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000102",
-        "CUST_OFF_NAM": "Luton Airport FCT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1582 817900",
-        "CITY": "LUTON",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000108",
-        "CUST_OFF_NAM": "FALMOUTH",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000119",
-        "CUST_OFF_NAM": "NORTHOLT AIRPORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000120",
-        "CUST_OFF_NAM": "London Heathrow Airport (Baggage)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)203 014 5600 / 5601",
-        "CITY": "London Heathrow, HOUNSLOW",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000121",
-        "CUST_OFF_NAM": "Stansted Airport FCT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1279 665825",
-        "CITY": "STANSTED",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000122",
-        "CUST_OFF_NAM": "Cardiff International Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1446 711580",
-        "CITY": "BARRY, Nr. Cardiff",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000123",
-        "CUST_OFF_NAM": "SWANSEA",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000124",
-        "CUST_OFF_NAM": "HOLYHEAD",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000125",
-        "CUST_OFF_NAM": "Barry Dock",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000126",
-        "CUST_OFF_NAM": "PEMBROKE DOCK",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000128",
-        "CUST_OFF_NAM": "Edinburgh Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000130",
-        "CUST_OFF_NAM": "London City Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)20 511 5560",
-        "CITY": "London",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000140",
-        "CUST_OFF_NAM": "George Best (Belfast City)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000142",
-        "CUST_OFF_NAM": "Belfast EPU",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 523068",
-        "CITY": "BELFAST",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000149",
-        "CUST_OFF_NAM": "PURFLEET THAMES TERMINAL",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000150",
-        "CUST_OFF_NAM": "Thamesport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000155",
-        "CUST_OFF_NAM": "Reading",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0) 3000 544419",
-        "CITY": "READING",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000170",
-        "CUST_OFF_NAM": "London Gateway Port",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1375 640541",
-        "CITY": "Stanford-le-Hope, Essex",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000191",
-        "CUST_OFF_NAM": "Manchester",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)161 261 5720/1",
-        "CITY": "MANCHESTER AIRPORT",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000218",
-        "CUST_OFF_NAM": "Newcastle-Upon-Tyne",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)191 2144356",
-        "CITY": "Newcastle Apt, Newcastle-Upon-Tyne",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000219",
-        "CUST_OFF_NAM": "Teesport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1642 440111",
-        "CITY": "MIDDLESBROUGH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000244",
-        "CUST_OFF_NAM": "BOSTON",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000245",
-        "CUST_OFF_NAM": "UKBA East Midlands Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1332 442071",
-        "CITY": "Castle Donington, DERBY",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000246",
-        "CUST_OFF_NAM": "UK South Auth Consignor/nees",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0) 3000 564478",
-        "CITY": "NOTTINGHAM",
-        "CUSTOMS_OFFICE_ROLES": [
-          "CCA",
-          "DEP",
-          "DES",
-          "EXP",
-          "EXT",
-          "MCA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000250",
-        "CUST_OFF_NAM": "PLYMOUTH",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000290",
-        "CUST_OFF_NAM": "Southampton",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 3000 568 147",
-        "CITY": "Southampton",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000291",
-        "CUST_OFF_NAM": "Poole Ferry Terminal",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000292",
-        "CUST_OFF_NAM": "Portsmouth",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 594321",
-        "CITY": "PORTSMOUTH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000297",
-        "CUST_OFF_NAM": "EXETER AIRPORT",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000328",
-        "CUST_OFF_NAM": "Cardiff",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)29 2038 6000",
-        "CITY": "CARDIFF",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT",
-          "REG"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000383",
-        "CUST_OFF_NAM": "Salford National Clearance Hub",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000392",
-        "CUST_OFF_NAM": "London South Bank",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)20 8929 6569",
-        "CITY": "LONDON",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000411",
-        "CUST_OFF_NAM": "Aberdeen Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000416",
-        "CUST_OFF_NAM": "PETERHEAD",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000434",
-        "CUST_OFF_NAM": "Aberdeen",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000450",
-        "CUST_OFF_NAM": "Isle of Man Customs & Excise",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1624 648100",
-        "CITY": "DOUGLAS, ISLE OF MAN",
-        "CUSTOMS_OFFICE_ROLES": [
-          "DEP",
-          "DES",
-          "ENT",
-          "EXP",
-          "EXT",
-          "GUA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000461",
-        "CUST_OFF_NAM": "Guernsey Customs & Excise",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1481 741450",
-        "CITY": "St Peter Port, GUERNSEY",
-        "CUSTOMS_OFFICE_ROLES": [
-          "AUT",
-          "CAU",
-          "DEP",
-          "DES",
-          "ENQ",
-          "GUA",
-          "REC",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000465",
-        "CUST_OFF_NAM": "Jersey Customs & Immigration",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1534 448000",
-        "CITY": "JERSEY, CHANNEL ISLANDS",
-        "CUSTOMS_OFFICE_ROLES": [
-          "AUT",
-          "CAU",
-          "DEP",
-          "DES",
-          "GUA",
-          "TRA"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000480",
-        "CUST_OFF_NAM": "Chatham",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000500",
-        "CUST_OFF_NAM": "COVENTRY INTERNATIONAL HUB",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 2476 212856",
-        "CITY": "COVENTRY",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000501",
-        "CUST_OFF_NAM": "HWDC LANGLEY",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 1753 484703",
-        "CITY": "SLOUGH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB000921",
-        "CUST_OFF_NAM": "FORDS JETTY",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB001016",
-        "CUST_OFF_NAM": "LERWICK",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "EXP",
-          "EXT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003010",
-        "CUST_OFF_NAM": "Barrow in Furness",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003020",
-        "CUST_OFF_NAM": "Berwick upon Tweed",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003030",
-        "CUST_OFF_NAM": "Blackpool International Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003040",
-        "CUST_OFF_NAM": "Glasgow Docks",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003050",
-        "CUST_OFF_NAM": "Plymouth Docks",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003060",
-        "CUST_OFF_NAM": "Bournmouth (Hurn) Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003070",
-        "CUST_OFF_NAM": "Brize Norton",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003080",
-        "CUST_OFF_NAM": "Cambridge Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003090",
-        "CUST_OFF_NAM": "Southampton (Eastleigh) Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003100",
-        "CUST_OFF_NAM": "Dundee (Sea)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003110",
-        "CUST_OFF_NAM": "Farnborough Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003120",
-        "CUST_OFF_NAM": "Gloucester (Staverton) Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003130",
-        "CUST_OFF_NAM": "Humberside International Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003140",
-        "CUST_OFF_NAM": "Hartlepool",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003150",
-        "CUST_OFF_NAM": "Inverness",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003160",
-        "CUST_OFF_NAM": "Kemble Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003170",
-        "CUST_OFF_NAM": "Kirkwall (Orkney Islands)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003180",
-        "CUST_OFF_NAM": "Durham Tees Valley (Teeside Apt)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003190",
-        "CUST_OFF_NAM": "Liverpool John Lennon Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003200",
-        "CUST_OFF_NAM": "London Ashford (Lydd) Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003210",
-        "CUST_OFF_NAM": "Londonderry",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003220",
-        "CUST_OFF_NAM": "Manchester Docks",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003230",
-        "CUST_OFF_NAM": "Oxford (Kidlington) Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003240",
-        "CUST_OFF_NAM": "Portree (Isle of Skye)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003250",
-        "CUST_OFF_NAM": "Newhaven",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003260",
-        "CUST_OFF_NAM": "Stornoway (Isle of Lewis)",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT",
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003270",
-        "CUST_OFF_NAM": "Stornoway Airport",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 515 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003280",
-        "CUST_OFF_NAM": "Workington",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB003290",
-        "CUST_OFF_NAM": "BIGGIN HILL",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "ENT"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB004098",
-        "CUST_OFF_NAM": "GLASGOW",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 141 555 3845",
-        "CITY": "GLASGOW",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXC"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005010",
-        "CUST_OFF_NAM": "Appledore",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005020",
-        "CUST_OFF_NAM": "Bridgwater",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005030",
-        "CUST_OFF_NAM": "Dagenham",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005040",
-        "CUST_OFF_NAM": "Dartford",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005050",
-        "CUST_OFF_NAM": "Greenock",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005060",
-        "CUST_OFF_NAM": "Langstone",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005070",
-        "CUST_OFF_NAM": "London",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005080",
-        "CUST_OFF_NAM": "Middlesbrough",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005090",
-        "CUST_OFF_NAM": "Neath",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005100",
-        "CUST_OFF_NAM": "Penrhyn",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005110",
-        "CUST_OFF_NAM": "Ridham",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005120",
-        "CUST_OFF_NAM": "Rochester",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005130",
-        "CUST_OFF_NAM": "Shoreham",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005140",
-        "CUST_OFF_NAM": "South Shields",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005160",
-        "CUST_OFF_NAM": "Warrenpoint",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005170",
-        "CUST_OFF_NAM": "Killingholme",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005180",
-        "CUST_OFF_NAM": "Montrose",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005190",
-        "CUST_OFF_NAM": "Portbury",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)1255 244725",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GB005200",
-        "CUST_OFF_NAM": "Fishguard",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 982",
-        "CITY": "Harwich",
-        "CUSTOMS_OFFICE_ROLES": [
-          "RSS"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GBEORI01",
-        "CUST_OFF_NAM": "EORI TEAM HMRC",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 02920 325502",
-        "CITY": "CARDIFF",
-        "CUSTOMS_OFFICE_ROLES": [
-          "REG"
-        ]
-      },
-      {
-        "CUST_OFF_ID": "GBSOU001",
-        "CUST_OFF_NAM": "SOUTHEND DIRECT EXPORTS",
-        "COUNTRY_ID": "GB",
-        "PHONE_NUMBER": "+44 (0)3000 575 988",
-        "CITY": "HARWICH",
-        "CUSTOMS_OFFICE_ROLES": [
-          "EXP",
-          "EXT"
-        ]
-      }
+  {
+    "CUST_OFF_ID": "GB000001",
+    "CUST_OFF_NAM": "Central Community Transit Office",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich, Essex. FAX 00443000 575993",
+    "CUSTOMS_OFFICE_ROLES": [
+      "AUT",
+      "CAE",
+      "CAU",
+      "CCA",
+      "CND",
+      "DEP",
+      "DES",
+      "ENQ",
+      "EXP",
+      "GUA",
+      "REC",
+      "RSS",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000011",
+    "CUST_OFF_NAM": "Birmingham Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)121 781 7850",
+    "CITY": "BIRMINGHAM",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "GUA",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000014",
+    "CUST_OFF_NAM": "Belfast International Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000029",
+    "CUST_OFF_NAM": "UKBF, Bristol International Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1275 476500 / 6520 / 3121",
+    "CITY": "Bristol",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000033",
+    "CUST_OFF_NAM": "AVONMOUTH 1",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000040",
+    "CUST_OFF_NAM": "Dover (OTS) Freight Clearance",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000041",
+    "CUST_OFF_NAM": "FOLKESTONE",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000043",
+    "CUST_OFF_NAM": "MANSTON AIRPORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000045",
+    "CUST_OFF_NAM": "SHEERNESS",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000047",
+    "CUST_OFF_NAM": "Ramsgate",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 515831",
+    "CITY": "RAMSGATE",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000049",
+    "CUST_OFF_NAM": "NEWPORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000051",
+    "CUST_OFF_NAM": "Felixstowe",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1394 303023 / 24 / 26",
+    "CITY": "FELIXSTOWE",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000052",
+    "CUST_OFF_NAM": "HARWICH",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000053",
+    "CUST_OFF_NAM": "IPSWICH PORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000054",
+    "CUST_OFF_NAM": "GREAT YARMOUTH",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000055",
+    "CUST_OFF_NAM": "KING'S LYNN",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000057",
+    "CUST_OFF_NAM": "Rosyth",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000058",
+    "CUST_OFF_NAM": "NORWICH AIRPORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000059",
+    "CUST_OFF_NAM": "Grangemouth",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000060",
+    "CUST_OFF_NAM": "Dover/Folkestone Eurotunnel Freight",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 515831",
+    "CITY": "DOVER",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000062",
+    "CUST_OFF_NAM": "Scrabster",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000063",
+    "CUST_OFF_NAM": "Scotland Inland Auth. Cee/Cor",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1224 401231",
+    "CITY": "Aberdeen",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000067",
+    "CUST_OFF_NAM": "Scotland Frontier",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)141 847 4855",
+    "CITY": "PAISLEY",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000070",
+    "CUST_OFF_NAM": "Prestwick Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000072",
+    "CUST_OFF_NAM": "Hull",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1482 785861",
+    "CITY": "HULL",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000073",
+    "CUST_OFF_NAM": "GRIMSBY",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000074",
+    "CUST_OFF_NAM": "Immingham",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1469 553 732",
+    "CITY": "IMMINGHAM",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000080",
+    "CUST_OFF_NAM": "Liverpool",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)151 934 1201",
+    "CITY": "LIVERPOOL",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000081",
+    "CUST_OFF_NAM": "UK North Auth Consignor/nees",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0) 3000 565 511",
+    "CITY": "LEEDS",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000084",
+    "CUST_OFF_NAM": "London Heathrow Cargo",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)20 3014 5600 / 5601",
+    "CITY": "HOUNSLOW",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000085",
+    "CUST_OFF_NAM": "London Gatwick Airport Cargo Dist.",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1293 721418",
+    "CITY": "GATWICK AIRPORT",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000087",
+    "CUST_OFF_NAM": "Leeds Bradford Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)113 250 4246",
+    "CITY": "LEEDS",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000091",
+    "CUST_OFF_NAM": "SOUTHEND AIRPORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000093",
+    "CUST_OFF_NAM": "Tilbury",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1375 853228",
+    "CITY": "TILBURY",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000098",
+    "CUST_OFF_NAM": "Newcastle Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000099",
+    "CUST_OFF_NAM": "THAMES EUROPORT (DIFT)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000102",
+    "CUST_OFF_NAM": "Luton Airport FCT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1582 817900",
+    "CITY": "LUTON",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000108",
+    "CUST_OFF_NAM": "FALMOUTH",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000119",
+    "CUST_OFF_NAM": "NORTHOLT AIRPORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000120",
+    "CUST_OFF_NAM": "London Heathrow Airport (Baggage)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)203 014 5600 / 5601",
+    "CITY": "London Heathrow, HOUNSLOW",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000121",
+    "CUST_OFF_NAM": "Stansted Airport FCT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1279 665825",
+    "CITY": "STANSTED",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000122",
+    "CUST_OFF_NAM": "Cardiff International Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1446 711580",
+    "CITY": "BARRY, Nr. Cardiff",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000123",
+    "CUST_OFF_NAM": "SWANSEA",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000124",
+    "CUST_OFF_NAM": "HOLYHEAD",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000125",
+    "CUST_OFF_NAM": "Barry Dock",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000126",
+    "CUST_OFF_NAM": "PEMBROKE DOCK",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000128",
+    "CUST_OFF_NAM": "Edinburgh Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000130",
+    "CUST_OFF_NAM": "London City Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)20 511 5560",
+    "CITY": "London",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000140",
+    "CUST_OFF_NAM": "George Best (Belfast City)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000142",
+    "CUST_OFF_NAM": "Belfast EPU",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 523068",
+    "CITY": "BELFAST",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000149",
+    "CUST_OFF_NAM": "PURFLEET THAMES TERMINAL",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000150",
+    "CUST_OFF_NAM": "Thamesport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000155",
+    "CUST_OFF_NAM": "Reading",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0) 3000 544419",
+    "CITY": "READING",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000170",
+    "CUST_OFF_NAM": "London Gateway Port",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1375 640541",
+    "CITY": "Stanford-le-Hope, Essex",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000191",
+    "CUST_OFF_NAM": "Manchester",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)161 261 5720/1",
+    "CITY": "MANCHESTER AIRPORT",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000218",
+    "CUST_OFF_NAM": "Newcastle-Upon-Tyne",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)191 2144356",
+    "CITY": "Newcastle Apt, Newcastle-Upon-Tyne",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000219",
+    "CUST_OFF_NAM": "Teesport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1642 440111",
+    "CITY": "MIDDLESBROUGH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000244",
+    "CUST_OFF_NAM": "BOSTON",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000245",
+    "CUST_OFF_NAM": "UKBA East Midlands Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1332 442071",
+    "CITY": "Castle Donington, DERBY",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000246",
+    "CUST_OFF_NAM": "UK South Auth Consignor/nees",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0) 3000 564478",
+    "CITY": "NOTTINGHAM",
+    "CUSTOMS_OFFICE_ROLES": [
+      "CCA",
+      "DEP",
+      "DES",
+      "EXP",
+      "EXT",
+      "MCA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000250",
+    "CUST_OFF_NAM": "PLYMOUTH",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000290",
+    "CUST_OFF_NAM": "Southampton",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 3000 568 147",
+    "CITY": "Southampton",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000291",
+    "CUST_OFF_NAM": "Poole Ferry Terminal",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000292",
+    "CUST_OFF_NAM": "Portsmouth",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 594321",
+    "CITY": "PORTSMOUTH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000297",
+    "CUST_OFF_NAM": "EXETER AIRPORT",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000328",
+    "CUST_OFF_NAM": "Cardiff",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)29 2038 6000",
+    "CITY": "CARDIFF",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT",
+      "REG"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000383",
+    "CUST_OFF_NAM": "Salford National Clearance Hub",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000392",
+    "CUST_OFF_NAM": "London South Bank",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)20 8929 6569",
+    "CITY": "LONDON",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000411",
+    "CUST_OFF_NAM": "Aberdeen Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000416",
+    "CUST_OFF_NAM": "PETERHEAD",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000434",
+    "CUST_OFF_NAM": "Aberdeen",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000450",
+    "CUST_OFF_NAM": "Isle of Man Customs & Excise",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1624 648100",
+    "CITY": "DOUGLAS, ISLE OF MAN",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "EXT",
+      "GUA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000461",
+    "CUST_OFF_NAM": "Guernsey Customs & Excise",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1481 741450",
+    "CITY": "St Peter Port, GUERNSEY",
+    "CUSTOMS_OFFICE_ROLES": [
+      "AUT",
+      "CAU",
+      "DEP",
+      "DES",
+      "ENQ",
+      "GUA",
+      "REC",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000465",
+    "CUST_OFF_NAM": "Jersey Customs & Immigration",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1534 448000",
+    "CITY": "JERSEY, CHANNEL ISLANDS",
+    "CUSTOMS_OFFICE_ROLES": [
+      "AUT",
+      "CAU",
+      "DEP",
+      "DES",
+      "GUA",
+      "TRA"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000480",
+    "CUST_OFF_NAM": "Chatham",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000500",
+    "CUST_OFF_NAM": "COVENTRY INTERNATIONAL HUB",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 2476 212856",
+    "CITY": "COVENTRY",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000501",
+    "CUST_OFF_NAM": "HWDC LANGLEY",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 1753 484703",
+    "CITY": "SLOUGH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000921",
+    "CUST_OFF_NAM": "FORDS JETTY",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB001016",
+    "CUST_OFF_NAM": "LERWICK",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003010",
+    "CUST_OFF_NAM": "Barrow in Furness",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003020",
+    "CUST_OFF_NAM": "Berwick upon Tweed",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003030",
+    "CUST_OFF_NAM": "Blackpool International Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003040",
+    "CUST_OFF_NAM": "Glasgow Docks",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003050",
+    "CUST_OFF_NAM": "Plymouth Docks",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003060",
+    "CUST_OFF_NAM": "Bournmouth (Hurn) Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003070",
+    "CUST_OFF_NAM": "Brize Norton",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003080",
+    "CUST_OFF_NAM": "Cambridge Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003090",
+    "CUST_OFF_NAM": "Southampton (Eastleigh) Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003100",
+    "CUST_OFF_NAM": "Dundee (Sea)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003110",
+    "CUST_OFF_NAM": "Farnborough Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003120",
+    "CUST_OFF_NAM": "Gloucester (Staverton) Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003130",
+    "CUST_OFF_NAM": "Humberside International Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003140",
+    "CUST_OFF_NAM": "Hartlepool",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003150",
+    "CUST_OFF_NAM": "Inverness",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003160",
+    "CUST_OFF_NAM": "Kemble Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003170",
+    "CUST_OFF_NAM": "Kirkwall (Orkney Islands)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003180",
+    "CUST_OFF_NAM": "Durham Tees Valley (Teeside Apt)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003190",
+    "CUST_OFF_NAM": "Liverpool John Lennon Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003200",
+    "CUST_OFF_NAM": "London Ashford (Lydd) Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003210",
+    "CUST_OFF_NAM": "Londonderry",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003220",
+    "CUST_OFF_NAM": "Manchester Docks",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003230",
+    "CUST_OFF_NAM": "Oxford (Kidlington) Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003240",
+    "CUST_OFF_NAM": "Portree (Isle of Skye)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003250",
+    "CUST_OFF_NAM": "Newhaven",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003260",
+    "CUST_OFF_NAM": "Stornoway (Isle of Lewis)",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003270",
+    "CUST_OFF_NAM": "Stornoway Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 515 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003280",
+    "CUST_OFF_NAM": "Workington",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB003290",
+    "CUST_OFF_NAM": "BIGGIN HILL",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB004098",
+    "CUST_OFF_NAM": "GLASGOW",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 141 555 3845",
+    "CITY": "GLASGOW",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXC"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005010",
+    "CUST_OFF_NAM": "Appledore",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005020",
+    "CUST_OFF_NAM": "Bridgwater",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005030",
+    "CUST_OFF_NAM": "Dagenham",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005040",
+    "CUST_OFF_NAM": "Dartford",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005050",
+    "CUST_OFF_NAM": "Greenock",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005060",
+    "CUST_OFF_NAM": "Langstone",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005070",
+    "CUST_OFF_NAM": "London",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005080",
+    "CUST_OFF_NAM": "Middlesbrough",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005090",
+    "CUST_OFF_NAM": "Neath",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005100",
+    "CUST_OFF_NAM": "Penrhyn",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005110",
+    "CUST_OFF_NAM": "Ridham",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005120",
+    "CUST_OFF_NAM": "Rochester",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005130",
+    "CUST_OFF_NAM": "Shoreham",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005140",
+    "CUST_OFF_NAM": "South Shields",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005160",
+    "CUST_OFF_NAM": "Warrenpoint",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005170",
+    "CUST_OFF_NAM": "Killingholme",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005180",
+    "CUST_OFF_NAM": "Montrose",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005190",
+    "CUST_OFF_NAM": "Portbury",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB005200",
+    "CUST_OFF_NAM": "Fishguard",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 982",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GBEORI01",
+    "CUST_OFF_NAM": "EORI TEAM HMRC",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 02920 325502",
+    "CITY": "CARDIFF",
+    "CUSTOMS_OFFICE_ROLES": [
+      "REG"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GBSOU001",
+    "CUST_OFF_NAM": "SOUTHEND DIRECT EXPORTS",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "IT014000",
+    "CUST_OFF_NAM": "FOGGIA",
+    "COUNTRY_ID": "IT",
+    "PHONE_NUMBER": "0039 0881779211",
+    "CITY": "FOGGIA",
+    "CUSTOMS_OFFICE_ROLES": [
+      "EXC",
+      "REG",
+      "RRG",
+      "ACE",
+      "ACP",
+      "ACR",
+      "ACT",
+      "AWB",
+      "CCL",
+      "CGU",
+      "DPO",
+      "ETD",
+      "EUS",
+      "IPO",
+      "OPO",
+      "SDE",
+      "SSE",
+      "TEA",
+      "TRD",
+      "TST",
+      "CWP"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "IT018105",
+    "CUST_OFF_NAM": "MONOPOLI",
+    "COUNTRY_ID": "IT",
+    "PHONE_NUMBER": "0039 0804107717",
+    "CITY": "Monopoli (BA)",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DEP",
+      "DEP",
+      "DES",
+      "DES",
+      "DES",
+      "EIN",
+      "EIN",
+      "EIN",
+      "ENQ",
+      "ENT",
+      "EXC",
+      "EXP",
+      "EXP",
+      "EXP",
+      "REC",
+      "REG",
+      "TRA",
+      "TRA",
+      "TRA"
+    ]
+  }
+
 ]
