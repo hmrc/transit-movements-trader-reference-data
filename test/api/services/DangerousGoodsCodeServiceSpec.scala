@@ -27,6 +27,6 @@ class DangerousGoodsCodeServiceSpec extends SpecBase with MustMatchers {
 
     val expectedFirstItem = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")
 
-    service.dangerousGoodsCode.head mustEqual expectedFirstItem
+    service.dangerousGoodsCodes.head mustEqual expectedFirstItem
   }
 }

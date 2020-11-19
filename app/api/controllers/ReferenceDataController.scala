@@ -54,7 +54,20 @@ class ReferenceDataController @Inject()(
     Ok(Json.toJson(methodOfPaymentService.methodOfPayment))
   }
 
-  def dangerousGoodsCode(): Action[AnyContent] = Action {
-    Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCode))
+  def dangerousGoodsCodes(): Action[AnyContent] = Action {
+    Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCodes))
+  }
+
+  def getDangerousGoodsCode(code: String): Action[AnyContent] = Action {
+
+    dangerousGoodsCodeService
+      .getDangerousGoodsCodeByCode(code)
+      .map {
+        dangerousGoodsCode =>
+          Ok(Json.toJson(dangerousGoodsCode))
+      }
+      .getOrElse {
+        NotFound
+      }
   }
 }
