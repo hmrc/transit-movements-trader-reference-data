@@ -16,13 +16,19 @@
 
 package api.models
 
-import play.api.libs.json.Format
+import play.api.libs.functional.syntax._
 import play.api.libs.json.Json
+import play.api.libs.json.Reads
+import play.api.libs.json.Writes
+import play.api.libs.json.__
 
 final case class DangerousGoodsCode(code: String, description: String)
 
 object DangerousGoodsCode {
 
-  implicit lazy val format: Format[DangerousGoodsCode] =
-    Json.format[DangerousGoodsCode]
+  implicit def reads: Reads[DangerousGoodsCode] =
+    ((__ \ "code").read[String] and
+      (__ \ "description").read[String])(DangerousGoodsCode.apply _)
+
+  implicit def writes: Writes[DangerousGoodsCode] = Json.writes[DangerousGoodsCode]
 }

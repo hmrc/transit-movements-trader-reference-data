@@ -23,7 +23,7 @@ import play.api.Environment
 class DangerousGoodsCodeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val dangerousGoodsCodes: Seq[DangerousGoodsCode] =
-    getData[DangerousGoodsCode](config.dangerousGoodsCode)
+    getData[DangerousGoodsCode](config.dangerousGoodsCode).sortBy(_.code)
 
   def getDangerousGoodsCodeByCode(code: String): Option[DangerousGoodsCode] =
     getData[DangerousGoodsCode](config.dangerousGoodsCode).find(_.code == code)
