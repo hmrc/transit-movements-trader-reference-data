@@ -22,11 +22,30 @@ import org.scalatest.MustMatchers
 
 class DangerousGoodsCodeServiceSpec extends SpecBase with MustMatchers {
 
-  "must return dangerous goods code" in {
+  val code                = "0004"
+  val dangerousGoodsCode1 = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")
+  val dangerousGoodsCode2 = DangerousGoodsCode("0005", "CARTRIDGES FOR WEAPONS with bursting charge")
+
+  "must return dangerous goods code list" in {
     val service = app.injector.instanceOf[DangerousGoodsCodeService]
 
-    val expectedFirstItem = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")
+    service.dangerousGoodsCodes.head mustBe dangerousGoodsCode1
+    service.dangerousGoodsCodes.last mustBe dangerousGoodsCode2
+  }
 
-    service.dangerousGoodsCodes.head mustEqual expectedFirstItem
+  "get dangerous goods code" - {
+
+    "must return some dangerous good code for a valid code" in {
+      val service = app.injector.instanceOf[DangerousGoodsCodeService]
+
+      service.getDangerousGoodsCodeByCode(code).value mustBe dangerousGoodsCode1
+    }
+
+    "must return None for an invalid code" in {
+      val service     = app.injector.instanceOf[DangerousGoodsCodeService]
+      val invalidCode = "1234"
+
+      service.getDangerousGoodsCodeByCode(invalidCode) mustBe None
+    }
   }
 }
