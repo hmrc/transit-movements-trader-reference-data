@@ -18,6 +18,7 @@ package api.generators
 
 import api.models.Country
 import api.models.CustomsOffice
+import api.models.DangerousGoodsCode
 import api.models.OfficeOfTransit
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
@@ -50,5 +51,13 @@ trait ModelGenerators {
         code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield Country(state, code, description)
+    }
+
+  implicit lazy val arbitraryDangerousGoodsCode: Arbitrary[DangerousGoodsCode] =
+    Arbitrary {
+      for {
+        code        <- Gen.alphaNumStr
+        description <- Gen.alphaNumStr
+      } yield DangerousGoodsCode(code, description)
     }
 }
