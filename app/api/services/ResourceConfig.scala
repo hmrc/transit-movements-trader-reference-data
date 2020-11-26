@@ -56,4 +56,7 @@ class ResourceConfig @Inject()(config: Configuration) {
 
   val dangerousGoodsCode: String =
     config.get[String]("resourceFiles.dangerousGoodsCode")
+
+  val circumstanceIndicators: String =
+    config.get[String]("resourceFiles.circumstanceIndicators")
 }
