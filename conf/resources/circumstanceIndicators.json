@@ -1,0 +1,22 @@
+[
+  {
+    "code": "E",
+    "description": "Authorised economic operators"
+  },
+  {
+    "code": "A",
+    "description": "Postal and express consignments"
+  },
+  {
+    "code": "D",
+    "description": "Rail mode of transport"
+  },
+  {
+    "code": "C",
+    "description": "Road mode of transport"
+  },
+  {
+    "code": "B",
+    "description": "Ship and aircraft supplies"
+  }
+]
