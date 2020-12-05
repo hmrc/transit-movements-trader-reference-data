@@ -20,7 +20,7 @@ import api.models.MethodOfPayment
 import javax.inject.Inject
 import play.api.Environment
 
-class MethodOfPaymentService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class MethodOfPaymentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val methodOfPayment: Seq[MethodOfPayment] =
     getData[MethodOfPayment](config.methodOfPayment)

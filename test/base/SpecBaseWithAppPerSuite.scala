@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package api.services
+package base
 
-import api.models.SpecialMention
-import javax.inject.Inject
-import play.api.Environment
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class SpecialMentionService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
-
-  val specialMention: Seq[SpecialMention] =
-    getData[SpecialMention](config.specialMention)
-}
+trait SpecBaseWithAppPerSuite extends SpecBase with GuiceOneAppPerSuite with TestWithApplication

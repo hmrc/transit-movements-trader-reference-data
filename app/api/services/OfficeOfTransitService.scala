@@ -20,7 +20,7 @@ import api.models.OfficeOfTransit
 import javax.inject.Inject
 import play.api.Environment
 
-class OfficeOfTransitService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class OfficeOfTransitService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val officesOfTransit: Seq[OfficeOfTransit] =
     getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.id)

@@ -17,14 +17,13 @@
 package api.models
 
 import api.generators.ModelGenerators
+import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
-import org.scalatest.FreeSpec
-import org.scalatest.MustMatchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json._
 
-class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
+class CustomsOfficeSpec extends SpecBase with ScalaCheckPropertyChecks with ModelGenerators {
 
   private val customsOffice = CustomsOffice("GB000074", "Immingham", "GB", Some("+44 (0)3000 999 982"), Seq("TRA", "DEP", "DES"))
 
@@ -63,13 +62,14 @@ class CustomsOfficeSpec extends FreeSpec with ScalaCheckPropertyChecks with Mode
     }
   }
 
-  def expectedCustomsOfficeJson(office: CustomsOffice = customsOffice): JsValue = Json.obj(
-    "id"          -> office.id,
-    "name"        -> office.name,
-    "countryId"   -> office.countryId,
-    "phoneNumber" -> office.phoneNumber,
-    "roles"       -> Json.toJson(office.roles)
-  )
+  def expectedCustomsOfficeJson(office: CustomsOffice = customsOffice): JsValue =
+    Json.obj(
+      "id"          -> office.id,
+      "name"        -> office.name,
+      "countryId"   -> office.countryId,
+      "phoneNumber" -> office.phoneNumber,
+      "roles"       -> Json.toJson(office.roles)
+    )
 
   def validCustomsOfficeJson(office: CustomsOffice): JsValue = {
 

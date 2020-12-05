@@ -20,11 +20,10 @@ import api.models.TransportMode
 import javax.inject.Inject
 import play.api.Environment
 
-class TransportModeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val transportModes: Seq[TransportMode] = {
+  val transportModes: Seq[TransportMode] =
     getData[TransportMode](config.transportModes)
-  }
 
   def getTransportModeByCode(code: String): Option[TransportMode] =
     getData[TransportMode](config.transportModes).find(_.code == code)

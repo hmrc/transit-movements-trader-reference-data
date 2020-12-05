@@ -20,7 +20,7 @@ import api.models.AdditionalInformation
 import javax.inject.Inject
 import play.api.Environment
 
-class AdditionalInformationService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class AdditionalInformationService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val additionalInformation: Seq[AdditionalInformation] =
     getData[AdditionalInformation](config.additionalInformation)

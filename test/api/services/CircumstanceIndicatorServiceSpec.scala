@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.CircumstanceIndicator
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class CircumstanceIndicatorServiceSpec extends SpecBase with MustMatchers {
+class CircumstanceIndicatorServiceSpec extends SpecBaseWithAppPerSuite {
 
   private val code                   = "E"
   private val circumstanceIndicator1 = CircumstanceIndicator("E", "Authorised economic operators")

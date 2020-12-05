@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.CustomsOffice
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class CustomsOfficesServiceSpec extends SpecBase with MustMatchers {
+class CustomsOfficesServiceSpec extends SpecBaseWithAppPerSuite {
 
   val countryId = "GB"
 

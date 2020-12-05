@@ -17,20 +17,19 @@
 package api.controllers
 
 import api.models.Country
-import base.SpecBase
-import org.mockito.Matchers.any
+import api.services._
+import base.SpecBaseWithAppPerSuite
 import org.mockito.Mockito.when
-import org.scalatest.MustMatchers
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers.any
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
-import api.services._
 
-class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar {
+class CountryControllerSpec extends SpecBaseWithAppPerSuite {
 
   private val ukCountry = Country("valid", "GB", "United Kingdom")
   private val countries = Seq(ukCountry)
@@ -38,18 +37,21 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
   private val countryService        = mock[CountryService]
   private val transitCountryService = mock[TransitCountryService]
 
+  override val mocks: Seq[_] = super.mocks ++ Seq(countryService, transitCountryService)
+
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder
+      .overrides(
+        bind[CountryService].toInstance(countryService),
+        bind[TransitCountryService].toInstance(transitCountryService)
+      )
+
   "CountryController" - {
 
     "countriesFullList" - {
       "must fetch country full list" in {
 
         when(countryService.countries).thenReturn(countries)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[CountryService].toInstance(countryService)
-          )
-          .build()
 
         val request = FakeRequest(
           GET,
@@ -59,7 +61,6 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(countries)
-        app.stop()
       }
     }
 
@@ -67,12 +68,6 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
       "must fetch transit countries" in {
 
         when(transitCountryService.transitCountryCodes).thenReturn(countries)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[TransitCountryService].toInstance(transitCountryService)
-          )
-          .build()
 
         val request = FakeRequest(
           GET,
@@ -82,7 +77,6 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(countries)
-        app.stop()
       }
     }
 
@@ -90,12 +84,6 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
       "must get correct country and return Ok" in {
 
         when(countryService.getCountryByCode(any())).thenReturn(Some(ukCountry))
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[CountryService].toInstance(countryService)
-          )
-          .build()
 
         val validCountryCode = "GB"
 
@@ -107,18 +95,11 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(ukCountry)
-        app.stop()
       }
 
       "must return NotFound when no country is found" in {
 
         when(countryService.getCountryByCode(any())).thenReturn(None)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[CountryService].toInstance(countryService)
-          )
-          .build()
 
         val invalidCountryCode = "Invalid"
 
@@ -129,7 +110,6 @@ class CountryControllerSpec extends SpecBase with MustMatchers with MockitoSugar
         val result = route(app, request).value
 
         status(result) mustBe NOT_FOUND
-        app.stop()
       }
     }
   }

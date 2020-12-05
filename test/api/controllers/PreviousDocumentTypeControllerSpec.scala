@@ -17,14 +17,12 @@
 package api.controllers
 
 import api.models.PreviousDocumentType
-import base.SpecBase
-import org.mockito.Matchers.any
-import org.mockito.Mockito.reset
+import api.services.PreviousDocumentTypeService
+import base.SpecBaseWithAppPerSuite
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.MustMatchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers.GET
@@ -32,9 +30,8 @@ import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
-import api.services.PreviousDocumentTypeService
 
-class PreviousDocumentTypeControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach {
+class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
 
   private def previousDocumentType = PreviousDocumentType("T1", "T1")
 
@@ -42,21 +39,18 @@ class PreviousDocumentTypeControllerSpec extends SpecBase with MustMatchers with
 
   val mockService: PreviousDocumentTypeService = mock[PreviousDocumentTypeService]
 
-  override def beforeEach(): Unit = {
-    reset(mockService)
-    super.beforeEach()
-  }
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockService)
+
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder
+      .overrides(
+        bind[PreviousDocumentTypeService].toInstance(mockService)
+      )
 
   "TransportModeController" - {
     "must fetch all transport modes" in {
 
       when(mockService.previousDocumentTypes).thenReturn(previousDocumentTypes)
-
-      val app = applicationBuilder()
-        .overrides(
-          bind[PreviousDocumentTypeService].toInstance(mockService)
-        )
-        .build()
 
       val request = FakeRequest(
         GET,
@@ -66,18 +60,11 @@ class PreviousDocumentTypeControllerSpec extends SpecBase with MustMatchers with
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(previousDocumentTypes)
-      app.stop()
     }
     "getPreviousDocumentType" - {
       "must get transport mode and return Ok" in {
 
         when(mockService.getPreviousDocumentTypeByCode(any())).thenReturn(Some(previousDocumentType))
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[PreviousDocumentTypeService].toInstance(mockService)
-          )
-          .build()
 
         val code = "T1"
 
@@ -89,18 +76,11 @@ class PreviousDocumentTypeControllerSpec extends SpecBase with MustMatchers with
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(previousDocumentType)
-        app.stop()
       }
 
       "must return NotFound when no transport mode is found" in {
 
         when(mockService.getPreviousDocumentTypeByCode(any())).thenReturn(None)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[PreviousDocumentTypeService].toInstance(mockService)
-          )
-          .build()
 
         val invalidCode = "Invalid"
 
@@ -111,7 +91,6 @@ class PreviousDocumentTypeControllerSpec extends SpecBase with MustMatchers with
         val result = route(app, request).value
 
         status(result) mustBe NOT_FOUND
-        app.stop()
       }
     }
   }

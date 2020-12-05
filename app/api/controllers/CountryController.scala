@@ -24,30 +24,33 @@ import play.api.mvc.ControllerComponents
 import api.services._
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class CountryController @Inject()(
+class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService,
   transitCountryService: TransitCountryService
 ) extends BackendController(cc) {
 
-  def countriesFullList(): Action[AnyContent] = Action {
-    Ok(Json.toJson(countryService.countries))
-  }
+  def countriesFullList(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(countryService.countries))
+    }
 
-  def transitCountries(): Action[AnyContent] = Action {
-    Ok(Json.toJson(transitCountryService.transitCountryCodes))
-  }
+  def transitCountries(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(transitCountryService.transitCountryCodes))
+    }
 
-  def getCountry(code: String): Action[AnyContent] = Action {
+  def getCountry(code: String): Action[AnyContent] =
+    Action {
 
-    countryService
-      .getCountryByCode(code)
-      .map {
-        country =>
-          Ok(Json.toJson(country))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+      countryService
+        .getCountryByCode(code)
+        .map {
+          country =>
+            Ok(Json.toJson(country))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

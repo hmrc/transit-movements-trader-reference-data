@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.DocumentType
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class DocumentTypeServiceSpec extends SpecBase with MustMatchers {
+class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
   "must return document types" in {
     val service = app.injector.instanceOf[DocumentTypeService]

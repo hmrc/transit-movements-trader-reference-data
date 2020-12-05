@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.KindOfPackage
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class KindOfPackageServiceSpec extends SpecBase with MustMatchers {
+class KindOfPackageServiceSpec extends SpecBaseWithAppPerSuite {
 
   "must return kinds of package" in {
     val service = app.injector.instanceOf[KindOfPackageService]

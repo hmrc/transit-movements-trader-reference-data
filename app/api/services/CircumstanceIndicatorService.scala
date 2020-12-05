@@ -20,11 +20,10 @@ import api.models.CircumstanceIndicator
 import javax.inject.Inject
 import play.api.Environment
 
-class CircumstanceIndicatorService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class CircumstanceIndicatorService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val circumstanceIndicators: Seq[CircumstanceIndicator] = {
+  val circumstanceIndicators: Seq[CircumstanceIndicator] =
     getData[CircumstanceIndicator](config.circumstanceIndicators)
-  }
 
   def getCircumstanceIndicator(code: String): Option[CircumstanceIndicator] =
     getData[CircumstanceIndicator](config.circumstanceIndicators).find(_.code == code)

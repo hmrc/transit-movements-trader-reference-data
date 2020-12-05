@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.OfficeOfTransit
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class OfficeOfTransitServiceSpec extends SpecBase with MustMatchers {
+class OfficeOfTransitServiceSpec extends SpecBaseWithAppPerSuite {
 
   val officeId = "AD000001"
 

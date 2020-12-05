@@ -18,14 +18,12 @@ package api.controllers
 
 import api.models.TransportMode
 import api.models.Valid
-import base.SpecBase
-import org.mockito.Matchers.any
-import org.mockito.Mockito.reset
+import api.services.TransportModeService
+import base.SpecBaseWithAppPerSuite
 import org.mockito.Mockito.when
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.MustMatchers
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers.any
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers.GET
@@ -33,9 +31,8 @@ import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
-import api.services.TransportModeService
 
-class TransportModeControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach {
+class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
   private val transportModes = Seq(transportMode)
 
   private def transportMode =
@@ -43,21 +40,18 @@ class TransportModeControllerSpec extends SpecBase with MustMatchers with Mockit
 
   val mockTransportModeService: TransportModeService = mock[TransportModeService]
 
-  override def beforeEach(): Unit = {
-    reset(mockTransportModeService)
-    super.beforeEach()
-  }
+  override val mocks: Seq[_] = super.mocks :+ mockTransportModeService
+
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder
+      .overrides(
+        bind[TransportModeService].toInstance(mockTransportModeService)
+      )
 
   "TransportModeController" - {
     "must fetch all transport modes" in {
 
       when(mockTransportModeService.transportModes).thenReturn(transportModes)
-
-      val app = applicationBuilder()
-        .overrides(
-          bind[TransportModeService].toInstance(mockTransportModeService)
-        )
-        .build()
 
       val request = FakeRequest(
         GET,
@@ -67,18 +61,11 @@ class TransportModeControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(transportModes)
-      app.stop()
     }
     "getTransportMode" - {
       "must get transport mode and return Ok" in {
 
         when(mockTransportModeService.getTransportModeByCode(any())).thenReturn(Some(transportMode))
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[TransportModeService].toInstance(mockTransportModeService)
-          )
-          .build()
 
         val validCountryCode = "GB"
 
@@ -90,18 +77,11 @@ class TransportModeControllerSpec extends SpecBase with MustMatchers with Mockit
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(transportMode)
-        app.stop()
       }
 
       "must return NotFound when no transport mode is found" in {
 
         when(mockTransportModeService.getTransportModeByCode(any())).thenReturn(None)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[TransportModeService].toInstance(mockTransportModeService)
-          )
-          .build()
 
         val invalidCode = "Invalid"
 
@@ -112,7 +92,6 @@ class TransportModeControllerSpec extends SpecBase with MustMatchers with Mockit
         val result = route(app, request).value
 
         status(result) mustBe NOT_FOUND
-        app.stop()
       }
     }
   }

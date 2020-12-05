@@ -24,23 +24,25 @@ import play.api.mvc.ControllerComponents
 import api.services.OfficeOfTransitService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class OfficeOfTransitController @Inject()(officeOfTransitService: OfficeOfTransitService, cc: ControllerComponents) extends BackendController(cc) {
+class OfficeOfTransitController @Inject() (officeOfTransitService: OfficeOfTransitService, cc: ControllerComponents) extends BackendController(cc) {
 
-  def officesOfTransit(): Action[AnyContent] = Action {
+  def officesOfTransit(): Action[AnyContent] =
+    Action {
 
-    Ok(Json.toJson(officeOfTransitService.officesOfTransit))
-  }
+      Ok(Json.toJson(officeOfTransitService.officesOfTransit))
+    }
 
-  def getOfficeOfTransit(id: String): Action[AnyContent] = Action {
+  def getOfficeOfTransit(id: String): Action[AnyContent] =
+    Action {
 
-    officeOfTransitService
-      .getOfficeOfTransit(id)
-      .map {
-        officesOfTransit =>
-          Ok(Json.toJson(officesOfTransit))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+      officeOfTransitService
+        .getOfficeOfTransit(id)
+        .map {
+          officesOfTransit =>
+            Ok(Json.toJson(officesOfTransit))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

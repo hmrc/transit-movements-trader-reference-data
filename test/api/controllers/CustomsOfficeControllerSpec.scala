@@ -17,28 +17,23 @@
 package api.controllers
 
 import api.models.CustomsOffice
-import base.SpecBase
-import org.mockito.Mockito.reset
+import api.services.CustomsOfficesService
+import base.SpecBaseWithAppPerSuite
 import org.mockito.Mockito.when
-import org.mockito.Matchers.any
-import org.mockito.Matchers.{eq => eqTo}
-import org.scalatest.BeforeAndAfterAll
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.MustMatchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import api.services.CustomsOfficesService
+import org.mockito.ArgumentMatchers.{eq => eqTo, _}
 
 import scala.concurrent.Future
 
-class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach with BeforeAndAfterAll {
+class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
 
   private val customsOfficeId = "GB000001"
+
   private val customsOffices = Seq(
     CustomsOffice(
       customsOfficeId,
@@ -60,8 +55,10 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
 
   private val mockCustomsOfficesService = mock[CustomsOfficesService]
 
-  private def application: GuiceApplicationBuilder =
-    applicationBuilder()
+  override val mocks: Seq[_] = super.mocks :+ mockCustomsOfficesService
+
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder
       .overrides(
         bind[CustomsOfficesService].toInstance(mockCustomsOfficesService)
       )
@@ -72,8 +69,6 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
 
       when(mockCustomsOfficesService.getCustomsOffice(eqTo(customsOfficeId))).thenReturn(Some(customsOffices.head))
 
-      lazy val app = application.build()
-
       val customsOffice = customsOffices.head
 
       val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(customsOfficeId).url)
@@ -83,14 +78,10 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
       status(result) mustEqual OK
 
       contentAsJson(result) mustBe Json.toJson(customsOffice)
-
-      app.stop()
     }
 
     "must return NotFound when no customs office is found" in {
       when(mockCustomsOfficesService.getCustomsOffice(any())).thenReturn(None)
-
-      lazy val app = application.build()
 
       val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(invalidId).url)
       val result  = route(app, request).value
@@ -100,8 +91,6 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
 
     "must fetch customs offices" in {
       when(mockCustomsOfficesService.customsOffices).thenReturn(customsOffices)
-
-      lazy val app = application.build()
 
       val request =
         FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
@@ -115,8 +104,6 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
 
       when(mockCustomsOfficesService.getCustomsOfficesOfTheCountry(any())).thenReturn(customsOffices)
 
-      lazy val app = application.build()
-
       val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry(customsOfficeId).url)
 
       val result: Future[Result] = route(app, request).value
@@ -124,13 +111,6 @@ class CustomsOfficeControllerSpec extends SpecBase with MustMatchers with Mockit
       status(result) mustEqual OK
 
       contentAsJson(result) mustBe Json.toJson(customsOffices)
-
-      app.stop()
     }
-  }
-
-  override protected def afterEach(): Unit = {
-    super.afterEach()
-    reset(mockCustomsOfficesService)
   }
 }

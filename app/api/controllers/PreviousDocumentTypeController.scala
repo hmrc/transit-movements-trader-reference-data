@@ -24,25 +24,27 @@ import play.api.mvc.ControllerComponents
 import api.services.PreviousDocumentTypeService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class PreviousDocumentTypeController @Inject()(
+class PreviousDocumentTypeController @Inject() (
   cc: ControllerComponents,
   previousDocumentTypeService: PreviousDocumentTypeService
 ) extends BackendController(cc) {
 
-  def previousDocumentTypes(): Action[AnyContent] = Action {
-    Ok(Json.toJson(previousDocumentTypeService.previousDocumentTypes))
-  }
+  def previousDocumentTypes(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(previousDocumentTypeService.previousDocumentTypes))
+    }
 
-  def getPreviousDocumentType(code: String): Action[AnyContent] = Action {
+  def getPreviousDocumentType(code: String): Action[AnyContent] =
+    Action {
 
-    previousDocumentTypeService
-      .getPreviousDocumentTypeByCode(code)
-      .map {
-        documentType =>
-          Ok(Json.toJson(documentType))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+      previousDocumentTypeService
+        .getPreviousDocumentTypeByCode(code)
+        .map {
+          documentType =>
+            Ok(Json.toJson(documentType))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

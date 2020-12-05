@@ -17,14 +17,13 @@
 package api.models
 
 import api.generators.ModelGenerators
+import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
-import org.scalatest.FreeSpec
-import org.scalatest.MustMatchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json._
 
-class DangerousGoodsCodeSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
+class DangerousGoodsCodeSpec extends SpecBase with ScalaCheckPropertyChecks with ModelGenerators {
 
   private val dangerousGoodsCode = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")
 
@@ -64,10 +63,11 @@ class DangerousGoodsCodeSpec extends FreeSpec with ScalaCheckPropertyChecks with
     }
   }
 
-  def expectedDangerousGoodsCodeJson(dangerousGoodsCode: DangerousGoodsCode = dangerousGoodsCode): JsValue = Json.obj(
-    "code"        -> dangerousGoodsCode.code,
-    "description" -> dangerousGoodsCode.description
-  )
+  def expectedDangerousGoodsCodeJson(dangerousGoodsCode: DangerousGoodsCode = dangerousGoodsCode): JsValue =
+    Json.obj(
+      "code"        -> dangerousGoodsCode.code,
+      "description" -> dangerousGoodsCode.description
+    )
 
   def validDangerousGoodsCodeJson(dangerousGoodsCode: DangerousGoodsCode): JsValue =
     Json.parse(s"""
