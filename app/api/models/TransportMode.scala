@@ -17,10 +17,15 @@
 package api.models
 
 import play.api.libs.json.Json
-import play.api.libs.json.OFormat
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class TransportMode(state: State, activeFrom: String, code: String, description: String)
 
 object TransportMode {
-  implicit val format: OFormat[TransportMode] = Json.format[TransportMode]
+
+  implicit val writes: OWrites[TransportMode] = Json.writes[TransportMode]
+
+  implicit val readFromFile: Reads[TransportMode] = Json.reads[TransportMode]
+
 }

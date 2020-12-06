@@ -16,13 +16,16 @@
 
 package api.models
 
-import play.api.libs.json.Format
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class PreviousDocumentType(code: String, description: String)
 
 object PreviousDocumentType {
 
-  implicit lazy val format: Format[PreviousDocumentType] =
-    Json.format[PreviousDocumentType]
+  implicit val writes: OWrites[PreviousDocumentType] = Json.writes[PreviousDocumentType]
+
+  implicit val readFromFile: Reads[PreviousDocumentType] = Json.reads[PreviousDocumentType]
+
 }

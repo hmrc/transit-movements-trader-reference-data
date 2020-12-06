@@ -17,11 +17,15 @@
 package api.models
 
 import play.api.libs.json.Json
-import play.api.libs.json.Format
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class Country(state: String, code: String, description: String)
 
 object Country {
 
-  implicit val format: Format[Country] = Json.format[Country]
+  implicit val writes: OWrites[Country] = Json.writes[Country]
+
+  implicit val readFromFile: Reads[Country] = Json.reads[Country]
+
 }

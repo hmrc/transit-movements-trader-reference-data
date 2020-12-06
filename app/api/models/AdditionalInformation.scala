@@ -16,13 +16,15 @@
 
 package api.models
 
-import play.api.libs.json.Format
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class AdditionalInformation(code: String, description: String)
 
 object AdditionalInformation {
 
-  implicit lazy val format: Format[AdditionalInformation] =
-    Json.format[AdditionalInformation]
+  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
+
+  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
 }

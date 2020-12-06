@@ -16,13 +16,16 @@
 
 package api.models
 
-import play.api.libs.json.Format
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class KindOfPackage(code: String, description: String)
 
 object KindOfPackage {
 
-  implicit lazy val format: Format[KindOfPackage] =
-    Json.format[KindOfPackage]
+  implicit val writes: OWrites[KindOfPackage] = Json.writes[KindOfPackage]
+
+  implicit val readFromFile: Reads[KindOfPackage] = Json.reads[KindOfPackage]
+
 }

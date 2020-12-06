@@ -16,19 +16,16 @@
 
 package api.models
 
-import play.api.libs.functional.syntax._
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
-import play.api.libs.json.Writes
-import play.api.libs.json.__
 
 final case class DangerousGoodsCode(code: String, description: String)
 
 object DangerousGoodsCode {
 
-  implicit def reads: Reads[DangerousGoodsCode] =
-    ((__ \ "code").read[String] and
-      (__ \ "description").read[String])(DangerousGoodsCode.apply _)
+  implicit val writes: OWrites[DangerousGoodsCode] = Json.writes[DangerousGoodsCode]
 
-  implicit def writes: Writes[DangerousGoodsCode] = Json.writes[DangerousGoodsCode]
+  implicit val readFromFile: Reads[DangerousGoodsCode] = Json.reads[DangerousGoodsCode]
+
 }

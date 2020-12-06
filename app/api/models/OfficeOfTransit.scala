@@ -18,17 +18,18 @@ package api.models
 
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
-import play.api.libs.json.Writes
 import play.api.libs.json.__
 
 case class OfficeOfTransit(id: String, name: String)
 
 object OfficeOfTransit {
 
-  implicit def reads: Reads[OfficeOfTransit] =
+  implicit val writes: OWrites[OfficeOfTransit] = Json.writes[OfficeOfTransit]
+
+  implicit val readFromFile: Reads[OfficeOfTransit] =
     ((__ \ "ID").read[String] and
       (__ \ "NAME").read[String])(OfficeOfTransit.apply _)
 
-  implicit def writes: Writes[OfficeOfTransit] = Json.writes[OfficeOfTransit]
 }
