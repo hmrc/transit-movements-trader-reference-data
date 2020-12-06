@@ -16,7 +16,8 @@
 
 package logging
 
-import akka.event.Logging
+import akka.event.Logging.LogLevel
+import akka.event.{Logging => AkkaLogging}
 import com.google.inject.AbstractModule
 import data.config.StreamLoggingConfig
 
@@ -39,6 +40,6 @@ object TestStreamLoggingConfig extends StreamLoggingConfig {
     *
     * @return (onElement, onFinish, onFailure)
     */
-  override def loggingConfig(streamComponentName: Option[String]): (Logging.LogLevel, Logging.LogLevel, Logging.LogLevel) =
-    (Logging.levelFor("off").get, Logging.levelFor("off").get, Logging.levelFor("error").get)
+  override def loggingConfig(streamComponentName: Option[String]): (LogLevel, LogLevel, LogLevel) =
+    (AkkaLogging.levelFor("off").get, AkkaLogging.levelFor("off").get, AkkaLogging.levelFor("off").get)
 }

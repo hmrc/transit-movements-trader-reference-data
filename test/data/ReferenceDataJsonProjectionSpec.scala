@@ -24,6 +24,7 @@ import akka.stream.testkit.scaladsl.TestSource
 import akka.util.ByteString
 import base.SpecBase
 import data.config.StreamLoggingConfig
+import logging.TestStreamLoggingConfig
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
@@ -34,14 +35,9 @@ import org.mockito.ArgumentMatchers._
 class ReferenceDataJsonProjectionSpec extends SpecBase {
   import ReferenceDataJsonProjectionSpec._
 
-  val mockStreamLoggingConfig: StreamLoggingConfig = mock[StreamLoggingConfig]
-  when(mockStreamLoggingConfig.loggingConfig(any())).thenReturn(
-    (Logging.levelFor("off").get, Logging.levelFor("off").get, Logging.levelFor("error").get)
-  )
-
   implicit lazy val actorSystem: ActorSystem = ActorSystem()
 
-  val referenceDataJsonProjection = new ReferenceDataJsonProjection(mockStreamLoggingConfig)
+  val referenceDataJsonProjection = new ReferenceDataJsonProjection(TestStreamLoggingConfig)
 
   "projects and returns all values in the nested sequence of values in the `data` array" in {
     implicit val owrites: OWrites[JsObject] = identity[JsObject]

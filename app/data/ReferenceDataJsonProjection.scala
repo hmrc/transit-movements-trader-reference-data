@@ -27,7 +27,7 @@ import logging.StreamLoggerAdapter
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 
-private[data] class ReferenceDataJsonProjection @Inject()(streamLoggingConfig: StreamLoggingConfig) extends StreamLoggerAdapter {
+private[data] class ReferenceDataJsonProjection @Inject() (streamLoggingConfig: StreamLoggingConfig) extends StreamLoggerAdapter {
 
   val (onElement, onFinish, onFailure) = streamLoggingConfig.loggingConfig(None)
 
