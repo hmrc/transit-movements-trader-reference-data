@@ -21,9 +21,7 @@ import akka.event.Logging.LogLevel
 import javax.inject.Inject
 import play.api.Configuration
 
-class StreamLoggingConfig @Inject() (config: Configuration) {
-
-  private val pathToConfig: String = "data.stream.logging"
+trait StreamLoggingConfig {
 
   /**
     * Configuration for the logging level of AkkaStream components. This allows for global
@@ -36,7 +34,15 @@ class StreamLoggingConfig @Inject() (config: Configuration) {
     *
     * @return (onElement, onFinish, onFailure)
     */
-  def loggingConfig(streamComponentName: Option[String] = None): (LogLevel, LogLevel, LogLevel) =
+  def loggingConfig(streamComponentName: Option[String] = None): (LogLevel, LogLevel, LogLevel)
+
+}
+
+class StreamLoggingConfigImpl @Inject() (config: Configuration) extends StreamLoggingConfig {
+
+  private val pathToConfig: String = "data.stream.logging"
+
+  override def loggingConfig(streamComponentName: Option[String] = None): (LogLevel, LogLevel, LogLevel) =
     (
       onElement(streamComponentName),
       onFinish(streamComponentName),
