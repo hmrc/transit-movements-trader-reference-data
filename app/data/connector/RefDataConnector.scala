@@ -22,5 +22,5 @@ import models.ListName
 import scala.concurrent.Future
 
 private[data] trait RefDataConnector {
-  def get(listName: ListName): Future[ByteString]
+  def get(listName: ListName): Future[Option[ByteString]]
 }

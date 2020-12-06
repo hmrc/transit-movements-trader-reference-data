@@ -16,9 +16,10 @@
 
 package data
 
+import akka.NotUsed
 import akka.actor.ActorSystem
+import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
-import akka.util.ByteString
 import base.SpecBase
 import data.connector.RefDataConnector
 import models.ListName
@@ -30,6 +31,7 @@ import play.api.libs.json.OWrites
 import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataJson
 import logging.TestStreamLoggingConfig
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class RefDataSourceSpec extends SpecBase {
@@ -47,11 +49,11 @@ class RefDataSourceSpec extends SpecBase {
 
     val mockDataConnector = mock[RefDataConnector]
 
-    when(mockDataConnector.get(eqTo(listName))).thenReturn(Future.successful(testData))
+    when(mockDataConnector.get(eqTo(listName))).thenReturn(Future.successful(Some(testData)))
 
     val referenceDataJsonProjection = new ReferenceDataJsonProjection(TestStreamLoggingConfig)
     val sut                         = new RefDataSource(mockDataConnector, referenceDataJsonProjection)
-    val source                      = sut(listName)
+    val source                      = sut(listName).futureValue.value
 
     source
       .runWith(TestSink.probe[JsObject])

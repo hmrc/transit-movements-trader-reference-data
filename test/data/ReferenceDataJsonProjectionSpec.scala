@@ -17,20 +17,16 @@
 package data
 
 import akka.actor.ActorSystem
-import akka.event.Logging
 import akka.stream.scaladsl.Keep
 import akka.stream.testkit.scaladsl.TestSink
 import akka.stream.testkit.scaladsl.TestSource
 import akka.util.ByteString
 import base.SpecBase
-import data.config.StreamLoggingConfig
 import logging.TestStreamLoggingConfig
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Writes
-import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
 
 class ReferenceDataJsonProjectionSpec extends SpecBase {
   import ReferenceDataJsonProjectionSpec._

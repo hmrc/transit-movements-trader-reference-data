@@ -18,17 +18,28 @@ package data
 
 import akka.NotUsed
 import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import data.connector.RefDataConnector
 import javax.inject.Inject
 import models.ListName
 import play.api.libs.json.JsObject
 
-private[data] class RefDataSource @Inject() (refDataConnector: RefDataConnector, referenceDataJsonProjection: ReferenceDataJsonProjection)
-    extends (ListName => Source[JsObject, NotUsed]) {
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
-  def apply(listName: ListName): Source[JsObject, NotUsed] =
+private[data] class RefDataSource @Inject() (
+  refDataConnector: RefDataConnector,
+  referenceDataJsonProjection: ReferenceDataJsonProjection
+)(implicit ec: ExecutionContext) {
+
+  private def jsonByteStringToDataElements(jsonByteString: ByteString): Source[JsObject, NotUsed] =
     Source
-      .future(refDataConnector.get(listName))
+      .single(jsonByteString)
       .via(referenceDataJsonProjection.dataElements)
+
+  def apply(listName: ListName): Future[Option[Source[JsObject, NotUsed]]] =
+    refDataConnector
+      .get(listName)
+      .map(_.map(jsonByteStringToDataElements))
 
 }
