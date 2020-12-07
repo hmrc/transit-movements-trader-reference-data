@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package api.models
+package logging
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
+import com.google.inject.AbstractModule
+import data.config.StreamLoggingConfig
+import data.config.StreamLoggingConfigImpl
 
-case class AdditionalInformation(code: String, description: String)
+class LoggingModule extends AbstractModule {
 
-object AdditionalInformation {
-
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
-
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
+  override def configure(): Unit =
+    bind(classOf[StreamLoggingConfig]).to(classOf[StreamLoggingConfigImpl]).asEagerSingleton()
 }

@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package api.models
+package data
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
+import models.ListName
 import play.api.libs.json.Reads
 
-case class AdditionalInformation(code: String, description: String)
+import scala.concurrent.Future
 
-object AdditionalInformation {
+trait DataRetrieval {
 
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
+  def getList[A: Reads](list: ListName): Future[Seq[A]]
 
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
 }

@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package api.models
+package data
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
+import akka.event.Logging
+import akka.event.Logging.LogLevel
+import play.api.ConfigLoader
+import play.api.Configuration
 
-case class AdditionalInformation(code: String, description: String)
+package object config {
 
-object AdditionalInformation {
+  implicit val configLoader: ConfigLoader[LogLevel] =
+    ConfigLoader {
+      config => prefix =>
+        val service = Configuration(config).get[Configuration](prefix)
+        val value   = service.get[String]("level")
 
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
+        Logging.levelFor(value).get
+    }
 
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
 }

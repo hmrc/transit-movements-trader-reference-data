@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package api.models
+package logging
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
+import play.api.Logger
 
-case class AdditionalInformation(code: String, description: String)
+trait Logging {
 
-object AdditionalInformation {
+  protected val logger: Logger = Logger(s"application.${this.getClass.getCanonicalName}")
 
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
-
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
 }

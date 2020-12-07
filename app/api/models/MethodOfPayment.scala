@@ -16,13 +16,16 @@
 
 package api.models
 
-import play.api.libs.json.Format
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 final case class MethodOfPayment(code: String, description: String)
 
 object MethodOfPayment {
 
-  implicit lazy val format: Format[MethodOfPayment] =
-    Json.format[MethodOfPayment]
+  implicit val writes: OWrites[MethodOfPayment] = Json.writes[MethodOfPayment]
+
+  implicit val readFromFile: Reads[MethodOfPayment] = Json.reads[MethodOfPayment]
+
 }

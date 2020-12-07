@@ -5,11 +5,12 @@ object AppDependencies {
   private val catsVersion = "2.1.1"
 
   val compile = Seq(
-    "uk.gov.hmrc"       %% "bootstrap-backend-play-27"       % "2.25.0",
-    "org.reactivemongo" %% "play2-reactivemongo"             % "0.20.11-play27",
-    "com.typesafe.play" %% "play-iteratees"                  % "2.6.1",
-    "com.typesafe.play" %% "play-iteratees-reactive-streams" % "2.6.1",
-    "org.typelevel"     %% "cats-core"                       % catsVersion
+    "uk.gov.hmrc"        %% "bootstrap-backend-play-27"          % "2.25.0",
+    "org.reactivemongo"  %% "play2-reactivemongo"                % "0.20.11-play27",
+    "com.typesafe.play"  %% "play-iteratees"                     % "2.6.1",
+    "com.typesafe.play"  %% "play-iteratees-reactive-streams"    % "2.6.1",
+    "org.typelevel"      %% "cats-core"                          % catsVersion,
+    "com.lightbend.akka" %% "akka-stream-alpakka-json-streaming" % "2.0.2"
   )
 
   val test = Seq(

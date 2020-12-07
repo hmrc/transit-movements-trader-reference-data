@@ -17,10 +17,15 @@
 package api.models
 
 import play.api.libs.json.Json
-import play.api.libs.json.OFormat
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class CircumstanceIndicator(code: String, description: String)
 
 object CircumstanceIndicator {
-  implicit val format: OFormat[CircumstanceIndicator] = Json.format[CircumstanceIndicator]
+
+  implicit val writes: OWrites[CircumstanceIndicator] = Json.writes[CircumstanceIndicator]
+
+  implicit val readFromFile: Reads[CircumstanceIndicator] = Json.reads[CircumstanceIndicator]
+
 }

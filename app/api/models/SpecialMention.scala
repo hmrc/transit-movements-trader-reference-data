@@ -16,13 +16,16 @@
 
 package api.models
 
-import play.api.libs.json.Format
 import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 final case class SpecialMention(code: String, description: String)
 
 object SpecialMention {
 
-  implicit lazy val format: Format[SpecialMention] =
-    Json.format[SpecialMention]
+  implicit val writes: OWrites[SpecialMention] = Json.writes[SpecialMention]
+
+  implicit val readFromFile: Reads[SpecialMention] = Json.reads[SpecialMention]
+
 }

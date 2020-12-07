@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package api.models
+package logging
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
+import akka.actor.ActorSystem
+import akka.event.Logging
+import akka.event.LoggingAdapter
 
-case class AdditionalInformation(code: String, description: String)
+trait StreamLoggerAdapter {
 
-object AdditionalInformation {
+  final val loggerName: String = s"application.${this.getClass.getCanonicalName}"
 
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
+  implicit def adapter(implicit actorSystem: ActorSystem): LoggingAdapter =
+    Logging(actorSystem, loggerName)
 
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
 }

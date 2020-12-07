@@ -16,9 +16,9 @@
 
 package api.models
 
-import play.api.libs.json._
-import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
 case class CustomsOffice(
   id: String,
@@ -30,7 +30,9 @@ case class CustomsOffice(
 
 object CustomsOffice {
 
-  implicit def reads: Reads[CustomsOffice] =
+  implicit val writes: OWrites[CustomsOffice] = Json.writes[CustomsOffice]
+
+  implicit val readFromFile: Reads[CustomsOffice] =
     (
       (__ \ "CUST_OFF_ID").read[String] and
         (__ \ "CUST_OFF_NAM").read[String] and
@@ -39,5 +41,4 @@ object CustomsOffice {
         (__ \ "CUSTOMS_OFFICE_ROLES").read[Seq[String]]
     )(CustomsOffice.apply _)
 
-  implicit def writes: Writes[CustomsOffice] = Json.writes[CustomsOffice]
 }

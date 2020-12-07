@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-package api.models
+package data.connector
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
+import akka.util.ByteString
+import models.ListName
 
-case class AdditionalInformation(code: String, description: String)
+import scala.concurrent.Future
 
-object AdditionalInformation {
-
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
-
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
+private[data] trait RefDataConnector {
+  def get(listName: ListName): Future[Option[ByteString]]
 }
