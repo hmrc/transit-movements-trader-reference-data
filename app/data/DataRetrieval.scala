@@ -16,13 +16,14 @@
 
 package data
 
-import models.ListName
-import play.api.libs.json.Reads
+import data.transform.Transformation
+import models.ReferenceDataList
+import play.api.libs.json.JsObject
 
 import scala.concurrent.Future
 
 trait DataRetrieval {
 
-  def getList[A: Reads](list: ListName): Future[Seq[A]]
+  def getList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Seq[JsObject]]
 
 }

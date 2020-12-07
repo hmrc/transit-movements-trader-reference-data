@@ -14,6 +14,24 @@
  * limitations under the License.
  */
 
-package models
+package data.transform
 
-case class ListName(listName: String)
+import play.api.libs.json.JsObject
+import play.api.libs.json.Reads
+
+trait Transformation[A] {
+
+  def transformation: Reads[JsObject]
+
+}
+
+object Transformation {
+
+  def apply[A: Transformation]: Transformation[A] = implicitly[Transformation[A]]
+
+  def fromReads[A](reads: Reads[JsObject]): Transformation[A] =
+    new Transformation[A] {
+      override def transformation: Reads[JsObject] = reads
+    }
+
+}

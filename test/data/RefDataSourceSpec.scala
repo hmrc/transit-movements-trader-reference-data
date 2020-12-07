@@ -22,7 +22,7 @@ import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import base.SpecBase
 import data.connector.RefDataConnector
-import models.ListName
+import models.ReferenceDataList
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito._
 import play.api.libs.json.JsObject
@@ -45,7 +45,7 @@ class RefDataSourceSpec extends SpecBase {
     val testData     = formatAsReferenceDataJson(Seq(TestObject(1), TestObject(2)))
     val expectedData = List(Json.obj("int" -> 1), Json.obj("int" -> 2))
 
-    val listName = ListName("TestObject")
+    val listName = new ReferenceDataList("TestObject") {}
 
     val mockDataConnector = mock[RefDataConnector]
 
