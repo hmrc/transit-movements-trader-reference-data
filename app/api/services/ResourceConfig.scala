@@ -19,7 +19,7 @@ package api.services
 import javax.inject.Inject
 import play.api.Configuration
 
-class ResourceConfig @Inject()(config: Configuration) {
+class ResourceConfig @Inject() (config: Configuration) {
 
   val customsOffice: String =
     config.get[String]("resourceFiles.customsOffices")

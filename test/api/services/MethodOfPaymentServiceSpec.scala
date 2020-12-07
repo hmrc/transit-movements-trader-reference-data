@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.MethodOfPayment
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class MethodOfPaymentServiceSpec extends SpecBase with MustMatchers {
+class MethodOfPaymentServiceSpec extends SpecBaseWithAppPerSuite {
 
   "must return method of payment" in {
     val service = app.injector.instanceOf[MethodOfPaymentService]

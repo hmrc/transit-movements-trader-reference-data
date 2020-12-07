@@ -24,25 +24,27 @@ import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class CircumstanceIndicatorController @Inject()(
+class CircumstanceIndicatorController @Inject() (
   cc: ControllerComponents,
   circumstanceIndicatorService: CircumstanceIndicatorService
 ) extends BackendController(cc) {
 
-  def circumstanceIndicators(): Action[AnyContent] = Action {
-    Ok(Json.toJson(circumstanceIndicatorService.circumstanceIndicators))
-  }
+  def circumstanceIndicators(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(circumstanceIndicatorService.circumstanceIndicators))
+    }
 
-  def getCircumstanceIndicator(code: String): Action[AnyContent] = Action {
+  def getCircumstanceIndicator(code: String): Action[AnyContent] =
+    Action {
 
-    circumstanceIndicatorService
-      .getCircumstanceIndicator(code)
-      .map {
-        indicator =>
-          Ok(Json.toJson(indicator))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+      circumstanceIndicatorService
+        .getCircumstanceIndicator(code)
+        .map {
+          indicator =>
+            Ok(Json.toJson(indicator))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

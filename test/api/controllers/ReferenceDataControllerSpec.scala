@@ -16,26 +16,20 @@
 
 package api.controllers
 
-import api.models.AdditionalInformation
-import api.models.DangerousGoodsCode
-import api.models.DocumentType
-import api.models.KindOfPackage
-import api.models.MethodOfPayment
-import api.models.SpecialMention
-import base.SpecBase
+import api.models._
+import api.services._
+import base.SpecBaseWithAppPerSuite
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
-import org.scalatest.MustMatchers
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
-import api.services._
-import org.mockito.Matchers.any
 
-class ReferenceDataControllerSpec extends SpecBase with MustMatchers with MockitoSugar {
+class ReferenceDataControllerSpec extends SpecBaseWithAppPerSuite {
 
   private val additionalInformation = Seq(AdditionalInformation("abc", "info description"))
 
@@ -58,15 +52,17 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
   private val methodOfPaymentService       = mock[MethodOfPaymentService]
   private val dangerousGoodsCodeService    = mock[DangerousGoodsCodeService]
 
-  when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
-  when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
-  when(documentTypeService.documentTypes).thenReturn(documentTypes)
-  when(specialMentionService.specialMention).thenReturn(specialMention)
-  when(methodOfPaymentService.methodOfPayment).thenReturn(methodOfPayment)
-  when(dangerousGoodsCodeService.dangerousGoodsCodes).thenReturn(dangerousGoodsCodes)
+  override val mocks: Seq[_] = super.mocks ++ Seq(
+    additionalInformationService,
+    kindOfPackageService,
+    documentTypeService,
+    specialMentionService,
+    methodOfPaymentService,
+    dangerousGoodsCodeService
+  )
 
-  private def appBuilder =
-    applicationBuilder()
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder
       .overrides(
         bind[AdditionalInformationService].toInstance(additionalInformationService),
         bind[KindOfPackageService].toInstance(kindOfPackageService),
@@ -79,8 +75,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
   "ReferenceDataController" - {
 
     "must fetch additional information" in {
-
-      lazy val app = appBuilder.build()
+      when(additionalInformationService.additionalInformation).thenReturn(additionalInformation)
 
       val request = FakeRequest(
         GET,
@@ -90,12 +85,11 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(additionalInformation)
-      app.stop()
+
     }
 
     "must fetch kinds of package" in {
-
-      lazy val app = appBuilder.build()
+      when(kindOfPackageService.kindsOfPackage).thenReturn(kindsOfPackage)
 
       val request = FakeRequest(
         GET,
@@ -105,12 +99,11 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(kindsOfPackage)
-      app.stop()
+
     }
 
     "must fetch document types" in {
-
-      lazy val app = appBuilder.build()
+      when(documentTypeService.documentTypes).thenReturn(documentTypes)
 
       val request = FakeRequest(
         GET,
@@ -120,12 +113,11 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(documentTypes)
-      app.stop()
+
     }
 
     "must fetch special mention" in {
-
-      lazy val app = appBuilder.build()
+      when(specialMentionService.specialMention).thenReturn(specialMention)
 
       val request = FakeRequest(
         GET,
@@ -135,12 +127,11 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(specialMention)
-      app.stop()
+
     }
 
     "must fetch method of payment" in {
-
-      lazy val app = appBuilder.build()
+      when(methodOfPaymentService.methodOfPayment).thenReturn(methodOfPayment)
 
       val request = FakeRequest(
         GET,
@@ -150,12 +141,11 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(methodOfPayment)
-      app.stop()
+
     }
 
     "must fetch dangerous goods code" in {
-
-      lazy val app = appBuilder.build()
+      when(dangerousGoodsCodeService.dangerousGoodsCodes).thenReturn(dangerousGoodsCodes)
 
       val request = FakeRequest(
         GET,
@@ -165,21 +155,14 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(dangerousGoodsCodes)
-      app.stop()
+
     }
 
     "getDangerousGoodsCodeByCode" - {
       "must dangerous goods code and return Ok" in {
+        val code = "0004"
 
         when(dangerousGoodsCodeService.getDangerousGoodsCodeByCode(any())).thenReturn(Some(dangerousGoodsCode))
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[DangerousGoodsCodeService].toInstance(dangerousGoodsCodeService)
-          )
-          .build()
-
-        val code = "0004"
 
         val request = FakeRequest(
           GET,
@@ -189,18 +172,11 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(dangerousGoodsCode)
-        app.stop()
+
       }
 
       "must return NotFound when no dangerous goods code is found" in {
-
         when(dangerousGoodsCodeService.getDangerousGoodsCodeByCode(any())).thenReturn(None)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[DangerousGoodsCodeService].toInstance(dangerousGoodsCodeService)
-          )
-          .build()
 
         val invalidCode = "Invalid"
 
@@ -211,7 +187,7 @@ class ReferenceDataControllerSpec extends SpecBase with MustMatchers with Mockit
         val result = route(app, request).value
 
         status(result) mustBe NOT_FOUND
-        app.stop()
+
       }
     }
   }

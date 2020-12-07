@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.SpecialMention
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class SpecialMentionServiceSpec extends SpecBase with MustMatchers {
+class SpecialMentionServiceSpec extends SpecBaseWithAppPerSuite {
 
   "must return special mention" in {
     val service = app.injector.instanceOf[SpecialMentionService]

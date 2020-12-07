@@ -20,7 +20,7 @@ import api.models.DangerousGoodsCode
 import javax.inject.Inject
 import play.api.Environment
 
-class DangerousGoodsCodeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class DangerousGoodsCodeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val dangerousGoodsCodes: Seq[DangerousGoodsCode] =
     getData[DangerousGoodsCode](config.dangerousGoodsCode).sortBy(_.code)

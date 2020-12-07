@@ -24,25 +24,27 @@ import play.api.mvc.ControllerComponents
 import api.services.TransportModeService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class TransportModeController @Inject()(
+class TransportModeController @Inject() (
   cc: ControllerComponents,
   transportModeService: TransportModeService
 ) extends BackendController(cc) {
 
-  def transportModes(): Action[AnyContent] = Action {
-    Ok(Json.toJson(transportModeService.transportModes))
-  }
+  def transportModes(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(transportModeService.transportModes))
+    }
 
-  def getTransportMode(code: String): Action[AnyContent] = Action {
+  def getTransportMode(code: String): Action[AnyContent] =
+    Action {
 
-    transportModeService
-      .getTransportModeByCode(code)
-      .map {
-        transportMode =>
-          Ok(Json.toJson(transportMode))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+      transportModeService
+        .getTransportModeByCode(code)
+        .map {
+          transportMode =>
+            Ok(Json.toJson(transportMode))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

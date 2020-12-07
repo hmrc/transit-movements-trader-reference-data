@@ -19,7 +19,8 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     majorVersion := 0,
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
-    scalafmtOnCompile in ThisBuild := true
+    scalafmtOnCompile in ThisBuild := true,
+    useSuperShell in ThisBuild := false
   )
   .settings(scalaVersion := "2.12.12")
   .settings(publishingSettings: _*)

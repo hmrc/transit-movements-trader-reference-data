@@ -24,31 +24,34 @@ import play.api.mvc.ControllerComponents
 import api.services.CustomsOfficesService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class CustomsOfficeController @Inject()(
+class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
 ) extends BackendController(cc) {
 
-  def customsOffices(): Action[AnyContent] = Action {
+  def customsOffices(): Action[AnyContent] =
+    Action {
 
-    Ok(Json.toJson(customsOfficesService.customsOffices))
-  }
+      Ok(Json.toJson(customsOfficesService.customsOffices))
+    }
 
-  def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] = Action {
+  def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] =
+    Action {
 
-    Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode)))
-  }
+      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode)))
+    }
 
-  def getCustomsOffice(officeId: String): Action[AnyContent] = Action {
+  def getCustomsOffice(officeId: String): Action[AnyContent] =
+    Action {
 
-    customsOfficesService
-      .getCustomsOffice(officeId)
-      .map {
-        customsOffice =>
-          Ok(Json.toJson(customsOffice))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+      customsOfficesService
+        .getCustomsOffice(officeId)
+        .map {
+          customsOffice =>
+            Ok(Json.toJson(customsOffice))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

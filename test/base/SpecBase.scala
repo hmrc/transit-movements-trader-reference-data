@@ -16,16 +16,8 @@
 
 package base
 
-import org.scalatest.FreeSpec
 import org.scalatest.OptionValues
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.Configuration
-import play.api.inject.guice.GuiceApplicationBuilder
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
-class SpecBase extends FreeSpec with GuiceOneAppPerSuite with OptionValues {
-
-  protected def applicationBuilder(): GuiceApplicationBuilder =
-    new GuiceApplicationBuilder()
-      .configure(Configuration("metrics.enabled" -> "false"))
-
-}
+trait SpecBase extends AnyFreeSpec with Matchers with OptionValues with TestWithMocking

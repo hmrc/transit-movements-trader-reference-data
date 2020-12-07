@@ -20,7 +20,7 @@ import api.models.Country
 import javax.inject.Inject
 import play.api.Environment
 
-class TransitCountryService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class TransitCountryService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val transitCountryCodes: Seq[Country] =
     getData[Country](config.transitCountryCodes).sortBy(_.description)

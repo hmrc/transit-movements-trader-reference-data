@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.PreviousDocumentType
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class PreviousDocumentTypeServiceSpec extends SpecBase with MustMatchers {
+class PreviousDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
   val service               = app.injector.instanceOf[PreviousDocumentTypeService]
   private val documentType1 = PreviousDocumentType("T2SM", "T2SM")

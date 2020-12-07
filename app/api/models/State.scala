@@ -28,6 +28,7 @@ case object Valid   extends State
 case object InValid extends State
 
 object State {
+
   implicit lazy val reads: Reads[State] = Reads {
     case JsString("valid")   => JsSuccess(Valid)
     case JsString("invalid") => JsSuccess(InValid)

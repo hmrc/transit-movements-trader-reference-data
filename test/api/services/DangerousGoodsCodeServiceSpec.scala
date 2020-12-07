@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.DangerousGoodsCode
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class DangerousGoodsCodeServiceSpec extends SpecBase with MustMatchers {
+class DangerousGoodsCodeServiceSpec extends SpecBaseWithAppPerSuite {
 
   val code                = "0004"
   val dangerousGoodsCode1 = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")

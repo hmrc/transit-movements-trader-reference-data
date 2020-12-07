@@ -20,7 +20,7 @@ import api.models.CustomsOffice
 import javax.inject.Inject
 import play.api.Environment
 
-class CustomsOfficesService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+class CustomsOfficesService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).sortBy(_.name)

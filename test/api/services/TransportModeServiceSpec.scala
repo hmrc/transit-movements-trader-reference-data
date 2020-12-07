@@ -18,10 +18,9 @@ package api.services
 
 import api.models.TransportMode
 import api.models.Valid
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class TransportModeServiceSpec extends SpecBase with MustMatchers {
+class TransportModeServiceSpec extends SpecBaseWithAppPerSuite {
   val service                = app.injector.instanceOf[TransportModeService]
   private val transportMode  = TransportMode(Valid, "2015-07-01", "17", "(semi) Trailer on sea-going vessel")
   private val transportMode1 = TransportMode(Valid, "2015-07-01", "10", "Sea transport")

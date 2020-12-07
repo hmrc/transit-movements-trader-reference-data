@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.AdditionalInformation
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class AdditionalInformationServiceSpec extends SpecBase with MustMatchers {
+class AdditionalInformationServiceSpec extends SpecBaseWithAppPerSuite {
 
   "must return additional information" in {
     val service = app.injector.instanceOf[AdditionalInformationService]

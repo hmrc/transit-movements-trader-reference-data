@@ -17,26 +17,20 @@
 package api.controllers
 
 import api.models.OfficeOfTransit
-import base.SpecBase
-import org.mockito.Mockito.reset
+import api.services.OfficeOfTransitService
+import base.SpecBaseWithAppPerSuite
 import org.mockito.Mockito.when
-import org.mockito.Matchers.any
-import org.mockito.Matchers.{eq => eqTo}
-import org.scalatest.BeforeAndAfterAll
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.MustMatchers
-import org.scalatestplus.mockito.MockitoSugar
-import play.api.inject.guice.GuiceApplicationBuilder
+import org.mockito.ArgumentMatchers.{eq => eqTo, _}
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import api.services.OfficeOfTransitService
 
 import scala.concurrent.Future
 
-class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach with BeforeAndAfterAll {
+class OfficeOfTransitControllerSpec extends SpecBaseWithAppPerSuite {
 
   val officeId = "AD000001"
 
@@ -49,8 +43,10 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
 
   private val mockOfficeOfTransitService = mock[OfficeOfTransitService]
 
-  private def application: GuiceApplicationBuilder =
-    applicationBuilder()
+  override val mocks: Seq[_] = super.mocks :+ mockOfficeOfTransitService
+
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder
       .overrides(
         bind[OfficeOfTransitService].toInstance(mockOfficeOfTransitService)
       )
@@ -60,8 +56,6 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
     "must return ok and fetch some offices of transit" in {
 
       when(mockOfficeOfTransitService.getOfficeOfTransit(eqTo(officeId))).thenReturn(Some(officesOfTransit.head))
-
-      lazy val app = application.build()
 
       val officeOfTransit = officesOfTransit.head
 
@@ -78,8 +72,7 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
 
       when(mockOfficeOfTransitService.getOfficeOfTransit(any())).thenReturn(None)
 
-      lazy val app = application.build()
-      val request  = FakeRequest(GET, routes.OfficeOfTransitController.getOfficeOfTransit(invalidValue).url)
+      val request = FakeRequest(GET, routes.OfficeOfTransitController.getOfficeOfTransit(invalidValue).url)
 
       val result: Future[Result] = route(app, request).value
       status(result) mustEqual NOT_FOUND
@@ -89,7 +82,6 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
 
       when(mockOfficeOfTransitService.officesOfTransit).thenReturn(officesOfTransit)
 
-      lazy val app = application.build()
       val request =
         FakeRequest(GET, routes.OfficeOfTransitController.officesOfTransit().url)
       val result: Future[Result] = route(app, request).value
@@ -98,10 +90,5 @@ class OfficeOfTransitControllerSpec extends SpecBase with MustMatchers with Mock
       contentAsJson(result) mustBe Json.toJson(officesOfTransit)
     }
 
-  }
-
-  override protected def afterEach(): Unit = {
-    super.afterEach()
-    reset(mockOfficeOfTransitService)
   }
 }

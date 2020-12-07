@@ -18,43 +18,33 @@ package api.controllers
 
 import api.models.CircumstanceIndicator
 import api.services.CircumstanceIndicatorService
-import base.SpecBase
-import org.mockito.Matchers.any
-import org.mockito.Mockito.reset
+import base.SpecBaseWithAppPerSuite
 import org.mockito.Mockito.when
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.MustMatchers
+import org.mockito.ArgumentMatchers.any
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.GET
-import play.api.test.Helpers.contentAsJson
-import play.api.test.Helpers.route
-import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
-class CircumstanceIndicatorControllerSpec extends SpecBase with MustMatchers with MockitoSugar with BeforeAndAfterEach {
+class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with MockitoSugar {
   private val circumstanceIndicator  = CircumstanceIndicator("E", "Authorised economic operators")
   private val circumstanceIndicators = Seq(circumstanceIndicator)
 
   val mockCircumstanceIndicatorService: CircumstanceIndicatorService = mock[CircumstanceIndicatorService]
 
-  override def beforeEach(): Unit = {
-    reset(mockCircumstanceIndicatorService)
-    super.beforeEach()
-  }
+  override val mocks: Seq[_] = super.mocks :+ mockCircumstanceIndicatorService
+
+  override def guiceApplicationBuilder: GuiceApplicationBuilder =
+    super.guiceApplicationBuilder.overrides(
+      bind[CircumstanceIndicatorService].toInstance(mockCircumstanceIndicatorService)
+    )
 
   "CircumstanceIndicatorController" - {
     "must fetch all circumstance indicators" in {
 
       when(mockCircumstanceIndicatorService.circumstanceIndicators).thenReturn(circumstanceIndicators)
-
-      val app = applicationBuilder()
-        .overrides(
-          bind[CircumstanceIndicatorService].toInstance(mockCircumstanceIndicatorService)
-        )
-        .build()
 
       val request = FakeRequest(
         GET,
@@ -64,19 +54,12 @@ class CircumstanceIndicatorControllerSpec extends SpecBase with MustMatchers wit
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(circumstanceIndicators)
-      app.stop()
     }
 
     "getCircumstanceIndicator" - {
       "must get circumstance indicator and return Ok" in {
 
         when(mockCircumstanceIndicatorService.getCircumstanceIndicator(any())).thenReturn(Some(circumstanceIndicator))
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[CircumstanceIndicatorService].toInstance(mockCircumstanceIndicatorService)
-          )
-          .build()
 
         val code = "E"
 
@@ -88,18 +71,11 @@ class CircumstanceIndicatorControllerSpec extends SpecBase with MustMatchers wit
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(circumstanceIndicator)
-        app.stop()
       }
 
       "must return NotFound when no circumstance indicator found" in {
 
         when(mockCircumstanceIndicatorService.getCircumstanceIndicator(any())).thenReturn(None)
-
-        val app = applicationBuilder()
-          .overrides(
-            bind[CircumstanceIndicatorService].toInstance(mockCircumstanceIndicatorService)
-          )
-          .build()
 
         val invalidCode = "Invalid"
 
@@ -110,7 +86,6 @@ class CircumstanceIndicatorControllerSpec extends SpecBase with MustMatchers wit
         val result = route(app, request).value
 
         status(result) mustBe NOT_FOUND
-        app.stop()
       }
     }
   }

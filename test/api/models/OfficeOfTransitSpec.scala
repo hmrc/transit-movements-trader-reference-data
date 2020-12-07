@@ -17,14 +17,13 @@
 package api.models
 
 import api.generators.ModelGenerators
+import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.Gen
-import org.scalatest.FreeSpec
-import org.scalatest.MustMatchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import org.scalacheck.Gen
 import play.api.libs.json._
 
-class OfficeOfTransitSpec extends FreeSpec with ScalaCheckPropertyChecks with ModelGenerators with MustMatchers {
+class OfficeOfTransitSpec extends SpecBase with ScalaCheckPropertyChecks with ModelGenerators {
 
   private val officesOfTransit = OfficeOfTransit("DE009583", "Stuttgart, Stuttgart-Hauptbahnhof")
 
@@ -64,10 +63,11 @@ class OfficeOfTransitSpec extends FreeSpec with ScalaCheckPropertyChecks with Mo
     }
   }
 
-  def expectedOfficesOfTransitJson(officeOfTransit: OfficeOfTransit = officesOfTransit): JsValue = Json.obj(
-    "id"   -> officeOfTransit.id,
-    "name" -> officeOfTransit.name
-  )
+  def expectedOfficesOfTransitJson(officeOfTransit: OfficeOfTransit = officesOfTransit): JsValue =
+    Json.obj(
+      "id"   -> officeOfTransit.id,
+      "name" -> officeOfTransit.name
+    )
 
   def validOfficeOfTransitsJson(office: OfficeOfTransit): JsValue =
     Json.parse(s"""

@@ -17,10 +17,9 @@
 package api.services
 
 import api.models.Country
-import base.SpecBase
-import org.scalatest.MustMatchers
+import base.SpecBaseWithAppPerSuite
 
-class CountryServiceSpec extends SpecBase with MustMatchers {
+class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
   val service = app.injector.instanceOf[CountryService]
 

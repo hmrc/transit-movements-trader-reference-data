@@ -24,7 +24,7 @@ import play.api.mvc.ControllerComponents
 import api.services._
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class ReferenceDataController @Inject()(
+class ReferenceDataController @Inject() (
   cc: ControllerComponents,
   additionalInformationService: AdditionalInformationService,
   kindOfPackagesService: KindOfPackageService,
@@ -34,40 +34,46 @@ class ReferenceDataController @Inject()(
   dangerousGoodsCodeService: DangerousGoodsCodeService
 ) extends BackendController(cc) {
 
-  def additionalInformation(): Action[AnyContent] = Action {
-    Ok(Json.toJson(additionalInformationService.additionalInformation))
-  }
+  def additionalInformation(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(additionalInformationService.additionalInformation))
+    }
 
-  def kindsOfPackage(): Action[AnyContent] = Action {
-    Ok(Json.toJson(kindOfPackagesService.kindsOfPackage))
-  }
+  def kindsOfPackage(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(kindOfPackagesService.kindsOfPackage))
+    }
 
-  def documentTypes(): Action[AnyContent] = Action {
-    Ok(Json.toJson(documentTypeService.documentTypes))
-  }
+  def documentTypes(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(documentTypeService.documentTypes))
+    }
 
-  def specialMention(): Action[AnyContent] = Action {
-    Ok(Json.toJson(specialMentionService.specialMention))
-  }
+  def specialMention(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(specialMentionService.specialMention))
+    }
 
-  def methodOfPayment(): Action[AnyContent] = Action {
-    Ok(Json.toJson(methodOfPaymentService.methodOfPayment))
-  }
+  def methodOfPayment(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(methodOfPaymentService.methodOfPayment))
+    }
 
-  def dangerousGoodsCodes(): Action[AnyContent] = Action {
-    Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCodes))
-  }
+  def dangerousGoodsCodes(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCodes))
+    }
 
-  def getDangerousGoodsCode(code: String): Action[AnyContent] = Action {
-
-    dangerousGoodsCodeService
-      .getDangerousGoodsCodeByCode(code)
-      .map {
-        dangerousGoodsCode =>
-          Ok(Json.toJson(dangerousGoodsCode))
-      }
-      .getOrElse {
-        NotFound
-      }
-  }
+  def getDangerousGoodsCode(code: String): Action[AnyContent] =
+    Action {
+      dangerousGoodsCodeService
+        .getDangerousGoodsCodeByCode(code)
+        .map {
+          dangerousGoodsCode =>
+            Ok(Json.toJson(dangerousGoodsCode))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }
