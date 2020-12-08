@@ -16,22 +16,25 @@
 
 package models
 
+import cats.data.NonEmptyList
 import play.api.mvc.PathBindable
 
 abstract class ReferenceDataList(val listName: String)
 
 object ReferenceDataList {
 
-  val values: Map[String, ReferenceDataList] =
-    Seq(
-      AdditionalInformationList,
-      AdditionalInformationList
-    ).map(x => x.listName -> x).toMap
+  val values: NonEmptyList[AdditionalInformationList.type] = NonEmptyList.of(
+    AdditionalInformationList,
+    AdditionalInformationList
+  )
+
+  val mappings: Map[String, ReferenceDataList] =
+    values.map(x => x.listName -> x).toList.toMap
 
   implicit val pathBindable: PathBindable[ReferenceDataList] = new PathBindable[ReferenceDataList] {
 
     override def bind(key: String, value: String): Either[String, ReferenceDataList] =
-      values.get(value).toRight(s"Unknown reference data list name : $value")
+      mappings.get(value).toRight(s"Unknown reference data list name : $value")
 
     override def unbind(key: String, value: ReferenceDataList): String = value.listName
   }
