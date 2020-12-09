@@ -16,22 +16,41 @@
 
 package data.transform
 
+import models.ReferenceDataList
 import play.api.libs.json.JsObject
 import play.api.libs.json.Reads
 
 trait Transformation[A] {
 
-  def transformation: Reads[JsObject]
+  /**
+    * The transformation that will be applied to the object
+    *
+    * @return The reads to transform the payload
+    */
+  def transform: Reads[JsObject]
+
+  /**
+    * The filter step that be applied to pre-transformed object,
+    * which allows business rules can be used to filter out items.
+    * If an input evaluates to `true`, then the will be dropped.
+    *
+    * @return Predicate that is used to test objects, if satisfied,
+    *         the element is dropped
+    */
+  def filterNot: JsObject => Boolean
 
 }
 
-object Transformation {
+object Transformation extends TransformationValues {
 
   def apply[A: Transformation]: Transformation[A] = implicitly[Transformation[A]]
 
+  def apply[A <: ReferenceDataList](a: A)(implicit ev: Transformation[A]): Transformation[A] = ev
+
   def fromReads[A](reads: Reads[JsObject]): Transformation[A] =
     new Transformation[A] {
-      override def transformation: Reads[JsObject] = reads
+      override def transform: Reads[JsObject]     = reads
+      override def filterNot: JsObject => Boolean = _ => false
     }
 
 }
