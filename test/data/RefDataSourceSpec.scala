@@ -17,6 +17,7 @@
 package data
 
 import akka.actor.ActorSystem
+import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import base.SpecBase
 import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataByteString
@@ -46,8 +47,8 @@ class RefDataSourceSpec extends SpecBase {
     val listName = ReferenceDataList.values.head
 
     val mockDataConnector = mock[RefDataConnector]
-
     when(mockDataConnector.get(eqTo(listName))).thenReturn(Future.successful(Some(testData)))
+    when(mockDataConnector.getAsSource(eqTo(listName))).thenReturn(Future.successful(Some(Source.single(testData))))
 
     val referenceDataJsonProjection = new ReferenceDataJsonProjection(TestStreamLoggingConfig)
     val sut                         = new RefDataSource(mockDataConnector, referenceDataJsonProjection)

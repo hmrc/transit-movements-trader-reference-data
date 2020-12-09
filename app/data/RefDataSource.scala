@@ -32,14 +32,9 @@ private[data] class RefDataSource @Inject() (
   referenceDataJsonProjection: ReferenceDataJsonProjection
 )(implicit ec: ExecutionContext) {
 
-  private def jsonByteStringToDataElements(jsonByteString: ByteString): Source[JsObject, NotUsed] =
-    Source
-      .single(jsonByteString)
-      .via(referenceDataJsonProjection.dataElements)
-
-  def apply(listName: ReferenceDataList): Future[Option[Source[JsObject, NotUsed]]] =
+  def apply(listName: ReferenceDataList): Future[Option[Source[JsObject, _]]] =
     refDataConnector
-      .get(listName)
-      .map(_.map(jsonByteStringToDataElements))
+      .getAsSource(listName)
+      .map(_.map(_.via(referenceDataJsonProjection.dataElements)))
 
 }
