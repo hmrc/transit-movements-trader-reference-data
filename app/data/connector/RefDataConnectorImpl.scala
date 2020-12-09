@@ -16,6 +16,7 @@
 
 package data.connector
 
+import akka.stream.scaladsl.Source
 import akka.util.ByteString
 import cats.data._
 import cats.implicits._
@@ -39,6 +40,18 @@ private[connector] class RefDataConnectorImpl @Inject() (ws: WSClient, connector
       listUrl = connectorConfig.customsReferenceData.fromRelativePath(listRelativePath)
       listData <- OptionT.liftF(ws.url(listUrl).get)
     } yield listData.bodyAsBytes).value
+  }
+
+  override def getAsSource(listName: ReferenceDataList): Future[Option[Source[ByteString, _]]] = {
+    val url = connectorConfig.customsReferenceData.urlWithBaseUrl("/lists")
+
+    (for {
+      response <- OptionT.liftF(ws.url(url).get)
+      lists = response.json.as[ReferenceDataLists]
+      listRelativePath <- OptionT.fromOption[Future](lists.getPath(listName))
+      listUrl = connectorConfig.customsReferenceData.fromRelativePath(listRelativePath)
+      listData <- OptionT.liftF(ws.url(listUrl).get)
+    } yield listData.bodyAsSource).value
   }
 
 }

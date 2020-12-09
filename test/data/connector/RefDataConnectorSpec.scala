@@ -18,6 +18,9 @@ package data.connector
 
 import java.util
 
+import akka.actor.ActorSystem
+import akka.stream.scaladsl.Source
+import akka.stream.testkit.scaladsl.TestSink
 import akka.util.ByteString
 import com.github.tomakehurst.wiremock.client.WireMock._
 import data.ReferenceDataJsonProjectionSpec
@@ -30,7 +33,11 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.Writes
 
+import scala.collection.immutable
+
 class RefDataConnectorSpec extends ConnectorSpecBase {
+
+  implicit lazy val actorSystem: ActorSystem = ActorSystem()
 
   implicit val arbitraryReferenceDataList: Arbitrary[ReferenceDataList] =
     Arbitrary(Gen.oneOf(ReferenceDataList.values.toList))
@@ -123,6 +130,104 @@ class RefDataConnectorSpec extends ConnectorSpecBase {
       val connector = app.injector.instanceOf[RefDataConnector]
 
       val result = connector.get(listName).futureValue
+
+      result must not be defined
+    }
+  }
+
+  "getAsSource" - {
+    "returns a Source of bytestring that can be parse into the reference data for a valid reference data list" in {
+
+      val listName         = Arbitrary.arbitrary[ReferenceDataList].sample.value
+      val pathToSingleList = s"$pathToLists/${listName.listName}"
+
+      val listsResponse: JsObject =
+        Json.obj(
+          "_self"           -> Json.obj("href" -> pathToLists),
+          listName.listName -> Json.obj("href" -> pathToSingleList)
+        )
+
+      val refDataList =
+        ReferenceDataJsonProjectionSpec.formatAsReferenceDataJson(
+          Seq(
+            simpleJsObject(1),
+            simpleJsObject(2),
+            simpleJsObject(3)
+          )
+        )
+
+      server.stubFor(
+        get(urlEqualTo(pathToLists))
+          .willReturn(
+            ok()
+              .withHeader(HeaderNames.CONTENT_ENCODING, MimeTypes.JSON)
+              .withBody(listsResponse.toString())
+          )
+      )
+
+      server.stubFor(
+        get(urlEqualTo(pathToSingleList))
+          .willReturn(
+            ok()
+              .withHeader(HeaderNames.CONTENT_ENCODING, MimeTypes.JSON)
+              .withBody(refDataList.toString())
+          )
+      )
+
+      val connector = app.injector.instanceOf[RefDataConnector]
+
+      val dataSource = connector.getAsSource(listName).futureValue.value
+
+      val result =
+        dataSource
+          .runWith(TestSink.probe[ByteString])
+          .request(1)
+          .expectNextN(1)
+          .head
+
+      Json.parse(result.toArray) mustEqual refDataList
+    }
+
+    "return a none when the service doesn't have the list" in {
+
+      val listName         = Arbitrary.arbitrary[ReferenceDataList].sample.value
+      val pathToSingleList = s"$pathToLists/${listName.listName}"
+
+      val listsResponse: JsObject =
+        Json.obj(
+          "_self" -> Json.obj("href" -> pathToLists)
+        )
+
+      val refDataList =
+        ReferenceDataJsonProjectionSpec.formatAsReferenceDataJson(
+          Seq(
+            simpleJsObject(1),
+            simpleJsObject(2),
+            simpleJsObject(3)
+          )
+        )
+
+      server.stubFor(
+        get(urlEqualTo(pathToLists))
+          .willReturn(
+            ok()
+              .withHeader(HeaderNames.CONTENT_ENCODING, MimeTypes.JSON)
+              .withBody(listsResponse.toString())
+          )
+      )
+
+      server.stubFor(
+        get(urlEqualTo(pathToSingleList))
+          .willReturn(
+            ok()
+              .withHeader(HeaderNames.CONTENT_ENCODING, MimeTypes.JSON)
+              .withBody(refDataList.toString())
+          )
+      )
+
+      val connector = app.injector.instanceOf[RefDataConnector]
+
+      val result = connector.getAsSource(listName).futureValue
 
       result must not be defined
     }
