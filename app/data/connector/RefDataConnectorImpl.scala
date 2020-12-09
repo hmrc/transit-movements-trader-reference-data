@@ -50,7 +50,7 @@ private[connector] class RefDataConnectorImpl @Inject() (ws: WSClient, connector
       lists = response.json.as[ReferenceDataLists]
       listRelativePath <- OptionT.fromOption[Future](lists.getPath(listName))
       listUrl = connectorConfig.customsReferenceData.fromRelativePath(listRelativePath)
-      listData <- OptionT.liftF(ws.url(listUrl).get)
+      listData <- OptionT.liftF(ws.url(listUrl).stream())
     } yield listData.bodyAsSource).value
   }
 
