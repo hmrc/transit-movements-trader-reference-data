@@ -39,7 +39,7 @@ class ReferenceDataJsonProjectionSpec extends SpecBase {
     implicit val owrites: OWrites[JsObject] = identity[JsObject]
 
     val expectedData = List(Json.obj("int" -> 1), Json.obj("int" -> 2))
-    val testData     = formatAsReferenceDataJson(expectedData)
+    val testData     = formatAsReferenceDataByteString(expectedData)
 
     val (pub, sub) =
       TestSource
@@ -56,7 +56,7 @@ class ReferenceDataJsonProjectionSpec extends SpecBase {
   "stream returns an error when values in the `data` array are not objects" in {
 
     val expectedData = List("one")
-    val testData     = formatAsReferenceDataJson(expectedData)
+    val testData     = formatAsReferenceDataByteString(expectedData)
 
     val (pub, sub) =
       TestSource
@@ -76,15 +76,15 @@ class ReferenceDataJsonProjectionSpec extends SpecBase {
 
 object ReferenceDataJsonProjectionSpec {
 
-  def formatAsReferenceDataJson[A: Writes](data: Seq[A]): ByteString =
-    ByteString(
-      Json
-        .obj(
-          "_links" -> Json.obj("self" -> "foo"),
-          "meta"   -> Json.obj("meta1" -> "meta1Value"),
-          "id"     -> "idValue",
-          "data"   -> Json.toJson(data)
-        )
-        .toString()
-    )
+  def formatAsReferenceDataByteString[A: Writes](data: Seq[A]): ByteString =
+    ByteString(formatAsReferenceDataJson(data).toString())
+
+  def formatAsReferenceDataJson[A: Writes](data: Seq[A]): JsObject =
+    Json
+      .obj(
+        "_links" -> Json.obj("self" -> "foo"),
+        "meta"   -> Json.obj("meta1" -> "meta1Value"),
+        "id"     -> "idValue",
+        "data"   -> Json.toJson(data)
+      )
 }

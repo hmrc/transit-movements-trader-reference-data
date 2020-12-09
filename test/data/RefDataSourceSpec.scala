@@ -28,7 +28,7 @@ import org.mockito.Mockito._
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
-import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataJson
+import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataByteString
 import logging.TestStreamLoggingConfig
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -42,7 +42,7 @@ class RefDataSourceSpec extends SpecBase {
     case class TestObject(int: Int)
     implicit val owrites: OWrites[TestObject] = o => Json.obj("int" -> o.int)
 
-    val testData     = formatAsReferenceDataJson(Seq(TestObject(1), TestObject(2)))
+    val testData     = formatAsReferenceDataByteString(Seq(TestObject(1), TestObject(2)))
     val expectedData = List(Json.obj("int" -> 1), Json.obj("int" -> 2))
 
     val listName = new ReferenceDataList("TestObject") {}

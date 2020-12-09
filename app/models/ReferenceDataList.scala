@@ -23,10 +23,11 @@ abstract class ReferenceDataList(val listName: String)
 
 object ReferenceDataList {
 
-  val values: NonEmptyList[AdditionalInformationList.type] = NonEmptyList.of(
-    AdditionalInformationList,
-    AdditionalInformationList
-  )
+  val values: NonEmptyList[ReferenceDataList] =
+    NonEmptyList.of(
+      AdditionalInformationList,
+      CircumstanceIndicatorList
+    )
 
   val mappings: Map[String, ReferenceDataList] =
     values.map(x => x.listName -> x).toList.toMap
