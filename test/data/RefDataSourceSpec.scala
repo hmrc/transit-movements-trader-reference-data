@@ -16,20 +16,18 @@
 
 package data
 
-import akka.NotUsed
 import akka.actor.ActorSystem
-import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import base.SpecBase
+import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataByteString
 import data.connector.RefDataConnector
+import logging.TestStreamLoggingConfig
 import models.ReferenceDataList
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito._
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
-import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataByteString
-import logging.TestStreamLoggingConfig
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -45,7 +43,7 @@ class RefDataSourceSpec extends SpecBase {
     val testData     = formatAsReferenceDataByteString(Seq(TestObject(1), TestObject(2)))
     val expectedData = List(Json.obj("int" -> 1), Json.obj("int" -> 2))
 
-    val listName = new ReferenceDataList("TestObject") {}
+    val listName = ReferenceDataList.values.head
 
     val mockDataConnector = mock[RefDataConnector]
 

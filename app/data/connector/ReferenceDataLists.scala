@@ -20,14 +20,14 @@ import models.ReferenceDataList
 import play.api.libs.json.Reads
 import play.api.libs.json._
 
-case class ReferenceDataLists(listPathMappings: Map[ReferenceDataList, String]) {
+private[data] case class ReferenceDataLists(listPathMappings: Map[ReferenceDataList, String]) {
 
   def getPath(listName: ReferenceDataList): Option[String] =
     listPathMappings.get(listName)
 
 }
 
-object ReferenceDataLists {
+private[data] object ReferenceDataLists {
 
   private val hrefTransform: Reads[JsString] =
     (__ \ "href").json.pick[JsString]

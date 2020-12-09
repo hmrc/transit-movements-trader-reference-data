@@ -19,7 +19,7 @@ package models
 import cats.data.NonEmptyList
 import play.api.mvc.PathBindable
 
-abstract class ReferenceDataList(val listName: String)
+sealed abstract class ReferenceDataList(val listName: String)
 
 object ReferenceDataList {
 

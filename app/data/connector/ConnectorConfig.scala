@@ -20,7 +20,7 @@ import javax.inject.Inject
 import models.config.Service
 import play.api.Configuration
 
-class ConnectorConfig @Inject() (config: Configuration) {
+private[connector] class ConnectorConfig @Inject() (config: Configuration) {
 
   val customsReferenceData: Service =
     config.get[Service]("microservice.services.customsReferenceData")

@@ -27,11 +27,8 @@ import org.scalacheck.Gen
 import play.api.http.HeaderNames
 import play.api.http.MimeTypes
 import play.api.libs.json.JsObject
-import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import play.api.libs.json.Writes
-
-import scala.collection.JavaConverters._
 
 class RefDataConnectorSpec extends ConnectorSpecBase {
 
