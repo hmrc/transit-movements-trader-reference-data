@@ -21,10 +21,7 @@ import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import models.CountryCodesFullList
 
-trait TransformationValues {
-
-  val englishDescription: Reads[JsValue] =
-    (__ \ "description" \ "en").json.pick
+trait CountryCodesFullListTransfom {
 
   implicit val transformationCountryCodesFullList: Transformation[CountryCodesFullList.type] =
     Transformation

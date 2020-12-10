@@ -24,27 +24,12 @@ import play.api.libs.json.Json
 import play.api.libs.json._
 
 class CountryCodesFullListTransfomSpec extends SpecBase {
+  import CountryCodesFullListTransfomSpec._
 
   val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   "transform" - {
     "transforms data as a JsSuccess JsObject and keeps the English description" in {
-      val data =
-        """ 
-          |{
-          |  "state": "valid",
-          |  "activeFrom": "2020-01-23",
-          |  "countryCode": "AD",
-          |  "tccEntryDate": "19000101",
-          |  "nctsEntryDate": "19000101",
-          |  "geoNomenclatureCode": "043",
-          |  "countryRegimeCode": "TOC",
-          |  "description": {
-          |    "en": "Andorra",
-          |    "tt": "Andorra"
-          |  }
-          |}
-          |""".stripMargin
 
       val expected =
         """
@@ -55,7 +40,7 @@ class CountryCodesFullListTransfomSpec extends SpecBase {
           |}
           |""".stripMargin
 
-      val result = Transformation(CountryCodesFullList).transform.reads(Json.parse(data))
+      val result = Transformation(CountryCodesFullList).transform.reads(Json.parse(validData))
 
       result.get mustEqual Json.parse(expected)
 
@@ -64,25 +49,10 @@ class CountryCodesFullListTransfomSpec extends SpecBase {
     "returns a JsError parse error if the json doesn't match the expected schema" - {
 
       "with missing state" in {
-        val data =
-          """ 
-            |{
-            |  "activeFrom": "2020-01-23",
-            |  "countryCode": "AD",
-            |  "tccEntryDate": "19000101",
-            |  "nctsEntryDate": "19000101",
-            |  "geoNomenclatureCode": "043",
-            |  "countryRegimeCode": "TOC",
-            |  "description": {
-            |    "en": "Andorra",
-            |    "tt": "Andorra"
-            |  }
-            |}
-            |""".stripMargin
 
         val result =
           Transformation(CountryCodesFullList).transform
-            .reads(Json.parse(data))
+            .reads(Json.parse(invalidDataWithMissingState))
             .asEither
             .left
             .value
@@ -194,5 +164,51 @@ class CountryCodesFullListTransfomSpec extends SpecBase {
     "returns a JsSuccess of None if the country is in the future" ignore {}
 
   }
+
+}
+
+object CountryCodesFullListTransfomSpec {
+
+  val validData =
+    """ 
+      |{
+      |  "state": "valid",
+      |  "activeFrom": "2020-01-23",
+      |  "countryCode": "AD",
+      |  "tccEntryDate": "19000101",
+      |  "nctsEntryDate": "19000101",
+      |  "geoNomenclatureCode": "043",
+      |  "countryRegimeCode": "TOC",
+      |  "description": {
+      |    "en": "Andorra",
+      |    "tt": "Andorra"
+      |  }
+      |}
+      |""".stripMargin
+
+  val expected =
+    """
+      |{
+      |  "code": "AD",
+      |  "state": "valid",
+      |  "description": "Andorra"
+      |}
+      |""".stripMargin
+
+  val invalidDataWithMissingState =
+    """ 
+      |{
+      |  "activeFrom": "2020-01-23",
+      |  "countryCode": "AD",
+      |  "tccEntryDate": "19000101",
+      |  "nctsEntryDate": "19000101",
+      |  "geoNomenclatureCode": "043",
+      |  "countryRegimeCode": "TOC",
+      |  "description": {
+      |    "en": "Andorra",
+      |    "tt": "Andorra"
+      |  }
+      |}
+      |""".stripMargin
 
 }
