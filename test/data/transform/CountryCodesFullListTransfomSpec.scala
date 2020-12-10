@@ -40,7 +40,7 @@ class CountryCodesFullListTransfomSpec extends SpecBase {
           |}
           |""".stripMargin
 
-      val result = Transformation(CountryCodesFullList).transform.reads(Json.parse(validData))
+      val result = Transformation(CountryCodesFullList).transform.reads(validData1)
 
       result.get mustEqual Json.parse(expected)
 
@@ -52,7 +52,7 @@ class CountryCodesFullListTransfomSpec extends SpecBase {
 
         val result =
           Transformation(CountryCodesFullList).transform
-            .reads(Json.parse(invalidDataWithMissingState))
+            .reads(dataWithErrorMissingState)
             .asEither
             .left
             .value
@@ -169,8 +169,9 @@ class CountryCodesFullListTransfomSpec extends SpecBase {
 
 object CountryCodesFullListTransfomSpec {
 
-  val validData =
-    """ 
+  val validData1: JsObject =
+    Json
+      .parse(""" 
       |{
       |  "state": "valid",
       |  "activeFrom": "2020-01-23",
@@ -184,19 +185,52 @@ object CountryCodesFullListTransfomSpec {
       |    "tt": "Andorra"
       |  }
       |}
-      |""".stripMargin
+      |""".stripMargin)
+      .as[JsObject]
 
-  val expected =
-    """
+  val expected1: JsObject =
+    Json
+      .parse("""
       |{
       |  "code": "AD",
       |  "state": "valid",
       |  "description": "Andorra"
       |}
-      |""".stripMargin
+      |""".stripMargin)
+      .as[JsObject]
 
-  val invalidDataWithMissingState =
-    """ 
+  val validData2: JsObject =
+    Json
+      .parse(""" 
+             |{
+             |  "state": "valid",
+             |  "activeFrom": "2015-07-01",
+             |  "countryCode": "TT",
+             |  "tccEntryDate": "19000101",
+             |  "nctsEntryDate": "19000101",
+             |  "geoNomenclatureCode": "472",
+             |  "countryRegimeCode": "OTH",
+             |  "description": {
+             |      "en": "Trinidad and Tobago"
+             |  }
+             |}
+             |""".stripMargin)
+      .as[JsObject]
+
+  val expected2: JsObject =
+    Json
+      .parse("""
+        |{
+        |  "code": "TT",
+        |  "state": "valid",
+        |  "description": "Trinidad and Tobago"
+        |}
+        |""".stripMargin)
+      .as[JsObject]
+
+  val dataWithErrorMissingState: JsObject =
+    Json
+      .parse(""" 
       |{
       |  "activeFrom": "2020-01-23",
       |  "countryCode": "AD",
@@ -209,6 +243,7 @@ object CountryCodesFullListTransfomSpec {
       |    "tt": "Andorra"
       |  }
       |}
-      |""".stripMargin
+      |""".stripMargin)
+      .as[JsObject]
 
 }

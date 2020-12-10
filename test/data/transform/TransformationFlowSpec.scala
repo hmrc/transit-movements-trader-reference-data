@@ -23,7 +23,6 @@ import akka.stream.testkit.scaladsl.TestSource
 import base.SpecBaseWithAppPerSuite
 import models.CountryCodesFullList
 import play.api.libs.json.JsObject
-import play.api.libs.json.Json
 
 class TransformationFlowSpec extends SpecBaseWithAppPerSuite {
 
@@ -33,10 +32,9 @@ class TransformationFlowSpec extends SpecBaseWithAppPerSuite {
 
   "flow returns a Flow that" - {
 
-    val testData       = Json.parse(validData).as[JsObject]
-    val expectedObject = Json.parse(expected).as[JsObject]
+    val testData = validData1
 
-    val invaildData = Json.parse(invalidDataWithMissingState).as[JsObject]
+    val invaildData = dataWithErrorMissingState
 
     "transforms the JsObject if it is valid for the transformation" in {
 
@@ -52,7 +50,7 @@ class TransformationFlowSpec extends SpecBaseWithAppPerSuite {
       sub.request(2)
       pub.sendNext(testData)
       pub.sendNext(testData)
-      sub.expectNextN(List(expectedObject, expectedObject))
+      sub.expectNextN(List(expected1, expected1))
 
     }
 
@@ -67,9 +65,9 @@ class TransformationFlowSpec extends SpecBaseWithAppPerSuite {
           .toMat(TestSink.probe[JsObject])(Keep.both)
           .run()
 
-      val testData = Json.parse(validData).as[JsObject]
+      val testData = validData1
 
-      val expectedObject = Json.parse(expected).as[JsObject]
+      val expectedObject = expected1
 
       sub.request(3)
       pub.sendNext(testData)
