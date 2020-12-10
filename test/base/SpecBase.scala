@@ -16,9 +16,11 @@
 
 package base
 
+import org.scalatest.EitherValues
 import org.scalatest.OptionValues
+import org.scalatest.concurrent.IntegrationPatience
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 
-trait SpecBase extends AnyFreeSpec with Matchers with OptionValues with TestWithMocking with ScalaFutures
+trait SpecBase extends AnyFreeSpec with Matchers with OptionValues with TestWithMocking with ScalaFutures with IntegrationPatience with EitherValues

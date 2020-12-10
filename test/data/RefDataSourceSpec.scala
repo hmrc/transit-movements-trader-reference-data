@@ -16,20 +16,19 @@
 
 package data
 
-import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import base.SpecBase
+import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataByteString
 import data.connector.RefDataConnector
-import models.ListName
+import logging.TestStreamLoggingConfig
+import models.ReferenceDataList
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito._
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
-import data.ReferenceDataJsonProjectionSpec.formatAsReferenceDataJson
-import logging.TestStreamLoggingConfig
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -42,14 +41,14 @@ class RefDataSourceSpec extends SpecBase {
     case class TestObject(int: Int)
     implicit val owrites: OWrites[TestObject] = o => Json.obj("int" -> o.int)
 
-    val testData     = formatAsReferenceDataJson(Seq(TestObject(1), TestObject(2)))
+    val testData     = formatAsReferenceDataByteString(Seq(TestObject(1), TestObject(2)))
     val expectedData = List(Json.obj("int" -> 1), Json.obj("int" -> 2))
 
-    val listName = ListName("TestObject")
+    val listName = ReferenceDataList.values.head
 
     val mockDataConnector = mock[RefDataConnector]
-
     when(mockDataConnector.get(eqTo(listName))).thenReturn(Future.successful(Some(testData)))
+    when(mockDataConnector.getAsSource(eqTo(listName))).thenReturn(Future.successful(Some(Source.single(testData))))
 
     val referenceDataJsonProjection = new ReferenceDataJsonProjection(TestStreamLoggingConfig)
     val sut                         = new RefDataSource(mockDataConnector, referenceDataJsonProjection)

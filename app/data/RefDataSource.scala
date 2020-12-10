@@ -21,7 +21,7 @@ import akka.stream.scaladsl.Source
 import akka.util.ByteString
 import data.connector.RefDataConnector
 import javax.inject.Inject
-import models.ListName
+import models.ReferenceDataList
 import play.api.libs.json.JsObject
 
 import scala.concurrent.ExecutionContext
@@ -32,14 +32,9 @@ private[data] class RefDataSource @Inject() (
   referenceDataJsonProjection: ReferenceDataJsonProjection
 )(implicit ec: ExecutionContext) {
 
-  private def jsonByteStringToDataElements(jsonByteString: ByteString): Source[JsObject, NotUsed] =
-    Source
-      .single(jsonByteString)
-      .via(referenceDataJsonProjection.dataElements)
-
-  def apply(listName: ListName): Future[Option[Source[JsObject, NotUsed]]] =
+  def apply(listName: ReferenceDataList): Future[Option[Source[JsObject, _]]] =
     refDataConnector
-      .get(listName)
-      .map(_.map(jsonByteStringToDataElements))
+      .getAsSource(listName)
+      .map(_.map(_.via(referenceDataJsonProjection.dataElements)))
 
 }

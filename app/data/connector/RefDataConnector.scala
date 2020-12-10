@@ -16,11 +16,14 @@
 
 package data.connector
 
+import akka.stream.scaladsl.Source
 import akka.util.ByteString
-import models.ListName
+import models.ReferenceDataList
 
 import scala.concurrent.Future
 
 private[data] trait RefDataConnector {
-  def get(listName: ListName): Future[Option[ByteString]]
+  def get(listName: ReferenceDataList): Future[Option[ByteString]]
+
+  def getAsSource(listName: ReferenceDataList): Future[Option[Source[ByteString, _]]]
 }

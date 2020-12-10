@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package data
+package data.connector
 
-import data.transform.Transformation
-import models.ReferenceDataList
-import play.api.libs.json.JsObject
+import javax.inject.Inject
+import models.config.Service
+import play.api.Configuration
 
-import scala.concurrent.Future
+private[connector] class ConnectorConfig @Inject() (config: Configuration) {
 
-trait DataRetrieval {
-
-  def getList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Seq[JsObject]]
+  val customsReferenceData: Service =
+    config.get[Service]("microservice.services.customsReferenceData")
 
 }

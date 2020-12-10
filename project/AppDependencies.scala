@@ -24,7 +24,8 @@ object AppDependencies {
     "com.typesafe.akka"      %% "akka-stream-testkit"      % "2.6.10",
     "com.typesafe.akka"      %% "akka-slf4j"               % "2.6.10",
     "org.pegdown"            % "pegdown"                   % "1.6.0",
-    "com.vladsch.flexmark"   % "flexmark-all"              % "0.35.10"
+    "com.vladsch.flexmark"   % "flexmark-all"              % "0.35.10",
+    "com.github.tomakehurst" % "wiremock-standalone"       % "2.27.1",
   ).map(_ % "test, it")
 
 }

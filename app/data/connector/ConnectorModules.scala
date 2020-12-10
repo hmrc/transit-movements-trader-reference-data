@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
-package models
+package data.connector
 
-case class ListName(listName: String)
+import com.google.inject.AbstractModule
+
+class ConnectorModules extends AbstractModule {
+
+  override def configure(): Unit = {
+    bind(classOf[RefDataConnector]).to(classOf[RefDataConnectorImpl])
+    bind(classOf[ConnectorConfig]).asEagerSingleton()
+
+  }
+
+}
