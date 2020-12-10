@@ -16,10 +16,7 @@
 
 package data.connector
 
-import java.util
-
 import akka.actor.ActorSystem
-import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import akka.util.ByteString
 import com.github.tomakehurst.wiremock.client.WireMock._
@@ -32,8 +29,6 @@ import play.api.http.MimeTypes
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.Writes
-
-import scala.collection.immutable
 
 class RefDataConnectorSpec extends ConnectorSpecBase {
 
@@ -52,8 +47,10 @@ class RefDataConnectorSpec extends ConnectorSpecBase {
 
       val listsResponse: JsObject =
         Json.obj(
-          "_self"           -> Json.obj("href" -> pathToLists),
-          listName.listName -> Json.obj("href" -> pathToSingleList)
+          "_links" -> Json.obj(
+            "_self"           -> Json.obj("href" -> pathToLists),
+            listName.listName -> Json.obj("href" -> pathToSingleList)
+          )
         )
 
       val refDataList =
@@ -97,7 +94,9 @@ class RefDataConnectorSpec extends ConnectorSpecBase {
 
       val listsResponse: JsObject =
         Json.obj(
-          "_self" -> Json.obj("href" -> pathToLists)
+          "_links" -> Json.obj(
+            "_self" -> Json.obj("href" -> pathToLists)
+          )
         )
 
       val refDataList =
@@ -143,8 +142,10 @@ class RefDataConnectorSpec extends ConnectorSpecBase {
 
       val listsResponse: JsObject =
         Json.obj(
-          "_self"           -> Json.obj("href" -> pathToLists),
-          listName.listName -> Json.obj("href" -> pathToSingleList)
+          "_links" -> Json.obj(
+            "_self"           -> Json.obj("href" -> pathToLists),
+            listName.listName -> Json.obj("href" -> pathToSingleList)
+          )
         )
 
       val refDataList =
@@ -195,7 +196,9 @@ class RefDataConnectorSpec extends ConnectorSpecBase {
 
       val listsResponse: JsObject =
         Json.obj(
-          "_self" -> Json.obj("href" -> pathToLists)
+          "_links" -> Json.obj(
+            "_self" -> Json.obj("href" -> pathToLists)
+          )
         )
 
       val refDataList =

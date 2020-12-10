@@ -17,8 +17,10 @@
 package data.connector
 
 import models.ReferenceDataList
-import play.api.libs.json.Reads
+import play.api.libs.functional.FunctionalBuilder
 import play.api.libs.json._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
 
 private[data] case class ReferenceDataLists(listPathMappings: Map[ReferenceDataList, String]) {
 
@@ -29,21 +31,21 @@ private[data] case class ReferenceDataLists(listPathMappings: Map[ReferenceDataL
 
 private[data] object ReferenceDataLists {
 
-  private val hrefTransform: Reads[JsString] =
-    (__ \ "href").json.pick[JsString]
+  val asdf: FunctionalBuilder[Reads]#CanBuild2[JsObject, JsValue] = (__ \ "_self").json.prune and
+    (__ \ "_links").json.pick
 
-  implicit val asdf: Reads[ReferenceDataLists] =
-    implicitly[Reads[Map[String, JsValue]]]
-      .map {
-        _.filterKeys(_ != "_self")
-          .flatMap {
-            case (listName, path) =>
-              ReferenceDataList.mappings
-                .get(listName)
-                .map(refDatList => (refDatList, path.transform(hrefTransform).get.value))
-          }
+  private def hrefTransform: Reads[JsString] =
+    (__ \\ "href").json.pick[JsString]
 
-      }
+  implicit val qwer: Reads[ReferenceDataLists] =
+    (__ \ "_links")
+      .read[Map[String, JsObject]]
+      .map(_.flatMap {
+        case (listName, path) =>
+          ReferenceDataList.mappings
+            .get(listName)
+            .map(refDatList => (refDatList, path.transform(hrefTransform).get.value))
+      })
       .map(ReferenceDataLists(_))
 
 }
