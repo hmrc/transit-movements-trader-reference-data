@@ -41,7 +41,7 @@ class ReferenceDataListsSpec extends SpecBase {
     result mustEqual expected
   }
 
-  "should read all known lists when there are known lists" in {
+  "should read all known lists when there are unknown lists" in {
 
     val testObject =
       Json.obj(
