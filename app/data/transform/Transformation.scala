@@ -41,7 +41,7 @@ trait Transformation[A] {
 
 }
 
-object Transformation extends TransformationValues {
+object Transformation extends CountryCodesFullListTransfom {
 
   def apply[A: Transformation]: Transformation[A] = implicitly[Transformation[A]]
 

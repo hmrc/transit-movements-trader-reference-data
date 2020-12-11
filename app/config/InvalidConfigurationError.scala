@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-package data
+package config
 
-import akka.stream.scaladsl.Source
-import data.transform.Transformation
-import models.ReferenceDataList
-import play.api.libs.json.JsObject
-
-import scala.concurrent.Future
-
-trait DataRetrieval {
-
-  def getList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Seq[JsObject]]
-
-  def streamList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Option[Source[JsObject, _]]]
-
-}
+class InvalidConfigurationError(errorMessage: String) extends RuntimeException(errorMessage)

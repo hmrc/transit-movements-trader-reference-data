@@ -18,6 +18,7 @@ package data.config
 
 import akka.event.Logging
 import akka.event.Logging.LogLevel
+import config.InvalidConfigurationError
 import javax.inject.Inject
 import play.api.Configuration
 
@@ -27,14 +28,27 @@ trait StreamLoggingConfig {
     * Configuration for the logging level of AkkaStream components. This allows for global
     * application configuration, or stream component specific configuration.
     *
-    * @param streamComponentName if provided, this will be used for this component over the
-    *                            global value at `data.stream.logging.onElement.level`,
+    * @note Valid values are: "error", "warning", "info", "debug"
+    *
+    * @param streamComponentName if provided, the value at
+    *                            `data.stream.logging.${streamComponentName}.${on event}.level`
+    *                            will be used for this component over the global value at
+    *                            `data.stream.logging.onElement.level`,
     *                            `data.stream.logging.onFinish.level` or
     *                            `data.stream.logging.onFailure.level`
     *
     * @return (onElement, onFinish, onFailure)
     */
   def loggingConfig(streamComponentName: Option[String] = None): (LogLevel, LogLevel, LogLevel)
+
+}
+
+object StreamLoggingConfig {
+
+  def getLogLevel(string: String): LogLevel =
+    Logging
+      .levelFor(string)
+      .getOrElse(throw new InvalidConfigurationError("Invalid value of: " + string))
 
 }
 
@@ -58,16 +72,16 @@ class StreamLoggingConfigImpl @Inject() (config: Configuration) extends StreamLo
   private def onElement(streamComponentName: Option[String]): LogLevel =
     config
       .getOptional[LogLevel](streamLoggingConfigPath(streamComponentName) + ".onElement")
-      .getOrElse(Logging.levelFor("off").get)
+      .getOrElse(Logging.DebugLevel)
 
   private def onFinish(streamComponentName: Option[String]): LogLevel =
     config
       .getOptional[LogLevel](streamLoggingConfigPath(streamComponentName) + ".onFinish")
-      .getOrElse(Logging.levelFor("off").get)
+      .getOrElse(Logging.DebugLevel)
 
   private def onFailure(streamComponentName: Option[String]): LogLevel =
     config
       .getOptional[LogLevel](streamLoggingConfigPath(streamComponentName) + ".onFailure")
-      .getOrElse(Logging.levelFor("warn").get)
+      .getOrElse(Logging.DebugLevel)
 
 }

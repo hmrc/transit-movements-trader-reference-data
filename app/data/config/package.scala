@@ -23,13 +23,12 @@ import play.api.Configuration
 
 package object config {
 
-  implicit val configLoader: ConfigLoader[LogLevel] =
-    ConfigLoader {
-      config => prefix =>
-        val service = Configuration(config).get[Configuration](prefix)
-        val value   = service.get[String]("level")
+  implicit lazy val configLoader: ConfigLoader[LogLevel] = ConfigLoader {
+    config => prefix =>
+      val configAtPath = Configuration(config).get[Configuration](prefix)
+      val level        = configAtPath.get[String]("level")
 
-        Logging.levelFor(value).get
-    }
+      StreamLoggingConfig.getLogLevel(level)
+  }
 
 }

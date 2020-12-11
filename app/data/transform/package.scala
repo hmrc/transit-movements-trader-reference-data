@@ -16,17 +16,13 @@
 
 package data
 
-import akka.stream.scaladsl.Source
-import data.transform.Transformation
-import models.ReferenceDataList
-import play.api.libs.json.JsObject
+import play.api.libs.json.JsValue
+import play.api.libs.json.Reads
+import play.api.libs.json.__
 
-import scala.concurrent.Future
+package object transform {
 
-trait DataRetrieval {
-
-  def getList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Seq[JsObject]]
-
-  def streamList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Option[Source[JsObject, _]]]
+  val englishDescription: Reads[JsValue] =
+    (__ \ "description" \ "en").json.pick
 
 }

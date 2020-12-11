@@ -21,10 +21,7 @@ import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import models.CountryCodesFullList
 
-trait TransformationValues {
-
-  val englishDescription: Reads[JsValue] =
-    (__ \ "description" \ "en").json.pick
+trait CountryCodesFullListTransfom {
 
   implicit val transformationCountryCodesFullList: Transformation[CountryCodesFullList.type] =
     Transformation
@@ -34,9 +31,10 @@ trait TransformationValues {
             (__ \ "state").json.pickBranch and
             (__ \ "activeFrom").json.pickBranch and
             (__ \ "description").json.copyFrom(englishDescription)
-        ).reduce andThen (
-          (__ \ "activeFrom").json.prune
-        )
+        ).reduce
+          .andThen(
+            (__ \ "activeFrom").json.prune
+          )
       )
 
 }

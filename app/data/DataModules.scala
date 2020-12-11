@@ -16,17 +16,11 @@
 
 package data
 
-import akka.stream.scaladsl.Source
-import data.transform.Transformation
-import models.ReferenceDataList
-import play.api.libs.json.JsObject
+import com.google.inject.AbstractModule
 
-import scala.concurrent.Future
+class DataModules extends AbstractModule {
 
-trait DataRetrieval {
-
-  def getList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Seq[JsObject]]
-
-  def streamList[A <: ReferenceDataList](list: A)(implicit transformation: Transformation[A]): Future[Option[Source[JsObject, _]]]
+  override def configure(): Unit =
+    bind(classOf[DataRetrieval]).to(classOf[DataRetrievalImpl])
 
 }
