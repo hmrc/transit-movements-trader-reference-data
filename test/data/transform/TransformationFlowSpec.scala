@@ -26,7 +26,7 @@ import play.api.libs.json.JsObject
 
 class TransformationFlowSpec extends SpecBaseWithAppPerSuite {
 
-  import CountryCodesFullListTransfomSpec._
+  import CountryCodesFullListTransformSpec._
 
   implicit lazy val actorSystem: ActorSystem = ActorSystem()
 

@@ -19,6 +19,7 @@ package api.controllers
 import api.services._
 import data.DataRetrieval
 import javax.inject.Inject
+import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -43,12 +44,15 @@ class CountryController @Inject() (
         .map(
           data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
         )
-
     }
 
   def transitCountries(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(transitCountryService.transitCountryCodes))
+    Action.async {
+      dataRetrieval
+        .getList(CountryCodesCommonTransitList)
+        .map(
+          data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
+        )
     }
 
   def getCountry(code: String): Action[AnyContent] =

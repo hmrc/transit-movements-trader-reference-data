@@ -27,7 +27,8 @@ object ReferenceDataList {
     NonEmptyList.of(
       AdditionalInformationList,
       CircumstanceIndicatorList,
-      CountryCodesFullList
+      CountryCodesFullList,
+      CountryCodesCommonTransitList
     )
 
   val mappings: Map[String, ReferenceDataList] =
@@ -43,6 +44,7 @@ object ReferenceDataList {
 
 }
 
-object AdditionalInformationList extends ReferenceDataList("AdditionalInformationIdCommon")
-object CircumstanceIndicatorList extends ReferenceDataList("SpecificCircumstanceIndicator")
-object CountryCodesFullList      extends ReferenceDataList("CountryCodesFullList")
+object AdditionalInformationList     extends ReferenceDataList("AdditionalInformationIdCommon")
+object CircumstanceIndicatorList     extends ReferenceDataList("SpecificCircumstanceIndicator")
+object CountryCodesFullList          extends ReferenceDataList("CountryCodesFullList")
+object CountryCodesCommonTransitList extends ReferenceDataList("CountryCodesCommonTransit")

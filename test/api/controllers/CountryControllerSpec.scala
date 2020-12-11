@@ -75,7 +75,7 @@ class CountryControllerSpec extends SpecBaseWithAppPerSuite {
     "transitCountries" - {
       "must fetch transit countries" in {
 
-        when(transitCountryService.transitCountryCodes).thenReturn(countries)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(
           GET,
