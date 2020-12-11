@@ -24,7 +24,7 @@ import play.api.mvc.ControllerComponents
 import api.services.CustomsOfficesService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class CustomsOfficeController @Inject() (
+class CustomsOfficeController @Inject()(
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
 ) extends BackendController(cc) {
