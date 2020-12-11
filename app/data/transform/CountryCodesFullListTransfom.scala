@@ -31,9 +31,10 @@ trait CountryCodesFullListTransfom {
             (__ \ "state").json.pickBranch and
             (__ \ "activeFrom").json.pickBranch and
             (__ \ "description").json.copyFrom(englishDescription)
-        ).reduce andThen (
-          (__ \ "activeFrom").json.prune
-        )
+        ).reduce
+          .andThen(
+            (__ \ "activeFrom").json.prune
+          )
       )
 
 }

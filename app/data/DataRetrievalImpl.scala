@@ -29,7 +29,7 @@ import play.api.libs.json.JsObject
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-private[data] class DataRetrievalImpl @Inject()(refDataSource: RefDataSource)(implicit ec: ExecutionContext, materializer: Materializer)
+private[data] class DataRetrievalImpl @Inject() (refDataSource: RefDataSource)(implicit ec: ExecutionContext, materializer: Materializer)
     extends DataRetrieval
     with Logging {
 

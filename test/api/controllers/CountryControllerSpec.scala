@@ -19,6 +19,7 @@ package api.controllers
 import api.models.Country
 import api.services._
 import base.SpecBaseWithAppPerSuite
+import data.DataRetrieval
 import org.mockito.Mockito.when
 import org.mockito.ArgumentMatchers.any
 import play.api.inject.bind
@@ -28,14 +29,20 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
+import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers._
+
+import scala.concurrent.Future
 
 class CountryControllerSpec extends SpecBaseWithAppPerSuite {
 
-  private val ukCountry = Country("valid", "GB", "United Kingdom")
-  private val countries = Seq(ukCountry)
+  private val ukCountry            = Country("valid", "GB", "United Kingdom")
+  private val countries            = Seq(ukCountry)
+  private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
 
   private val countryService        = mock[CountryService]
   private val transitCountryService = mock[TransitCountryService]
+  private val mockDataRetrieval     = mock[DataRetrieval]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(countryService, transitCountryService)
 
@@ -43,7 +50,8 @@ class CountryControllerSpec extends SpecBaseWithAppPerSuite {
     super.guiceApplicationBuilder
       .overrides(
         bind[CountryService].toInstance(countryService),
-        bind[TransitCountryService].toInstance(transitCountryService)
+        bind[TransitCountryService].toInstance(transitCountryService),
+        bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
   "CountryController" - {
@@ -51,7 +59,7 @@ class CountryControllerSpec extends SpecBaseWithAppPerSuite {
     "countriesFullList" - {
       "must fetch country full list" in {
 
-        when(countryService.countries).thenReturn(countries)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(
           GET,
