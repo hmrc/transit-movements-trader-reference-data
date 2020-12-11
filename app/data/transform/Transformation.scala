@@ -18,6 +18,7 @@ package data.transform
 
 import models.ReferenceDataList
 import play.api.libs.json.JsObject
+import play.api.libs.json.JsResult
 import play.api.libs.json.Reads
 
 trait Transformation[A] {
@@ -28,6 +29,16 @@ trait Transformation[A] {
     * @return The reads to transform the payload
     */
   def transform: Reads[JsObject]
+
+  /**
+    * Run the transformation for an input
+    *
+    * @param JsObject to be transformed
+    *
+    * @return Result of transformation
+    */
+  def runTransform(input: JsObject): JsResult[JsObject] =
+    transform.reads(input)
 
   /**
     * The filter step that be applied to pre-transformed object,
@@ -41,7 +52,7 @@ trait Transformation[A] {
 
 }
 
-object Transformation extends CountryCodesFullListTransfom {
+object Transformation extends CountryCodesFullListTransform with CountryCodesCommonTransitList {
 
   def apply[A: Transformation]: Transformation[A] = implicitly[Transformation[A]]
 

@@ -32,7 +32,7 @@ import play.api.libs.json.JsObject
 import scala.concurrent.Future
 
 class DataRetrievalSpec extends SpecBaseWithAppPerSuite {
-  import data.transform.CountryCodesFullListTransfomSpec._
+  import data.transform.CountryCodesFullListTransformSpec._
 
   "streamList" - {
 

@@ -17,10 +17,8 @@
 package data.connector
 
 import models.ReferenceDataList
-import play.api.libs.functional.FunctionalBuilder
-import play.api.libs.json._
 import play.api.libs.json.Reads._
-import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 private[data] case class ReferenceDataLists(listPathMappings: Map[ReferenceDataList, String]) {
 

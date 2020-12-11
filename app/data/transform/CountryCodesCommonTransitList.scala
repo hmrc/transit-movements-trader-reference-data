@@ -16,14 +16,14 @@
 
 package data.transform
 
-import play.api.libs.json._
-import play.api.libs.json.Reads._
+import models.CountryCodesCommonTransitList
 import play.api.libs.functional.syntax._
-import models.CountryCodesFullList
+import play.api.libs.json.Reads._
+import play.api.libs.json._
 
-trait CountryCodesFullListTransfom {
+trait CountryCodesCommonTransitList {
 
-  implicit val transformationCountryCodesFullList: Transformation[CountryCodesFullList.type] =
+  implicit val transformationCountryCodesCommonTransitList: Transformation[CountryCodesCommonTransitList.type] =
     Transformation
       .fromReads(
         (
