@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-package data
+package config
 
-import akka.event.Logging
-import akka.event.Logging.LogLevel
-import play.api.ConfigLoader
-import play.api.Configuration
-
-package object config {
-
-  implicit lazy val configLoader: ConfigLoader[LogLevel] = ConfigLoader {
-    config => prefix =>
-      val configAtPath = Configuration(config).get[Configuration](prefix)
-      val level        = configAtPath.get[String]("level")
-
-      StreamLoggingConfig.getLogLevel(level)
-  }
-
-}
+class InvalidConfigurationError(errorMessage: String) extends RuntimeException(errorMessage)
