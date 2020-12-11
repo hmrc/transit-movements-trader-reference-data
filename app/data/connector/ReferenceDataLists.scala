@@ -31,13 +31,10 @@ private[data] case class ReferenceDataLists(listPathMappings: Map[ReferenceDataL
 
 private[data] object ReferenceDataLists {
 
-  val asdf: FunctionalBuilder[Reads]#CanBuild2[JsObject, JsValue] = (__ \ "_self").json.prune and
-    (__ \ "_links").json.pick
-
-  private def hrefTransform: Reads[JsString] =
+  private val hrefTransform: Reads[JsString] =
     (__ \\ "href").json.pick[JsString]
 
-  implicit val qwer: Reads[ReferenceDataLists] =
+  implicit val readReferenceDataLists: Reads[ReferenceDataLists] =
     (__ \ "_links")
       .read[Map[String, JsObject]]
       .map(_.flatMap {
