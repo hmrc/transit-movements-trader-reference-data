@@ -156,12 +156,12 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
         val expected =
           """
             |{
-            | "CUST_OFF_ID": "AD000003",
-            | "CUST_OFF_NAM": "CENTRAL CUSTOMS OFFICE",
-            | "COUNTRY_ID": "AD",
-            | "PHONE_NUMBER": "+ (376) 879900",
-            | "CITY": "ESCALDES - ENGORDANY",
-            | "CUSTOMS_OFFICE_ROLES": []
+            | "id": "AD000003",
+            | "name": "CENTRAL CUSTOMS OFFICE",
+            | "countryId": "AD",
+            | "phoneNumber": "+ (376) 879900",
+            | "city": "ESCALDES - ENGORDANY",
+            | "roles": []
             |}
             |""".stripMargin
 

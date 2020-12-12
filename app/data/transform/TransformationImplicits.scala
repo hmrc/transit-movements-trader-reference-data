@@ -72,21 +72,21 @@ trait TransformationImplicits {
     Transformation
       .fromReads(
         (
-          (__ \ "CUST_OFF_ID").json.copyFrom((__ \ "referenceNumber").json.pick) and
+          (__ \ "id").json.copyFrom((__ \ "referenceNumber").json.pick) and
             (__ \ "state").json.pickBranch and
             (__ \ "activeFrom").json.pickBranch and
-            (__ \ "CUST_OFF_NAM").json.copyFrom(
+            (__ \ "name").json.copyFrom(
               customsOfficeDetailsEN.andThen((__ \ "customsOfficeDetails" \ "customsOfficeUsualName").json.pick)
             ) and
-            (__ \ "COUNTRY_ID").json.copyFrom((__ \ "countryCode").json.pick) and
-            (__ \ "PHONE_NUMBER").json.copyFrom((__ \ "phoneNumber").json.pick) and
-            (__ \ "CITY").json.copyFrom(
+            (__ \ "countryId").json.copyFrom((__ \ "countryCode").json.pick) and
+            (__ \ "phoneNumber").json.copyFrom((__ \ "phoneNumber").json.pick) and
+            (__ \ "city").json.copyFrom(
               customsOfficeDetailsEN.flatMap[JsString] {
                 x =>
                   (x \ "customsOfficeDetails" \ "city").validate[JsString].fold(x => Reads.failed(x.toString()), x => Reads.pure(x))
               }
             ) and
-            (__ \ "CUSTOMS_OFFICE_ROLES").json.put(JsArray.empty)
+            (__ \ "roles").json.put(JsArray.empty)
         ).reduce
           .andThen((__ \ "activeFrom").json.prune)
           .andThen((__ \ "state").json.prune)
