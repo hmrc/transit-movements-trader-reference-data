@@ -17,11 +17,12 @@
 package api.controllers
 
 import api.models.CustomsOffice
-import api.services.CustomsOfficesService
 import base.SpecBaseWithAppPerSuite
+import data.DataRetrieval
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
@@ -33,6 +34,8 @@ import scala.concurrent.Future
 class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
 
   private val customsOfficeId = "GB000001"
+
+  private val countryCode = "GB"
 
   private val customsOffices = Seq(
     CustomsOffice(
@@ -51,66 +54,110 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
     )
   )
 
+  private val customsOfficesJsObjects: Seq[JsObject] =
+    customsOffices.map(Json.toJsObject(_))
+
   private val invalidId = "123"
 
-  private val mockCustomsOfficesService = mock[CustomsOfficesService]
+  private val mockDataRetrieval = mock[DataRetrieval]
 
-  override val mocks: Seq[_] = super.mocks :+ mockCustomsOfficesService
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[CustomsOfficesService].toInstance(mockCustomsOfficesService)
+        bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
   "CustomsOfficeController" - {
 
-    "must return Ok and fetch some customs office" in {
+    "customsOffices" - {
 
-      when(mockCustomsOfficesService.getCustomsOffice(eqTo(customsOfficeId))).thenReturn(Some(customsOffices.head))
+      "must fetch customs offices" in {
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
 
-      val customsOffice = customsOffices.head
+        val request =
+          FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
+        val result = route(app, request).value
 
-      val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(customsOfficeId).url)
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(customsOffices)
+      }
 
-      val result: Future[Result] = route(app, request).value
+      "must return Internal Server Error when there are no customs offices" in {
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
-      status(result) mustEqual OK
+        val request =
+          FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
+        val result = route(app, request).value
 
-      contentAsJson(result) mustBe Json.toJson(customsOffice)
+        status(result) mustBe INTERNAL_SERVER_ERROR
+
+      }
+
     }
 
-    "must return NotFound when no customs office is found" in {
-      when(mockCustomsOfficesService.getCustomsOffice(any())).thenReturn(None)
+    "customsOfficesOfTheCountry" - {
 
-      val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(invalidId).url)
-      val result  = route(app, request).value
+      "must return customs offices of the input country" in {
 
-      status(result) mustBe NOT_FOUND
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+
+        val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry(countryCode).url)
+
+        val result: Future[Result] = route(app, request).value
+
+        status(result) mustEqual OK
+
+        contentAsJson(result) mustBe Json.toJson(customsOffices)
+      }
+
+      "must return Not Found when there are no customs offices for the country" in {
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+
+        val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry("TEST").url)
+
+        val result: Future[Result] = route(app, request).value
+
+        status(result) mustEqual NOT_FOUND
+
+      }
+
+      "must return BadRequest when the country code is not known" ignore {
+        // TODO: Add this test when the data is saved in Mongo
+      }
+
     }
 
-    "must fetch customs offices" in {
-      when(mockCustomsOfficesService.customsOffices).thenReturn(customsOffices)
+    "getCustomsOffice" - {
 
-      val request =
-        FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
-      val result = route(app, request).value
+      "must return Ok with a customs office when there is a matching customs office for the office id" in {
 
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(customsOffices)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+
+        val customsOffice = customsOffices.head
+
+        val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(customsOfficeId).url)
+
+        val result: Future[Result] = route(app, request).value
+
+        status(result) mustEqual OK
+
+        contentAsJson(result) mustBe Json.toJson(customsOffice)
+
+      }
+
+      "must return NotFound when no matching customs office is found" in {
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+
+        val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(invalidId).url)
+        val result  = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
+      }
+
     }
 
-    "must return customs offices of the input country" in {
-
-      when(mockCustomsOfficesService.getCustomsOfficesOfTheCountry(any())).thenReturn(customsOffices)
-
-      val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry(customsOfficeId).url)
-
-      val result: Future[Result] = route(app, request).value
-
-      status(result) mustEqual OK
-
-      contentAsJson(result) mustBe Json.toJson(customsOffices)
-    }
   }
+
 }

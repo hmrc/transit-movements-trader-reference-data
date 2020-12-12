@@ -16,6 +16,7 @@
 
 package data.transform
 
+import api.models.CustomsOffice
 import models.ReferenceDataList
 import play.api.libs.json.JsObject
 import play.api.libs.json.JsResult
@@ -52,7 +53,7 @@ trait Transformation[A] {
 
 }
 
-object Transformation extends CountryCodesFullListTransform with CountryCodesCommonTransitList {
+object Transformation extends TransformationImplicits {
 
   def apply[A: Transformation]: Transformation[A] = implicitly[Transformation[A]]
 

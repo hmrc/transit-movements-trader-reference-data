@@ -44,7 +44,7 @@ class CountryControllerSpec extends SpecBaseWithAppPerSuite {
   private val transitCountryService = mock[TransitCountryService]
   private val mockDataRetrieval     = mock[DataRetrieval]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(countryService, transitCountryService)
+  override val mocks: Seq[_] = super.mocks ++ Seq(countryService, transitCountryService, mockDataRetrieval)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder

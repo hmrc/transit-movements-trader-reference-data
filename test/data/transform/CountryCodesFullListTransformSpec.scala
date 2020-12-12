@@ -29,10 +29,13 @@ class CountryCodesFullListTransformSpec extends SpecBase {
   val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   "transform" - {
-    "transforms data as a JsSuccess JsObject and keeps the English description" in {
 
-      val expected =
-        """
+    "when the json matches the expected schema" - {
+
+      "transforms data as a JsSuccess JsObject and keeps the English description" in {
+
+        val expected =
+          """
           |{
           |  "code": "AD",
           |  "state": "valid",
@@ -40,32 +43,36 @@ class CountryCodesFullListTransformSpec extends SpecBase {
           |}
           |""".stripMargin
 
-      val result = Transformation(CountryCodesFullList).runTransform(validData1)
+        val result = Transformation(CountryCodesFullList).runTransform(validData1)
 
-      result.get mustEqual Json.parse(expected)
-
-    }
-
-    "returns a JsError parse error if the json doesn't match the expected schema" - {
-
-      "with missing state" in {
-
-        val result =
-          Transformation(CountryCodesFullList).transform
-            .reads(dataWithErrorMissingState)
-            .asEither
-            .left
-            .value
-
-        result.length mustEqual 1
-        val (errorPath, _) = result.head
-        errorPath mustEqual (__ \ "state")
+        result.get mustEqual Json.parse(expected)
 
       }
 
-      "with missing activeFrom" in {
-        val data =
-          """ 
+    }
+
+    "when the json doesn't match the expected schema" - {
+
+      "returns a JsError parse error if the json doesn't match the expected schema" - {
+
+        "when missing state" in {
+
+          val result =
+            Transformation(CountryCodesFullList).transform
+              .reads(dataWithErrorMissingState)
+              .asEither
+              .left
+              .value
+
+          result.length mustEqual 1
+          val (errorPath, _) = result.head
+          errorPath mustEqual (__ \ "state")
+
+        }
+
+        "when missing activeFrom" in {
+          val data =
+            """ 
             |{
             |  "state": "valid",
             |  "countryCode": "AD",
@@ -80,23 +87,23 @@ class CountryCodesFullListTransformSpec extends SpecBase {
             |}
             |""".stripMargin
 
-        val result =
-          Transformation(CountryCodesFullList).transform
-            .reads(Json.parse(data))
-            .asEither
-            .left
-            .value
+          val result =
+            Transformation(CountryCodesFullList).transform
+              .reads(Json.parse(data))
+              .asEither
+              .left
+              .value
 
-        result.length mustEqual 1
-        val (errorPath, _) = result.head
-        errorPath mustEqual (__ \ "activeFrom")
+          result.length mustEqual 1
+          val (errorPath, _) = result.head
+          errorPath mustEqual (__ \ "activeFrom")
 
-      }
+        }
 
-      "with missing countryCode" in {
+        "when missing countryCode" in {
 
-        val data =
-          """ 
+          val data =
+            """ 
             |{
             |  "state": "valid",
             |  "activeFrom": "2020-01-23",
@@ -111,22 +118,22 @@ class CountryCodesFullListTransformSpec extends SpecBase {
             |}
             |""".stripMargin
 
-        val result =
-          Transformation(CountryCodesFullList).transform
-            .reads(Json.parse(data))
-            .asEither
-            .left
-            .value
+          val result =
+            Transformation(CountryCodesFullList).transform
+              .reads(Json.parse(data))
+              .asEither
+              .left
+              .value
 
-        result.length mustEqual 1
-        val (errorPath, _) = result.head
-        errorPath mustEqual (__ \ "countryCode")
+          result.length mustEqual 1
+          val (errorPath, _) = result.head
+          errorPath mustEqual (__ \ "countryCode")
 
-      }
+        }
 
-      "with missing #/description/en field" in {
-        val data =
-          """ 
+        "when missing #/description/en field" in {
+          val data =
+            """ 
             |{
             |  "state": "valid",
             |  "activeFrom": "2020-01-23",
@@ -141,20 +148,20 @@ class CountryCodesFullListTransformSpec extends SpecBase {
             |}
             |""".stripMargin
 
-        val result =
-          Transformation(CountryCodesFullList).transform
-            .reads(Json.parse(data))
-            .asEither
-            .left
-            .value
+          val result =
+            Transformation(CountryCodesFullList).transform
+              .reads(Json.parse(data))
+              .asEither
+              .left
+              .value
 
-        result.length mustEqual 1
-        val (errorPath, _) = result.head
-        errorPath mustEqual (__ \ "description" \ "en")
+          result.length mustEqual 1
+          val (errorPath, _) = result.head
+          errorPath mustEqual (__ \ "description" \ "en")
+        }
+
       }
-
     }
-
   }
 
   "filter" ignore {
