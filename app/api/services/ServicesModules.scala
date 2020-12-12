@@ -23,7 +23,6 @@ class ServicesModules extends AbstractModule {
   override def configure(): Unit = {
     bind(classOf[ResourceConfig]).asEagerSingleton()
     bind(classOf[CountryService]).asEagerSingleton()
-    bind(classOf[CustomsOfficesService]).asEagerSingleton()
     bind(classOf[TransitCountryService]).asEagerSingleton()
   }
 }

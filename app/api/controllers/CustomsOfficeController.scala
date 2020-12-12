@@ -21,7 +21,6 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import api.services.CustomsOfficesService
 import data.DataRetrieval
 import logging.Logging
 import models.CustomsOfficesList
@@ -31,7 +30,6 @@ import scala.concurrent.ExecutionContext
 
 class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
-  customsOfficesService: CustomsOfficesService,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)

@@ -21,9 +21,6 @@ import play.api.Configuration
 
 class ResourceConfig @Inject() (config: Configuration) {
 
-  val customsOffice: String =
-    config.get[String]("resourceFiles.customsOffices")
-
   val countryCodes: String =
     config.get[String]("resourceFiles.countryCodesFullList")
 
