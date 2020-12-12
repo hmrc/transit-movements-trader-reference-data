@@ -22,36 +22,72 @@ import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import api.services.CustomsOfficesService
+import data.DataRetrieval
+import logging.Logging
+import models.CustomsOfficesList
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-class CustomsOfficeController @Inject()(
+import scala.concurrent.ExecutionContext
+
+class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
-  customsOfficesService: CustomsOfficesService
-) extends BackendController(cc) {
+  customsOfficesService: CustomsOfficesService,
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging {
 
   def customsOffices(): Action[AnyContent] =
-    Action {
+    Action.async {
+      dataRetrieval
+        .getList(CustomsOfficesList)
+        .map(
+          data =>
+            if (data.nonEmpty)
+              Ok(Json.toJson(data))
+            else {
+              logger.error(s"No data found for ${CustomsOfficesList.listName}")
+              InternalServerError
+            }
+        )
 
-      Ok(Json.toJson(customsOfficesService.customsOffices))
     }
 
   def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] =
-    Action {
+    Action.async {
+      dataRetrieval
+        .getList(CustomsOfficesList)
+        .map {
+          data =>
+            val response = data.filter(
+              json => (json \ "countryId").as[String] == countryCode
+            )
 
-      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode)))
+            if (data.nonEmpty)
+              Ok(Json.toJson(response))
+            else
+              NotFound
+        }
+
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
-    Action {
-
-      customsOfficesService
-        .getCustomsOffice(officeId)
+    Action.async {
+      dataRetrieval
+        .getList(CustomsOfficesList)
         .map {
-          customsOffice =>
-            Ok(Json.toJson(customsOffice))
+          data =>
+            val response = data
+              .find(
+                json => (json \ "id").as[String] == officeId
+              )
+
+            response match {
+              case Some(value) => Ok(Json.toJson(value))
+              case None        => NotFound
+            }
+
         }
-        .getOrElse {
-          NotFound
-        }
+
     }
 }

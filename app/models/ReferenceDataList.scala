@@ -28,7 +28,8 @@ object ReferenceDataList {
       AdditionalInformationList,
       CircumstanceIndicatorList,
       CountryCodesFullList,
-      CountryCodesCommonTransitList CustomsOfficesList
+      CountryCodesCommonTransitList,
+      CustomsOfficesList
     )
 
   val mappings: Map[String, ReferenceDataList] =
