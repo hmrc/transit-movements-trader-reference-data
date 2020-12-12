@@ -16,11 +16,9 @@
 
 package api.controllers
 
-import api.services._
 import data.DataRetrieval
 import javax.inject.Inject
 import models.CountryCodesCommonTransitList
-import models.CountryCodesFullList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -29,34 +27,19 @@ import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class CountryController @Inject()(
+class TransitCountriesController @Inject() (
   cc: ControllerComponents,
-  countryService: CountryService,
-  transitCountryService: TransitCountryService,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
     extends BackendController(cc) {
 
-  def countriesFullList(): Action[AnyContent] =
+  def transitCountries(): Action[AnyContent] =
     Action.async {
       dataRetrieval
-        .getList(CountryCodesFullList)
+        .getList(CountryCodesCommonTransitList)
         .map(
           data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
         )
     }
 
-  def getCountry(code: String): Action[AnyContent] =
-    Action {
-
-      countryService
-        .getCountryByCode(code)
-        .map {
-          country =>
-            Ok(Json.toJson(country))
-        }
-        .getOrElse {
-          NotFound
-        }
-    }
 }
