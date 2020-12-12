@@ -76,16 +76,10 @@ trait TransformationImplicits {
             (__ \ "state").json.pickBranch and
             (__ \ "activeFrom").json.pickBranch and
             (__ \ "name").json.copyFrom(
-              customsOfficeDetailsEN.andThen((__ \ "customsOfficeDetails" \ "customsOfficeUsualName").json.pick)
+              customsOfficeDetailsEN.andThen((__ \ "customsOfficeDetails" \ "customsOfficeUsualName").json.pick) orElse Reads.pure(JsNull)
             ) and
             (__ \ "countryId").json.copyFrom((__ \ "countryCode").json.pick) and
-            (__ \ "phoneNumber").json.copyFrom((__ \ "phoneNumber").json.pick) and
-            (__ \ "city").json.copyFrom(
-              customsOfficeDetailsEN.flatMap[JsString] {
-                x =>
-                  (x \ "customsOfficeDetails" \ "city").validate[JsString].fold(x => Reads.failed(x.toString()), x => Reads.pure(x))
-              }
-            ) and
+            (__ \ "phoneNumber").json.copyFrom((__ \ "phoneNumber").json.pick orElse Reads.pure(JsNull)) and
             (__ \ "roles").json.put(JsArray.empty)
         ).reduce
           .andThen((__ \ "activeFrom").json.prune)

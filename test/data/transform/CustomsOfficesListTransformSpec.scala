@@ -151,23 +151,101 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
 
   "transform" - {
     "when the json matches the expected schema" - {
-      "returns the transformed data as a JsSuccess" in {
+      "returns the transformed data as a JsSuccess" - {
 
-        val expected =
-          """
-            |{
-            | "id": "AD000003",
-            | "name": "CENTRAL CUSTOMS OFFICE",
-            | "countryId": "AD",
-            | "phoneNumber": "+ (376) 879900",
-            | "city": "ESCALDES - ENGORDANY",
-            | "roles": []
-            |}
-            |""".stripMargin
+        "when telephone is present" in {
+          val expected =
+            """
+                |{
+                | "id": "AD000003",
+                | "name": "CENTRAL CUSTOMS OFFICE",
+                | "countryId": "AD",
+                | "phoneNumber": "+ (376) 879900",
+                | "roles": []
+                |}
+                |""".stripMargin
 
-        val result = Transformation(CustomsOfficesList).runTransform(validData)
+          val result = Transformation(CustomsOfficesList).runTransform(validData)
 
-        result.get mustEqual Json.parse(expected)
+          result.get mustEqual Json.parse(expected)
+
+        }
+
+        "when telephone is missing" in {
+          val expected =
+            """
+              |{
+              | "id": "AD000003",
+              | "name": "CENTRAL CUSTOMS OFFICE",
+              | "countryId": "AD",
+              | "phoneNumber": null,
+              | "roles": []
+              |}
+              |""".stripMargin
+
+          val data = (__ \ "phoneNumber").json.prune.reads(validData).get
+
+          val result = Transformation(CustomsOfficesList).runTransform(data)
+
+          result.get mustEqual Json.parse(expected)
+
+        }
+
+        "when customsOfficeDetails EN" - {
+          "is present" in {
+            val expected =
+              """
+                |{
+                | "id": "AD000003",
+                | "name": "CENTRAL CUSTOMS OFFICE",
+                | "countryId": "AD",
+                | "phoneNumber": "+ (376) 879900",
+                | "roles": []
+                |}
+                |""".stripMargin
+
+            val result = Transformation(CustomsOfficesList).runTransform(validData)
+
+            result.get mustEqual Json.parse(expected)
+
+          }
+
+          "is missing" in {
+            val expected =
+              """
+                |{
+                | "id": "AD000003",
+                | "name": null,
+                | "countryId": "AD",
+                | "phoneNumber": "+ (376) 879900",
+                | "roles": []
+                |}
+                |""".stripMargin
+
+            val data = validData ++ Json
+              .parse(
+                """
+                |{
+                | "customsOfficeDetails": [
+                |    {
+                |      "languageCode": "FR",
+                |      "customsOfficeUsualName": "BUREAU CENTRAL DES DOUANES",
+                |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
+                |      "city": "ESCALDES - ENGORDANY",
+                |      "prefixSuffixFlag": 0,
+                |      "spaceToAdd": 0
+                |    }
+                |  ]
+                |}
+                |""".stripMargin
+              )
+              .as[JsObject]
+
+            val result = Transformation(CustomsOfficesList).runTransform(data)
+
+            result.get mustEqual Json.parse(expected)
+          }
+        }
 
       }
     }
@@ -180,8 +258,7 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
             "referenceNumber",
             "state",
             "activeFrom",
-            "countryCode",
-            "phoneNumber"
+            "countryCode"
           )
         )
 
@@ -205,52 +282,6 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
 
         }
 
-        "when nested mandatory fields are missing" - {
-          "when the english description is missing" in {
-
-            val dataWithError = validData ++ Json.obj("customsOfficeDetails" -> JsArray.empty)
-
-            val result = Transformation(CustomsOfficesList).transform
-              .reads(dataWithError)
-              .asEither
-              .left
-              .value
-
-            result must not be empty
-
-          }
-
-          "asdf when the english description City is missing" in {
-
-            val dataWithError = validData ++ Json
-              .parse(
-                """
-                  |{ "customsOfficeDetails": [
-                  |  {
-                  |    "languageCode": "EN",
-                  |    "customsOfficeUsualName": "CENTRAL CUSTOMS OFFICE",
-                  |    "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
-                  |    "prefixSuffixFlag": 0,
-                  |    "prefixSuffixLevel": "E",
-                  |    "prefixSuffixName": "Tulli",
-                  |    "spaceToAdd": 0
-                  |  }
-                  |]}
-                  |""".stripMargin
-              )
-              .as[JsObject]
-
-            val result =
-              Transformation(CustomsOfficesList).transform
-                .reads(dataWithError)
-                .asEither
-                .left
-                .value
-
-            result must not be empty
-          }
-
-        }
       }
     }
 
