@@ -21,7 +21,7 @@ import java.time.Instant
 import play.api.libs.json.Json
 import play.api.libs.json.OFormat
 
-case class DataImport(importId: ImportId, status: ImportStatus, started: Instant, finished: Option[Instant])
+case class DataImport(importId: ImportId, status: ImportStatus, started: Instant, finished: Option[Instant] = None)
 
 object DataImport {
   val jsonFormat: OFormat[DataImport] = Json.format[DataImport]

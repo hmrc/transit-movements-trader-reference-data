@@ -2,7 +2,7 @@ package repositories
 
 import java.time.Instant
 
-import org.scalatest.OptionValues
+import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -10,19 +10,24 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
 
 import scala.concurrent.ExecutionContext.Implicits.global
+
 class DataImportRepositorySpec
   extends AnyFreeSpec
     with Matchers
     with MongoSuite
     with ScalaFutures
     with IntegrationPatience
-    with OptionValues {
+    with OptionValues
+    with BeforeAndAfterEach {
+
+  override def beforeEach(): Unit = {
+    database.flatMap(_.drop).futureValue
+    super.beforeEach()
+  }
 
   "Data Import Repository" - {
 
     "must insert a new data import and retrieve it" in {
-
-      database.flatMap(_.drop).futureValue
 
       val app = new GuiceApplicationBuilder().build()
 
@@ -41,8 +46,6 @@ class DataImportRepositorySpec
     }
 
     "must update an existing record" in {
-
-      database.flatMap(_.drop).futureValue
 
       val app = new GuiceApplicationBuilder().build()
 

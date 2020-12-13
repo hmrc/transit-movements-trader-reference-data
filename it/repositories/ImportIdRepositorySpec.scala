@@ -1,6 +1,6 @@
 package repositories
 
-import org.scalatest.OptionValues
+import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -17,14 +17,18 @@ class ImportIdRepositorySpec
     with Matchers
     with MongoSuite
     with ScalaFutures
+    with BeforeAndAfterEach
     with IntegrationPatience
     with OptionValues {
+
+  override def beforeEach(): Unit = {
+    database.flatMap(_.drop).futureValue
+    super.beforeEach()
+  }
 
   "Import Id Repository" - {
 
     "must return sequential ids starting at 1" in {
-
-      database.flatMap(_.drop).futureValue
 
       val app = new GuiceApplicationBuilder().build()
 
@@ -44,13 +48,9 @@ class ImportIdRepositorySpec
       val initialRecord = Json.obj("_id" -> "next-id", "import-id" -> 123)
 
       database.flatMap {
-        db =>
-          db.drop.flatMap {
-            _ =>
-              db.collection[JSONCollection]("import-ids")
-                .insert(ordered = false)
-                .one(initialRecord)
-          }
+        _.collection[JSONCollection]("import-ids")
+          .insert(ordered = false)
+          .one(initialRecord)
       }.futureValue
 
       val app = new GuiceApplicationBuilder().build()

@@ -70,6 +70,6 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Exec
     collection.flatMap {
       _.findAndUpdate(selector, update, upsert = false)
         .map(_ => true) // TODO: Check update result and log if no record was updated
-    } // TODO: Log exceptions
+    }                   // TODO: Log exceptions
   }
 }
