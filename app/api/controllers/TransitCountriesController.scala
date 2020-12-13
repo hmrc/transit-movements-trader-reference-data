@@ -18,6 +18,7 @@ package api.controllers
 
 import data.DataRetrieval
 import javax.inject.Inject
+import logging.Logging
 import models.CountryCodesCommonTransitList
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -31,15 +32,19 @@ class TransitCountriesController @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+    extends BackendController(cc)
+    with Logging {
 
   def transitCountries(): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CountryCodesCommonTransitList)
-        .map(
-          data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
-        )
+        .map {
+          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
+            InternalServerError
+        }
     }
 
 }

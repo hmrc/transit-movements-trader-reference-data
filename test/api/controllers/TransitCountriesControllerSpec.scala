@@ -47,23 +47,35 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
         bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
-  "CountryController" - {
+  "transitCountries" - {
+    "must return Ok when there are transit countries" in {
 
-    "transitCountries" - {
-      "must fetch transit countries" in {
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.transitCountries().url
+      )
+      val result = route(app, request).value
 
-        val request = FakeRequest(
-          GET,
-          routes.TransitCountriesController.transitCountries().url
-        )
-        val result = route(app, request).value
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(countries)
 
-        status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(countries)
-      }
     }
 
+    "must return Internal Server Error when the transit countries cannot be retrieved" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.transitCountries().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe INTERNAL_SERVER_ERROR
+
+    }
   }
+
 }
