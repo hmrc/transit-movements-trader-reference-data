@@ -12,7 +12,13 @@ import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ImportIdRepositorySpec extends AnyFreeSpec with Matchers with MongoSuite with ScalaFutures with IntegrationPatience with OptionValues {
+class ImportIdRepositorySpec
+  extends AnyFreeSpec
+    with Matchers
+    with MongoSuite
+    with ScalaFutures
+    with IntegrationPatience
+    with OptionValues {
 
   "Import Id Repository" - {
 

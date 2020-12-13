@@ -16,4 +16,36 @@
 
 package repositories
 
+import play.api.libs.json.JsError
+import play.api.libs.json.JsNumber
+import play.api.libs.json.JsResult
+import play.api.libs.json.JsSuccess
+import play.api.libs.json.JsValue
+import play.api.libs.json.Reads
+import play.api.libs.json.Writes
+
+import scala.util.Failure
+import scala.util.Success
+import scala.util.Try
+
 case class ImportId(value: Int)
+
+object ImportId {
+
+  implicit val writes: Writes[ImportId] = Writes {
+    importId => JsNumber(importId.value)
+  }
+
+  implicit val reads: Reads[ImportId] = new Reads[ImportId] {
+
+    override def reads(json: JsValue): JsResult[ImportId] =
+      json match {
+        case JsNumber(num) =>
+          Try(num.toIntExact) match {
+            case Failure(_)     => JsError("Expected number to be an integer")
+            case Success(value) => JsSuccess(ImportId(value))
+          }
+        case _ => JsError("Expected JSON number type")
+      }
+  }
+}
