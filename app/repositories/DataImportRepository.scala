@@ -16,6 +16,8 @@
 
 package repositories
 
+import java.time.Instant
+
 import javax.inject.Inject
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
@@ -62,14 +64,22 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Exec
     }
   }
 
-  def update(dataImport: DataImport): Future[Boolean] = {
+  def markFinished(importId: ImportId, status: ImportStatus): Future[Boolean] = {
 
-    val selector = Json.obj("importId" -> dataImport.importId)
-    val update   = Json.obj("$set" -> dataImport)
+    import MongoInstantFormats._
+
+    val selector = Json.obj("importId" -> Json.toJson(importId))
+
+    val update = Json.obj(
+      "$set" -> Json.obj(
+        "status"   -> Json.toJson(status),
+        "finished" -> Json.toJson(Instant.now)
+      )
+    )
 
     collection.flatMap {
       _.findAndUpdate(selector, update, upsert = false)
-        .map(_ => true) // TODO: Check update result and log if no record was updated
-    }                   // TODO: Log exceptions
+        .map(_ => true)
+    }
   }
 }

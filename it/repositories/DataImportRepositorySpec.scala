@@ -45,23 +45,23 @@ class DataImportRepositorySpec
       }
     }
 
-    "must update an existing record" in {
+    "must mark a record as finished" in {
 
       val app = new GuiceApplicationBuilder().build()
 
       running(app) {
 
         val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now, None)
-        val updatedImport = dataImport copy (status = ImportStatus.Complete, finished = Some(Instant.now))
 
         val repo = app.injector.instanceOf[DataImportRepository]
 
         repo.insert(dataImport).futureValue
-        val updateResult = repo.update(updatedImport).futureValue
-        val getResult    = repo.get(dataImport.importId).futureValue
+        val updateResult = repo.markFinished(ImportId(1), ImportStatus.Complete).futureValue
+        val getResult    = repo.get(dataImport.importId).futureValue.value
 
         updateResult mustEqual true
-        getResult.value mustEqual updatedImport
+        getResult.status mustEqual ImportStatus.Complete
+        getResult.finished mustBe defined
       }
     }
   }
