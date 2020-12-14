@@ -28,6 +28,7 @@ object CountryCodesCommonTransitList  extends ReferenceDataList("CountryCodesCom
 object CustomsOfficesList             extends ReferenceDataList("CustomsOffices")
 object DocumentTypeCommonList         extends ReferenceDataList("DocumentTypeCommon")
 object PreviousDocumentTypeCommonList extends ReferenceDataList("PreviousDocumentTypeCommon")
+object KindOfPackagesList             extends ReferenceDataList("KindOfPackages")
 
 object ReferenceDataList {
 

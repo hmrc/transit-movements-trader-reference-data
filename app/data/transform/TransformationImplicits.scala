@@ -20,6 +20,7 @@ import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
 import models.DocumentTypeCommonList
+import models.KindOfPackagesList
 import models.PreviousDocumentTypeCommonList
 import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
@@ -108,16 +109,20 @@ trait TransformationImplicits {
           .andThen((__ \ Common.activeFrom).json.prune)
       )
 
+  private val simpleCodeDescriptionReads: Reads[JsObject] =
+    (
+      (__ \ Common.state).json.pickBranch and
+        (__ \ Common.activeFrom).json.pickBranch and
+        (__ \ PreviousDocumentTypeCommonListFieldNames.code).json.pickBranch and
+        (__ \ Common.description).json.copyFrom(englishDescription)
+    ).reduce
+      .andThen((__ \ Common.state).json.prune)
+      .andThen((__ \ Common.activeFrom).json.prune)
+
   implicit val transformationPreviousDocumentTypeCommonList: Transformation[PreviousDocumentTypeCommonList.type] =
-    Transformation.fromReads(
-      (
-        (__ \ Common.state).json.pickBranch and
-          (__ \ Common.activeFrom).json.pickBranch and
-          (__ \ PreviousDocumentTypeCommonListFieldNames.code).json.pickBranch and
-          (__ \ Common.description).json.copyFrom(englishDescription)
-      ).reduce
-        .andThen((__ \ Common.state).json.prune)
-        .andThen((__ \ Common.activeFrom).json.prune)
-    )
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationKindOfPackagesList: Transformation[KindOfPackagesList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
 
 }
