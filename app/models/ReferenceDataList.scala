@@ -26,6 +26,7 @@ object CircumstanceIndicatorList     extends ReferenceDataList("SpecificCircumst
 object CountryCodesFullList          extends ReferenceDataList("CountryCodesFullList")
 object CountryCodesCommonTransitList extends ReferenceDataList("CountryCodesCommonTransit")
 object CustomsOfficesList            extends ReferenceDataList("CustomsOffices")
+object DocumentTypeCommonList        extends ReferenceDataList("DocumentTypeCommon")
 
 object ReferenceDataList {
 
@@ -52,18 +53,20 @@ object ReferenceDataList {
   object Constants {
 
     object Common {
-      val activeFrom = "activeFrom"
-      val state      = "state"
+      val activeFrom  = "activeFrom"
+      val state       = "state"
+      val description = "description"
+      val en          = "en"
     }
 
     object CountryCodesFullListFieldNames {
       val code        = "code"
-      val description = "description"
+      val description = "description" // TODO: Remove
     }
 
     object CountryCodesCommonTransitListFieldNames {
       val code        = "code"
-      val description = "description"
+      val description = "description" // TODO: Remove
     }
 
     object CustomsOfficesListFieldNames {
@@ -72,6 +75,11 @@ object ReferenceDataList {
       val countryId   = "countryId"
       val phoneNumber = "phoneNumber"
       val roles       = "roles"
+    }
+
+    object DocumentTypeCommonListFieldNames {
+      val code              = "code"
+      val transportDocument = "transportDocument"
     }
 
   }

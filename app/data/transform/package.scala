@@ -16,6 +16,14 @@
 
 package data
 
+import models.DocumentTypeCommonList
+import models.ReferenceDataList
+import play.api.libs.json.JsBoolean
+import play.api.libs.json.JsError
+import play.api.libs.json.JsPath
+import play.api.libs.json.JsResult
+import play.api.libs.json.JsString
+import play.api.libs.json.JsSuccess
 import play.api.libs.json.JsValue
 import play.api.libs.json.Reads
 import play.api.libs.json.__
@@ -24,5 +32,15 @@ package object transform {
 
   val englishDescription: Reads[JsValue] =
     (__ \ "description" \ "en").json.pick
+
+  def booleanFromIntString(listName: ReferenceDataList, path: JsPath): Reads[JsBoolean] =
+    Reads[JsBoolean] {
+      case JsString("1") => JsSuccess(JsBoolean(true))
+      case JsString("0") => JsSuccess(JsBoolean(false))
+      case JsString(_) =>
+        JsError(s"Error in parsing ${listName.listName} at path ${path.toString()}, expected value of 0 or 1, got string")
+      case x =>
+        JsError(s"Error in parsing ${listName.listName} at path ${path.toString()}, expected value of 0 or 1, got ${x.getClass.getSimpleName}")
+    }
 
 }
