@@ -65,7 +65,6 @@ class DataImportRepositorySpec
 
         repo.insert(dataImport).futureValue
         val updateResult = repo.markFinished(ImportId(1), ImportStatus.Complete).futureValue
-        val getResult    = repo.get(dataImport.importId).futureValue.value
 
         updateResult mustEqual DataImport(ImportId(1), ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
       }

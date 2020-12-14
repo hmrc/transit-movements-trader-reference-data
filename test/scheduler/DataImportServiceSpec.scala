@@ -44,6 +44,7 @@ import repositories.DataImportRepository
 import repositories.ImportId
 import repositories.ImportIdRepository
 import repositories.ImportStatus
+import repositories.ListCollectionIndexManager
 import repositories.ListRepository
 
 import scala.concurrent.Future
@@ -53,11 +54,12 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
   private val instant: Instant = Instant.now
 
-  private val stubClock: Clock   = Clock.fixed(instant, ZoneId.systemDefault)
-  private val mockImportIdRepo   = mock[ImportIdRepository]
-  private val mockDataImportRepo = mock[DataImportRepository]
-  private val mockListRepo       = mock[ListRepository]
-  private val mockDataRetrieval  = mock[DataRetrieval]
+  private val stubClock: Clock               = Clock.fixed(instant, ZoneId.systemDefault)
+  private val mockImportIdRepo               = mock[ImportIdRepository]
+  private val mockDataImportRepo             = mock[DataImportRepository]
+  private val mockListRepo                   = mock[ListRepository]
+  private val mockDataRetrieval              = mock[DataRetrieval]
+  private val mockListCollectionIndexManager = mock[ListCollectionIndexManager]
 
   private val appBuilder: GuiceApplicationBuilder =
     new GuiceApplicationBuilder()
@@ -66,7 +68,8 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
         bind[DataImportRepository].toInstance(mockDataImportRepo),
         bind[ListRepository].toInstance(mockListRepo),
         bind[DataRetrieval].toInstance(mockDataRetrieval),
-        bind[Clock].toInstance(stubClock)
+        bind[Clock].toInstance(stubClock),
+        bind[ListCollectionIndexManager].toInstance(mockListCollectionIndexManager)
       )
 
   override def beforeEach(): Unit = {

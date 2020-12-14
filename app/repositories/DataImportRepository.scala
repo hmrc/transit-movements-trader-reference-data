@@ -20,28 +20,36 @@ import java.time.Clock
 import java.time.Instant
 
 import javax.inject.Inject
+import play.api.Logging
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OFormat
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.commands.LastError
+import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
 import reactivemongo.play.json.ImplicitBSONHandlers._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(implicit ec: ExecutionContext) {
+class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(implicit ec: ExecutionContext) extends Logging {
 
   val collectionName: String = "data-imports"
-  private val duplicateError = 11000
 
   implicit private val dataImportFormat: OFormat[DataImport] = DataImport.mongoFormat
 
-  // TODO: Add index on importId
+  private val importIdIndex =
+    IndexUtils.index(
+      key = Seq("importId" -> IndexType.Ascending),
+      name = Some("import-id-index"),
+      unique = true
+    )
+
   private def collection: Future[JSONCollection] =
     for {
       coll <- mongo.database.map(_.collection[JSONCollection](collectionName))
+      _    <- coll.indexesManager.ensure(importIdIndex)
     } yield coll
 
   // TODO: Introduce e.g. InsertResult rather than Boolean?
@@ -51,8 +59,9 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
         .one(dataImport)
         .map(_ => true)
     } recover {
-      case e: LastError if e.code contains duplicateError => true
-      case _                                              => false // TODO: Log
+      case e: Throwable =>
+        logger.error("Error creating a DataImport record", e)
+        false
     }
 
   def get(importId: ImportId): Future[Option[DataImport]] = {
