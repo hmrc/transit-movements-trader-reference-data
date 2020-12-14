@@ -21,12 +21,6 @@ import play.api.Configuration
 
 class ResourceConfig @Inject() (config: Configuration) {
 
-  val countryCodes: String =
-    config.get[String]("resourceFiles.countryCodesFullList")
-
-  val transitCountryCodes: String =
-    config.get[String]("resourceFiles.transitCountryCodesFullList")
-
   val additionalInformation: String =
     config.get[String]("resourceFiles.additionalInformation")
 

@@ -19,6 +19,7 @@ package data.transform
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
+import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
@@ -29,13 +30,13 @@ trait TransformationImplicits {
     Transformation
       .fromReads(
         (
-          (__ \ "code").json.copyFrom((__ \ "countryCode").json.pick) and
-            (__ \ "state").json.pickBranch and
-            (__ \ "activeFrom").json.pickBranch and
-            (__ \ "description").json.copyFrom(englishDescription)
+          (__ \ CountryCodesFullListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
+            (__ \ Common.state).json.pickBranch and
+            (__ \ Common.activeFrom).json.pickBranch and
+            (__ \ CountryCodesFullListFieldNames.description).json.copyFrom(englishDescription)
         ).reduce
           .andThen(
-            (__ \ "activeFrom").json.prune
+            (__ \ Common.activeFrom).json.prune
           )
       )
 
@@ -43,13 +44,13 @@ trait TransformationImplicits {
     Transformation
       .fromReads(
         (
-          (__ \ "code").json.copyFrom((__ \ "countryCode").json.pick) and
-            (__ \ "state").json.pickBranch and
-            (__ \ "activeFrom").json.pickBranch and
-            (__ \ "description").json.copyFrom(englishDescription)
+          (__ \ CountryCodesCommonTransitListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
+            (__ \ Common.state).json.pickBranch and
+            (__ \ Common.activeFrom).json.pickBranch and
+            (__ \ CountryCodesCommonTransitListFieldNames.description).json.copyFrom(englishDescription)
         ).reduce
           .andThen(
-            (__ \ "activeFrom").json.prune
+            (__ \ Common.activeFrom).json.prune
           )
       )
 
@@ -72,18 +73,18 @@ trait TransformationImplicits {
     Transformation
       .fromReads(
         (
-          (__ \ "id").json.copyFrom((__ \ "referenceNumber").json.pick) and
-            (__ \ "state").json.pickBranch and
-            (__ \ "activeFrom").json.pickBranch and
+          (__ \ CustomsOfficesListFieldNames.id).json.copyFrom((__ \ "referenceNumber").json.pick) and
+            (__ \ Common.state).json.pickBranch and
+            (__ \ Common.activeFrom).json.pickBranch and
             (__ \ "name").json.copyFrom(
               customsOfficeDetailsEN.andThen((__ \ "customsOfficeDetails" \ "customsOfficeUsualName").json.pick) orElse Reads.pure(JsNull)
             ) and
-            (__ \ "countryId").json.copyFrom((__ \ "countryCode").json.pick) and
-            (__ \ "phoneNumber").json.copyFrom((__ \ "phoneNumber").json.pick orElse Reads.pure(JsNull)) and
-            (__ \ "roles").json.put(JsArray.empty)
+            (__ \ CustomsOfficesListFieldNames.countryId).json.copyFrom((__ \ "countryCode").json.pick) and
+            (__ \ CustomsOfficesListFieldNames.phoneNumber).json.copyFrom((__ \ "phoneNumber").json.pick orElse Reads.pure(JsNull)) and
+            (__ \ CustomsOfficesListFieldNames.roles).json.put(JsArray.empty)
         ).reduce
-          .andThen((__ \ "activeFrom").json.prune)
-          .andThen((__ \ "state").json.prune)
+          .andThen((__ \ Common.activeFrom).json.prune)
+          .andThen((__ \ Common.state).json.prune)
       )
   }
 

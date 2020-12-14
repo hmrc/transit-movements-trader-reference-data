@@ -21,6 +21,12 @@ import play.api.mvc.PathBindable
 
 sealed abstract class ReferenceDataList(val listName: String)
 
+object AdditionalInformationList     extends ReferenceDataList("AdditionalInformationIdCommon")
+object CircumstanceIndicatorList     extends ReferenceDataList("SpecificCircumstanceIndicator")
+object CountryCodesFullList          extends ReferenceDataList("CountryCodesFullList")
+object CountryCodesCommonTransitList extends ReferenceDataList("CountryCodesCommonTransit")
+object CustomsOfficesList            extends ReferenceDataList("CustomsOffices")
+
 object ReferenceDataList {
 
   val values: NonEmptyList[ReferenceDataList] =
@@ -43,10 +49,31 @@ object ReferenceDataList {
     override def unbind(key: String, value: ReferenceDataList): String = value.listName
   }
 
-}
+  object Constants {
 
-object AdditionalInformationList     extends ReferenceDataList("AdditionalInformationIdCommon")
-object CircumstanceIndicatorList     extends ReferenceDataList("SpecificCircumstanceIndicator")
-object CountryCodesFullList          extends ReferenceDataList("CountryCodesFullList")
-object CountryCodesCommonTransitList extends ReferenceDataList("CountryCodesCommonTransit")
-object CustomsOfficesList            extends ReferenceDataList("CustomsOffices")
+    object Common {
+      val activeFrom = "activeFrom"
+      val state      = "state"
+    }
+
+    object CountryCodesFullListFieldNames {
+      val code        = "code"
+      val description = "description"
+    }
+
+    object CountryCodesCommonTransitListFieldNames {
+      val code        = "code"
+      val description = "description"
+    }
+
+    object CustomsOfficesListFieldNames {
+      val id          = "id"
+      val name        = "name"
+      val countryId   = "countryId"
+      val phoneNumber = "phoneNumber"
+      val roles       = "roles"
+    }
+
+  }
+
+}

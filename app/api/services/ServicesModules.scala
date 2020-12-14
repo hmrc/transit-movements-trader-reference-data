@@ -20,9 +20,6 @@ import com.google.inject.AbstractModule
 
 class ServicesModules extends AbstractModule {
 
-  override def configure(): Unit = {
+  override def configure(): Unit =
     bind(classOf[ResourceConfig]).asEagerSingleton()
-    bind(classOf[CountryService]).asEagerSingleton()
-    bind(classOf[TransitCountryService]).asEagerSingleton()
-  }
 }

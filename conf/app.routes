@@ -5,7 +5,8 @@ GET        /customs-office/:id                                api.controllers.Cu
 
 GET        /countries/:code                                   api.controllers.CountryController.getCountry(code)
 GET        /countries-full-list                               api.controllers.CountryController.countriesFullList
-GET        /transit-countries                                 api.controllers.CountryController.transitCountries
+
+GET        /transit-countries                                 api.controllers.TransitCountriesController.transitCountries()
 
 GET        /additional-information                            api.controllers.ReferenceDataController.additionalInformation
 GET        /kinds-of-package                                  api.controllers.ReferenceDataController.kindsOfPackage
