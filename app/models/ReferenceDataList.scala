@@ -60,13 +60,11 @@ object ReferenceDataList {
     }
 
     object CountryCodesFullListFieldNames {
-      val code        = "code"
-      val description = "description" // TODO: Remove
+      val code = "code"
     }
 
     object CountryCodesCommonTransitListFieldNames {
-      val code        = "code"
-      val description = "description" // TODO: Remove
+      val code = "code"
     }
 
     object CustomsOfficesListFieldNames {

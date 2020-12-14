@@ -34,7 +34,7 @@ trait TransformationImplicits {
           (__ \ CountryCodesFullListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
             (__ \ Common.state).json.pickBranch and
             (__ \ Common.activeFrom).json.pickBranch and
-            (__ \ CountryCodesFullListFieldNames.description).json.copyFrom(englishDescription)
+            (__ \ Common.description).json.copyFrom(englishDescription)
         ).reduce
           .andThen(
             (__ \ Common.activeFrom).json.prune
@@ -48,7 +48,7 @@ trait TransformationImplicits {
           (__ \ CountryCodesCommonTransitListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
             (__ \ Common.state).json.pickBranch and
             (__ \ Common.activeFrom).json.pickBranch and
-            (__ \ CountryCodesCommonTransitListFieldNames.description).json.copyFrom(englishDescription)
+            (__ \ Common.description).json.copyFrom(englishDescription)
         ).reduce
           .andThen(
             (__ \ Common.activeFrom).json.prune
