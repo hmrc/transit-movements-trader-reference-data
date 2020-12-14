@@ -38,16 +38,19 @@ trait Selector[A] {
 object Selector {
 
   case class All(importId: ImportId) extends Selector[ReferenceDataList] {
+
     protected val expression: JsObject =
       Json.obj()
   }
 
   case class ByCountry(importId: ImportId, countryCode: String) extends Selector[CustomsOfficesList.type] {
+
     protected val expression: JsObject =
       Json.obj("countryCode" -> countryCode)
   }
 
   case class ByCustomsOfficeId(importId: ImportId, officeId: String) extends Selector[CustomsOfficesList.type] {
+
     protected val expression: JsObject =
       Json.obj("officeId" -> officeId)
   }

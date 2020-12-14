@@ -16,6 +16,7 @@
 
 package repositories
 
+import java.time.Clock
 import java.time.Instant
 
 import javax.inject.Inject
@@ -30,9 +31,9 @@ import reactivemongo.play.json.ImplicitBSONHandlers._
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-class DataImportRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) {
+class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(implicit ec: ExecutionContext) {
 
-  val collectionName: String = "imports"
+  val collectionName: String = "data-imports"
   private val duplicateError = 11000
 
   implicit private val dataImportFormat: OFormat[DataImport] = DataImport.mongoFormat
@@ -64,7 +65,7 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Exec
     }
   }
 
-  def markFinished(importId: ImportId, status: ImportStatus): Future[Boolean] = {
+  def markFinished(importId: ImportId, status: ImportStatus): Future[DataImport] = {
 
     import MongoInstantFormats._
 
@@ -73,13 +74,15 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Exec
     val update = Json.obj(
       "$set" -> Json.obj(
         "status"   -> Json.toJson(status),
-        "finished" -> Json.toJson(Instant.now)
+        "finished" -> Json.toJson(Instant.now(clock))
       )
     )
 
     collection.flatMap {
-      _.findAndUpdate(selector, update, upsert = false)
-        .map(_ => true)
+      _.findAndUpdate(selector, update, upsert = false, fetchNewObject = true)
+        .map {
+          _.result[DataImport].getOrElse(throw new Exception(s"Unable to mark import ${importId.value} as finished"))
+        }
     }
   }
 }

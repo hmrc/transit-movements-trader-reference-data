@@ -1,11 +1,12 @@
 package repositories
 
-import java.time.Instant
+import java.time.{Clock, Instant, ZoneId}
 
 import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
+import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
 
@@ -25,15 +26,22 @@ class DataImportRepositorySpec
     super.beforeEach()
   }
 
+  private val instant = Instant.now
+  private val stubClock: Clock = Clock.fixed(instant, ZoneId.systemDefault)
+
+  private val appBuilder: GuiceApplicationBuilder =
+    new GuiceApplicationBuilder()
+      .overrides(bind[Clock].toInstance(stubClock))
+
   "Data Import Repository" - {
 
     "must insert a new data import and retrieve it" in {
 
-      val app = new GuiceApplicationBuilder().build()
+      val app = appBuilder.build()
 
       running(app) {
 
-        val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now, None)
+        val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now(stubClock), None)
 
         val repo = app.injector.instanceOf[DataImportRepository]
 
@@ -47,11 +55,11 @@ class DataImportRepositorySpec
 
     "must mark a record as finished" in {
 
-      val app = new GuiceApplicationBuilder().build()
+      val app = appBuilder.build()
 
       running(app) {
 
-        val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now, None)
+        val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now(stubClock), None)
 
         val repo = app.injector.instanceOf[DataImportRepository]
 
@@ -59,9 +67,7 @@ class DataImportRepositorySpec
         val updateResult = repo.markFinished(ImportId(1), ImportStatus.Complete).futureValue
         val getResult    = repo.get(dataImport.importId).futureValue.value
 
-        updateResult mustEqual true
-        getResult.status mustEqual ImportStatus.Complete
-        getResult.finished mustBe defined
+        updateResult mustEqual DataImport(ImportId(1), ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
       }
     }
   }

@@ -50,7 +50,6 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
         .collect[Seq](-1, Cursor.FailOnError())
     }
 
-  // TODO: Better logging
   def insert(list: ReferenceDataList, importId: ImportId, values: Seq[JsObject]): Future[Boolean] = {
 
     val enrichedValues = values.map(_ ++ Json.obj("importId" -> Json.toJson(importId)))
@@ -63,6 +62,9 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
           case e: LastError if e.code contains duplicateErrorCode =>
             logger.warn(s"Tried to insert duplicate values for ${list.listName}")
             true
+          case e: Throwable =>
+            logger.error(s"Error inserting s${list.listName}", e)
+            throw e
         }
     }
   }

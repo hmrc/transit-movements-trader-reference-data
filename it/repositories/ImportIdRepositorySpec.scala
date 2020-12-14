@@ -45,7 +45,7 @@ class ImportIdRepositorySpec
 
     "must not fail if the collection already has a document on startup" in {
 
-      val initialRecord = Json.obj("_id" -> "next-id", "import-id" -> 123)
+      val initialRecord = Json.obj("_id" -> "last-id", "import-id" -> 123)
 
       database.flatMap {
         _.collection[JSONCollection]("import-ids")

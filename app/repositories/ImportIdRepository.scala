@@ -31,7 +31,7 @@ import scala.concurrent.Future
 class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) {
 
   val collectionName: String = "import-ids"
-  val recordId: String       = "next-id"
+  val recordId: String       = "last-id"
   val fieldName: String      = "import-id"
   val startingSeed: Int      = 0
 
