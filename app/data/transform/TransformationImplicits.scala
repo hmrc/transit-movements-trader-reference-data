@@ -20,6 +20,7 @@ import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
 import models.DocumentTypeCommonList
+import models.PreviousDocumentTypeCommonList
 import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -106,5 +107,17 @@ trait TransformationImplicits {
           .andThen((__ \ Common.state).json.prune)
           .andThen((__ \ Common.activeFrom).json.prune)
       )
+
+  implicit val transformationPreviousDocumentTypeCommonList: Transformation[PreviousDocumentTypeCommonList.type] =
+    Transformation.fromReads(
+      (
+        (__ \ Common.state).json.pickBranch and
+          (__ \ Common.activeFrom).json.pickBranch and
+          (__ \ PreviousDocumentTypeCommonListFieldNames.code).json.pickBranch and
+          (__ \ Common.description).json.copyFrom(englishDescription)
+      ).reduce
+        .andThen((__ \ Common.state).json.prune)
+        .andThen((__ \ Common.activeFrom).json.prune)
+    )
 
 }

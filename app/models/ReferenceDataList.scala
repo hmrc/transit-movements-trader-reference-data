@@ -21,12 +21,13 @@ import play.api.mvc.PathBindable
 
 sealed abstract class ReferenceDataList(val listName: String)
 
-object AdditionalInformationList     extends ReferenceDataList("AdditionalInformationIdCommon")
-object CircumstanceIndicatorList     extends ReferenceDataList("SpecificCircumstanceIndicator")
-object CountryCodesFullList          extends ReferenceDataList("CountryCodesFullList")
-object CountryCodesCommonTransitList extends ReferenceDataList("CountryCodesCommonTransit")
-object CustomsOfficesList            extends ReferenceDataList("CustomsOffices")
-object DocumentTypeCommonList        extends ReferenceDataList("DocumentTypeCommon")
+object AdditionalInformationList      extends ReferenceDataList("AdditionalInformationIdCommon")
+object CircumstanceIndicatorList      extends ReferenceDataList("SpecificCircumstanceIndicator")
+object CountryCodesFullList           extends ReferenceDataList("CountryCodesFullList")
+object CountryCodesCommonTransitList  extends ReferenceDataList("CountryCodesCommonTransit")
+object CustomsOfficesList             extends ReferenceDataList("CustomsOffices")
+object DocumentTypeCommonList         extends ReferenceDataList("DocumentTypeCommon")
+object PreviousDocumentTypeCommonList extends ReferenceDataList("PreviousDocumentTypeCommon")
 
 object ReferenceDataList {
 
@@ -78,6 +79,10 @@ object ReferenceDataList {
     object DocumentTypeCommonListFieldNames {
       val code              = "code"
       val transportDocument = "transportDocument"
+    }
+
+    object PreviousDocumentTypeCommonListFieldNames {
+      val code = "code"
     }
 
   }
