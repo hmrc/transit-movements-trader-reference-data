@@ -22,6 +22,7 @@ import models.CustomsOfficesList
 import models.DocumentTypeCommonList
 import models.KindOfPackagesList
 import models.PreviousDocumentTypeCommonList
+import models.TransportModeList
 import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -123,6 +124,9 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationKindOfPackagesList: Transformation[KindOfPackagesList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationTransportModeList: Transformation[TransportModeList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }

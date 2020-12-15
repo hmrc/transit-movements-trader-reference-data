@@ -29,6 +29,7 @@ object CustomsOfficesList             extends ReferenceDataList("CustomsOffices"
 object DocumentTypeCommonList         extends ReferenceDataList("DocumentTypeCommon")
 object PreviousDocumentTypeCommonList extends ReferenceDataList("PreviousDocumentTypeCommon")
 object KindOfPackagesList             extends ReferenceDataList("KindOfPackages")
+object TransportModeList              extends ReferenceDataList("TransportMode")
 
 object ReferenceDataList {
 
@@ -83,6 +84,10 @@ object ReferenceDataList {
     }
 
     object PreviousDocumentTypeCommonListFieldNames {
+      val code = "code"
+    }
+
+    object TransportModeListFieldNames {
       val code = "code"
     }
 
