@@ -21,8 +21,6 @@ import play.api.mvc.PathBindable
 
 sealed abstract class ReferenceDataList(val listName: String)
 
-object AdditionalInformationList           extends ReferenceDataList("AdditionalInformationIdCommon")
-object CircumstanceIndicatorList           extends ReferenceDataList("SpecificCircumstanceIndicator")
 object CountryCodesFullList                extends ReferenceDataList("CountryCodesFullList")
 object CountryCodesCommonTransitList       extends ReferenceDataList("CountryCodesCommonTransit")
 object CustomsOfficesList                  extends ReferenceDataList("CustomsOffices")
@@ -30,8 +28,8 @@ object DocumentTypeCommonList              extends ReferenceDataList("DocumentTy
 object PreviousDocumentTypeCommonList      extends ReferenceDataList("PreviousDocumentTypeCommon")
 object KindOfPackagesList                  extends ReferenceDataList("KindOfPackages")
 object TransportModeList                   extends ReferenceDataList("TransportMode")
-object AdditionalInformationIdCommonList   extends ReferenceDataList("AdditionalInformationIdCommonList")
-object SpecificCircumstanceIndicatorList   extends ReferenceDataList("SpecificCircumstanceIndicatorList")
+object AdditionalInformationIdCommonList   extends ReferenceDataList("AdditionalInformationIdCommon")
+object SpecificCircumstanceIndicatorList   extends ReferenceDataList("SpecificCircumstanceIndicator")
 object UnDangerousGoodsCodeList            extends ReferenceDataList("UnDangerousGoodsCode")
 object TransportChargesMethodOfPaymentList extends ReferenceDataList("TransportChargesMethodOfPayment")
 object ControlResultList                   extends ReferenceDataList("ControlResult")
@@ -40,8 +38,6 @@ object ReferenceDataList {
 
   val values: NonEmptyList[ReferenceDataList] =
     NonEmptyList.of(
-      AdditionalInformationList,
-      CircumstanceIndicatorList,
       CountryCodesFullList,
       CountryCodesCommonTransitList,
       CustomsOfficesList
@@ -97,6 +93,10 @@ object ReferenceDataList {
     }
 
     object AdditionalInformationIdCommonListFieldNames {
+      val code = "code"
+    }
+
+    object SpecificCountryCodesFullListFieldNames {
       val code = "code"
     }
 

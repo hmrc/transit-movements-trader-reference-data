@@ -17,7 +17,6 @@
 package data.transform
 
 import models.AdditionalInformationIdCommonList
-import models.CircumstanceIndicatorList
 import models.ControlResultList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
@@ -148,9 +147,6 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationControlResultList: Transformation[ControlResultList.type] =
-    Transformation.fromReads(simpleCodeDescriptionReads)
-
-  implicit val transformationCircumstanceIndicatorList: Transformation[CircumstanceIndicatorList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }
