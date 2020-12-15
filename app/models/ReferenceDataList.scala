@@ -40,7 +40,16 @@ object ReferenceDataList {
     NonEmptyList.of(
       CountryCodesFullList,
       CountryCodesCommonTransitList,
-      CustomsOfficesList
+      CustomsOfficesList,
+      DocumentTypeCommonList,
+      PreviousDocumentTypeCommonList,
+      KindOfPackagesList,
+      TransportModeList,
+      AdditionalInformationIdCommonList,
+      SpecificCircumstanceIndicatorList,
+      UnDangerousGoodsCodeList,
+      TransportChargesMethodOfPaymentList,
+      ControlResultList
     )
 
   val mappings: Map[String, ReferenceDataList] =
