@@ -23,6 +23,7 @@ import models.CustomsOfficesList
 import models.DocumentTypeCommonList
 import models.KindOfPackagesList
 import models.PreviousDocumentTypeCommonList
+import models.SpecificCircumstanceIndicatorList
 import models.TransportModeList
 import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
@@ -131,6 +132,9 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationAdditionalInformationIdCommonList: Transformation[AdditionalInformationIdCommonList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationSpecificCircumstanceIndicatorList: Transformation[SpecificCircumstanceIndicatorList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }

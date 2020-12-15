@@ -31,6 +31,7 @@ object PreviousDocumentTypeCommonList    extends ReferenceDataList("PreviousDocu
 object KindOfPackagesList                extends ReferenceDataList("KindOfPackages")
 object TransportModeList                 extends ReferenceDataList("TransportMode")
 object AdditionalInformationIdCommonList extends ReferenceDataList("AdditionalInformationIdCommonList")
+object SpecificCircumstanceIndicatorList extends ReferenceDataList("SpecificCircumstanceIndicatorList")
 
 object ReferenceDataList {
 
