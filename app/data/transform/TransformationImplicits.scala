@@ -16,6 +16,7 @@
 
 package data.transform
 
+import models.AdditionalInformationIdCommonList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
@@ -127,6 +128,9 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationTransportModeList: Transformation[TransportModeList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationAdditionalInformationIdCommonList: Transformation[AdditionalInformationIdCommonList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }
