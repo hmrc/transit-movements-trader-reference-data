@@ -17,6 +17,7 @@
 package data.transform
 
 import models.AdditionalInformationIdCommonList
+import models.ControlResultList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
@@ -143,6 +144,9 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationTransportChargesMethodOfPaymentList: Transformation[TransportChargesMethodOfPaymentList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationControlResultList: Transformation[ControlResultList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }

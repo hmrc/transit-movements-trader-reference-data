@@ -34,6 +34,7 @@ object AdditionalInformationIdCommonList   extends ReferenceDataList("Additional
 object SpecificCircumstanceIndicatorList   extends ReferenceDataList("SpecificCircumstanceIndicatorList")
 object UnDangerousGoodsCodeList            extends ReferenceDataList("UnDangerousGoodsCode")
 object TransportChargesMethodOfPaymentList extends ReferenceDataList("TransportChargesMethodOfPayment")
+object ControlResultList                   extends ReferenceDataList("ControlResult")
 
 object ReferenceDataList {
 
