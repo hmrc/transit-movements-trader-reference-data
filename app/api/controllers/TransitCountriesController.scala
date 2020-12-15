@@ -43,7 +43,7 @@ class TransitCountriesController @Inject() (
           case data if data.nonEmpty => Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
-            InternalServerError
+            NotFound
         }
     }
 

@@ -63,7 +63,7 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
 
     }
 
-    "must return Internal Server Error when the transit countries cannot be retrieved" in {
+    "must return Not Found when the transit countries cannot be retrieved" in {
 
       when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
@@ -73,7 +73,7 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
       )
       val result = route(app, request).value
 
-      status(result) mustBe INTERNAL_SERVER_ERROR
+      status(result) mustBe NOT_FOUND
 
     }
   }
