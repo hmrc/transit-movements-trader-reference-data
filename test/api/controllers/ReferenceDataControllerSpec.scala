@@ -143,52 +143,5 @@ class ReferenceDataControllerSpec extends SpecBaseWithAppPerSuite {
       contentAsJson(result) mustBe Json.toJson(methodOfPayment)
 
     }
-
-    "must fetch dangerous goods code" in {
-      when(dangerousGoodsCodeService.dangerousGoodsCodes).thenReturn(dangerousGoodsCodes)
-
-      val request = FakeRequest(
-        GET,
-        routes.ReferenceDataController.dangerousGoodsCodes().url
-      )
-      val result = route(app, request).value
-
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(dangerousGoodsCodes)
-
-    }
-
-    "getDangerousGoodsCodeByCode" - {
-      "must dangerous goods code and return Ok" in {
-        val code = "0004"
-
-        when(dangerousGoodsCodeService.getDangerousGoodsCodeByCode(any())).thenReturn(Some(dangerousGoodsCode))
-
-        val request = FakeRequest(
-          GET,
-          routes.ReferenceDataController.getDangerousGoodsCode(code).url
-        )
-        val result = route(app, request).value
-
-        status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(dangerousGoodsCode)
-
-      }
-
-      "must return NotFound when no dangerous goods code is found" in {
-        when(dangerousGoodsCodeService.getDangerousGoodsCodeByCode(any())).thenReturn(None)
-
-        val invalidCode = "Invalid"
-
-        val request = FakeRequest(
-          GET,
-          routes.ReferenceDataController.getDangerousGoodsCode(invalidCode).url
-        )
-        val result = route(app, request).value
-
-        status(result) mustBe NOT_FOUND
-
-      }
-    }
   }
 }

@@ -25,8 +25,8 @@ GET        /special-mention                                   api.controllers.Re
 
 GET        /method-of-payment                                 api.controllers.ReferenceDataController.methodOfPayment
 
-GET        /dangerous-goods-code                              api.controllers.ReferenceDataController.dangerousGoodsCodes
-GET        /dangerous-goods-code/:code                        api.controllers.ReferenceDataController.getDangerousGoodsCode(code)
+GET        /dangerous-goods-code                              api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
+GET        /dangerous-goods-code/:code                        api.controllers.DangerousGoodsCodesController.getDangerousGoodsCode(code)
 
 GET        /circumstance-indicators                           api.controllers.CircumstanceIndicatorController.circumstanceIndicators
 GET        /circumstance-indicator/:code                      api.controllers.CircumstanceIndicatorController.getCircumstanceIndicator(code)
