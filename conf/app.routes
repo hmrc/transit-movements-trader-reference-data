@@ -1,33 +1,35 @@
 # microservice specific routes
-GET        /customs-offices                                   api.controllers.CustomsOfficeController.customsOffices
-GET        /customs-offices/:code                             api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code)
-GET        /customs-office/:id                                api.controllers.CustomsOfficeController.getCustomsOffice(id)
+GET   /customs-offices                 api.controllers.CustomsOfficeController.customsOffices
+GET   /customs-offices/:code           api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code)
+GET   /customs-office/:id              api.controllers.CustomsOfficeController.getCustomsOffice(id)
 
-GET        /countries/:code                                   api.controllers.CountryController.getCountry(code)
-GET        /countries-full-list                               api.controllers.CountryController.countriesFullList
+GET   /countries/:code                 api.controllers.CountryController.getCountry(code)
+GET   /countries-full-list             api.controllers.CountryController.countriesFullList
 
-GET        /transit-countries                                 api.controllers.TransitCountriesController.transitCountries()
+GET   /transit-countries               api.controllers.TransitCountriesController.transitCountries()
 
-GET        /additional-information                            api.controllers.ReferenceDataController.additionalInformation
-GET        /kinds-of-package                                  api.controllers.ReferenceDataController.kindsOfPackage
-GET        /document-types                                    api.controllers.ReferenceDataController.documentTypes
+GET   /additional-information          api.controllers.AdditionalInformationController.getAll()
 
-GET        /transport-modes                                   api.controllers.TransportModeController.transportModes
-GET        /transport-mode/:code                              api.controllers.TransportModeController.getTransportMode(code)
+GET   /kinds-of-package                api.controllers.KindsOfPackageController.getAll()
 
-GET        /office-transit                                    api.controllers.OfficeOfTransitController.officesOfTransit
-GET        /office-transit/:id                                api.controllers.OfficeOfTransitController.getOfficeOfTransit(id)
+GET   /document-types                  api.controllers.DocumentTypeController.getAll()
 
-GET        /previous-document-type                            api.controllers.PreviousDocumentTypeController.previousDocumentTypes
-GET        /previous-document-type/:code                      api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
+GET   /transport-modes                 api.controllers.TransportModeController.transportModes
+GET   /transport-mode/:code            api.controllers.TransportModeController.getTransportMode(code)
 
-GET        /special-mention                                   api.controllers.ReferenceDataController.specialMention
+GET   /office-transit                  api.controllers.OfficeOfTransitController.officesOfTransit
+GET   /office-transit/:id              api.controllers.OfficeOfTransitController.getOfficeOfTransit(id)
 
-GET        /method-of-payment                                 api.controllers.ReferenceDataController.methodOfPayment
+GET   /previous-document-type          api.controllers.PreviousDocumentTypeController.previousDocumentTypes
+GET   /previous-document-type/:code    api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
-GET        /dangerous-goods-code                              api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
-GET        /dangerous-goods-code/:code                        api.controllers.DangerousGoodsCodesController.getDangerousGoodsCode(code)
+GET   /special-mention                 api.controllers.SpecialMentionController.getAll()
 
-GET        /circumstance-indicators                           api.controllers.CircumstanceIndicatorController.circumstanceIndicators
-GET        /circumstance-indicator/:code                      api.controllers.CircumstanceIndicatorController.getCircumstanceIndicator(code)
+GET   /method-of-payment               api.controllers.MethodOfPaymentController.getAll()
+
+GET   /dangerous-goods-code            api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
+GET   /dangerous-goods-code/:code      api.controllers.DangerousGoodsCodesController.getDangerousGoodsCode(code)
+
+GET   /circumstance-indicators         api.controllers.CircumstanceIndicatorController.circumstanceIndicators
+GET   /circumstance-indicator/:code    api.controllers.CircumstanceIndicatorController.getCircumstanceIndicator(code)
 
