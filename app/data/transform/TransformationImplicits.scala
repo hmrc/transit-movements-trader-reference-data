@@ -16,9 +16,18 @@
 
 package data.transform
 
+import models.AdditionalInformationIdCommonList
+import models.ControlResultList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
+import models.DocumentTypeCommonList
+import models.KindOfPackagesList
+import models.PreviousDocumentTypeCommonList
+import models.SpecificCircumstanceIndicatorList
+import models.TransportChargesMethodOfPaymentList
+import models.TransportModeList
+import models.UnDangerousGoodsCodeList
 import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -33,7 +42,7 @@ trait TransformationImplicits {
           (__ \ CountryCodesFullListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
             (__ \ Common.state).json.pickBranch and
             (__ \ Common.activeFrom).json.pickBranch and
-            (__ \ CountryCodesFullListFieldNames.description).json.copyFrom(englishDescription)
+            (__ \ Common.description).json.copyFrom(englishDescription)
         ).reduce
           .andThen(
             (__ \ Common.activeFrom).json.prune
@@ -47,7 +56,7 @@ trait TransformationImplicits {
           (__ \ CountryCodesCommonTransitListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
             (__ \ Common.state).json.pickBranch and
             (__ \ Common.activeFrom).json.pickBranch and
-            (__ \ CountryCodesCommonTransitListFieldNames.description).json.copyFrom(englishDescription)
+            (__ \ Common.description).json.copyFrom(englishDescription)
         ).reduce
           .andThen(
             (__ \ Common.activeFrom).json.prune
@@ -83,9 +92,61 @@ trait TransformationImplicits {
             (__ \ CustomsOfficesListFieldNames.phoneNumber).json.copyFrom((__ \ "phoneNumber").json.pick orElse Reads.pure(JsNull)) and
             (__ \ CustomsOfficesListFieldNames.roles).json.put(JsArray.empty)
         ).reduce
-          .andThen((__ \ Common.activeFrom).json.prune)
           .andThen((__ \ Common.state).json.prune)
+          .andThen((__ \ Common.activeFrom).json.prune)
       )
   }
+
+  implicit val transformationDocumentTypeCommonList: Transformation[DocumentTypeCommonList.type] =
+    Transformation
+      .fromReads(
+        (
+          (__ \ Common.state).json.pickBranch and
+            (__ \ Common.activeFrom).json.pickBranch and
+            (__ \ DocumentTypeCommonListFieldNames.code).json.copyFrom((__ \ "documentType").json.pick) and
+            (__ \ Common.description).json.copyFrom(englishDescription) and
+            (__ \ DocumentTypeCommonListFieldNames.transportDocument).json.copyFrom(
+              (__ \ DocumentTypeCommonListFieldNames.transportDocument).json.pick.andThen(
+                booleanFromIntString(DocumentTypeCommonList, (__ \ DocumentTypeCommonListFieldNames.transportDocument))
+              )
+            )
+        ).reduce
+          .andThen((__ \ Common.state).json.prune)
+          .andThen((__ \ Common.activeFrom).json.prune)
+      )
+
+  private val simpleCodeDescriptionReads: Reads[JsObject] =
+    (
+      (__ \ Common.state).json.pickBranch and
+        (__ \ Common.activeFrom).json.pickBranch and
+        (__ \ PreviousDocumentTypeCommonListFieldNames.code).json.pickBranch and
+        (__ \ Common.description).json.copyFrom(englishDescription)
+    ).reduce
+      .andThen((__ \ Common.state).json.prune)
+      .andThen((__ \ Common.activeFrom).json.prune)
+
+  implicit val transformationPreviousDocumentTypeCommonList: Transformation[PreviousDocumentTypeCommonList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationKindOfPackagesList: Transformation[KindOfPackagesList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationTransportModeList: Transformation[TransportModeList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationAdditionalInformationIdCommonList: Transformation[AdditionalInformationIdCommonList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationSpecificCircumstanceIndicatorList: Transformation[SpecificCircumstanceIndicatorList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationUnDangerousGoodsCodeList: Transformation[UnDangerousGoodsCodeList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationTransportChargesMethodOfPaymentList: Transformation[TransportChargesMethodOfPaymentList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationControlResultList: Transformation[ControlResultList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
 
 }
