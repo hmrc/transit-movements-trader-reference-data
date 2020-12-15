@@ -59,9 +59,6 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
         .many[JsObject](enrichedValues)
         .map(_ => true)
         .recover {
-          case e: LastError if e.code contains duplicateErrorCode =>
-            logger.warn(s"Tried to insert duplicate values for ${list.listName}")
-            true
           case e: Throwable =>
             logger.error(s"Error inserting s${list.listName}", e)
             throw e

@@ -59,9 +59,7 @@ class ListRepositorySpec
         databaseRecords must contain theSameElementsAs expectedRecords
       }
     }
-
-    // TODO: Add a test for an attempt to insert duplicates
-
+    
     "must get all records that match a given selector" in {
 
       val app = new GuiceApplicationBuilder().build()
