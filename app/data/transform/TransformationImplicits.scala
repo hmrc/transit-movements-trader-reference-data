@@ -25,6 +25,7 @@ import models.KindOfPackagesList
 import models.PreviousDocumentTypeCommonList
 import models.SpecificCircumstanceIndicatorList
 import models.TransportModeList
+import models.UnDangerousGoodsCodeList
 import models.ReferenceDataList.Constants._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -135,6 +136,9 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationSpecificCircumstanceIndicatorList: Transformation[SpecificCircumstanceIndicatorList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationUnDangerousGoodsCodeList: Transformation[UnDangerousGoodsCodeList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }

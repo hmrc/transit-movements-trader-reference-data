@@ -32,6 +32,7 @@ object KindOfPackagesList                extends ReferenceDataList("KindOfPackag
 object TransportModeList                 extends ReferenceDataList("TransportMode")
 object AdditionalInformationIdCommonList extends ReferenceDataList("AdditionalInformationIdCommonList")
 object SpecificCircumstanceIndicatorList extends ReferenceDataList("SpecificCircumstanceIndicatorList")
+object UnDangerousGoodsCodeList          extends ReferenceDataList("UnDangerousGoodsCode")
 
 object ReferenceDataList {
 
