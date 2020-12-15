@@ -24,6 +24,7 @@ import models.DocumentTypeCommonList
 import models.KindOfPackagesList
 import models.PreviousDocumentTypeCommonList
 import models.SpecificCircumstanceIndicatorList
+import models.TransportChargesMethodOfPaymentList
 import models.TransportModeList
 import models.UnDangerousGoodsCodeList
 import models.ReferenceDataList.Constants._
@@ -139,6 +140,9 @@ trait TransformationImplicits {
     Transformation.fromReads(simpleCodeDescriptionReads)
 
   implicit val transformationUnDangerousGoodsCodeList: Transformation[UnDangerousGoodsCodeList.type] =
+    Transformation.fromReads(simpleCodeDescriptionReads)
+
+  implicit val transformationTransportChargesMethodOfPaymentList: Transformation[TransportChargesMethodOfPaymentList.type] =
     Transformation.fromReads(simpleCodeDescriptionReads)
 
 }

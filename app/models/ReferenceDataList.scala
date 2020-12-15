@@ -21,18 +21,19 @@ import play.api.mvc.PathBindable
 
 sealed abstract class ReferenceDataList(val listName: String)
 
-object AdditionalInformationList         extends ReferenceDataList("AdditionalInformationIdCommon")
-object CircumstanceIndicatorList         extends ReferenceDataList("SpecificCircumstanceIndicator")
-object CountryCodesFullList              extends ReferenceDataList("CountryCodesFullList")
-object CountryCodesCommonTransitList     extends ReferenceDataList("CountryCodesCommonTransit")
-object CustomsOfficesList                extends ReferenceDataList("CustomsOffices")
-object DocumentTypeCommonList            extends ReferenceDataList("DocumentTypeCommon")
-object PreviousDocumentTypeCommonList    extends ReferenceDataList("PreviousDocumentTypeCommon")
-object KindOfPackagesList                extends ReferenceDataList("KindOfPackages")
-object TransportModeList                 extends ReferenceDataList("TransportMode")
-object AdditionalInformationIdCommonList extends ReferenceDataList("AdditionalInformationIdCommonList")
-object SpecificCircumstanceIndicatorList extends ReferenceDataList("SpecificCircumstanceIndicatorList")
-object UnDangerousGoodsCodeList          extends ReferenceDataList("UnDangerousGoodsCode")
+object AdditionalInformationList           extends ReferenceDataList("AdditionalInformationIdCommon")
+object CircumstanceIndicatorList           extends ReferenceDataList("SpecificCircumstanceIndicator")
+object CountryCodesFullList                extends ReferenceDataList("CountryCodesFullList")
+object CountryCodesCommonTransitList       extends ReferenceDataList("CountryCodesCommonTransit")
+object CustomsOfficesList                  extends ReferenceDataList("CustomsOffices")
+object DocumentTypeCommonList              extends ReferenceDataList("DocumentTypeCommon")
+object PreviousDocumentTypeCommonList      extends ReferenceDataList("PreviousDocumentTypeCommon")
+object KindOfPackagesList                  extends ReferenceDataList("KindOfPackages")
+object TransportModeList                   extends ReferenceDataList("TransportMode")
+object AdditionalInformationIdCommonList   extends ReferenceDataList("AdditionalInformationIdCommonList")
+object SpecificCircumstanceIndicatorList   extends ReferenceDataList("SpecificCircumstanceIndicatorList")
+object UnDangerousGoodsCodeList            extends ReferenceDataList("UnDangerousGoodsCode")
+object TransportChargesMethodOfPaymentList extends ReferenceDataList("TransportChargesMethodOfPayment")
 
 object ReferenceDataList {
 
