@@ -17,22 +17,25 @@
 package models
 
 import base.SpecBase
+import org.scalacheck.Gen
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.mvc.PathBindable
 
-class ReferenceDataListSpec extends SpecBase {
+class ReferenceDataListSpec extends SpecBase with ScalaCheckPropertyChecks {
 
   "pathBindable" - {
     "given a valid list name will return the ReferenceDataList for that list name" in {
-      val testList = ReferenceDataList.values.head
+      forAll(Gen.oneOf(ReferenceDataList.values.toList)) {
+        testList =>
+          val result: Either[String, ReferenceDataList] = implicitly[PathBindable[ReferenceDataList]].bind("", testList.listName)
 
-      val result: Either[String, ReferenceDataList] = implicitly[PathBindable[ReferenceDataList]].bind("", testList.listName)
+          result.right.value mustEqual testList
 
-      result.right.value mustEqual testList
+      }
 
     }
 
     "given an invalid list name will return a left with an error message" in {
-
       val invalidTestList = "invalidTestList"
 
       val result: Either[String, ReferenceDataList] = implicitly[PathBindable[ReferenceDataList]].bind("", invalidTestList)
