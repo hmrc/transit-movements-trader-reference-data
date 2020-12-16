@@ -39,16 +39,12 @@ class CustomsOfficeController @Inject() (
     Action.async {
       dataRetrieval
         .getList(CustomsOfficesList)
-        .map(
-          data =>
-            if (data.nonEmpty)
-              Ok(Json.toJson(data))
-            else {
-              logger.error(s"No data found for ${CustomsOfficesList.listName}")
-              InternalServerError
-            }
-        )
-
+        .map {
+          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CustomsOfficesList.listName}")
+            InternalServerError
+        }
     }
 
   def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] =

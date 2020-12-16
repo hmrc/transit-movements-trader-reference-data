@@ -18,8 +18,8 @@ package api.controllers
 
 import data.DataRetrieval
 import javax.inject.Inject
-import models.CountryCodesFullList
-import models.ReferenceDataList.Constants.CountryCodesFullListFieldNames
+import logging.Logging
+import models.CountryCodesCommonTransitList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -28,36 +28,23 @@ import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class CountryController @Inject() (
+class TransitCountriesController @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+    extends BackendController(cc)
+    with Logging {
 
-  def countriesFullList(): Action[AnyContent] =
+  def transitCountries(): Action[AnyContent] =
     Action.async {
       dataRetrieval
-        .getList(CountryCodesFullList)
-        .map(
-          data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
-        )
-    }
-
-  def getCountry(code: String): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CountryCodesFullList)
+        .getList(CountryCodesCommonTransitList)
         .map {
-          data =>
-            val response = data.find(
-              json => (json \ CountryCodesFullListFieldNames.code).as[String] == code
-            )
-
-            response match {
-              case Some(country) => Ok(Json.toJson(country))
-              case None          => NotFound
-            }
+          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
+            InternalServerError
         }
-
     }
+
 }

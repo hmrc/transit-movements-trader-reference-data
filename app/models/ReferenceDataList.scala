@@ -21,15 +21,35 @@ import play.api.mvc.PathBindable
 
 sealed abstract class ReferenceDataList(val listName: String)
 
+object CountryCodesFullList                extends ReferenceDataList("CountryCodesFullList")
+object CountryCodesCommonTransitList       extends ReferenceDataList("CountryCodesCommonTransit")
+object CustomsOfficesList                  extends ReferenceDataList("CustomsOffices")
+object DocumentTypeCommonList              extends ReferenceDataList("DocumentTypeCommon")
+object PreviousDocumentTypeCommonList      extends ReferenceDataList("PreviousDocumentTypeCommon")
+object KindOfPackagesList                  extends ReferenceDataList("KindOfPackages")
+object TransportModeList                   extends ReferenceDataList("TransportMode")
+object AdditionalInformationIdCommonList   extends ReferenceDataList("AdditionalInformationIdCommon")
+object SpecificCircumstanceIndicatorList   extends ReferenceDataList("SpecificCircumstanceIndicator")
+object UnDangerousGoodsCodeList            extends ReferenceDataList("UnDangerousGoodsCode")
+object TransportChargesMethodOfPaymentList extends ReferenceDataList("TransportChargesMethodOfPayment")
+object ControlResultList                   extends ReferenceDataList("ControlResult")
+
 object ReferenceDataList {
 
   val values: NonEmptyList[ReferenceDataList] =
     NonEmptyList.of(
-      AdditionalInformationList,
-      CircumstanceIndicatorList,
       CountryCodesFullList,
       CountryCodesCommonTransitList,
-      CustomsOfficesList
+      CustomsOfficesList,
+      DocumentTypeCommonList,
+      PreviousDocumentTypeCommonList,
+      KindOfPackagesList,
+      TransportModeList,
+      AdditionalInformationIdCommonList,
+      SpecificCircumstanceIndicatorList,
+      UnDangerousGoodsCodeList,
+      TransportChargesMethodOfPaymentList,
+      ControlResultList
     )
 
   val mappings: Map[String, ReferenceDataList] =
@@ -43,10 +63,52 @@ object ReferenceDataList {
     override def unbind(key: String, value: ReferenceDataList): String = value.listName
   }
 
-}
+  object Constants {
 
-object AdditionalInformationList     extends ReferenceDataList("AdditionalInformationIdCommon")
-object CircumstanceIndicatorList     extends ReferenceDataList("SpecificCircumstanceIndicator")
-object CountryCodesFullList          extends ReferenceDataList("CountryCodesFullList")
-object CountryCodesCommonTransitList extends ReferenceDataList("CountryCodesCommonTransit")
-object CustomsOfficesList            extends ReferenceDataList("CustomsOffices")
+    object Common {
+      val activeFrom  = "activeFrom"
+      val state       = "state"
+      val description = "description"
+      val en          = "en"
+    }
+
+    object CountryCodesFullListFieldNames {
+      val code = "code"
+    }
+
+    object CountryCodesCommonTransitListFieldNames {
+      val code = "code"
+    }
+
+    object CustomsOfficesListFieldNames {
+      val id          = "id"
+      val name        = "name"
+      val countryId   = "countryId"
+      val phoneNumber = "phoneNumber"
+      val roles       = "roles"
+    }
+
+    object DocumentTypeCommonListFieldNames {
+      val code              = "code"
+      val transportDocument = "transportDocument"
+    }
+
+    object PreviousDocumentTypeCommonListFieldNames {
+      val code = "code"
+    }
+
+    object TransportModeListFieldNames {
+      val code = "code"
+    }
+
+    object AdditionalInformationIdCommonListFieldNames {
+      val code = "code"
+    }
+
+    object SpecificCountryCodesFullListFieldNames {
+      val code = "code"
+    }
+
+  }
+
+}

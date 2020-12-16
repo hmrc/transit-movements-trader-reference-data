@@ -18,15 +18,20 @@ package scheduler
 
 import javax.inject.Inject
 import play.api.Logging
-import repositories.{DataImport, LockRepository, LockResult}
-import scheduler.ScheduleStatus.{MongoUnlockException, UnknownExceptionOccurred}
+import repositories.DataImport
+import repositories.LockRepository
+import repositories.LockResult
+import scheduler.ScheduleStatus.MongoUnlockException
+import scheduler.ScheduleStatus.UnknownExceptionOccurred
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 class DataImportTrigger @Inject() (
-  val lockRepository: LockRepository,
+  lockRepository: LockRepository,
   dataImportService: DataImportService
-) extends ServiceTrigger[Either[JobFailed, Option[DataImport]]] with Logging {
+) extends ServiceTrigger[Either[JobFailed, Option[DataImport]]]
+    with Logging {
 
   override def invoke(implicit ec: ExecutionContext): Future[Either[JobFailed, Option[DataImport]]] = {
 

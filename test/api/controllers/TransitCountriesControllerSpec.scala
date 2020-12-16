@@ -31,7 +31,7 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class CountryControllerSpec extends SpecBaseWithAppPerSuite {
+class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
 
   private val ukCountry            = Country("valid", "GB", "United Kingdom")
   private val countries            = Seq(ukCountry)
@@ -47,55 +47,35 @@ class CountryControllerSpec extends SpecBaseWithAppPerSuite {
         bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
-  "CountryController" - {
+  "transitCountries" - {
+    "must return Ok when there are transit countries" in {
 
-    "countriesFullList" - {
-      "must fetch country full list" in {
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.transitCountries().url
+      )
+      val result = route(app, request).value
 
-        val request = FakeRequest(
-          GET,
-          routes.CountryController.countriesFullList().url
-        )
-        val result = route(app, request).value
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(countries)
 
-        status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(countries)
-      }
     }
 
-    "getCountry" - {
-      "must get correct country and return Ok" in {
+    "must return Internal Server Error when the transit countries cannot be retrieved" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
-        val validCountryCode = "GB"
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.transitCountries().url
+      )
+      val result = route(app, request).value
 
-        val request = FakeRequest(
-          GET,
-          routes.CountryController.getCountry(validCountryCode).url
-        )
-        val result = route(app, request).value
+      status(result) mustBe INTERNAL_SERVER_ERROR
 
-        status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(ukCountry)
-      }
-
-      "must return NotFound when no country is found" in {
-
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
-
-        val invalidCountryCode = "Invalid"
-
-        val request = FakeRequest(
-          GET,
-          routes.CountryController.getCountry(invalidCountryCode).url
-        )
-        val result = route(app, request).value
-
-        status(result) mustBe NOT_FOUND
-      }
     }
   }
+
 }

@@ -16,26 +16,10 @@
 
 package scheduler
 
-import repositories.{LockRepository, LockResult}
-
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 trait ServiceTrigger[A] {
-  val lockRepository: LockRepository
-
-  val lockName: String = this.getClass.getCanonicalName
-
   def invoke(implicit ec: ExecutionContext): Future[A]
 
-  protected def getLock(block: => Future[Either[JobFailed, A]])(implicit ec: ExecutionContext): Future[Either[JobFailed, Option[A]]] = {
-    lockRepository.lock(lockName).flatMap {
-      case LockResult.LockAcquired =>
-        block.flatMap {
-          result =>
-            lockRepository.unlock(lockName).map(_ => result)
-        }
-      case LockResult.AlreadyLocked => Future.successful(Right(None))
-    }
-  }
 }
