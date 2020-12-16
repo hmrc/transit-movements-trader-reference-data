@@ -9,5 +9,16 @@
 # !!!WARNING!!! Every route defined in this file MUST be prefixed with "/test-only/". This is because NGINX is blocking every uri containing the string "test-only" in production.
 # Failing to follow this rule may result in test routes deployed in production.
 
+# microservice specific routes
+GET        /transit-movements-trader-reference-data/customs-offices                                   api.controllers.testOnly.CustomsOfficeController.customsOffices
+GET        /transit-movements-trader-reference-data/customs-offices/:code                             api.controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code)
+GET        /transit-movements-trader-reference-data/customs-office/:id                                api.controllers.testOnly.CustomsOfficeController.getCustomsOffice(id)
+
+GET        /transit-movements-trader-reference-data/countries/:code                                   api.controllers.testOnly.CountryController.getCountry(code)
+GET        /transit-movements-trader-reference-data/countries-full-list                               api.controllers.testOnly.CountryController.countriesFullList
+GET        /transit-movements-trader-reference-data/transit-countries                                 api.controllers.testOnly.CountryController.transitCountries
+
 # Add all the application routes to the prod.routes file
-->         /                          prod.Routes
+->         /                          health.Routes
+
+GET        /admin/metrics             com.kenshoo.play.metrics.MetricsController.metrics

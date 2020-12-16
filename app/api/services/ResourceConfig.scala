@@ -50,4 +50,13 @@ class ResourceConfig @Inject() (config: Configuration) {
 
   val circumstanceIndicators: String =
     config.get[String]("resourceFiles.circumstanceIndicators")
+
+  val customsOffice: String =
+    config.get[String]("resourceFiles.customsOffices")
+
+  val countryCodes: String =
+    config.get[String]("resourceFiles.countryCodesFullList")
+
+  val transitCountryCodes: String =
+    config.get[String]("resourceFiles.transitCountryCodesFullList")
 }

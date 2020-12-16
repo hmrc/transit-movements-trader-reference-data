@@ -33,7 +33,8 @@ case class ImportId(value: Int)
 object ImportId {
 
   implicit val writes: Writes[ImportId] = Writes {
-    importId => JsNumber(importId.value)
+    importId =>
+      JsNumber(importId.value)
   }
 
   implicit val reads: Reads[ImportId] = new Reads[ImportId] {
