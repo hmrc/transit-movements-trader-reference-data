@@ -22,7 +22,6 @@ import java.time.Instant
 import data.DataRetrieval
 import data.transform.Transformation
 import javax.inject.Inject
-import models.AdditionalInformationList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
