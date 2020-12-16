@@ -1,0 +1,17 @@
+[
+  {
+    "code": "CM",
+    "state": "valid",
+    "description": "Cameroon"
+  },
+  {
+    "code": "CN",
+    "state": "valid",
+    "description": "China"
+  },
+  {
+    "code": "It",
+    "state": "valid",
+    "description": "Italy"
+  }
+]
