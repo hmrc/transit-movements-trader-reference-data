@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.SpecialMentionService
 import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
@@ -28,16 +29,16 @@ import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class SpecialMentionController @Inject() (
+class SpecialMentionController @Inject()(
   cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
+  specialMentionService: SpecialMentionService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
   def getAll(): Action[AnyContent] =
     Action {
-      NotImplemented
+      Ok(Json.toJson(specialMentionService.specialMention))
     }
 
 }
