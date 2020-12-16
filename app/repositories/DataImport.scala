@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package config
+package repositories
 
-import java.time.Clock
-import java.time.ZoneOffset
+import java.time.Instant
 
-import com.google.inject.AbstractModule
-import repositories.ListCollectionIndexManager
+import play.api.libs.json.Json
+import play.api.libs.json.OFormat
 
-class Modules extends AbstractModule {
+case class DataImport(importId: ImportId, status: ImportStatus, started: Instant, finished: Option[Instant] = None)
 
-  override def configure(): Unit = {
-    bind(classOf[AppConfig]).asEagerSingleton()
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-    bind(classOf[ListCollectionIndexManager]).asEagerSingleton()
+object DataImport {
+  val jsonFormat: OFormat[DataImport] = Json.format[DataImport]
+
+  val mongoFormat: OFormat[DataImport] = {
+    import repositories.MongoInstantFormats._
+    Json.format[DataImport]
   }
 }

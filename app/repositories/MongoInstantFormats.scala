@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-package config
+package repositories
 
-import java.time.Clock
-import java.time.ZoneOffset
+import java.time.Instant
 
-import com.google.inject.AbstractModule
-import repositories.ListCollectionIndexManager
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
+import play.api.libs.json.Writes
+import play.api.libs.json.__
 
-class Modules extends AbstractModule {
+object MongoInstantFormats {
 
-  override def configure(): Unit = {
-    bind(classOf[AppConfig]).asEagerSingleton()
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-    bind(classOf[ListCollectionIndexManager]).asEagerSingleton()
-  }
+  implicit val instantRead: Reads[Instant] =
+    (__ \ "$date").read[Long].map {
+      millis =>
+        Instant.ofEpochMilli(millis)
+    }
+
+  implicit val instantWrites: Writes[Instant] =
+    (instant: Instant) =>
+      Json.obj(
+        "$date" -> instant.toEpochMilli
+      )
 }
