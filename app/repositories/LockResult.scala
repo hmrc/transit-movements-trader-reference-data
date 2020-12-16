@@ -14,24 +14,11 @@
  * limitations under the License.
  */
 
-package config
+package repositories
 
-import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+sealed trait LockResult
 
-import scala.concurrent.duration.FiniteDuration
-
-class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
-
-  val authBaseUrl: String =
-    servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean =
-    config.get[Boolean]("auditing.enabled")
-
-  val graphiteHost: String =
-    config.get[String]("microservice.metrics.graphite.host")
-
-  val mongoLockTtlInSeconds: Int = config.get[Int]("mongodb.locks.ttlSeconds")
+object LockResult {
+  case object LockAcquired  extends LockResult
+  case object AlreadyLocked extends LockResult
 }
