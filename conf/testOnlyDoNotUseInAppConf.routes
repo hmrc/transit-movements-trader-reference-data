@@ -18,6 +18,26 @@ GET        /transit-movements-trader-reference-data/countries/:code             
 GET        /transit-movements-trader-reference-data/countries-full-list                               api.controllers.testOnly.CountryController.countriesFullList
 GET        /transit-movements-trader-reference-data/transit-countries                                 api.controllers.testOnly.CountryController.transitCountries
 
+GET        /transit-movements-trader-reference-data/office-transit                                    api.controllers.testOnly.OfficeOfTransitController.officesOfTransit
+GET        /transit-movements-trader-reference-data/office-transit/:id                                api.controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)
+
+GET        /transit-movements-trader-reference-data/transport-modes                                   api.controllers.testOnly.TransportModeController.transportModes
+GET        /transit-movements-trader-reference-data/transport-mode/:code                              api.controllers.testOnly.TransportModeController.getTransportMode(code)
+
+GET        /transit-movements-trader-reference-data/previous-document-type                            api.controllers.testOnly.PreviousDocumentTypeController.previousDocumentTypes
+GET        /transit-movements-trader-reference-data/previous-document-type/:code                      api.controllers.testOnly.PreviousDocumentTypeController.getPreviousDocumentType(code)
+
+GET        /transit-movements-trader-reference-data/circumstance-indicators                           api.controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
+GET        /transit-movements-trader-reference-data/circumstance-indicator/:code                      api.controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
+
+GET        /transit-movements-trader-reference-data/special-mention                                   api.controllers.testOnly.ReferenceDataController.specialMention
+GET        /transit-movements-trader-reference-data/method-of-payment                                 api.controllers.testOnly.ReferenceDataController.methodOfPayment
+GET        /transit-movements-trader-reference-data/dangerous-goods-code                              api.controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
+GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        api.controllers.testOnly.ReferenceDataController.getDangerousGoodsCode(code)
+GET        /transit-movements-trader-reference-data/additional-information                            api.controllers.testOnly.ReferenceDataController.additionalInformation
+GET        /transit-movements-trader-reference-data/kinds-of-package                                  api.controllers.testOnly.ReferenceDataController.kindsOfPackage
+GET        /transit-movements-trader-reference-data/document-types                                    api.controllers.testOnly.ReferenceDataController.documentTypes
+
 # Add all the application routes to the prod.routes file
 ->         /                          health.Routes
 
