@@ -16,10 +16,50 @@
 
 package scheduler
 
+import logging.Logging
+import repositories.LockRepository
+import repositories.LockResult
+import scheduler.ScheduleStatus.MongoUnlockException
+import scheduler.ScheduleStatus.UnknownExceptionOccurred
+
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-trait ServiceTrigger[A] {
+trait ServiceTrigger[A] extends Logging {
+  val lockRepository: LockRepository
+
   def invoke(implicit ec: ExecutionContext): Future[A]
 
+  protected def withLock[T](lock: String)(block: => Future[Either[JobFailed, Option[T]]])(implicit ec: ExecutionContext): Future[Either[JobFailed, Option[T]]] =
+    lockRepository.lock(lock) flatMap {
+      case LockResult.LockAcquired =>
+        logger.info("Acquired a lock")
+
+        block.flatMap {
+          result =>
+            lockRepository
+              .unlock(lock)
+              .map(_ => result)
+              .recover {
+                case e: Exception =>
+                  logger.warn(s"Unable to release lock $lock")
+                  Left(MongoUnlockException(e))
+              }
+        }
+
+      case LockResult.AlreadyLocked =>
+        logger.info("Could not get a lock - may have been triggered on another instance")
+        Future.successful(Right(None))
+    } recoverWith {
+      case e: Exception =>
+        logger.warn("Something went wrong", e)
+        lockRepository
+          .unlock(lock)
+          .map(_ => Left(UnknownExceptionOccurred(e)))
+          .recover {
+            case e: Exception =>
+              logger.warn(s"Unable to release lock $lock")
+              Left(MongoUnlockException(e))
+          }
+    }
 }

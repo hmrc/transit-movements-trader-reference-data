@@ -22,8 +22,8 @@ sealed trait JobName
 
 object JobName {
 
-  case object ImportDataJob extends JobName {
-    override def toString: String = "ImportDataJob"
+  case object ImportData extends JobName {
+    override def toString: String = "ImportData"
   }
 
   implicit def convertToString(jobName: JobName): String = jobName.toString

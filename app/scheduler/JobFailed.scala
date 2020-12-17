@@ -23,5 +23,6 @@ sealed trait JobFailed {
 object ScheduleStatus {
 
   case class UnknownExceptionOccurred(override val ex: Exception) extends JobFailed
+  case class MongoLockException(override val ex: Exception)       extends JobFailed
   case class MongoUnlockException(override val ex: Exception)     extends JobFailed
 }

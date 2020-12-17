@@ -26,6 +26,7 @@ import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
 import models.ReferenceDataList
+import play.api.Logging
 import repositories.DataImport
 import repositories.DataImportRepository
 import repositories.ImportId
@@ -42,9 +43,11 @@ class DataImportService @Inject() (
   listRepository: ListRepository,
   dataRetrieval: DataRetrieval,
   clock: Clock
-) {
+) extends Logging {
 
-  def importReferenceData()(implicit ec: ExecutionContext): Future[DataImport] =
+  def importReferenceData()(implicit ec: ExecutionContext): Future[DataImport] = {
+    logger.info("About to import reference data")
+
     for {
       importId <- importIdRepository.nextId
       dataImport = DataImport(importId, ImportStatus.Started, Instant.now(clock))
@@ -54,6 +57,7 @@ class DataImportService @Inject() (
       updateResult <- dataImportRepository.markFinished(importId, overallStatus)
       // TODO: Delete old versions of data?  This would again need to hit multiple collections
     } yield updateResult
+  }
 
   // TODO: Can (and *should*) we source this list from elsewhere?  We need evidence of the transformation existing
   private def importLists(importId: ImportId)(implicit ec: ExecutionContext): Future[List[Boolean]] =

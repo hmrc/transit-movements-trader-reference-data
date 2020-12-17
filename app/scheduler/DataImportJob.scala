@@ -29,7 +29,7 @@ class DataImportJob @Inject() (
 ) extends ScheduledJob {
 
   override val scheduledMessage: ImportDataMessage = ImportDataMessage(dataImportTrigger)
-  override val jobName: JobName                    = JobName.ImportDataJob
+  override val jobName: JobName                    = JobName.ImportData
   override val actorSystem: ActorSystem            = ActorSystem(jobName)
 
   schedule
