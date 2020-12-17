@@ -36,5 +36,15 @@
       "EXP",
       "EXT"
     ]
+  },
+  {
+    "CUST_OFF_ID": "GB005010",
+    "CUST_OFF_NAM": "Appledore",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)1255 244725",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "RSS"
+    ]
   }
 ]

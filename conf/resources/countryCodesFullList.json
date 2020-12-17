@@ -1,5 +1,25 @@
 [
   {
+    "code": "AD",
+    "state": "valid",
+    "description": "Andorra"
+  },
+  {
+    "code": "AE",
+    "state": "valid",
+    "description": "United Arab Emirates"
+  },
+  {
+    "code": "AF",
+    "state": "valid",
+    "description": "Afghanistan"
+  },
+  {
+    "code": "AG",
+    "state": "valid",
+    "description": "Antigua and Barbuda"
+  },
+  {
     "code": "CM",
     "state": "valid",
     "description": "Cameroon"
@@ -8,6 +28,26 @@
     "code": "CN",
     "state": "valid",
     "description": "China"
+  },
+  {
+    "code": "FR",
+    "state": "valid",
+    "description": "France"
+  },
+  {
+    "code": "GA",
+    "state": "valid",
+    "description": "Gabon"
+  },
+  {
+    "code": "GB",
+    "state": "valid",
+    "description": "United Kingdom"
+  },
+  {
+    "code": "GD",
+    "state": "valid",
+    "description": "Grenada"
   },
   {
     "code": "It",
