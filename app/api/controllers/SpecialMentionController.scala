@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class SpecialMentionController @Inject()(
+class SpecialMentionController @Inject() (
   cc: ControllerComponents,
   specialMentionService: SpecialMentionService
 )(implicit ec: ExecutionContext)

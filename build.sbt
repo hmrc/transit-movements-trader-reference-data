@@ -49,6 +49,8 @@ lazy val scoverageSettings = {
       "Reverse.*",
       "config.*",
       "logging.*",
+      "api.controllers.testOnly.*",
+      "data.config.*",
       ".*(BuildInfo|Routes).*"
     ).mkString(";"),
     ScoverageKeys.coverageMinimum := 85.00,
