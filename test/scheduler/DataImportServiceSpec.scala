@@ -21,9 +21,18 @@ import java.time.Instant
 import java.time.ZoneId
 
 import data.DataRetrieval
+import models.AdditionalInformationIdCommonList
+import models.ControlResultList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
+import models.DocumentTypeCommonList
+import models.KindOfPackagesList
+import models.PreviousDocumentTypeCommonList
+import models.SpecificCircumstanceIndicatorList
+import models.TransportChargesMethodOfPaymentList
+import models.TransportModeList
+import models.UnDangerousGoodsCodeList
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.reset
@@ -106,10 +115,19 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
         val expectedResult = DataImport(importId, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
 
         result mustEqual expectedResult
-        verify(mockListRepo, times(1)).insert(eqTo(CustomsOfficesList), eqTo(importId), eqTo(referenceData))
         verify(mockListRepo, times(1)).insert(eqTo(CountryCodesFullList), eqTo(importId), eqTo(referenceData))
         verify(mockListRepo, times(1)).insert(eqTo(CountryCodesCommonTransitList), eqTo(importId), eqTo(referenceData))
-        verify(mockListRepo, times(3)).insert(any(), any(), any())
+        verify(mockListRepo, times(1)).insert(eqTo(CustomsOfficesList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(DocumentTypeCommonList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(PreviousDocumentTypeCommonList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(KindOfPackagesList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(TransportModeList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(AdditionalInformationIdCommonList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(SpecificCircumstanceIndicatorList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(UnDangerousGoodsCodeList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(TransportChargesMethodOfPaymentList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(1)).insert(eqTo(ControlResultList), eqTo(importId), eqTo(referenceData))
+        verify(mockListRepo, times(12)).insert(any(), any(), any())
         verify(mockDataImportRepo, times(1)).insert(eqTo(initialDataImport))
         verify(mockDataImportRepo, times(1)).markFinished(importId, ImportStatus.Complete)
       }

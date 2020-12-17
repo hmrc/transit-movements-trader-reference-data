@@ -22,10 +22,19 @@ import java.time.Instant
 import data.DataRetrieval
 import data.transform.Transformation
 import javax.inject.Inject
+import models.AdditionalInformationIdCommonList
+import models.ControlResultList
 import models.CountryCodesCommonTransitList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
+import models.DocumentTypeCommonList
+import models.KindOfPackagesList
+import models.PreviousDocumentTypeCommonList
 import models.ReferenceDataList
+import models.SpecificCircumstanceIndicatorList
+import models.TransportChargesMethodOfPaymentList
+import models.TransportModeList
+import models.UnDangerousGoodsCodeList
 import play.api.Logging
 import repositories.DataImport
 import repositories.DataImportRepository
@@ -63,9 +72,18 @@ class DataImportService @Inject() (
   private def importLists(importId: ImportId)(implicit ec: ExecutionContext): Future[List[Boolean]] =
     Future.sequence(
       List(
-        importList(CustomsOfficesList, importId),
         importList(CountryCodesFullList, importId),
-        importList(CountryCodesCommonTransitList, importId)
+        importList(CountryCodesCommonTransitList, importId),
+        importList(CustomsOfficesList, importId),
+        importList(DocumentTypeCommonList, importId),
+        importList(PreviousDocumentTypeCommonList, importId),
+        importList(KindOfPackagesList, importId),
+        importList(TransportModeList, importId),
+        importList(AdditionalInformationIdCommonList, importId),
+        importList(SpecificCircumstanceIndicatorList, importId),
+        importList(UnDangerousGoodsCodeList, importId),
+        importList(TransportChargesMethodOfPaymentList, importId),
+        importList(ControlResultList, importId)
       )
     )
 
@@ -73,5 +91,9 @@ class DataImportService @Inject() (
     for {
       data   <- dataRetrieval.getList(list)
       result <- listRepository.insert(list, importId, data)
-    } yield result
+    } yield {
+      val status = if(result) "completed successfully" else "failed"
+      logger.info(s"Import of ${list.listName} $status")
+      result
+    }
 }
