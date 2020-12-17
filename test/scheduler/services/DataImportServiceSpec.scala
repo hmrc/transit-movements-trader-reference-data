@@ -14,25 +14,14 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.services
 
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
 
 import data.DataRetrieval
-import models.AdditionalInformationIdCommonList
-import models.ControlResultList
-import models.CountryCodesCommonTransitList
-import models.CountryCodesFullList
-import models.CustomsOfficesList
-import models.DocumentTypeCommonList
-import models.KindOfPackagesList
-import models.PreviousDocumentTypeCommonList
-import models.SpecificCircumstanceIndicatorList
-import models.TransportChargesMethodOfPaymentList
-import models.TransportModeList
-import models.UnDangerousGoodsCodeList
+import models._
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.reset
@@ -48,16 +37,10 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import repositories.DataImport
-import repositories.DataImportRepository
-import repositories.ImportId
-import repositories.ImportIdRepository
-import repositories.ImportStatus
-import repositories.ListCollectionIndexManager
-import repositories.ListRepository
+import repositories._
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with ScalaFutures with BeforeAndAfterEach {
 

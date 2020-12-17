@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.jobs
 
 import akka.actor.ActorRef
 import akka.actor.ActorSystem
@@ -23,6 +23,7 @@ import config.ScheduledJobConfig
 import logging.Logging
 import play.api.Configuration
 import play.api.inject.ApplicationLifecycle
+import scheduler.SchedulingActor
 import scheduler.SchedulingActor.ScheduledMessage
 
 import scala.concurrent.Future

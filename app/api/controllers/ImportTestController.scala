@@ -20,7 +20,7 @@ import javax.inject.Inject
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import scheduler.DataImportService
+import scheduler.services.DataImportService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext

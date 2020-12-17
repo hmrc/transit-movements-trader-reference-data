@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.tasks
 
 import javax.inject.Inject
 import repositories.DataImport
 import repositories.LockRepository
-import scheduler.ScheduleStatus.UnknownExceptionOccurred
+import scheduler.jobs.ScheduleStatus.UnknownExceptionOccurred
+import scheduler.jobs.JobFailed
+import scheduler.jobs.JobName
+import scheduler.services.DataImportService
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-class DataImportTrigger @Inject() (
+class DataImportTask @Inject() (
   val lockRepository: LockRepository,
   dataImportService: DataImportService
-) extends ServiceTrigger[Either[JobFailed, Option[DataImport]]] {
+) extends ScheduledTask[Either[JobFailed, Option[DataImport]]] {
 
   override def invoke(implicit ec: ExecutionContext): Future[Either[JobFailed, Option[DataImport]]] = {
 

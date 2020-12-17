@@ -22,6 +22,9 @@ import akka.actor.Props
 import logging.Logging
 import repositories.DataImport
 import scheduler.SchedulingActor.ScheduledMessage
+import scheduler.jobs.JobFailed
+import scheduler.tasks.DataImportTask
+import scheduler.tasks.ScheduledTask
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -30,7 +33,7 @@ class SchedulingActor extends Actor with ActorLogging with Logging {
   override def receive: Receive = {
     case message: ScheduledMessage[_] =>
       logger.info(s"Received message: ${message.getClass.getCanonicalName}")
-      message.trigger.invoke
+      message.task.invoke
   }
 }
 
@@ -39,8 +42,8 @@ object SchedulingActor {
   def props: Props = Props[SchedulingActor]
 
   sealed trait ScheduledMessage[A] {
-    val trigger: ServiceTrigger[A]
+    val task: ScheduledTask[A]
   }
 
-  case class ImportDataMessage(trigger: DataImportTrigger) extends ScheduledMessage[Either[JobFailed, Option[DataImport]]]
+  case class ImportDataMessage(task: DataImportTask) extends ScheduledMessage[Either[JobFailed, Option[DataImport]]]
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.tasks
 
 import java.time.Instant
 
@@ -34,18 +34,16 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
-import repositories.DataImport
-import repositories.ImportId
-import repositories.ImportStatus
-import repositories.LockRepository
-import repositories.LockResult
-import scheduler.ScheduleStatus.MongoUnlockException
-import scheduler.ScheduleStatus.UnknownExceptionOccurred
+import repositories._
+import scheduler.jobs.JobName
+import scheduler.jobs.ScheduleStatus.MongoUnlockException
+import scheduler.jobs.ScheduleStatus.UnknownExceptionOccurred
+import scheduler.services.DataImportService
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-class DataImportTriggerSpec extends AnyFreeSpec with Matchers with MockitoSugar with ScalaFutures with BeforeAndAfterEach with EitherValues with OptionValues {
+class DataImportTaskSpec extends AnyFreeSpec with Matchers with MockitoSugar with ScalaFutures with BeforeAndAfterEach with EitherValues with OptionValues {
 
   private val fixedInstant          = Instant.ofEpochMilli(1)
   private val mockLockRepo          = mock[LockRepository]
@@ -83,9 +81,9 @@ class DataImportTriggerSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
           running(app) {
 
-            val trigger = app.injector.instanceOf[DataImportTrigger]
+            val task = app.injector.instanceOf[DataImportTask]
 
-            val result = trigger.invoke.futureValue
+            val result = task.invoke.futureValue
 
             result.right.value.value mustEqual dataImport
             verify(mockLockRepo, times(1)).unlock(eqTo(lock))
@@ -108,9 +106,9 @@ class DataImportTriggerSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
             running(app) {
 
-              val trigger = app.injector.instanceOf[DataImportTrigger]
+              val task = app.injector.instanceOf[DataImportTask]
 
-              val result = trigger.invoke.futureValue
+              val result = task.invoke.futureValue
 
               result.left.value mustEqual MongoUnlockException(exception)
             }
@@ -133,9 +131,9 @@ class DataImportTriggerSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
           running(app) {
 
-            val trigger = app.injector.instanceOf[DataImportTrigger]
+            val task = app.injector.instanceOf[DataImportTask]
 
-            val result = trigger.invoke.futureValue
+            val result = task.invoke.futureValue
 
             result.left.value mustEqual UnknownExceptionOccurred(exception)
             verify(mockLockRepo, times(1)).unlock(eqTo(lock))
@@ -156,9 +154,9 @@ class DataImportTriggerSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
         running(app) {
 
-          val trigger = app.injector.instanceOf[DataImportTrigger]
+          val task = app.injector.instanceOf[DataImportTask]
 
-          val result = trigger.invoke.futureValue
+          val result = task.invoke.futureValue
 
           result.right.value must not be defined
           verify(mockDataImportService, times(0)).importReferenceData()

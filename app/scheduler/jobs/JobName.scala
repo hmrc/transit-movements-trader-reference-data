@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.jobs
 
-sealed trait JobFailed {
-  val ex: Exception
-}
+import scala.language.implicitConversions
 
-object ScheduleStatus {
+sealed trait JobName
 
-  case class UnknownExceptionOccurred(override val ex: Exception) extends JobFailed
-  case class MongoLockException(override val ex: Exception)       extends JobFailed
-  case class MongoUnlockException(override val ex: Exception)     extends JobFailed
+object JobName {
+
+  case object ImportData extends JobName {
+    override def toString: String = "ImportData"
+  }
+
+  implicit def convertToString(jobName: JobName): String = jobName.toString
 }

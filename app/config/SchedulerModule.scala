@@ -17,13 +17,13 @@
 package config
 
 import com.google.inject.AbstractModule
-import scheduler.DataImportJob
-import scheduler.DataImportTrigger
+import scheduler.jobs.DataImportScheduledJob
+import scheduler.tasks.DataImportTask
 
 class SchedulerModule extends AbstractModule {
 
   override def configure(): Unit = {
-    bind(classOf[DataImportJob]).asEagerSingleton()
-    bind(classOf[DataImportTrigger]).asEagerSingleton()
+    bind(classOf[DataImportScheduledJob]).asEagerSingleton()
+    bind(classOf[DataImportTask]).asEagerSingleton()
   }
 }

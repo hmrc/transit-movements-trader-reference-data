@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.services
 
 import java.time.Clock
 import java.time.Instant
@@ -22,26 +22,9 @@ import java.time.Instant
 import data.DataRetrieval
 import data.transform.Transformation
 import javax.inject.Inject
-import models.AdditionalInformationIdCommonList
-import models.ControlResultList
-import models.CountryCodesCommonTransitList
-import models.CountryCodesFullList
-import models.CustomsOfficesList
-import models.DocumentTypeCommonList
-import models.KindOfPackagesList
-import models.PreviousDocumentTypeCommonList
-import models.ReferenceDataList
-import models.SpecificCircumstanceIndicatorList
-import models.TransportChargesMethodOfPaymentList
-import models.TransportModeList
-import models.UnDangerousGoodsCodeList
+import models._
 import play.api.Logging
-import repositories.DataImport
-import repositories.DataImportRepository
-import repositories.ImportId
-import repositories.ImportIdRepository
-import repositories.ImportStatus
-import repositories.ListRepository
+import repositories._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
@@ -92,7 +75,7 @@ class DataImportService @Inject() (
       data   <- dataRetrieval.getList(list)
       result <- listRepository.insert(list, importId, data)
     } yield {
-      val status = if(result) "completed successfully" else "failed"
+      val status = if (result) "completed successfully" else "failed"
       logger.info(s"Import of ${list.listName} $status")
       result
     }

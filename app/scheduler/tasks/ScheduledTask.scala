@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.tasks
 
 import logging.Logging
 import repositories.LockRepository
 import repositories.LockResult
-import scheduler.ScheduleStatus.MongoUnlockException
-import scheduler.ScheduleStatus.UnknownExceptionOccurred
+import scheduler.jobs.JobFailed
+import scheduler.jobs.ScheduleStatus.MongoUnlockException
+import scheduler.jobs.ScheduleStatus.UnknownExceptionOccurred
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-trait ServiceTrigger[A] extends Logging {
+trait ScheduledTask[A] extends Logging {
   val lockRepository: LockRepository
 
   def invoke(implicit ec: ExecutionContext): Future[A]
@@ -48,7 +49,7 @@ trait ServiceTrigger[A] extends Logging {
         }
 
       case LockResult.AlreadyLocked =>
-        logger.info("Could not get a lock - may have been triggered on another instance")
+        logger.info("Could not get a lock - task may have been run on another instance")
         Future.successful(Right(None))
     } recoverWith {
       case e: Exception =>

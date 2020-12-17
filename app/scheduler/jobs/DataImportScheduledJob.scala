@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package scheduler
+package scheduler.jobs
 
 import akka.actor.ActorSystem
 import javax.inject.Inject
 import play.api.Configuration
 import play.api.inject.ApplicationLifecycle
 import scheduler.SchedulingActor.ImportDataMessage
+import scheduler.tasks.DataImportTask
 
-class DataImportJob @Inject() (
-  val config: Configuration,
-  val applicationLifecycle: ApplicationLifecycle,
-  dataImportTrigger: DataImportTrigger
+class DataImportScheduledJob @Inject() (
+                                         val config: Configuration,
+                                         val applicationLifecycle: ApplicationLifecycle,
+                                         task: DataImportTask
 ) extends ScheduledJob {
 
-  override val scheduledMessage: ImportDataMessage = ImportDataMessage(dataImportTrigger)
+  override val scheduledMessage: ImportDataMessage = ImportDataMessage(task)
   override val jobName: JobName                    = JobName.ImportData
   override val actorSystem: ActorSystem            = ActorSystem(jobName)
 
