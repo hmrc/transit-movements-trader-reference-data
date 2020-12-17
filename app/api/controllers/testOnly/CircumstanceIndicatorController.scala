@@ -14,31 +14,37 @@
  * limitations under the License.
  */
 
-package api.controllers
+package api.controllers.testOnly
 
-import api.services.SpecialMentionService
-import data.DataRetrieval
+import api.services.CircumstanceIndicatorService
 import javax.inject.Inject
-import logging.Logging
-import models.UnDangerousGoodsCodeList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-import scala.concurrent.ExecutionContext
-
-class SpecialMentionController @Inject() (
+class CircumstanceIndicatorController @Inject() (
   cc: ControllerComponents,
-  specialMentionService: SpecialMentionService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with Logging {
+  circumstanceIndicatorService: CircumstanceIndicatorService
+) extends BackendController(cc) {
 
-  def getAll(): Action[AnyContent] =
+  def circumstanceIndicators(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(specialMentionService.specialMention))
+      Ok(Json.toJson(circumstanceIndicatorService.circumstanceIndicators))
     }
 
+  def getCircumstanceIndicator(code: String): Action[AnyContent] =
+    Action {
+
+      circumstanceIndicatorService
+        .getCircumstanceIndicator(code)
+        .map {
+          indicator =>
+            Ok(Json.toJson(indicator))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

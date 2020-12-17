@@ -14,31 +14,35 @@
  * limitations under the License.
  */
 
-package api.controllers
+package api.controllers.testOnly
 
-import api.services.SpecialMentionService
-import data.DataRetrieval
+import api.services.OfficeOfTransitService
 import javax.inject.Inject
-import logging.Logging
-import models.UnDangerousGoodsCodeList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-import scala.concurrent.ExecutionContext
+class OfficeOfTransitController @Inject() (officeOfTransitService: OfficeOfTransitService, cc: ControllerComponents) extends BackendController(cc) {
 
-class SpecialMentionController @Inject() (
-  cc: ControllerComponents,
-  specialMentionService: SpecialMentionService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with Logging {
-
-  def getAll(): Action[AnyContent] =
+  def officesOfTransit(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(specialMentionService.specialMention))
+
+      Ok(Json.toJson(officeOfTransitService.officesOfTransit))
     }
 
+  def getOfficeOfTransit(id: String): Action[AnyContent] =
+    Action {
+
+      officeOfTransitService
+        .getOfficeOfTransit(id)
+        .map {
+          officesOfTransit =>
+            Ok(Json.toJson(officesOfTransit))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
 }

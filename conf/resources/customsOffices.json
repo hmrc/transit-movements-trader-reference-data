@@ -46,5 +46,15 @@
     "CUSTOMS_OFFICE_ROLES": [
       "RSS"
     ]
+  },
+  {
+    "CUST_OFF_ID": "GB003250",
+    "CUST_OFF_NAM": "Newhaven",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
   }
 ]

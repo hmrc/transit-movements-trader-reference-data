@@ -5,29 +5,14 @@
     "description": "Andorra"
   },
   {
-    "code": "AE",
+    "code": "AR",
     "state": "valid",
-    "description": "United Arab Emirates"
+    "description": "Argentina"
   },
   {
-    "code": "AF",
+    "code": "AU",
     "state": "valid",
-    "description": "Afghanistan"
-  },
-  {
-    "code": "AG",
-    "state": "valid",
-    "description": "Antigua and Barbuda"
-  },
-  {
-    "code": "CM",
-    "state": "valid",
-    "description": "Cameroon"
-  },
-  {
-    "code": "CN",
-    "state": "valid",
-    "description": "China"
+    "description": "Australia"
   },
   {
     "code": "FR",
@@ -35,19 +20,9 @@
     "description": "France"
   },
   {
-    "code": "GA",
-    "state": "valid",
-    "description": "Gabon"
-  },
-  {
     "code": "GB",
     "state": "valid",
     "description": "United Kingdom"
-  },
-  {
-    "code": "GD",
-    "state": "valid",
-    "description": "Grenada"
   },
   {
     "code": "It",
