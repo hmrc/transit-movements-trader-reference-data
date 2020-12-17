@@ -84,14 +84,14 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
         contentAsJson(result) mustBe Json.toJson(customsOffices)
       }
 
-      "must return Internal Server Error when there are no customs offices" in {
+      "must return Not Found when there are no customs offices" in {
         when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
         val request =
           FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
         val result = route(app, request).value
 
-        status(result) mustBe INTERNAL_SERVER_ERROR
+        status(result) mustBe NOT_FOUND
 
       }
 

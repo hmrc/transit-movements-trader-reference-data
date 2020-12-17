@@ -16,8 +16,8 @@
 
 package data.connector
 
+import config.Service
 import javax.inject.Inject
-import models.config.Service
 import play.api.Configuration
 
 private[connector] class ConnectorConfig @Inject() (config: Configuration) {

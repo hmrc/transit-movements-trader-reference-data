@@ -16,35 +16,50 @@
 
 package api.controllers
 
+import data.DataRetrieval
 import javax.inject.Inject
+import logging.Logging
+import models.PreviousDocumentTypeCommonList
+import models.ReferenceDataList.Constants.PreviousDocumentTypeCommonListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import api.services.PreviousDocumentTypeService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
+
+import scala.concurrent.ExecutionContext
 
 class PreviousDocumentTypeController @Inject() (
   cc: ControllerComponents,
-  previousDocumentTypeService: PreviousDocumentTypeService
-) extends BackendController(cc) {
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging {
 
   def previousDocumentTypes(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(previousDocumentTypeService.previousDocumentTypes))
+    Action.async {
+
+      dataRetrieval.getList(PreviousDocumentTypeCommonList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${PreviousDocumentTypeCommonList.listName}")
+          NotFound
+      }
     }
 
   def getPreviousDocumentType(code: String): Action[AnyContent] =
-    Action {
-
-      previousDocumentTypeService
-        .getPreviousDocumentTypeByCode(code)
+    Action.async {
+      dataRetrieval
+        .getList(PreviousDocumentTypeCommonList)
+        .map(
+          _.find(
+            json => (json \ PreviousDocumentTypeCommonListFieldNames.code).as[String] == code
+          )
+        )
         .map {
-          documentType =>
-            Ok(Json.toJson(documentType))
-        }
-        .getOrElse {
-          NotFound
+          case Some(data) => Ok(Json.toJson(data))
+          case _ =>
+            NotFound
         }
     }
 }

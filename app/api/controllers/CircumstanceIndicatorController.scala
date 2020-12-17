@@ -16,35 +16,51 @@
 
 package api.controllers
 
-import api.services.CircumstanceIndicatorService
+import data.DataRetrieval
 import javax.inject.Inject
+import logging.Logging
+import models.SpecificCircumstanceIndicatorList
+import models.CustomsOfficesList
+import models.ReferenceDataList.Constants.SpecificCountryCodesFullListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
+import scala.concurrent.ExecutionContext
+
 class CircumstanceIndicatorController @Inject() (
   cc: ControllerComponents,
-  circumstanceIndicatorService: CircumstanceIndicatorService
-) extends BackendController(cc) {
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging {
 
   def circumstanceIndicators(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(circumstanceIndicatorService.circumstanceIndicators))
+    Action.async {
+      dataRetrieval.getList(SpecificCircumstanceIndicatorList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${SpecificCircumstanceIndicatorList.listName}")
+          NotFound
+      }
+
     }
 
   def getCircumstanceIndicator(code: String): Action[AnyContent] =
-    Action {
-
-      circumstanceIndicatorService
-        .getCircumstanceIndicator(code)
+    Action.async {
+      dataRetrieval
+        .getList(SpecificCircumstanceIndicatorList)
+        .map(
+          _.find(
+            json => (json \ SpecificCountryCodesFullListFieldNames.code).as[String] == code
+          )
+        )
         .map {
-          indicator =>
-            Ok(Json.toJson(indicator))
-        }
-        .getOrElse {
-          NotFound
+          case Some(data) => Ok(Json.toJson(data))
+          case _ =>
+            NotFound
         }
     }
 }
