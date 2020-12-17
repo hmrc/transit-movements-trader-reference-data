@@ -24,9 +24,9 @@ import scheduler.SchedulingActor.ImportDataMessage
 import scheduler.tasks.DataImportTask
 
 class DataImportScheduledJob @Inject() (
-                                         val config: Configuration,
-                                         val applicationLifecycle: ApplicationLifecycle,
-                                         task: DataImportTask
+  val config: Configuration,
+  val applicationLifecycle: ApplicationLifecycle,
+  task: DataImportTask
 ) extends ScheduledJob {
 
   override val scheduledMessage: ImportDataMessage = ImportDataMessage(task)

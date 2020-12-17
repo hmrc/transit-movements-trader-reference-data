@@ -20,8 +20,6 @@ import javax.inject.Inject
 import play.api.Configuration
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-import scala.concurrent.duration.FiniteDuration
-
 class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
 
   val authBaseUrl: String =
