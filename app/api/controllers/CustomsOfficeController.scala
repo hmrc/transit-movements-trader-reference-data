@@ -43,7 +43,7 @@ class CustomsOfficeController @Inject() (
           case data if data.nonEmpty => Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CustomsOfficesList.listName}")
-            InternalServerError
+            NotFound
         }
     }
 

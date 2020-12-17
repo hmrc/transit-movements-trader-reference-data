@@ -19,7 +19,8 @@ package api.controllers
 import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
-import models.CountryCodesCommonTransitList
+import models.ReferenceDataList.Constants.TransportModeListFieldNames
+import models.UnDangerousGoodsCodeList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -28,23 +29,36 @@ import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class TransitCountriesController @Inject() (
+class DangerousGoodsCodesController @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
-  def transitCountries(): Action[AnyContent] =
+  def dangerousGoodsCodes(): Action[AnyContent] =
+    Action.async {
+      dataRetrieval.getList(UnDangerousGoodsCodeList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${UnDangerousGoodsCodeList.listName}")
+          NotFound
+      }
+    }
+
+  def getDangerousGoodsCode(code: String): Action[AnyContent] =
     Action.async {
       dataRetrieval
-        .getList(CountryCodesCommonTransitList)
+        .getList(UnDangerousGoodsCodeList)
+        .map(
+          _.find(
+            json => (json \ TransportModeListFieldNames.code).as[String] == code
+          )
+        )
         .map {
-          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case Some(data) => Ok(Json.toJson(data))
           case _ =>
-            logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
             NotFound
         }
     }
-
 }

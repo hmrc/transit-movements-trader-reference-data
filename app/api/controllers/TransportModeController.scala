@@ -21,30 +21,44 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import api.services.TransportModeService
+import data.DataRetrieval
+import logging.Logging
+import models.ReferenceDataList.Constants.TransportModeListFieldNames
+import models.TransportModeList
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
+
+import scala.concurrent.ExecutionContext
 
 class TransportModeController @Inject() (
   cc: ControllerComponents,
-  transportModeService: TransportModeService
-) extends BackendController(cc) {
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging {
 
   def transportModes(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(transportModeService.transportModes))
+    Action.async {
+      dataRetrieval.getList(TransportModeList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${TransportModeList.listName}")
+          NotFound
+      }
     }
 
   def getTransportMode(code: String): Action[AnyContent] =
-    Action {
-
-      transportModeService
-        .getTransportModeByCode(code)
+    Action.async {
+      dataRetrieval
+        .getList(TransportModeList)
+        .map(
+          _.find(
+            json => (json \ TransportModeListFieldNames.code).as[String] == code
+          )
+        )
         .map {
-          transportMode =>
-            Ok(Json.toJson(transportMode))
-        }
-        .getOrElse {
-          NotFound
+          case Some(data) => Ok(Json.toJson(data))
+          case _ =>
+            NotFound
         }
     }
 }

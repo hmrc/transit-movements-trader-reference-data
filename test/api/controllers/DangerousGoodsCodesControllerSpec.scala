@@ -16,11 +16,9 @@
 
 package api.controllers
 
-import api.models.PreviousDocumentType
-import api.services.PreviousDocumentTypeService
 import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
-import org.mockito.ArgumentMatchers._
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -34,8 +32,7 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
-
+class DangerousGoodsCodesControllerSpec extends SpecBaseWithAppPerSuite {
   private val mockDataRetrieval = mock[DataRetrieval]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
@@ -54,25 +51,23 @@ class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
 
       val request = FakeRequest(
         GET,
-        routes.PreviousDocumentTypeController.previousDocumentTypes().url
+        routes.DangerousGoodsCodesController.dangerousGoodsCodes().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(data)
     }
-    "getPreviousDocumentType" - {
+    "getTransportMode" - {
       "must get transport mode and return Ok" in {
 
-        val code = "T1"
-
-        val expected = Json.obj("code" -> code)
-        val data     = Seq(Json.obj("code" -> "other1"), expected, Json.obj("code" -> "notTheOther1"))
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
 
         val request = FakeRequest(
           GET,
-          routes.PreviousDocumentTypeController.getPreviousDocumentType(code).url
+          routes.DangerousGoodsCodesController.getDangerousGoodsCode(validCountryCode).url
         )
         val result = route(app, request).value
 
@@ -82,13 +77,15 @@ class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no transport mode is found" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
 
         val invalidCode = "Invalid"
 
         val request = FakeRequest(
           GET,
-          routes.PreviousDocumentTypeController.getPreviousDocumentType(invalidCode).url
+          routes.DangerousGoodsCodesController.getDangerousGoodsCode(invalidCode).url
         )
         val result = route(app, request).value
 

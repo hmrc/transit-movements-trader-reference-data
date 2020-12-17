@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.config
+package config
 
 import play.api.ConfigLoader
 import play.api.Configuration
