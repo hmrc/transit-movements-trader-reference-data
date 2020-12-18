@@ -17,9 +17,6 @@ GET   /document-types                  api.controllers.DocumentTypeController.ge
 GET   /transport-modes                 api.controllers.TransportModeController.transportModes
 GET   /transport-mode/:code            api.controllers.TransportModeController.getTransportMode(code)
 
-GET   /office-transit                  api.controllers.OfficeOfTransitController.officesOfTransit
-GET   /office-transit/:id              api.controllers.OfficeOfTransitController.getOfficeOfTransit(id)
-
 GET   /previous-document-type          api.controllers.PreviousDocumentTypeController.previousDocumentTypes
 GET   /previous-document-type/:code    api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
@@ -30,4 +27,3 @@ GET   /dangerous-goods-code/:code      api.controllers.DangerousGoodsCodesContro
 
 GET   /circumstance-indicators         api.controllers.CircumstanceIndicatorController.circumstanceIndicators
 GET   /circumstance-indicator/:code    api.controllers.CircumstanceIndicatorController.getCircumstanceIndicator(code)
-
