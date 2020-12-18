@@ -23,8 +23,6 @@ GET   /office-transit/:id              api.controllers.OfficeOfTransitController
 GET   /previous-document-type          api.controllers.PreviousDocumentTypeController.previousDocumentTypes
 GET   /previous-document-type/:code    api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
-GET   /special-mention                 api.controllers.SpecialMentionController.getAll()
-
 GET   /method-of-payment               api.controllers.MethodOfPaymentController.getAll()
 
 GET   /dangerous-goods-code            api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
