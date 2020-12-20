@@ -39,13 +39,13 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
 
   def one[A <: ReferenceDataList](list: A, selector: Selector[A]): Future[Option[JsObject]] =
     collection(list).flatMap {
-      _.find(selector.fullExpression, projection = None)
+      _.find(selector.expression, projection = None)
         .one[JsObject]
     }
 
   def many[A <: ReferenceDataList](list: A, selector: Selector[A]): Future[Seq[JsObject]] =
     collection(list).flatMap {
-      _.find(selector.fullExpression, projection = None)
+      _.find(selector.expression, projection = None)
         .cursor[JsObject]()
         .collect[Seq](-1, Cursor.FailOnError())
     }

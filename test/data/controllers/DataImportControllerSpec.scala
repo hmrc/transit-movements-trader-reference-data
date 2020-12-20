@@ -69,9 +69,8 @@ class DataImportControllerSpec extends SpecBaseWithAppPerSuite {
 
     "must return Internal Server Error when something goes wrong saving the data" in {
 
-      val data       = Json.arr(Json.obj("id" -> 1))
-      val list       = Gen.oneOf(ReferenceDataList.values.toList).sample.value
-      val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Complete, instant, Some(instant))
+      val data = Json.arr(Json.obj("id" -> 1))
+      val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
       when(mockDataImportService.importData(eqTo(list), any())) thenReturn Future.failed(new Exception("foo"))
 

@@ -21,37 +21,43 @@ import models.ReferenceDataList
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 
-// TODO *if needed* - this could have a projection if we find the get methods need one
-// TODO: Should we make this sealed?
 trait Selector[A] {
-  val importId: ImportId
-  protected val expression: JsObject
-
-  final private val baseExpression: JsObject =
-    Json.obj("importId" -> Json.toJson(importId))
-
-  final lazy val fullExpression: JsObject =
-    baseExpression ++ expression
+  val expression: JsObject
 }
 
-// TODO: Create more selectors
 object Selector {
 
-  case class All(importId: ImportId) extends Selector[ReferenceDataList] {
+  implicit class SingleImportSelector[A](selector: Selector[A]) {
 
-    protected val expression: JsObject =
+    def forImport(importId: ImportId): Selector[A] =
+      new Selector[A] {
+
+        val expression: JsObject =
+          Json.obj("importId" -> importId) ++ selector.expression
+      }
+  }
+
+  case class All() extends Selector[ReferenceDataList] {
+
+    val expression: JsObject =
       Json.obj()
   }
 
-  case class ByCountry(importId: ImportId, countryCode: String) extends Selector[CustomsOfficesList.type] {
+  case class ByCountry(countryCode: String) extends Selector[CustomsOfficesList.type] {
 
-    protected val expression: JsObject =
+    val expression: JsObject =
       Json.obj("countryCode" -> countryCode)
   }
 
-  case class ByCustomsOfficeId(importId: ImportId, officeId: String) extends Selector[CustomsOfficesList.type] {
+  case class ByCustomsOfficeId(officeId: String) extends Selector[CustomsOfficesList.type] {
 
-    protected val expression: JsObject =
+    val expression: JsObject =
       Json.obj("officeId" -> officeId)
+  }
+
+  // TODO: Type reference data lists to restrict this to those which make sense
+  case class ById(id: String) extends Selector[ReferenceDataList] {
+
+    val expression: JsObject = Json.obj("id" -> id)
   }
 }

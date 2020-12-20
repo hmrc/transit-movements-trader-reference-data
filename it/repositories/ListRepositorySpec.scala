@@ -67,19 +67,18 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val import1Data = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "FR"))
-        val import2Data = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "IT"))
+        val data = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "FR"))
 
-        repo.insert(CountryCodesFullList, ImportId(1), import1Data).futureValue
-        repo.insert(CountryCodesFullList, ImportId(2), import2Data).futureValue
+
+        repo.insert(CountryCodesFullList, ImportId(1), data).futureValue
 
         val results =
           repo
-            .many(CountryCodesFullList, Selector.All(ImportId(2)))
+            .many(CountryCodesFullList, Selector.All())
             .futureValue
             .map(jsObject => jsObject - "_id")
 
-        val expectedResults = import2Data.map(jsObject => jsObject ++ Json.obj("importId" -> 2))
+        val expectedResults = data.map(jsObject => jsObject ++ Json.obj("importId" -> 1))
 
         results must contain theSameElementsAs expectedResults
       }
@@ -92,15 +91,13 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val import1Data = Seq(Json.obj("officeId" -> "GB000060"), Json.obj("officeId" -> "IT010101"))
-        val import2Data = Seq(Json.obj("officeId" -> "GB000060"), Json.obj("officeId" -> "IT010101"))
+        val data = Seq(Json.obj("officeId" -> "GB000060"), Json.obj("officeId" -> "IT010101"))
 
-        repo.insert(CustomsOfficesList, ImportId(1), import1Data).futureValue
-        repo.insert(CustomsOfficesList, ImportId(2), import2Data).futureValue
+        repo.insert(CustomsOfficesList, ImportId(1), data).futureValue
 
         val result =
           repo
-            .one(CustomsOfficesList, Selector.ByCustomsOfficeId(ImportId(1), "GB000060"))
+            .one(CustomsOfficesList, Selector.ByCustomsOfficeId("GB000060"))
             .futureValue
             .map(jsObject => jsObject - "_id")
             .value
@@ -116,15 +113,13 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val import1Data = Seq(Json.obj("officeId" -> "GB000060", "officeId" -> "IT010101"))
-        val import2Data = Seq(Json.obj("officeId" -> "GB000060", "officeId" -> "FR202020"))
+        val data = Seq(Json.obj("officeId" -> "GB000060", "officeId" -> "IT010101"))
 
-        repo.insert(CustomsOfficesList, ImportId(1), import1Data).futureValue
-        repo.insert(CustomsOfficesList, ImportId(2), import2Data).futureValue
+        repo.insert(CustomsOfficesList, ImportId(1), data).futureValue
 
         val result =
           repo
-            .one(CustomsOfficesList, Selector.ByCustomsOfficeId(ImportId(1), "FR202020"))
+            .one(CustomsOfficesList, Selector.ByCustomsOfficeId("FR202020"))
             .futureValue
             .map(jsObject => jsObject - "_id")
 
