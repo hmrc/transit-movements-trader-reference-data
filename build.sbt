@@ -1,3 +1,4 @@
+import play.sbt.routes.RoutesKeys
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.SbtArtifactory
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
@@ -29,6 +30,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(PlayKeys.playDefaultPort := 9482)
   .settings(scoverageSettings: _*)
+  .settings(RoutesKeys.routesImport += "models.ReferenceDataList")
   .settings(
     // ***************
     // Use the silencer plugin to suppress warnings

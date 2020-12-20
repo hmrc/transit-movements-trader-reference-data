@@ -2,6 +2,8 @@ package repositories
 
 import java.time.{Clock, Instant, ZoneId}
 
+import models.ReferenceDataList
+import org.scalacheck.Gen
 import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -41,7 +43,9 @@ class DataImportRepositorySpec
 
       running(app) {
 
-        val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now(stubClock), None)
+        val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
+
+        val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Started, Instant.now(stubClock), None)
 
         val repo = app.injector.instanceOf[DataImportRepository]
 
@@ -59,14 +63,16 @@ class DataImportRepositorySpec
 
       running(app) {
 
-        val dataImport = DataImport(ImportId(1), ImportStatus.Started, Instant.now(stubClock), None)
+        val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
+
+        val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Started, Instant.now(stubClock), None)
 
         val repo = app.injector.instanceOf[DataImportRepository]
 
         repo.insert(dataImport).futureValue
         val updateResult = repo.markFinished(ImportId(1), ImportStatus.Complete).futureValue
 
-        updateResult mustEqual DataImport(ImportId(1), ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
+        updateResult mustEqual DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
       }
     }
   }

@@ -17,6 +17,11 @@
 package models
 
 import cats.data.NonEmptyList
+import play.api.libs.json.JsError
+import play.api.libs.json.JsString
+import play.api.libs.json.JsSuccess
+import play.api.libs.json.Reads
+import play.api.libs.json.Writes
 import play.api.mvc.PathBindable
 
 sealed abstract class ReferenceDataList(val listName: String)
@@ -51,6 +56,22 @@ object ReferenceDataList {
       TransportChargesMethodOfPaymentList,
       ControlResultList
     )
+
+  implicit val writes: Writes[ReferenceDataList] = Writes {
+    list =>
+      JsString(list.listName)
+  }
+
+  implicit val reads: Reads[ReferenceDataList] = Reads {
+    case JsString(s) =>
+      mappings
+        .get(s)
+        .map(JsSuccess(_))
+        .getOrElse(JsError("Unknown reference data list"))
+
+    case _ =>
+      JsError("Expected a JsString")
+  }
 
   val mappings: Map[String, ReferenceDataList] =
     values.map(x => x.listName -> x).toList.toMap

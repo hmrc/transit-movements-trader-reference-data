@@ -18,10 +18,18 @@ package repositories
 
 import java.time.Instant
 
+import models.ReferenceDataList
 import play.api.libs.json.Json
 import play.api.libs.json.OFormat
 
-case class DataImport(importId: ImportId, status: ImportStatus, started: Instant, finished: Option[Instant] = None)
+case class DataImport(
+  importId: ImportId,
+  list: ReferenceDataList,
+  records: Int,
+  status: ImportStatus,
+  started: Instant,
+  finished: Option[Instant] = None
+)
 
 object DataImport {
   val jsonFormat: OFormat[DataImport] = Json.format[DataImport]
