@@ -18,7 +18,6 @@ package api.controllers
 
 import api.models.Country
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
@@ -28,6 +27,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
+import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 
@@ -37,20 +37,20 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
   private val countries            = Seq(ukCountry)
   private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
 
-  private val mockDataRetrieval = mock[DataRetrieval]
+  private val mockReferenceDataService = mock[ReferenceDataService]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "transitCountries" - {
     "must return Ok when there are transit countries" in {
 
-      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -60,12 +60,11 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(countries)
-
     }
 
     "must return Not Found when the transit countries cannot be retrieved" in {
 
-      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
@@ -74,8 +73,6 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
-
     }
   }
-
 }

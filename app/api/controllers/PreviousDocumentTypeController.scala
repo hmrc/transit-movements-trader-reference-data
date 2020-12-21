@@ -16,31 +16,31 @@
 
 package api.controllers
 
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.PreviousDocumentTypeCommonList
-import models.ReferenceDataList.Constants.PreviousDocumentTypeCommonListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.services.ReferenceDataService
+import repositories.Selector
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
 class PreviousDocumentTypeController @Inject() (
   cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
+  referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
   def previousDocumentTypes(): Action[AnyContent] =
     Action.async {
-
-      dataRetrieval.getList(PreviousDocumentTypeCommonList).map {
-        case data if data.nonEmpty => Ok(Json.toJson(data))
+      referenceDataService.many(PreviousDocumentTypeCommonList, Selector.All()).map {
+        case data if data.nonEmpty =>
+          Ok(Json.toJson(data))
         case _ =>
           logger.error(s"No data found for ${PreviousDocumentTypeCommonList.listName}")
           NotFound
@@ -49,16 +49,13 @@ class PreviousDocumentTypeController @Inject() (
 
   def getPreviousDocumentType(code: String): Action[AnyContent] =
     Action.async {
-      dataRetrieval
-        .getList(PreviousDocumentTypeCommonList)
-        .map(
-          _.find(
-            json => (json \ PreviousDocumentTypeCommonListFieldNames.code).as[String] == code
-          )
-        )
+      referenceDataService
+        .one(PreviousDocumentTypeCommonList, Selector.ByCode(code))
         .map {
-          case Some(data) => Ok(Json.toJson(data))
+          case Some(data) =>
+            Ok(Json.toJson(data))
           case _ =>
+            logger.info(s"No ${PreviousDocumentTypeCommonList.listName} data found for code $code")
             NotFound
         }
     }

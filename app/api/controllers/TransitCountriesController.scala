@@ -16,7 +16,6 @@
 
 package api.controllers
 
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.CountryCodesCommonTransitList
@@ -24,23 +23,26 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import repositories.services.ReferenceDataService
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
 class TransitCountriesController @Inject() (
   cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
+  referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
   def transitCountries(): Action[AnyContent] =
     Action.async {
-      dataRetrieval
-        .getList(CountryCodesCommonTransitList)
+      referenceDataService
+        .many(CountryCodesCommonTransitList, Selector.All())
         .map {
-          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case data if data.nonEmpty =>
+            Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
             NotFound

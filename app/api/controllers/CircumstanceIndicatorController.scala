@@ -16,50 +16,46 @@
 
 package api.controllers
 
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.SpecificCircumstanceIndicatorList
-import models.CustomsOfficesList
-import models.ReferenceDataList.Constants.SpecificCountryCodesFullListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import repositories.services.ReferenceDataService
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
 class CircumstanceIndicatorController @Inject() (
   cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
+  referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
   def circumstanceIndicators(): Action[AnyContent] =
     Action.async {
-      dataRetrieval.getList(SpecificCircumstanceIndicatorList).map {
-        case data if data.nonEmpty => Ok(Json.toJson(data))
+      referenceDataService.many(SpecificCircumstanceIndicatorList, Selector.All()).map {
+        case data if data.nonEmpty =>
+          Ok(Json.toJson(data))
         case _ =>
           logger.error(s"No data found for ${SpecificCircumstanceIndicatorList.listName}")
           NotFound
       }
-
     }
 
   def getCircumstanceIndicator(code: String): Action[AnyContent] =
     Action.async {
-      dataRetrieval
-        .getList(SpecificCircumstanceIndicatorList)
-        .map(
-          _.find(
-            json => (json \ SpecificCountryCodesFullListFieldNames.code).as[String] == code
-          )
-        )
+      referenceDataService
+        .one(SpecificCircumstanceIndicatorList, Selector.ByCode(code))
         .map {
-          case Some(data) => Ok(Json.toJson(data))
+          case Some(data) =>
+            Ok(Json.toJson(data))
           case _ =>
+            logger.info(s"Could not find ${SpecificCircumstanceIndicatorList.listName} with code $code")
             NotFound
         }
     }

@@ -26,26 +26,28 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 
 class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with MockitoSugar {
 
-  private val mockDataRetrieval = mock[DataRetrieval]
+  private val mockReferenceDataService = mock[ReferenceDataService]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "CircumstanceIndicatorController" - {
+
     "must fetch all circumstance indicators" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -57,12 +59,26 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
       contentAsJson(result) mustBe Json.toJson(data)
     }
 
+    "must return NotFound when there is data" in {
+
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+
+      val request = FakeRequest(
+        GET,
+        routes.CircumstanceIndicatorController.circumstanceIndicators().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
+    }
+
     "getCircumstanceIndicator" - {
+
       "must get circumstance indicator and return Ok" in {
         val code = "E"
 
-        val data = Seq(Json.obj("code" -> code))
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+        val data = Json.obj("code" -> code)
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(data)))
 
         val request = FakeRequest(
           GET,
@@ -71,12 +87,12 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
         val result = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(data.head)
+        contentAsJson(result) mustBe data
       }
 
       "must return NotFound when no circumstance indicator found" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"
 

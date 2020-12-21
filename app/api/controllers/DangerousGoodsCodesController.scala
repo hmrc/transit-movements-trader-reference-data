@@ -16,30 +16,31 @@
 
 package api.controllers
 
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
-import models.ReferenceDataList.Constants.TransportModeListFieldNames
 import models.UnDangerousGoodsCodeList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import repositories.services.ReferenceDataService
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
 class DangerousGoodsCodesController @Inject() (
   cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
+  referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
   def dangerousGoodsCodes(): Action[AnyContent] =
     Action.async {
-      dataRetrieval.getList(UnDangerousGoodsCodeList).map {
-        case data if data.nonEmpty => Ok(Json.toJson(data))
+      referenceDataService.many(UnDangerousGoodsCodeList, Selector.All()).map {
+        case data if data.nonEmpty =>
+          Ok(Json.toJson(data))
         case _ =>
           logger.error(s"No data found for ${UnDangerousGoodsCodeList.listName}")
           NotFound
@@ -48,16 +49,13 @@ class DangerousGoodsCodesController @Inject() (
 
   def getDangerousGoodsCode(code: String): Action[AnyContent] =
     Action.async {
-      dataRetrieval
-        .getList(UnDangerousGoodsCodeList)
-        .map(
-          _.find(
-            json => (json \ TransportModeListFieldNames.code).as[String] == code
-          )
-        )
+      referenceDataService
+        .one(UnDangerousGoodsCodeList, Selector.ByCode(code))
         .map {
-          case Some(data) => Ok(Json.toJson(data))
+          case Some(data) =>
+            Ok(Json.toJson(data))
           case _ =>
+            logger.info(s"No ${UnDangerousGoodsCodeList.listName} data found for code $code")
             NotFound
         }
     }

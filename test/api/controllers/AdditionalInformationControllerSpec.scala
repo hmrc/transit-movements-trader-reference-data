@@ -17,7 +17,6 @@
 package api.controllers
 
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import models.AdditionalInformationIdCommonList
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
@@ -31,25 +30,26 @@ import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
+import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 
 class AdditionalInformationControllerSpec extends SpecBaseWithAppPerSuite {
-  private val mockDataRetrieval = mock[DataRetrieval]
+  private val mockReferenceDataService = mock[ReferenceDataService]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "getAll" - {
     "must fetch all AdditionalInformation data" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(eqTo(AdditionalInformationIdCommonList))(any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(eqTo(AdditionalInformationIdCommonList), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -63,7 +63,7 @@ class AdditionalInformationControllerSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockDataRetrieval.getList(eqTo(AdditionalInformationIdCommonList))(any())).thenReturn(Future.successful(Seq.empty))
+      when(mockReferenceDataService.many(eqTo(AdditionalInformationIdCommonList), any())).thenReturn(Future.successful(Seq.empty))
 
       val request = FakeRequest(
         GET,

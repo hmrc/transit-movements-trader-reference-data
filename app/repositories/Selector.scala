@@ -60,4 +60,9 @@ object Selector {
 
     val expression: JsObject = Json.obj("id" -> id)
   }
+
+  case class ByCode(code: String) extends Selector[ReferenceDataList] {
+
+    val expression: JsObject = Json.obj("code" -> code)
+  }
 }

@@ -16,7 +16,7 @@ import repositories.{DataImport, DataImportRepository, ImportId, ImportStatus, L
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class CurrentReferenceDataServiceSpec
+class ReferenceDataServiceSpec
   extends AnyFreeSpec
     with Matchers
     with MongoSuite
@@ -67,7 +67,7 @@ class CurrentReferenceDataServiceSpec
 
               val dataImportRepo = app.injector.instanceOf[DataImportRepository]
               val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[CurrentReferenceDataService]
+              val service        = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
@@ -99,7 +99,7 @@ class CurrentReferenceDataServiceSpec
 
               val dataImportRepo = app.injector.instanceOf[DataImportRepository]
               val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[CurrentReferenceDataService]
+              val service        = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
@@ -128,7 +128,7 @@ class CurrentReferenceDataServiceSpec
 
             val dataImportRepo = app.injector.instanceOf[DataImportRepository]
             val listRepo       = app.injector.instanceOf[ListRepository]
-            val service        = app.injector.instanceOf[CurrentReferenceDataService]
+            val service        = app.injector.instanceOf[ReferenceDataService]
 
             dataImportRepo.insert(import1).futureValue
             listRepo.insert(list, ImportId(1), import1Data).futureValue
@@ -151,7 +151,7 @@ class CurrentReferenceDataServiceSpec
 
         running(app) {
 
-          val service = app.injector.instanceOf[CurrentReferenceDataService]
+          val service = app.injector.instanceOf[ReferenceDataService]
 
           val result = service.one(list, Selector.ById("1")).futureValue
 
@@ -184,7 +184,7 @@ class CurrentReferenceDataServiceSpec
 
               val dataImportRepo = app.injector.instanceOf[DataImportRepository]
               val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[CurrentReferenceDataService]
+              val service        = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
@@ -216,7 +216,7 @@ class CurrentReferenceDataServiceSpec
 
               val dataImportRepo = app.injector.instanceOf[DataImportRepository]
               val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[CurrentReferenceDataService]
+              val service        = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
@@ -245,7 +245,7 @@ class CurrentReferenceDataServiceSpec
 
             val dataImportRepo = app.injector.instanceOf[DataImportRepository]
             val listRepo       = app.injector.instanceOf[ListRepository]
-            val service        = app.injector.instanceOf[CurrentReferenceDataService]
+            val service        = app.injector.instanceOf[ReferenceDataService]
 
             dataImportRepo.insert(import1).futureValue
             listRepo.insert(list, ImportId(1), import1Data).futureValue
@@ -268,7 +268,7 @@ class CurrentReferenceDataServiceSpec
 
         running(app) {
 
-          val service = app.injector.instanceOf[CurrentReferenceDataService]
+          val service = app.injector.instanceOf[ReferenceDataService]
 
           val result = service.many(list, Selector.All()).futureValue
 

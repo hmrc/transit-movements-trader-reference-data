@@ -26,7 +26,7 @@ import repositories.Selector
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-class CurrentReferenceDataService @Inject() (
+class ReferenceDataService @Inject() (
   dataImportRepository: DataImportRepository,
   listRepository: ListRepository
 )(implicit ec: ExecutionContext) {

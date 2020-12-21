@@ -21,24 +21,24 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import data.DataRetrieval
 import logging.Logging
-import models.ReferenceDataList.Constants.TransportModeListFieldNames
 import models.TransportModeList
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import repositories.services.ReferenceDataService
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
 class TransportModeController @Inject() (
   cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
+  referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging {
 
   def transportModes(): Action[AnyContent] =
     Action.async {
-      dataRetrieval.getList(TransportModeList).map {
+      referenceDataService.many(TransportModeList, Selector.All()).map {
         case data if data.nonEmpty => Ok(Json.toJson(data))
         case _ =>
           logger.error(s"No data found for ${TransportModeList.listName}")
@@ -48,16 +48,13 @@ class TransportModeController @Inject() (
 
   def getTransportMode(code: String): Action[AnyContent] =
     Action.async {
-      dataRetrieval
-        .getList(TransportModeList)
-        .map(
-          _.find(
-            json => (json \ TransportModeListFieldNames.code).as[String] == code
-          )
-        )
+      referenceDataService
+        .one(TransportModeList, Selector.ByCode(code))
         .map {
-          case Some(data) => Ok(Json.toJson(data))
+          case Some(data) =>
+            Ok(Json.toJson(data))
           case _ =>
+            logger.info(s"No ${TransportModeList.listName} data found for code $code")
             NotFound
         }
     }
