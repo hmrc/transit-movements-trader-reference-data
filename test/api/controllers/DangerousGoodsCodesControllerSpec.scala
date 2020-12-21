@@ -91,8 +91,6 @@ class DangerousGoodsCodesControllerSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no transport mode is found" in {
 
-        val validCountryCode = "GB"
-        val expected         = Json.obj("code" -> validCountryCode)
         when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"

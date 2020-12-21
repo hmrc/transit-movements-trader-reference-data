@@ -17,7 +17,6 @@
 package api.controllers
 
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar

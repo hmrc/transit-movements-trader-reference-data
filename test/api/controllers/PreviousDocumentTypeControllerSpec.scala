@@ -16,10 +16,7 @@
 
 package api.controllers
 
-import api.models.PreviousDocumentType
-import api.services.PreviousDocumentTypeService
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
 import play.api.inject.bind
@@ -65,7 +62,6 @@ class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
 
     "must return NotFound if no data exists" in {
 
-      val data = Seq(Json.obj("key" -> "value"))
       when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(

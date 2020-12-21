@@ -18,24 +18,18 @@ package api.controllers.testOnly
 
 import api.services.CountryService
 import api.services.TransitCountryService
-import data.DataRetrieval
 import javax.inject.Inject
-import models.CountryCodesFullList
-import models.ReferenceDataList.Constants.CountryCodesFullListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
-
-import scala.concurrent.ExecutionContext
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService,
   transitCountryService: TransitCountryService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+) extends BackendController(cc) {
 
   def countriesFullList(): Action[AnyContent] =
     Action {
