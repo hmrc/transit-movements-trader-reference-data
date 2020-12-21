@@ -27,3 +27,5 @@ GET   /dangerous-goods-code/:code      api.controllers.DangerousGoodsCodesContro
 
 GET   /circumstance-indicators         api.controllers.CircumstanceIndicatorController.circumstanceIndicators
 GET   /circumstance-indicator/:code    api.controllers.CircumstanceIndicatorController.getCircumstanceIndicator(code)
+
+POST  /data/:list                            data.controllers.DataImportController.post(list: ReferenceDataList)

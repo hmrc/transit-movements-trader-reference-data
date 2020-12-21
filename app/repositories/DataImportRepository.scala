@@ -25,7 +25,6 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OFormat
 import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.api.commands.LastError
 import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
 import reactivemongo.play.json.ImplicitBSONHandlers._
