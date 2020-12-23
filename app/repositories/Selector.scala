@@ -43,16 +43,10 @@ object Selector {
       Json.obj()
   }
 
-  case class ByCountry(countryCode: String) extends Selector[CustomsOfficesList.type] {
+  case class ByCountry(countryId: String) extends Selector[CustomsOfficesList.type] {
 
     val expression: JsObject =
-      Json.obj("countryCode" -> countryCode)
-  }
-
-  case class ByCustomsOfficeId(officeId: String) extends Selector[CustomsOfficesList.type] {
-
-    val expression: JsObject =
-      Json.obj("officeId" -> officeId)
+      Json.obj("countryId" -> countryId)
   }
 
   // TODO: Type reference data lists to restrict this to those which make sense

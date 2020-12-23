@@ -49,15 +49,15 @@ class CustomsOfficeController @Inject() (
         }
     }
 
-  def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] =
+  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.ByCountry(countryCode))
+        .many(CustomsOfficesList, Selector.ByCountry(countryId))
         .map {
           case data if data.nonEmpty =>
             Ok(Json.toJson(data))
           case _ =>
-            logger.info(s"No ${CustomsOfficesList.listName} data found for country $countryCode")
+            logger.info(s"No ${CustomsOfficesList.listName} data found for country $countryId")
             NotFound
         }
     }
@@ -65,12 +65,12 @@ class CustomsOfficeController @Inject() (
   def getCustomsOffice(officeId: String): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .one(CustomsOfficesList, Selector.ByCustomsOfficeId(officeId))
+        .one(CustomsOfficesList, Selector.ById(officeId))
         .map {
           case Some(value) =>
             Ok(Json.toJson(value))
           case None =>
-            logger.info(s"No ${CustomsOfficesList.listName} data found for office id $officeId")
+            logger.info(s"No ${CustomsOfficesList.listName} data found for id $officeId")
             NotFound
         }
     }

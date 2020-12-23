@@ -91,18 +91,18 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val data = Seq(Json.obj("officeId" -> "GB000060"), Json.obj("officeId" -> "IT010101"))
+        val data = Seq(Json.obj("id" -> "GB000060"), Json.obj("id" -> "IT010101"))
 
         repo.insert(CustomsOfficesList, ImportId(1), data).futureValue
 
         val result =
           repo
-            .one(CustomsOfficesList, Selector.ByCustomsOfficeId("GB000060"))
+            .one(CustomsOfficesList, Selector.ById("GB000060"))
             .futureValue
             .map(jsObject => jsObject - "_id")
             .value
 
-        result mustEqual Json.obj("officeId" -> "GB000060", "importId" -> 1)
+        result mustEqual Json.obj("id" -> "GB000060", "importId" -> 1)
       }
     }
 
@@ -119,7 +119,7 @@ class ListRepositorySpec
 
         val result =
           repo
-            .one(CustomsOfficesList, Selector.ByCustomsOfficeId("FR202020"))
+            .one(CustomsOfficesList, Selector.ById("FR202020"))
             .futureValue
             .map(jsObject => jsObject - "_id")
 
