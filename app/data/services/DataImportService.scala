@@ -49,7 +49,7 @@ class DataImportService @Inject() (
       insertResult <- insertData(list, importId, data)
       importStatus = if (insertResult) ImportStatus.Complete else ImportStatus.Failed
       updateResult <- dataImportRepository.markFinished(importId, importStatus)
-      // TODO: Delete old versions of data?
+      _            <- cleanUp(list, importId, importStatus)
     } yield updateResult
 
   private def insertData(list: ReferenceDataList, importId: ImportId, data: Seq[JsObject]): Future[Boolean] =
@@ -60,4 +60,13 @@ class DataImportService @Inject() (
           logger.error(s"Error inserting ${list.listName} data", e)
           false
       }
+
+  private def cleanUp(list: ReferenceDataList, currentImportId: ImportId, importStatus: ImportStatus): Future[Boolean] =
+    if (importStatus == ImportStatus.Complete) {
+      logger.info(s"Deleting ${list.listName} data with an import id less than ${currentImportId.value}")
+      listRepository.deleteOldImports(list, currentImportId)
+    } else {
+      logger.warn(s"Not deleting any ${list.listName} data as the import failed")
+      Future.successful(false)
+    }
 }

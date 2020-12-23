@@ -21,31 +21,28 @@ import java.time.Instant
 import java.time.ZoneId
 
 import models.ReferenceDataList
+import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.when
 import org.scalacheck.Gen
-import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.OptionValues
 import org.scalatestplus.mockito.MockitoSugar
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import repositories.DataImport
-import repositories.DataImportRepository
-import repositories.ImportId
-import repositories.ImportIdRepository
-import repositories.ImportStatus
-import repositories.ListCollectionIndexManager
-import repositories.ListRepository
+import repositories._
 
 import scala.concurrent.Future
 
-class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with ScalaFutures with BeforeAndAfterEach with ScalaCheckPropertyChecks {
+class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with ScalaFutures with BeforeAndAfterEach with OptionValues {
 
   private val instant: Instant = Instant.now
 
@@ -74,57 +71,58 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
   ".importData" - {
 
-    "must load data into the correct collection and record the result of the import" in {
+    "must load data into the correct collection, record the result of the import, and delete old data" in {
 
-      forAll(Gen.oneOf(ReferenceDataList.values.toList)) {
-        list =>
-          val importId          = ImportId(1)
-          val referenceData     = Seq(Json.obj("id" -> 1))
-          val initialDataImport = DataImport(importId, list, 1, ImportStatus.Started, Instant.now(stubClock))
-          val finalDataImport   = DataImport(importId, list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
+      val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-          when(mockImportIdRepo.nextId) thenReturn Future.successful(importId)
-          when(mockDataImportRepo.insert(eqTo(initialDataImport))) thenReturn Future.successful(true)
-          when(mockDataImportRepo.markFinished(eqTo(importId), eqTo(ImportStatus.Complete))) thenReturn Future.successful(finalDataImport)
-          when(mockListRepo.insert(eqTo(list), eqTo(importId), eqTo(referenceData))) thenReturn Future.successful(true)
+      val importId          = ImportId(1)
+      val referenceData     = Seq(Json.obj("id" -> 1))
+      val initialDataImport = DataImport(importId, list, 1, ImportStatus.Started, Instant.now(stubClock))
+      val finalDataImport   = DataImport(importId, list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
 
-          val app = appBuilder.build()
+      when(mockImportIdRepo.nextId) thenReturn Future.successful(importId)
+      when(mockDataImportRepo.insert(eqTo(initialDataImport))) thenReturn Future.successful(true)
+      when(mockDataImportRepo.markFinished(eqTo(importId), eqTo(ImportStatus.Complete))) thenReturn Future.successful(finalDataImport)
+      when(mockListRepo.insert(eqTo(list), eqTo(importId), eqTo(referenceData))) thenReturn Future.successful(true)
+      when(mockListRepo.deleteOldImports(eqTo(list), eqTo(importId))) thenReturn Future.successful(true)
 
-          running(app) {
+      val app = appBuilder.build()
 
-            val service = app.injector.instanceOf[DataImportService]
+      running(app) {
 
-            val result = service.importData(list, referenceData).futureValue
+        val service = app.injector.instanceOf[DataImportService]
 
-            result mustEqual finalDataImport
-          }
+        val result = service.importData(list, referenceData).futureValue
+
+        result mustEqual finalDataImport
+        verify(mockListRepo, times(1)).deleteOldImports(eqTo(list), eqTo(importId))
       }
     }
 
-    "must mark an import as failed if there is a problem inserting the data" in {
+    "must mark an import as failed if there is a problem inserting the data and not delete any old data" in {
 
-      forAll(Gen.oneOf(ReferenceDataList.values.toList)) {
-        list =>
-          val importId          = ImportId(1)
-          val referenceData     = Seq(Json.obj("id" -> 1))
-          val initialDataImport = DataImport(importId, list, 1, ImportStatus.Started, Instant.now(stubClock))
-          val finalDataImport   = DataImport(importId, list, 1, ImportStatus.Failed, Instant.now(stubClock), Some(Instant.now(stubClock)))
+      val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-          when(mockImportIdRepo.nextId) thenReturn Future.successful(importId)
-          when(mockDataImportRepo.insert(eqTo(initialDataImport))) thenReturn Future.successful(true)
-          when(mockDataImportRepo.markFinished(eqTo(importId), eqTo(ImportStatus.Failed))) thenReturn Future.successful(finalDataImport)
-          when(mockListRepo.insert(eqTo(list), eqTo(importId), eqTo(referenceData))) thenReturn Future.failed(new Exception("foo"))
+      val importId          = ImportId(1)
+      val referenceData     = Seq(Json.obj("id" -> 1))
+      val initialDataImport = DataImport(importId, list, 1, ImportStatus.Started, Instant.now(stubClock))
+      val finalDataImport   = DataImport(importId, list, 1, ImportStatus.Failed, Instant.now(stubClock), Some(Instant.now(stubClock)))
 
-          val app = appBuilder.build()
+      when(mockImportIdRepo.nextId) thenReturn Future.successful(importId)
+      when(mockDataImportRepo.insert(eqTo(initialDataImport))) thenReturn Future.successful(true)
+      when(mockDataImportRepo.markFinished(eqTo(importId), eqTo(ImportStatus.Failed))) thenReturn Future.successful(finalDataImport)
+      when(mockListRepo.insert(eqTo(list), eqTo(importId), eqTo(referenceData))) thenReturn Future.failed(new Exception("foo"))
 
-          running(app) {
+      val app = appBuilder.build()
 
-            val service = app.injector.instanceOf[DataImportService]
+      running(app) {
 
-            val result = service.importData(list, referenceData).futureValue
+        val service = app.injector.instanceOf[DataImportService]
 
-            result mustEqual finalDataImport
-          }
+        val result = service.importData(list, referenceData).futureValue
+
+        result mustEqual finalDataImport
+        verify(mockListRepo, times(0)).deleteOldImports(any(), any())
       }
     }
   }

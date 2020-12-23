@@ -65,4 +65,22 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
         }
     }
   }
+
+  def deleteOldImports(list: ReferenceDataList, currentImportId: ImportId): Future[Boolean] = {
+
+    val selector = Json.obj("importId" -> Json.obj("$lt" -> Json.toJson(currentImportId)))
+
+    collection(list).flatMap {
+      _.remove(selector)
+        .map {
+          result =>
+            logger.info(s"Deleted ${result.n} ${list.listName} records with import ids less than $currentImportId")
+            true
+        }
+    } recover {
+      case e: Exception =>
+        logger.error(s"Error trying to delete ${list.listName} data with import ids less than ${currentImportId.value}", e)
+        false
+    }
+  }
 }
