@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -24,7 +25,6 @@ import play.api.mvc.ControllerComponents
 import logging.Logging
 import models.TransportChargesMethodOfPaymentList
 import repositories.Selector
-import repositories.services.ReferenceDataService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext

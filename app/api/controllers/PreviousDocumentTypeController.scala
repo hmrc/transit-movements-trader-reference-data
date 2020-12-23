@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import javax.inject.Inject
 import logging.Logging
 import models.PreviousDocumentTypeCommonList
@@ -23,7 +24,6 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import repositories.services.ReferenceDataService
 import repositories.Selector
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 

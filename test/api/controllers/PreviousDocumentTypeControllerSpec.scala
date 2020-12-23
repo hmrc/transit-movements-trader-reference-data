@@ -18,6 +18,7 @@ package api.controllers
 
 import api.models.PreviousDocumentType
 import api.services.PreviousDocumentTypeService
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
 import org.mockito.ArgumentMatchers._
@@ -31,7 +32,6 @@ import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
-import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 

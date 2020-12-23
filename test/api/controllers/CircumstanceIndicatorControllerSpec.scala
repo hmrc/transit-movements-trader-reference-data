@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
@@ -26,7 +27,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 

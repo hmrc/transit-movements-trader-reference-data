@@ -17,6 +17,7 @@
 package api.controllers
 
 import api.models.Country
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -28,7 +29,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
-import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 

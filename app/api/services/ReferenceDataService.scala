@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package repositories.services
+package api.services
 
 import javax.inject.Inject
 import models.ReferenceDataList

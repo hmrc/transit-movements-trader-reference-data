@@ -17,6 +17,7 @@
 package api.controllers
 
 import api.models.CustomsOffice
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
 import org.mockito.Mockito.when
 import play.api.inject.bind
@@ -27,7 +28,6 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import org.mockito.ArgumentMatchers.any
-import repositories.services.ReferenceDataService
 
 import scala.concurrent.Future
 
