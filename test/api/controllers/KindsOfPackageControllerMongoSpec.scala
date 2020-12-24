@@ -18,7 +18,7 @@ package api.controllers
 
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import models.DocumentTypeCommonList
+import models.KindOfPackagesList
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.when
@@ -34,7 +34,7 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class DocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
+class KindsOfPackageControllerMongoSpec extends SpecBaseWithAppPerSuite {
   private val mockReferenceDataService = mock[ReferenceDataService]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
@@ -42,18 +42,19 @@ class DocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[KindsOfPackageController].to[KindsOfPackageControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "getAll" - {
-    "must fetch all document type data" in {
+    "must fetch all kinds of packages data" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(DocumentTypeCommonList), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
-        routes.DocumentTypeController.getAll().url
+        routes.KindsOfPackageController.getAll().url
       )
       val result = route(app, request).value
 
@@ -63,11 +64,11 @@ class DocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockReferenceDataService.many(eqTo(DocumentTypeCommonList), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
-        routes.DocumentTypeController.getAll().url
+        routes.KindsOfPackageController.getAll().url
       )
       val result = route(app, request).value
 

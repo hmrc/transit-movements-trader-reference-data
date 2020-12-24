@@ -17,8 +17,8 @@
 package api.controllers
 
 import api.models.Country
-import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
+import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
@@ -31,26 +31,27 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
+class TransitCountriesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
 
   private val ukCountry            = Country("valid", "GB", "United Kingdom")
   private val countries            = Seq(ukCountry)
   private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
 
-  private val mockReferenceDataService = mock[ReferenceDataService]
+  private val mockDataRetrieval = mock[DataRetrieval]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[ReferenceDataService].toInstance(mockReferenceDataService)
+        bind[TransitCountriesController].to[TransitCountriesControllerRemote],
+        bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
   "transitCountries" - {
     "must return Ok when there are transit countries" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -60,11 +61,12 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(countries)
+
     }
 
     "must return Not Found when the transit countries cannot be retrieved" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
       val request = FakeRequest(
         GET,
@@ -73,6 +75,8 @@ class TransitCountriesControllerSpec extends SpecBaseWithAppPerSuite {
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
+
     }
   }
+
 }

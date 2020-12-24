@@ -17,6 +17,7 @@
 package api.controllers
 
 import api.services.ReferenceDataService
+import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.CountryCodesCommonTransitList
@@ -29,12 +30,17 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class TransitCountriesController @Inject() (
+trait TransitCountriesController {
+  def transitCountries(): Action[AnyContent]
+}
+
+class TransitCountriesControllerMongo @Inject() (
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with TransitCountriesController {
 
   def transitCountries(): Action[AnyContent] =
     Action.async {
@@ -43,6 +49,27 @@ class TransitCountriesController @Inject() (
         .map {
           case data if data.nonEmpty =>
             Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
+            NotFound
+        }
+    }
+}
+
+class TransitCountriesControllerRemote @Inject() (
+  cc: ControllerComponents,
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging
+    with TransitCountriesController {
+
+  def transitCountries(): Action[AnyContent] =
+    Action.async {
+      dataRetrieval
+        .getList(CountryCodesCommonTransitList)
+        .map {
+          case data if data.nonEmpty => Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
             NotFound

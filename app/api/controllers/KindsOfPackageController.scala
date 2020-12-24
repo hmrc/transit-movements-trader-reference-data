@@ -17,6 +17,7 @@
 package api.controllers
 
 import api.services.ReferenceDataService
+import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.KindOfPackagesList
@@ -29,12 +30,17 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class KindsOfPackageController @Inject() (
+trait KindsOfPackageController {
+  def getAll(): Action[AnyContent]
+}
+
+class KindsOfPackageControllerMongo @Inject() (
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with KindsOfPackageController {
 
   def getAll(): Action[AnyContent] =
     Action.async {
@@ -46,5 +52,23 @@ class KindsOfPackageController @Inject() (
           NotFound
       }
     }
+}
 
+class KindsOfPackageControllerRemote @Inject() (
+  cc: ControllerComponents,
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging
+    with KindsOfPackageController {
+
+  def getAll(): Action[AnyContent] =
+    Action.async {
+      dataRetrieval.getList(KindOfPackagesList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${KindOfPackagesList.listName}")
+          NotFound
+      }
+    }
 }

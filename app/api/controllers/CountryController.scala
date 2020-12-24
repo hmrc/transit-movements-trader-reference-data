@@ -17,8 +17,10 @@
 package api.controllers
 
 import api.services.ReferenceDataService
+import data.DataRetrieval
 import javax.inject.Inject
 import models.CountryCodesFullList
+import models.ReferenceDataList.Constants.CountryCodesFullListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -28,11 +30,17 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class CountryController @Inject() (
+trait CountryController {
+  def countriesFullList(): Action[AnyContent]
+  def getCountry(code: String): Action[AnyContent]
+}
+
+class CountryControllerMongo @Inject() (
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+    extends BackendController(cc)
+    with CountryController {
 
   def countriesFullList(): Action[AnyContent] =
     Action.async {
@@ -56,5 +64,40 @@ class CountryController @Inject() (
           case _ =>
             NotFound
         }
+    }
+}
+
+class CountryControllerRemote @Inject() (
+  cc: ControllerComponents,
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with CountryController {
+
+  def countriesFullList(): Action[AnyContent] =
+    Action.async {
+      dataRetrieval
+        .getList(CountryCodesFullList)
+        .map(
+          data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
+        )
+    }
+
+  def getCountry(code: String): Action[AnyContent] =
+    Action.async {
+      dataRetrieval
+        .getList(CountryCodesFullList)
+        .map {
+          data =>
+            val response = data.find(
+              json => (json \ CountryCodesFullListFieldNames.code).as[String] == code
+            )
+
+            response match {
+              case Some(country) => Ok(Json.toJson(country))
+              case None          => NotFound
+            }
+        }
+
     }
 }

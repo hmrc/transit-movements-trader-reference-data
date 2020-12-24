@@ -16,23 +16,28 @@
 
 package api.controllers
 
+import api.models.Country
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.GET
-import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
+class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
+
+  private val ukCountry            = Country("valid", "GB", "United Kingdom")
+  private val countries            = Seq(ukCountry)
+  private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
+
   private val mockReferenceDataService = mock[ReferenceDataService]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
@@ -40,64 +45,67 @@ class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[CountryController].to[CountryControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
-  "TransportModeController" - {
-    "must fetch all transport modes" in {
+  "CountryController" - {
 
-      val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
+    "countriesFullList" - {
+      "must fetch country full list" in {
 
-      val request = FakeRequest(
-        GET,
-        routes.TransportModeController.transportModes().url
-      )
-      val result = route(app, request).value
-
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(data)
-    }
-
-    "must return NotFound when no data exists" in {
-
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
-
-      val request = FakeRequest(
-        GET,
-        routes.TransportModeController.transportModes().url
-      )
-      val result = route(app, request).value
-
-      status(result) mustBe NOT_FOUND
-    }
-
-    "getTransportMode" - {
-      "must get transport mode and return Ok" in {
-
-        val validCountryCode = "GB"
-        val expected         = Json.obj("code" -> validCountryCode)
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(expected)))
+        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(
           GET,
-          routes.TransportModeController.getTransportMode(validCountryCode).url
+          routes.CountryController.countriesFullList().url
         )
         val result = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(expected)
+        contentAsJson(result) mustBe Json.toJson(countries)
       }
 
-      "must return NotFound when no transport mode is found" in {
+      "must return NotFound when there is no data" in {
 
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
-
-        val invalidCode = "Invalid"
+        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
         val request = FakeRequest(
           GET,
-          routes.TransportModeController.getTransportMode(invalidCode).url
+          routes.CountryController.countriesFullList().url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
+      }
+    }
+
+    "getCountry" - {
+      "must get correct country and return Ok" in {
+
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(Json.toJson(ukCountry).as[JsObject])))
+
+        val validCountryCode = "GB"
+
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.getCountry(validCountryCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(ukCountry)
+      }
+
+      "must return NotFound when no country is found" in {
+
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
+
+        val invalidCountryCode = "Invalid"
+
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.getCountry(invalidCountryCode).url
         )
         val result = route(app, request).value
 
@@ -105,5 +113,4 @@ class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
       }
     }
   }
-
 }

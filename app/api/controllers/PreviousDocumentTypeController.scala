@@ -17,9 +17,11 @@
 package api.controllers
 
 import api.services.ReferenceDataService
+import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.PreviousDocumentTypeCommonList
+import models.ReferenceDataList.Constants.PreviousDocumentTypeCommonListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -29,12 +31,18 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class PreviousDocumentTypeController @Inject() (
+trait PreviousDocumentTypeController {
+  def previousDocumentTypes(): Action[AnyContent]
+  def getPreviousDocumentType(code: String): Action[AnyContent]
+}
+
+class PreviousDocumentTypeControllerMongo @Inject() (
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with PreviousDocumentTypeController {
 
   def previousDocumentTypes(): Action[AnyContent] =
     Action.async {
@@ -56,6 +64,42 @@ class PreviousDocumentTypeController @Inject() (
             Ok(Json.toJson(data))
           case _ =>
             logger.info(s"No ${PreviousDocumentTypeCommonList.listName} data found for code $code")
+            NotFound
+        }
+    }
+}
+
+class PreviousDocumentTypeControllerRemote @Inject() (
+  cc: ControllerComponents,
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging
+    with PreviousDocumentTypeController {
+
+  def previousDocumentTypes(): Action[AnyContent] =
+    Action.async {
+
+      dataRetrieval.getList(PreviousDocumentTypeCommonList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${PreviousDocumentTypeCommonList.listName}")
+          NotFound
+      }
+    }
+
+  def getPreviousDocumentType(code: String): Action[AnyContent] =
+    Action.async {
+      dataRetrieval
+        .getList(PreviousDocumentTypeCommonList)
+        .map(
+          _.find(
+            json => (json \ PreviousDocumentTypeCommonListFieldNames.code).as[String] == code
+          )
+        )
+        .map {
+          case Some(data) => Ok(Json.toJson(data))
+          case _ =>
             NotFound
         }
     }

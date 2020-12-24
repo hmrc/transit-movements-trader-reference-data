@@ -31,7 +31,7 @@ import org.mockito.ArgumentMatchers.any
 
 import scala.concurrent.Future
 
-class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
+class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
   private val customsOfficeId = "GB000001"
 
@@ -66,6 +66,7 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[CustomsOfficeController].to[CustomsOfficeControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

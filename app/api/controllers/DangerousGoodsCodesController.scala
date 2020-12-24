@@ -17,8 +17,10 @@
 package api.controllers
 
 import api.services.ReferenceDataService
+import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
+import models.ReferenceDataList.Constants.TransportModeListFieldNames
 import models.UnDangerousGoodsCodeList
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -29,12 +31,18 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class DangerousGoodsCodesController @Inject() (
+trait DangerousGoodsCodesController {
+  def dangerousGoodsCodes(): Action[AnyContent]
+  def getDangerousGoodsCode(code: String): Action[AnyContent]
+}
+
+class DangerousGoodsCodesControllerMongo @Inject() (
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with DangerousGoodsCodesController {
 
   def dangerousGoodsCodes(): Action[AnyContent] =
     Action.async {
@@ -56,6 +64,41 @@ class DangerousGoodsCodesController @Inject() (
             Ok(Json.toJson(data))
           case _ =>
             logger.info(s"No ${UnDangerousGoodsCodeList.listName} data found for code $code")
+            NotFound
+        }
+    }
+}
+
+class DangerousGoodsCodesControllerRemote @Inject() (
+  cc: ControllerComponents,
+  dataRetrieval: DataRetrieval
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging
+    with DangerousGoodsCodesController {
+
+  def dangerousGoodsCodes(): Action[AnyContent] =
+    Action.async {
+      dataRetrieval.getList(UnDangerousGoodsCodeList).map {
+        case data if data.nonEmpty => Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${UnDangerousGoodsCodeList.listName}")
+          NotFound
+      }
+    }
+
+  def getDangerousGoodsCode(code: String): Action[AnyContent] =
+    Action.async {
+      dataRetrieval
+        .getList(UnDangerousGoodsCodeList)
+        .map(
+          _.find(
+            json => (json \ TransportModeListFieldNames.code).as[String] == code
+          )
+        )
+        .map {
+          case Some(data) => Ok(Json.toJson(data))
+          case _ =>
             NotFound
         }
     }

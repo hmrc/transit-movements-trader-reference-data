@@ -16,8 +16,8 @@
 
 package api.controllers
 
-import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
+import data.DataRetrieval
 import models.TransportChargesMethodOfPaymentList
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
@@ -34,22 +34,23 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class MethodOfPaymentControllerSpec extends SpecBaseWithAppPerSuite {
-  private val mockReferenceDataService = mock[ReferenceDataService]
+class MethodOfPaymentControllerRemoteSpec extends SpecBaseWithAppPerSuite {
+  private val mockDataRetrieval = mock[DataRetrieval]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[ReferenceDataService].toInstance(mockReferenceDataService)
+        bind[MethodOfPaymentController].to[MethodOfPaymentControllerRemote],
+        bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
   "getAll" - {
     "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(TransportChargesMethodOfPaymentList), any())).thenReturn(Future.successful(data))
+      when(mockDataRetrieval.getList(eqTo(TransportChargesMethodOfPaymentList))(any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -63,7 +64,7 @@ class MethodOfPaymentControllerSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockReferenceDataService.many(eqTo(TransportChargesMethodOfPaymentList), any())).thenReturn(Future.successful(Nil))
+      when(mockDataRetrieval.getList(eqTo(TransportChargesMethodOfPaymentList))(any())).thenReturn(Future.successful(Seq.empty))
 
       val request = FakeRequest(
         GET,

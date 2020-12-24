@@ -18,20 +18,21 @@ package api.controllers
 
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
+import play.api.test.Helpers.GET
+import play.api.test.Helpers.contentAsJson
+import play.api.test.Helpers.route
+import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with MockitoSugar {
-
+class TransportModeControllerMongoSpec extends SpecBaseWithAppPerSuite {
   private val mockReferenceDataService = mock[ReferenceDataService]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
@@ -39,19 +40,19 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[TransportModeController].to[TransportModeControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
-  "CircumstanceIndicatorController" - {
-
-    "must fetch all circumstance indicators" in {
+  "TransportModeController" - {
+    "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
       when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
-        routes.CircumstanceIndicatorController.circumstanceIndicators().url
+        routes.TransportModeController.transportModes().url
       )
       val result = route(app, request).value
 
@@ -59,38 +60,37 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
       contentAsJson(result) mustBe Json.toJson(data)
     }
 
-    "must return NotFound when there is data" in {
+    "must return NotFound when no data exists" in {
 
       when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
-        routes.CircumstanceIndicatorController.circumstanceIndicators().url
+        routes.TransportModeController.transportModes().url
       )
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
     }
 
-    "getCircumstanceIndicator" - {
+    "getTransportMode" - {
+      "must get transport mode and return Ok" in {
 
-      "must get circumstance indicator and return Ok" in {
-        val code = "E"
-
-        val data = Json.obj("code" -> code)
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(data)))
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(expected)))
 
         val request = FakeRequest(
           GET,
-          routes.CircumstanceIndicatorController.getCircumstanceIndicator(code).url
+          routes.TransportModeController.getTransportMode(validCountryCode).url
         )
         val result = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe data
+        contentAsJson(result) mustBe Json.toJson(expected)
       }
 
-      "must return NotFound when no circumstance indicator found" in {
+      "must return NotFound when no transport mode is found" in {
 
         when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
 
@@ -98,7 +98,7 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
 
         val request = FakeRequest(
           GET,
-          routes.CircumstanceIndicatorController.getCircumstanceIndicator(invalidCode).url
+          routes.TransportModeController.getTransportMode(invalidCode).url
         )
         val result = route(app, request).value
 
@@ -106,4 +106,5 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
       }
     }
   }
+
 }

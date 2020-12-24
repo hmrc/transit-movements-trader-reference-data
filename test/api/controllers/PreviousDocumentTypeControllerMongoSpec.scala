@@ -18,9 +18,7 @@ package api.controllers
 
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import models.KindOfPackagesList
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.{eq => eqTo}
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -34,7 +32,8 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class KindsOfPackageControllerSpec extends SpecBaseWithAppPerSuite {
+class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
+
   private val mockReferenceDataService = mock[ReferenceDataService]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
@@ -42,18 +41,19 @@ class KindsOfPackageControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[PreviousDocumentTypeController].to[PreviousDocumentTypeControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
-  "getAll" - {
-    "must fetch all kinds of packages data" in {
+  "TransportModeController" - {
+    "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
-        routes.KindsOfPackageController.getAll().url
+        routes.PreviousDocumentTypeController.previousDocumentTypes().url
       )
       val result = route(app, request).value
 
@@ -61,17 +61,51 @@ class KindsOfPackageControllerSpec extends SpecBaseWithAppPerSuite {
       contentAsJson(result) mustBe Json.toJson(data)
     }
 
-    "returns a 404 when no data is present" in {
+    "must return NotFound if no data exists" in {
 
-      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
-        routes.KindsOfPackageController.getAll().url
+        routes.PreviousDocumentTypeController.previousDocumentTypes().url
       )
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
+    }
+
+    "getPreviousDocumentType" - {
+      "must get transport mode and return Ok" in {
+
+        val code = "T1"
+
+        val data = Json.obj("code" -> code)
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(data)))
+
+        val request = FakeRequest(
+          GET,
+          routes.PreviousDocumentTypeController.getPreviousDocumentType(code).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(data)
+      }
+
+      "must return NotFound when no transport mode is found" in {
+
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
+
+        val invalidCode = "Invalid"
+
+        val request = FakeRequest(
+          GET,
+          routes.PreviousDocumentTypeController.getPreviousDocumentType(invalidCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
+      }
     }
   }
 
