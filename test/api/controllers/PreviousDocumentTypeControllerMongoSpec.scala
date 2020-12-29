@@ -16,9 +16,9 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -32,60 +32,75 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class DangerousGoodsCodesControllerSpec extends SpecBaseWithAppPerSuite {
-  private val mockDataRetrieval = mock[DataRetrieval]
+class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  private val mockReferenceDataService = mock[ReferenceDataService]
+
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[PreviousDocumentTypeController].to[PreviousDocumentTypeControllerMongo],
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "TransportModeController" - {
     "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
-        routes.DangerousGoodsCodesController.dangerousGoodsCodes().url
+        routes.PreviousDocumentTypeController.previousDocumentTypes().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(data)
     }
-    "getTransportMode" - {
+
+    "must return NotFound if no data exists" in {
+
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+
+      val request = FakeRequest(
+        GET,
+        routes.PreviousDocumentTypeController.previousDocumentTypes().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
+    }
+
+    "getPreviousDocumentType" - {
       "must get transport mode and return Ok" in {
 
-        val validCountryCode = "GB"
-        val expected         = Json.obj("code" -> validCountryCode)
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
+        val code = "T1"
+
+        val data = Json.obj("code" -> code)
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(data)))
 
         val request = FakeRequest(
           GET,
-          routes.DangerousGoodsCodesController.getDangerousGoodsCode(validCountryCode).url
+          routes.PreviousDocumentTypeController.getPreviousDocumentType(code).url
         )
         val result = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(expected)
+        contentAsJson(result) mustBe Json.toJson(data)
       }
 
       "must return NotFound when no transport mode is found" in {
 
-        val validCountryCode = "GB"
-        val expected         = Json.obj("code" -> validCountryCode)
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"
 
         val request = FakeRequest(
           GET,
-          routes.DangerousGoodsCodesController.getDangerousGoodsCode(invalidCode).url
+          routes.PreviousDocumentTypeController.getPreviousDocumentType(invalidCode).url
         )
         val result = route(app, request).value
 

@@ -16,25 +16,26 @@
 
 package api.controllers
 
-import api.models.PreviousDocumentType
-import api.services.PreviousDocumentTypeService
+import api.models.Country
 import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
-import org.mockito.ArgumentMatchers._
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.GET
-import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
+class CountryControllerRemoteSpec extends SpecBaseWithAppPerSuite {
+
+  private val ukCountry            = Country("valid", "GB", "United Kingdom")
+  private val countries            = Seq(ukCountry)
+  private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
 
   private val mockDataRetrieval = mock[DataRetrieval]
 
@@ -43,52 +44,54 @@ class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[CountryController].to[CountryControllerRemote],
         bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
-  "TransportModeController" - {
-    "must fetch all transport modes" in {
+  "CountryController" - {
 
-      val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+    "countriesFullList" - {
+      "must fetch country full list" in {
 
-      val request = FakeRequest(
-        GET,
-        routes.PreviousDocumentTypeController.previousDocumentTypes().url
-      )
-      val result = route(app, request).value
-
-      status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(data)
-    }
-    "getPreviousDocumentType" - {
-      "must get transport mode and return Ok" in {
-
-        val code = "T1"
-
-        val expected = Json.obj("code" -> code)
-        val data     = Seq(Json.obj("code" -> "other1"), expected, Json.obj("code" -> "notTheOther1"))
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(
           GET,
-          routes.PreviousDocumentTypeController.getPreviousDocumentType(code).url
+          routes.CountryController.countriesFullList().url
         )
         val result = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(expected)
+        contentAsJson(result) mustBe Json.toJson(countries)
       }
+    }
 
-      "must return NotFound when no transport mode is found" in {
+    "getCountry" - {
+      "must get correct country and return Ok" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
-        val invalidCode = "Invalid"
+        val validCountryCode = "GB"
 
         val request = FakeRequest(
           GET,
-          routes.PreviousDocumentTypeController.getPreviousDocumentType(invalidCode).url
+          routes.CountryController.getCountry(validCountryCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(ukCountry)
+      }
+
+      "must return NotFound when no country is found" in {
+
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+        val invalidCountryCode = "Invalid"
+
+        val request = FakeRequest(
+          GET,
+          routes.CountryController.getCountry(invalidCountryCode).url
         )
         val result = route(app, request).value
 
@@ -96,5 +99,4 @@ class PreviousDocumentTypeControllerSpec extends SpecBaseWithAppPerSuite {
       }
     }
   }
-
 }

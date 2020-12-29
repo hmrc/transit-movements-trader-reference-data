@@ -16,25 +16,27 @@
 
 package api.controllers
 
+import api.models.Country
 import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
-import models.TransportChargesMethodOfPaymentList
 import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.GET
-import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class MethodOfPaymentControllerSpec extends SpecBaseWithAppPerSuite {
+class TransitCountriesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
+
+  private val ukCountry            = Country("valid", "GB", "United Kingdom")
+  private val countries            = Seq(ukCountry)
+  private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
+
   private val mockDataRetrieval = mock[DataRetrieval]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
@@ -42,36 +44,38 @@ class MethodOfPaymentControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[TransitCountriesController].to[TransitCountriesControllerRemote],
         bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
-  "getAll" - {
-    "must fetch all transport modes" in {
+  "transitCountries" - {
+    "must return Ok when there are transit countries" in {
 
-      val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(eqTo(TransportChargesMethodOfPaymentList))(any())).thenReturn(Future.successful(data))
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
-        routes.MethodOfPaymentController.getAll().url
+        routes.TransitCountriesController.transitCountries().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(data)
+      contentAsJson(result) mustBe Json.toJson(countries)
+
     }
 
-    "returns a 404 when no data is present" in {
+    "must return Not Found when the transit countries cannot be retrieved" in {
 
-      when(mockDataRetrieval.getList(eqTo(TransportChargesMethodOfPaymentList))(any())).thenReturn(Future.successful(Seq.empty))
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
       val request = FakeRequest(
         GET,
-        routes.MethodOfPaymentController.getAll().url
+        routes.TransitCountriesController.transitCountries().url
       )
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
+
     }
   }
 

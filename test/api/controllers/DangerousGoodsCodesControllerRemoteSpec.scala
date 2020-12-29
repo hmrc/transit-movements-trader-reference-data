@@ -20,17 +20,19 @@ import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
+import play.api.test.Helpers.GET
+import play.api.test.Helpers.contentAsJson
+import play.api.test.Helpers.route
+import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with MockitoSugar {
-
+class DangerousGoodsCodesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
   private val mockDataRetrieval = mock[DataRetrieval]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
@@ -38,51 +40,53 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[DangerousGoodsCodesController].to[DangerousGoodsCodesControllerRemote],
         bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
-  "CircumstanceIndicatorController" - {
-    "must fetch all circumstance indicators" in {
+  "TransportModeController" - {
+    "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
       when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
-        routes.CircumstanceIndicatorController.circumstanceIndicators().url
+        routes.DangerousGoodsCodesController.dangerousGoodsCodes().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(data)
     }
+    "getTransportMode" - {
+      "must get transport mode and return Ok" in {
 
-    "getCircumstanceIndicator" - {
-      "must get circumstance indicator and return Ok" in {
-        val code = "E"
-
-        val data = Seq(Json.obj("code" -> code))
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
 
         val request = FakeRequest(
           GET,
-          routes.CircumstanceIndicatorController.getCircumstanceIndicator(code).url
+          routes.DangerousGoodsCodesController.getDangerousGoodsCode(validCountryCode).url
         )
         val result = route(app, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(data.head)
+        contentAsJson(result) mustBe Json.toJson(expected)
       }
 
-      "must return NotFound when no circumstance indicator found" in {
+      "must return NotFound when no transport mode is found" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
 
         val invalidCode = "Invalid"
 
         val request = FakeRequest(
           GET,
-          routes.CircumstanceIndicatorController.getCircumstanceIndicator(invalidCode).url
+          routes.DangerousGoodsCodesController.getDangerousGoodsCode(invalidCode).url
         )
         val result = route(app, request).value
 
@@ -90,4 +94,5 @@ class CircumstanceIndicatorControllerSpec extends SpecBaseWithAppPerSuite with M
       }
     }
   }
+
 }

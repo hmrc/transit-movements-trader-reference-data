@@ -20,6 +20,7 @@ import java.time.Clock
 import java.time.Instant
 
 import javax.inject.Inject
+import models.ReferenceDataList
 import play.api.Logging
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
@@ -91,6 +92,23 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
         .map {
           _.result[DataImport].getOrElse(throw new Exception(s"Unable to mark import ${importId.value} as finished"))
         }
+    }
+  }
+
+  def currentImportId(list: ReferenceDataList): Future[Option[ImportId]] = {
+
+    val selector = Json.obj(
+      "list"   -> list.listName,
+      "status" -> Json.toJson(ImportStatus.Complete)
+    )
+
+    val byMostRecent = Json.obj("importId" -> -1)
+
+    collection.flatMap {
+      _.find[JsObject, DataImport](selector, projection = None)
+        .sort(byMostRecent)
+        .one[DataImport]
+        .map(_.map(_.importId))
     }
   }
 }

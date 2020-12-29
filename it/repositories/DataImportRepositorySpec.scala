@@ -76,4 +76,33 @@ class DataImportRepositorySpec
       }
     }
   }
+
+  ".currentImportId" - {
+
+    "must return the highest import Id that's in a Complete status" in {
+
+      val app = appBuilder.build()
+
+      running(app) {
+
+        val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
+
+        val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
+        val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
+        val import3 = DataImport(ImportId(3), list, 1, ImportStatus.Failed, Instant.now(stubClock), Some(Instant.now(stubClock)))
+        val import4 = DataImport(ImportId(4), list, 1, ImportStatus.Started, Instant.now(stubClock), Some(Instant.now(stubClock)))
+
+        val repo = app.injector.instanceOf[DataImportRepository]
+
+        repo.insert(import1).futureValue
+        repo.insert(import2).futureValue
+        repo.insert(import3).futureValue
+        repo.insert(import4).futureValue
+
+        val result = repo.currentImportId(list).futureValue
+
+        result.value mustEqual ImportId(2)
+      }
+    }
+  }
 }

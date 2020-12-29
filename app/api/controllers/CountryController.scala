@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import data.DataRetrieval
 import javax.inject.Inject
 import models.CountryCodesFullList
@@ -24,15 +25,54 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class CountryController @Inject() (
+trait CountryController {
+  def countriesFullList(): Action[AnyContent]
+  def getCountry(code: String): Action[AnyContent]
+}
+
+class CountryControllerMongo @Inject() (
+  cc: ControllerComponents,
+  referenceDataService: ReferenceDataService
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with CountryController {
+
+  def countriesFullList(): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .many(CountryCodesFullList, Selector.All())
+        .map {
+          case data if data.nonEmpty =>
+            Ok(Json.toJson(data))
+          case _ =>
+            NotFound
+        }
+    }
+
+  def getCountry(code: String): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .one(CountryCodesFullList, Selector.ByCode(code))
+        .map {
+          case Some(data) =>
+            Ok(Json.toJson(data))
+          case _ =>
+            NotFound
+        }
+    }
+}
+
+class CountryControllerRemote @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+    extends BackendController(cc)
+    with CountryController {
 
   def countriesFullList(): Action[AnyContent] =
     Action.async {

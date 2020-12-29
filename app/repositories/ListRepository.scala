@@ -39,13 +39,13 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
 
   def one[A <: ReferenceDataList](list: A, selector: Selector[A]): Future[Option[JsObject]] =
     collection(list).flatMap {
-      _.find(selector.fullExpression, projection = None)
+      _.find(selector.expression, projection = None)
         .one[JsObject]
     }
 
   def many[A <: ReferenceDataList](list: A, selector: Selector[A]): Future[Seq[JsObject]] =
     collection(list).flatMap {
-      _.find(selector.fullExpression, projection = None)
+      _.find(selector.expression, projection = None)
         .cursor[JsObject]()
         .collect[Seq](-1, Cursor.FailOnError())
     }
@@ -63,6 +63,24 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
             logger.error(s"Error inserting s${list.listName}", e)
             throw e
         }
+    }
+  }
+
+  def deleteOldImports(list: ReferenceDataList, currentImportId: ImportId): Future[Boolean] = {
+
+    val selector = Json.obj("importId" -> Json.obj("$lt" -> Json.toJson(currentImportId)))
+
+    collection(list).flatMap {
+      _.remove(selector)
+        .map {
+          result =>
+            logger.info(s"Deleted ${result.n} ${list.listName} records with import ids less than $currentImportId")
+            true
+        }
+    } recover {
+      case e: Exception =>
+        logger.error(s"Error trying to delete ${list.listName} data with import ids less than ${currentImportId.value}", e)
+        false
     }
   }
 }

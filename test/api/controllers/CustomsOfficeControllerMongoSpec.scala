@@ -17,8 +17,8 @@
 package api.controllers
 
 import api.models.CustomsOffice
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -27,11 +27,11 @@ import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import org.mockito.ArgumentMatchers.{eq => eqTo, _}
+import org.mockito.ArgumentMatchers.any
 
 import scala.concurrent.Future
 
-class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
+class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
   private val customsOfficeId = "GB000001"
 
@@ -59,14 +59,15 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
 
   private val invalidId = "123"
 
-  private val mockDataRetrieval = mock[DataRetrieval]
+  private val mockReferenceDataService = mock[ReferenceDataService]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[CustomsOfficeController].to[CustomsOfficeControllerMongo],
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "CustomsOfficeController" - {
@@ -74,7 +75,7 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
     "customsOffices" - {
 
       "must fetch customs offices" in {
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(customsOfficesJsObjects))
 
         val request =
           FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
@@ -85,23 +86,21 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
       }
 
       "must return Not Found when there are no customs offices" in {
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
         val request =
           FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
         val result = route(app, request).value
 
         status(result) mustBe NOT_FOUND
-
       }
-
     }
 
     "customsOfficesOfTheCountry" - {
 
       "must return customs offices of the input country" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(customsOfficesJsObjects))
 
         val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry(countryCode).url)
 
@@ -113,7 +112,7 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
       }
 
       "must return Not Found when there are no customs offices for the country" in {
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
+        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Seq.empty))
 
         val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry("TEST").url)
 
@@ -133,7 +132,7 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
 
       "must return Ok with a customs office when there is a matching customs office for the office id" in {
 
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(customsOfficesJsObjects.head)))
 
         val customsOffice = customsOffices.head
 
@@ -144,20 +143,16 @@ class CustomsOfficeControllerSpec extends SpecBaseWithAppPerSuite {
         status(result) mustEqual OK
 
         contentAsJson(result) mustBe Json.toJson(customsOffice)
-
       }
 
       "must return NotFound when no matching customs office is found" in {
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(customsOfficesJsObjects))
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
 
         val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(invalidId).url)
         val result  = route(app, request).value
 
         status(result) mustBe NOT_FOUND
       }
-
     }
-
   }
-
 }

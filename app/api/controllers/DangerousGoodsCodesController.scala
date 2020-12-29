@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
@@ -25,16 +26,56 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class DangerousGoodsCodesController @Inject() (
+trait DangerousGoodsCodesController {
+  def dangerousGoodsCodes(): Action[AnyContent]
+  def getDangerousGoodsCode(code: String): Action[AnyContent]
+}
+
+class DangerousGoodsCodesControllerMongo @Inject() (
+  cc: ControllerComponents,
+  referenceDataService: ReferenceDataService
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging
+    with DangerousGoodsCodesController {
+
+  def dangerousGoodsCodes(): Action[AnyContent] =
+    Action.async {
+      referenceDataService.many(UnDangerousGoodsCodeList, Selector.All()).map {
+        case data if data.nonEmpty =>
+          Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${UnDangerousGoodsCodeList.listName}")
+          NotFound
+      }
+    }
+
+  def getDangerousGoodsCode(code: String): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .one(UnDangerousGoodsCodeList, Selector.ByCode(code))
+        .map {
+          case Some(data) =>
+            Ok(Json.toJson(data))
+          case _ =>
+            logger.info(s"No ${UnDangerousGoodsCodeList.listName} data found for code $code")
+            NotFound
+        }
+    }
+}
+
+class DangerousGoodsCodesControllerRemote @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with DangerousGoodsCodesController {
 
   def dangerousGoodsCodes(): Action[AnyContent] =
     Action.async {

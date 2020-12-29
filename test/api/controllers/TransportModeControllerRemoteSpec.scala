@@ -18,9 +18,7 @@ package api.controllers
 
 import base.SpecBaseWithAppPerSuite
 import data.DataRetrieval
-import models.KindOfPackagesList
 import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -34,7 +32,7 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class KindsOfPackageControllerSpec extends SpecBaseWithAppPerSuite {
+class TransportModeControllerRemoteSpec extends SpecBaseWithAppPerSuite {
   private val mockDataRetrieval = mock[DataRetrieval]
 
   override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
@@ -42,36 +40,58 @@ class KindsOfPackageControllerSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
+        bind[TransportModeController].to[TransportModeControllerRemote],
         bind[DataRetrieval].toInstance(mockDataRetrieval)
       )
 
-  "getAll" - {
-    "must fetch all kinds of packages data" in {
+  "TransportModeController" - {
+    "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(eqTo(KindOfPackagesList))(any())).thenReturn(Future.successful(data))
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
-        routes.KindsOfPackageController.getAll().url
+        routes.TransportModeController.transportModes().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(data)
     }
+    "getTransportMode" - {
+      "must get transport mode and return Ok" in {
 
-    "returns a 404 when no data is present" in {
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
 
-      when(mockDataRetrieval.getList(eqTo(KindOfPackagesList))(any())).thenReturn(Future.successful(Seq.empty))
+        val request = FakeRequest(
+          GET,
+          routes.TransportModeController.getTransportMode(validCountryCode).url
+        )
+        val result = route(app, request).value
 
-      val request = FakeRequest(
-        GET,
-        routes.KindsOfPackageController.getAll().url
-      )
-      val result = route(app, request).value
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(expected)
+      }
 
-      status(result) mustBe NOT_FOUND
+      "must return NotFound when no transport mode is found" in {
+
+        val validCountryCode = "GB"
+        val expected         = Json.obj("code" -> validCountryCode)
+        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
+
+        val invalidCode = "Invalid"
+
+        val request = FakeRequest(
+          GET,
+          routes.TransportModeController.getTransportMode(invalidCode).url
+        )
+        val result = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
+      }
     }
   }
 

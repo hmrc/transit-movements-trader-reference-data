@@ -16,24 +16,81 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
+import data.DataRetrieval
 import javax.inject.Inject
+import logging.Logging
+import models.CustomsOfficesList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import data.DataRetrieval
-import logging.Logging
-import models.CustomsOfficesList
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class CustomsOfficeController @Inject() (
+trait CustomsOfficeController {
+  def customsOffices(): Action[AnyContent]
+  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent]
+  def getCustomsOffice(officeId: String): Action[AnyContent]
+}
+
+class CustomsOfficeControllerMongo @Inject() (
+  cc: ControllerComponents,
+  referenceDataService: ReferenceDataService
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with CustomsOfficeController
+    with Logging {
+
+  def customsOffices(): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .many(CustomsOfficesList, Selector.All())
+        .map {
+          case data if data.nonEmpty =>
+            Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CustomsOfficesList.listName}")
+            NotFound
+        }
+    }
+
+  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .many(CustomsOfficesList, Selector.ByCountry(countryId))
+        .map {
+          case data if data.nonEmpty =>
+            Ok(Json.toJson(data))
+          case _ =>
+            logger.info(s"No ${CustomsOfficesList.listName} data found for country $countryId")
+            NotFound
+        }
+    }
+
+  def getCustomsOffice(officeId: String): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .one(CustomsOfficesList, Selector.ById(officeId))
+        .map {
+          case Some(value) =>
+            Ok(Json.toJson(value))
+          case None =>
+            logger.info(s"No ${CustomsOfficesList.listName} data found for id $officeId")
+            NotFound
+        }
+    }
+}
+
+class CustomsOfficeControllerRemote @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with CustomsOfficeController {
 
   def customsOffices(): Action[AnyContent] =
     Action.async {
@@ -62,7 +119,6 @@ class CustomsOfficeController @Inject() (
             else
               NotFound
         }
-
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
@@ -80,8 +136,6 @@ class CustomsOfficeController @Inject() (
               case Some(value) => Ok(Json.toJson(value))
               case None        => NotFound
             }
-
         }
-
     }
 }

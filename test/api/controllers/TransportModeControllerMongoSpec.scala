@@ -16,8 +16,8 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
@@ -32,22 +32,23 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
-  private val mockDataRetrieval = mock[DataRetrieval]
+class TransportModeControllerMongoSpec extends SpecBaseWithAppPerSuite {
+  private val mockReferenceDataService = mock[ReferenceDataService]
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[TransportModeController].to[TransportModeControllerMongo],
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
   "TransportModeController" - {
     "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -58,12 +59,26 @@ class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(data)
     }
+
+    "must return NotFound when no data exists" in {
+
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+
+      val request = FakeRequest(
+        GET,
+        routes.TransportModeController.transportModes().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
+    }
+
     "getTransportMode" - {
       "must get transport mode and return Ok" in {
 
         val validCountryCode = "GB"
         val expected         = Json.obj("code" -> validCountryCode)
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(expected)))
 
         val request = FakeRequest(
           GET,
@@ -77,9 +92,7 @@ class TransportModeControllerSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no transport mode is found" in {
 
-        val validCountryCode = "GB"
-        val expected         = Json.obj("code" -> validCountryCode)
-        when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq(expected)))
+        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"
 

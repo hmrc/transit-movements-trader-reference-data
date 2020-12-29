@@ -1,6 +1,7 @@
 package repositories
 
-import models.{CountryCodesFullList, CustomsOfficesList}
+import models.{CountryCodesFullList, CustomsOfficesList, ReferenceDataList}
+import org.scalacheck.Gen
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -28,7 +29,7 @@ class ListRepositorySpec
     super.beforeEach()
   }
 
-  "insert" - {
+  ".insert" - {
 
     "must insert records, adding the import id to them" in {
 
@@ -59,7 +60,10 @@ class ListRepositorySpec
         databaseRecords must contain theSameElementsAs expectedRecords
       }
     }
-    
+  }
+
+  ".many" - {
+
     "must get all records that match a given selector" in {
 
       val app = new GuiceApplicationBuilder().build()
@@ -67,23 +71,25 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val import1Data = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "FR"))
-        val import2Data = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "IT"))
+        val data = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "FR"))
 
-        repo.insert(CountryCodesFullList, ImportId(1), import1Data).futureValue
-        repo.insert(CountryCodesFullList, ImportId(2), import2Data).futureValue
+
+        repo.insert(CountryCodesFullList, ImportId(1), data).futureValue
 
         val results =
           repo
-            .many(CountryCodesFullList, Selector.All(ImportId(2)))
+            .many(CountryCodesFullList, Selector.All())
             .futureValue
             .map(jsObject => jsObject - "_id")
 
-        val expectedResults = import2Data.map(jsObject => jsObject ++ Json.obj("importId" -> 2))
+        val expectedResults = data.map(jsObject => jsObject ++ Json.obj("importId" -> 1))
 
         results must contain theSameElementsAs expectedResults
       }
     }
+  }
+
+  ".one" - {
 
     "must get a record if one exists that matches the selector" in {
 
@@ -92,20 +98,18 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val import1Data = Seq(Json.obj("officeId" -> "GB000060"), Json.obj("officeId" -> "IT010101"))
-        val import2Data = Seq(Json.obj("officeId" -> "GB000060"), Json.obj("officeId" -> "IT010101"))
+        val data = Seq(Json.obj("id" -> "GB000060"), Json.obj("id" -> "IT010101"))
 
-        repo.insert(CustomsOfficesList, ImportId(1), import1Data).futureValue
-        repo.insert(CustomsOfficesList, ImportId(2), import2Data).futureValue
+        repo.insert(CustomsOfficesList, ImportId(1), data).futureValue
 
         val result =
           repo
-            .one(CustomsOfficesList, Selector.ByCustomsOfficeId(ImportId(1), "GB000060"))
+            .one(CustomsOfficesList, Selector.ById("GB000060"))
             .futureValue
             .map(jsObject => jsObject - "_id")
             .value
 
-        result mustEqual Json.obj("officeId" -> "GB000060", "importId" -> 1)
+        result mustEqual Json.obj("id" -> "GB000060", "importId" -> 1)
       }
     }
 
@@ -116,19 +120,53 @@ class ListRepositorySpec
       running(app) {
         val repo = app.injector.instanceOf[ListRepository]
 
-        val import1Data = Seq(Json.obj("officeId" -> "GB000060", "officeId" -> "IT010101"))
-        val import2Data = Seq(Json.obj("officeId" -> "GB000060", "officeId" -> "FR202020"))
+        val data = Seq(Json.obj("id" -> "GB000060", "id" -> "IT010101"))
 
-        repo.insert(CustomsOfficesList, ImportId(1), import1Data).futureValue
-        repo.insert(CustomsOfficesList, ImportId(2), import2Data).futureValue
+        repo.insert(CustomsOfficesList, ImportId(1), data).futureValue
 
         val result =
           repo
-            .one(CustomsOfficesList, Selector.ByCustomsOfficeId(ImportId(1), "FR202020"))
+            .one(CustomsOfficesList, Selector.ById("FR202020"))
             .futureValue
             .map(jsObject => jsObject - "_id")
 
         result must not be defined
+      }
+    }
+  }
+
+  ".deleteOldImports" - {
+
+    "must delete records with an importId less than the id specified" in {
+
+      val app = new GuiceApplicationBuilder().build()
+
+      val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
+
+      running(app) {
+        val repo = app.injector.instanceOf[ListRepository]
+
+        val record = Json.obj("id" -> 1)
+        val data = Seq(record)
+
+        repo.insert(list, ImportId(1), data).futureValue
+        repo.insert(list, ImportId(2), data).futureValue
+        repo.insert(list, ImportId(3), data).futureValue
+        repo.insert(list, ImportId(4), data).futureValue
+
+        val result = repo.deleteOldImports(list, ImportId(3)).futureValue
+
+        result mustEqual true
+
+        val import1Records = repo.many(list, Selector.All().forImport(ImportId(1))).futureValue
+        val import2Records = repo.many(list, Selector.All().forImport(ImportId(2))).futureValue
+        val import3Records = repo.many(list, Selector.All().forImport(ImportId(3))).futureValue
+        val import4Records = repo.many(list, Selector.All().forImport(ImportId(4))).futureValue
+
+        import1Records mustBe empty
+        import2Records mustBe empty
+        import3Records.map(_ - "_id") must contain theSameElementsAs Seq(record ++ Json.obj("importId" -> 3))
+        import4Records.map(_ - "_id") must contain theSameElementsAs Seq(record ++ Json.obj("importId" -> 4))
       }
     }
   }

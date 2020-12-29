@@ -16,6 +16,7 @@
 
 package api.controllers
 
+import api.services.ReferenceDataService
 import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
@@ -24,15 +25,41 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import repositories.Selector
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
-class AdditionalInformationController @Inject() (
+trait AdditionalInformationController {
+  def getAll(): Action[AnyContent]
+}
+
+class AdditionalInformationControllerMongo @Inject() (
+  cc: ControllerComponents,
+  referenceDataService: ReferenceDataService
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with AdditionalInformationController
+    with Logging {
+
+  def getAll(): Action[AnyContent] =
+    Action.async {
+      referenceDataService.many(AdditionalInformationIdCommonList, Selector.All()).map {
+        case data if data.nonEmpty =>
+          Ok(Json.toJson(data))
+        case _ =>
+          logger.error(s"No data found for ${AdditionalInformationIdCommonList.listName}")
+          NotFound
+      }
+    }
+}
+
+class AdditionalInformationControllerRemote @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
+    with AdditionalInformationController
     with Logging {
 
   def getAll(): Action[AnyContent] =
@@ -44,5 +71,4 @@ class AdditionalInformationController @Inject() (
           NotFound
       }
     }
-
 }

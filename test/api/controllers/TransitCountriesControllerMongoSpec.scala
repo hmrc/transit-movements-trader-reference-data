@@ -16,64 +16,64 @@
 
 package api.controllers
 
+import api.models.Country
+import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import data.DataRetrieval
-import models.AdditionalInformationIdCommonList
 import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.GET
-import play.api.test.Helpers.contentAsJson
 import play.api.test.Helpers.route
 import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class AdditionalInformationControllerSpec extends SpecBaseWithAppPerSuite {
-  private val mockDataRetrieval = mock[DataRetrieval]
+class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
-  override val mocks: Seq[_] = super.mocks ++ Seq(mockDataRetrieval)
+  private val ukCountry            = Country("valid", "GB", "United Kingdom")
+  private val countries            = Seq(ukCountry)
+  private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
+
+  private val mockReferenceDataService = mock[ReferenceDataService]
+
+  override val mocks: Seq[_] = super.mocks ++ Seq(mockReferenceDataService)
 
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DataRetrieval].toInstance(mockDataRetrieval)
+        bind[TransitCountriesController].to[TransitCountriesControllerMongo],
+        bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
-  "getAll" - {
-    "must fetch all AdditionalInformation data" in {
+  "transitCountries" - {
+    "must return Ok when there are transit countries" in {
 
-      val data = Seq(Json.obj("key" -> "value"))
-      when(mockDataRetrieval.getList(eqTo(AdditionalInformationIdCommonList))(any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
-        routes.AdditionalInformationController.getAll().url
+        routes.TransitCountriesController.transitCountries().url
       )
       val result = route(app, request).value
 
       status(result) mustBe OK
-      contentAsJson(result) mustBe Json.toJson(data)
+      contentAsJson(result) mustBe Json.toJson(countries)
     }
 
-    "returns a 404 when no data is present" in {
+    "must return Not Found when the transit countries cannot be retrieved" in {
 
-      when(mockDataRetrieval.getList(eqTo(AdditionalInformationIdCommonList))(any())).thenReturn(Future.successful(Seq.empty))
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
-        routes.AdditionalInformationController.getAll().url
+        routes.TransitCountriesController.transitCountries().url
       )
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
     }
-
   }
-
 }
