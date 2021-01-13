@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ class ReferenceDataController @Inject() (
   additionalInformationService: AdditionalInformationService,
   kindOfPackagesService: KindOfPackageService,
   documentTypeService: DocumentTypeService,
-  specialMentionService: SpecialMentionService,
   methodOfPaymentService: MethodOfPaymentService,
   dangerousGoodsCodeService: DangerousGoodsCodeService
 ) extends BackendController(cc) {
@@ -47,11 +46,6 @@ class ReferenceDataController @Inject() (
   def documentTypes(): Action[AnyContent] =
     Action {
       Ok(Json.toJson(documentTypeService.documentTypes))
-    }
-
-  def specialMention(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(specialMentionService.specialMention))
     }
 
   def methodOfPayment(): Action[AnyContent] =

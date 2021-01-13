@@ -14,5 +14,9 @@
   {
     "code": "DG2",
     "description": "EXPORT"
+  },
+  {
+    "code": "30400",
+    "description": "RET-EXP – Copy 3 to be returned"
   }
 ]

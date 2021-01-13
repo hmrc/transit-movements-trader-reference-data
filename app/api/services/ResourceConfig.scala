@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,6 @@ class ResourceConfig @Inject() (config: Configuration) {
 
   val previousDocumentTypes: String =
     config.get[String]("resourceFiles.previousDocumentTypes")
-
-  val specialMention: String =
-    config.get[String]("resourceFiles.specialMention")
 
   val methodOfPayment: String =
     config.get[String]("resourceFiles.methodOfPayment")
