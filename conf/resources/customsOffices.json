@@ -56,5 +56,25 @@
     "CUSTOMS_OFFICE_ROLES": [
       "ENT"
     ]
+  },
+  {
+    "CUST_OFF_ID": "IT018105",
+    "CUST_OFF_NAM": "Roma",
+    "COUNTRY_ID": "IT",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Rome",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "FR001260",
+    "CUST_OFF_NAM": "Paris",
+    "COUNTRY_ID": "FR",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Paris",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
   }
 ]
