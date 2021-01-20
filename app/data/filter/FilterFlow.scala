@@ -23,34 +23,42 @@ import akka.stream.ActorAttributes
 import akka.stream.Attributes
 import akka.stream.Supervision
 import akka.stream.scaladsl.Flow
+import models.ReferenceDataList
 import models.ReferenceDataList.Constants.Common
 import play.api.Logger
 import play.api.libs.json.JsObject
 
-case class FilterFlow() {
+case class FilterFlow(list: ReferenceDataList) {
 
   val logger: Logger = Logger(getClass.getSimpleName)
 
-  private def isActiveRecord(jsObject: JsObject): Boolean =
-    (jsObject \ Common.state).as[String] == Common.valid && (jsObject \ Common.activeFrom)
-      .asOpt[LocalDate]
+  private def isActiveRecord(state: String, activeFrom: Option[LocalDate]): Boolean =
+    state == Common.valid && activeFrom
       .exists(_.isBefore(LocalDate.now().plusDays(1)))
 
   private val supervisionStrategy: Attributes = ActorAttributes.supervisionStrategy {
-    case FilterFlowItemNotActiveException => Supervision.resume
+    case filteredException @ FilterFlowItemNotActiveException(_, state) =>
+      logger.info(
+        s"[supervisionStrategy] Filtering out item for '$list' where activeFrom: ${filteredException.activeFromAsString} and state: $state LIST_ITEM_FILTERED"
+      )
+      Supervision.resume
     case _ =>
-      logger.error("[supervisionStrategy] An unexpected exception happened when trying to parse the Json")
+      logger.warn(
+        s"[supervisionStrategy] An unexpected exception happened when trying to filter the Json item for '$list' UNEXPECTED_LIST_ITEM_FILTERING_EXCEPTION"
+      )
       Supervision.resume
   }
 
   def flow: Flow[JsObject, JsObject, NotUsed] =
     Flow[JsObject]
-      .map(
+      .map {
         jsObject =>
-          if (isActiveRecord(jsObject))
+          val state      = (jsObject \ Common.state).as[String]
+          val activeFrom = (jsObject \ Common.activeFrom).asOpt[LocalDate]
+          if (isActiveRecord(state, activeFrom))
             jsObject
           else
-            throw FilterFlowItemNotActiveException
-      )
+            throw FilterFlowItemNotActiveException(activeFrom, state)
+      }
       .addAttributes(supervisionStrategy)
 }
