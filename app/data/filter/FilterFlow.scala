@@ -39,12 +39,12 @@ case class FilterFlow(list: ReferenceDataList) {
   private val supervisionStrategy: Attributes = ActorAttributes.supervisionStrategy {
     case filteredException @ FilterFlowItemNotActiveException(_, state) =>
       logger.info(
-        s"[supervisionStrategy] Filtering out item for '$list' where activeFrom: ${filteredException.activeFromAsString} and state: $state LIST_ITEM_FILTERED"
+        s"[supervisionStrategy] Filtering out item for '${list.listName}' where activeFrom: ${filteredException.activeFromAsString} and state: $state LIST_ITEM_FILTERED"
       )
       Supervision.resume
     case _ =>
       logger.warn(
-        s"[supervisionStrategy] An unexpected exception happened when trying to filter the Json item for '$list' UNEXPECTED_LIST_ITEM_FILTERING_EXCEPTION"
+        s"[supervisionStrategy] An unexpected exception happened when trying to filter the Json item for '${list.listName}' UNEXPECTED_LIST_ITEM_FILTERING_EXCEPTION"
       )
       Supervision.resume
   }
