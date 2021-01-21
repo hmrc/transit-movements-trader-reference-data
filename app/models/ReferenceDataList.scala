@@ -91,6 +91,7 @@ object ReferenceDataList {
       val state       = "state"
       val description = "description"
       val en          = "en"
+      val valid       = "valid"
     }
 
     object CountryCodesFullListFieldNames {

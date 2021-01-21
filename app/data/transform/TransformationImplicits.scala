@@ -75,7 +75,6 @@ trait TransformationImplicits {
             case Some(value: JsObject) => Reads.pure(value)
             case _                     => Reads.failed("Could not find element in array matching `en` language in path #/customsOfficeDetails")
           }
-
       }
     )
 
