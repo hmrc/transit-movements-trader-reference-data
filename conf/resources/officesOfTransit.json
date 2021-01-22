@@ -1250,5 +1250,13 @@
   {
     "ID":"FR001260",
     "NAME":"Dunkerque Cedex 1, Dunkerque port bureau (FR001260)"
+  },
+  {
+    "ID": "GB000244",
+    "NAME": "BOSTON"
+  },
+  {
+    "ID": "GB000060",
+    "NAME": "Dover/Folkestone Eurotunnel Freight"
   }
 ]
