@@ -1258,5 +1258,21 @@
   {
     "ID": "GB000060",
     "NAME": "Dover/Folkestone Eurotunnel Freight"
+  },
+  {
+    "ID": "IT018105",
+    "NAME": "Roma"
+  },
+  {
+    "ID": "GB005010",
+    "NAME": "Appledore"
+  },
+  {
+    "ID": "GB000040",
+    "NAME": "Dover (OTS) Freight Clearance"
+  },
+  {
+    "ID": "GB003250",
+    "NAME": "Newhaven"
   }
 ]
