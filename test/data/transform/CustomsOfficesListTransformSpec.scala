@@ -75,6 +75,14 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
       |  ],
       |  "customsOfficeDetails": [
       |    {
+      |      "languageCode": "ES",
+      |      "customsOfficeUsualName": "DESPATCHO CENTRAL DE ADUANAS",
+      |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
+      |      "city": "ESCALDES-ENGORDANY",
+      |      "prefixSuffixFlag": 0,
+      |      "spaceToAdd": 0
+      |    },
+      |    {
       |      "languageCode": "EN",
       |      "customsOfficeUsualName": "CENTRAL CUSTOMS OFFICE",
       |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
@@ -82,14 +90,6 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
       |      "prefixSuffixFlag": 0,
       |      "prefixSuffixLevel": "E",
       |      "prefixSuffixName": "Tulli",
-      |      "spaceToAdd": 0
-      |    },
-      |    {
-      |      "languageCode": "ES",
-      |      "customsOfficeUsualName": "DESPATCHO CENTRAL DE ADUANAS",
-      |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
-      |      "city": "ESCALDES-ENGORDANY",
-      |      "prefixSuffixFlag": 0,
       |      "spaceToAdd": 0
       |    },
       |    {
@@ -232,6 +232,14 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
                 |      "customsOfficeUsualName": "BUREAU CENTRAL DES DOUANES",
                 |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
                 |      "city": "ESCALDES - ENGORDANY",
+                |      "prefixSuffixFlag": 0,
+                |      "spaceToAdd": 0
+                |    },
+                |    {
+                |      "languageCode": "ES",
+                |      "customsOfficeUsualName": "DESPATCHO CENTRAL DE ADUANAS",
+                |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
+                |      "city": "ESCALDES-ENGORDANY",
                 |      "prefixSuffixFlag": 0,
                 |      "spaceToAdd": 0
                 |    }

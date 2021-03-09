@@ -67,7 +67,6 @@ trait TransformationImplicits {
 
     val customsOfficeDetailsEN: Reads[JsObject] = (__ \ "customsOfficeDetails").json.update(
       of[JsArray].flatMap[JsObject] {
-
         case JsArray(array) =>
           val englishDetails: Option[JsValue] = array.find(
             x => (x \ "languageCode").as[String].toLowerCase == "en"
