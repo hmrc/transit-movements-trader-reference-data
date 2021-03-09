@@ -210,12 +210,12 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
 
           }
 
-          "is missing" in {
+          "is missing and picks next available non EN name" in {
             val expected =
               """
                 |{
                 | "id": "AD000003",
-                | "name": null,
+                | "name": "BUREAU CENTRAL DES DOUANES",
                 | "countryId": "AD",
                 | "phoneNumber": "+ (376) 879900",
                 | "roles": []
@@ -238,6 +238,41 @@ class CustomsOfficesListTransformSpec extends SpecBase with ScalaCheckPropertyCh
                 |  ]
                 |}
                 |""".stripMargin
+              )
+              .as[JsObject]
+
+            val result = Transformation(CustomsOfficesList).runTransform(data)
+
+            result.get mustEqual Json.parse(expected)
+          }
+
+          "is missing" in {
+            val expected =
+              """
+                |{
+                | "id": "AD000003",
+                | "name": null,
+                | "countryId": "AD",
+                | "phoneNumber": "+ (376) 879900",
+                | "roles": []
+                |}
+                |""".stripMargin
+
+            val data = validData ++ Json
+              .parse(
+                """
+                  |{
+                  | "customsOfficeDetails": [
+                  |    {
+                  |      "languageCode": "FR",
+                  |      "streetAndNumber": "AVINGUDA FITER I ROSSELL, 2",
+                  |      "city": "ESCALDES - ENGORDANY",
+                  |      "prefixSuffixFlag": 0,
+                  |      "spaceToAdd": 0
+                  |    }
+                  |  ]
+                  |}
+                  |""".stripMargin
               )
               .as[JsObject]
 
