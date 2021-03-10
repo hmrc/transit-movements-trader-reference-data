@@ -17,7 +17,7 @@ GET   /document-types                  api.controllers.DocumentTypeController.ge
 GET   /transport-modes                 api.controllers.TransportModeController.transportModes
 GET   /transport-mode/:code            api.controllers.TransportModeController.getTransportMode(code)
 
-GET   /previous-document-type          api.controllers.PreviousDocumentTypeController.previousDocumentTypes
+GET   /previous-document-types         api.controllers.PreviousDocumentTypeController.previousDocumentTypes
 GET   /previous-document-type/:code    api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
 GET   /method-of-payment               api.controllers.MethodOfPaymentController.getAll()
