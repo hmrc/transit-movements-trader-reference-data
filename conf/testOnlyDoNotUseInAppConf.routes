@@ -24,7 +24,7 @@ GET        /transit-movements-trader-reference-data/office-transit/:id          
 GET        /transit-movements-trader-reference-data/transport-modes                                   api.controllers.testOnly.TransportModeController.transportModes
 GET        /transit-movements-trader-reference-data/transport-mode/:code                              api.controllers.testOnly.TransportModeController.getTransportMode(code)
 
-GET        /transit-movements-trader-reference-data/previous-document-type                            api.controllers.testOnly.PreviousDocumentTypeController.previousDocumentTypes
+GET        /transit-movements-trader-reference-data/previous-document-types                           api.controllers.testOnly.PreviousDocumentTypeController.previousDocumentTypes
 GET        /transit-movements-trader-reference-data/previous-document-type/:code                      api.controllers.testOnly.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
 GET        /transit-movements-trader-reference-data/circumstance-indicators                           api.controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
