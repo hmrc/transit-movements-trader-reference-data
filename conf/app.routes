@@ -22,7 +22,7 @@ GET   /previous-document-type/:code    api.controllers.PreviousDocumentTypeContr
 
 GET   /method-of-payment               api.controllers.MethodOfPaymentController.getAll()
 
-GET   /dangerous-goods-code            api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
+GET   /dangerous-goods-codes            api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
 GET   /dangerous-goods-code/:code      api.controllers.DangerousGoodsCodesController.getDangerousGoodsCode(code)
 
 GET   /circumstance-indicators         api.controllers.CircumstanceIndicatorController.circumstanceIndicators

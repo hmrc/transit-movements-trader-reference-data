@@ -31,7 +31,7 @@ GET        /transit-movements-trader-reference-data/circumstance-indicators     
 GET        /transit-movements-trader-reference-data/circumstance-indicator/:code                      api.controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
 
 GET        /transit-movements-trader-reference-data/method-of-payment                                 api.controllers.testOnly.ReferenceDataController.methodOfPayment
-GET        /transit-movements-trader-reference-data/dangerous-goods-code                              api.controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
+GET        /transit-movements-trader-reference-data/dangerous-goods-codes                              api.controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
 GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        api.controllers.testOnly.ReferenceDataController.getDangerousGoodsCode(code)
 GET        /transit-movements-trader-reference-data/additional-information                            api.controllers.testOnly.ReferenceDataController.additionalInformation
 GET        /transit-movements-trader-reference-data/kinds-of-package                                  api.controllers.testOnly.ReferenceDataController.kindsOfPackage
