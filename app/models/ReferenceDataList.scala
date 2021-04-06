@@ -95,6 +95,10 @@ object ReferenceDataList {
       val name        = "name"
     }
 
+    object ControlResultsListFieldNames {
+      val code = "code"
+    }
+
     object CountryCodesFullListFieldNames {
       val code = "code"
     }

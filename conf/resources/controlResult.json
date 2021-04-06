@@ -1,0 +1,42 @@
+[
+  {
+    "code": "A1",
+    "description": "Satisfactory"
+  },
+  {
+    "code": "A2",
+    "description": "Considered satisfactory"
+  },
+  {
+    "code": "A3",
+    "description": "Simplified procedure"
+  },
+  {
+    "code": "A4",
+    "description": "Minor discrepancies"
+  },
+  {
+    "code": "A5",
+    "description": "Discrepancies"
+  },
+  {
+    "code": "B1",
+    "description": "Not satisfactory"
+  },
+  {
+    "code": "B2",
+    "description": "Office of Destination is not appropriate .{en}."
+  },
+  {
+    "code": "B3",
+    "description": "Not satisfactory at Office of Destination (equivalent to B1 in NCTS) .{en}."
+  },
+  {
+    "code": "C1",
+    "description": ""
+  },
+  {
+    "code": "C2",
+    "description": "Filament - None Existent"
+  }
+]

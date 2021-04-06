@@ -28,6 +28,7 @@ class DataServedFromCustomsReferenceDataModule extends AbstractModule with Loggi
 
     bind(classOf[AdditionalInformationController]).to(classOf[AdditionalInformationControllerRemote]).asEagerSingleton()
     bind(classOf[CircumstanceIndicatorController]).to(classOf[CircumstanceIndicatorControllerRemote]).asEagerSingleton()
+    bind(classOf[ControlResultController]).to(classOf[ControlResultControllerRemote]).asEagerSingleton()
     bind(classOf[CountryController]).to(classOf[CountryControllerRemote]).asEagerSingleton()
     bind(classOf[CustomsOfficeController]).to(classOf[CustomsOfficeControllerRemote]).asEagerSingleton()
     bind(classOf[DangerousGoodsCodesController]).to(classOf[DangerousGoodsCodesControllerRemote]).asEagerSingleton()

@@ -16,8 +16,9 @@
 
 package api.services
 
-import javax.inject.Inject
 import play.api.Configuration
+
+import javax.inject.Inject
 
 class ResourceConfig @Inject() (config: Configuration) {
 
@@ -53,6 +54,9 @@ class ResourceConfig @Inject() (config: Configuration) {
 
   val countryCodes: String =
     config.get[String]("resourceFiles.countryCodesFullList")
+
+  val controlResult: String =
+    config.get[String]("resourceFiles.controlResult")
 
   val transitCountryCodes: String =
     config.get[String]("resourceFiles.transitCountryCodesFullList")
