@@ -50,7 +50,7 @@ trait TransformationImplicits {
           )
       )
 
-  implicit val transformationCountryCodesCommonTransitList: Transformation[CountryCodesCommonTransitList.type] =
+  implicit val countryCodesCommonTransitOutsideCommunityList: Transformation[CountryCodesCommonTransitOutsideCommunityList.type] =
     Transformation
       .fromReads(
         (
@@ -64,7 +64,7 @@ trait TransformationImplicits {
           )
       )
 
-  implicit val countryCodesCommonTransitOutsideCommunityList: Transformation[CountryCodesCommonTransitOutsideCommunityList.type] =
+  implicit val transformationCountryCodesCommonTransitList: Transformation[CountryCodesCommonTransitList.type] =
     Transformation
       .fromReads(
         (
