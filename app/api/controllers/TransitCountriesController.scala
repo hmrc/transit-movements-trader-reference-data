@@ -34,9 +34,10 @@ import scala.concurrent.ExecutionContext
 
 trait TransitCountriesController {
   def transitCountries(): Action[AnyContent]
+  def nonEUTransitCountries(): Action[AnyContent]
 }
 
-class TransitCountriesControllerMongo @Inject()(
+class TransitCountriesControllerMongo @Inject() (
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
@@ -56,9 +57,22 @@ class TransitCountriesControllerMongo @Inject()(
             NotFound
         }
     }
+
+  def nonEUTransitCountries(): Action[AnyContent] =
+    Action.async {
+      referenceDataService
+        .many(CountryCodesCommonTransitOutsideCommunityList, Selector.All())
+        .map {
+          case data if data.nonEmpty =>
+            Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CountryCodesCommonTransitOutsideCommunityList.listName}")
+            NotFound
+        }
+    }
 }
 
-class TransitCountriesControllerRemote @Inject()(
+class TransitCountriesControllerRemote @Inject() (
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
