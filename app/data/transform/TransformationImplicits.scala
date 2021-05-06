@@ -19,6 +19,7 @@ package data.transform
 import models.AdditionalInformationIdCommonList
 import models.ControlResultList
 import models.CountryCodesCommonTransitList
+import models.CountryCodesCommonTransitOutsideCommunityList
 import models.CountryCodesFullList
 import models.CustomsOfficesList
 import models.DocumentTypeCommonList
@@ -50,6 +51,20 @@ trait TransformationImplicits {
       )
 
   implicit val transformationCountryCodesCommonTransitList: Transformation[CountryCodesCommonTransitList.type] =
+    Transformation
+      .fromReads(
+        (
+          (__ \ CountryCodesCommonTransitOutsideCommunityListFieldNames.code).json.copyFrom((__ \ "countryCode").json.pick) and
+            (__ \ Common.state).json.pickBranch and
+            (__ \ Common.activeFrom).json.pickBranch and
+            (__ \ Common.description).json.copyFrom(englishDescription)
+        ).reduce
+          .andThen(
+            (__ \ Common.activeFrom).json.prune
+          )
+      )
+
+  implicit val countryCodesCommonTransitOutsideCommunityList: Transformation[CountryCodesCommonTransitOutsideCommunityList.type] =
     Transformation
       .fromReads(
         (

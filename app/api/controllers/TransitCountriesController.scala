@@ -18,9 +18,11 @@ package api.controllers
 
 import api.services.ReferenceDataService
 import data.DataRetrieval
+
 import javax.inject.Inject
 import logging.Logging
 import models.CountryCodesCommonTransitList
+import models.CountryCodesCommonTransitOutsideCommunityList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -34,7 +36,7 @@ trait TransitCountriesController {
   def transitCountries(): Action[AnyContent]
 }
 
-class TransitCountriesControllerMongo @Inject() (
+class TransitCountriesControllerMongo @Inject()(
   cc: ControllerComponents,
   referenceDataService: ReferenceDataService
 )(implicit ec: ExecutionContext)
@@ -56,7 +58,7 @@ class TransitCountriesControllerMongo @Inject() (
     }
 }
 
-class TransitCountriesControllerRemote @Inject() (
+class TransitCountriesControllerRemote @Inject()(
   cc: ControllerComponents,
   dataRetrieval: DataRetrieval
 )(implicit ec: ExecutionContext)
@@ -72,6 +74,18 @@ class TransitCountriesControllerRemote @Inject() (
           case data if data.nonEmpty => Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
+            NotFound
+        }
+    }
+
+  def nonEUTransitCountries(): Action[AnyContent] =
+    Action.async {
+      dataRetrieval
+        .getList(CountryCodesCommonTransitOutsideCommunityList)
+        .map {
+          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case _ =>
+            logger.error(s"No data found for ${CountryCodesCommonTransitOutsideCommunityList.listName}")
             NotFound
         }
     }
