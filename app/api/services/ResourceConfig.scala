@@ -55,7 +55,7 @@ class ResourceConfig @Inject() (config: Configuration) {
   val countryCodes: String =
     config.get[String]("resourceFiles.countryCodesFullList")
 
-  val nonEuCtcCountryCodes: String =
+  val nonEuCtcCountryList: String =
     config.get[String]("resourcesFiles.nonEuCtcCountryList")
 
   val controlResult: String =
