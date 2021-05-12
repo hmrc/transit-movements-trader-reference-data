@@ -16,5 +16,10 @@
     "activeFrom": "2015-10-01",
     "code": "T1",
     "description": "Document T1"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "CO"
   }
 ]

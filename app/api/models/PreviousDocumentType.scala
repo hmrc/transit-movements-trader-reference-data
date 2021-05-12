@@ -20,7 +20,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-case class PreviousDocumentType(code: String, description: String)
+case class PreviousDocumentType(code: String, description: Option[String])
 
 object PreviousDocumentType {
 
