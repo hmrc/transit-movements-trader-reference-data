@@ -76,4 +76,33 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
       status(result) mustBe NOT_FOUND
     }
   }
+
+  "nonEUTransitCountries" - {
+    "must return Ok when there are non eu transit countries" in {
+
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.nonEUTransitCountries().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(countries)
+    }
+
+    "must return Not Found when the non eu transit countries cannot be retrieved" in {
+
+      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.nonEUTransitCountries().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
+    }
+  }
 }

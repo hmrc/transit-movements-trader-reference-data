@@ -8,6 +8,8 @@ GET   /countries-full-list             api.controllers.CountryController.countri
 
 GET   /transit-countries               api.controllers.TransitCountriesController.transitCountries()
 
+GET   /non-eu-transit-countries        api.controllers.TransitCountriesController.nonEUTransitCountries
+
 GET   /additional-information          api.controllers.AdditionalInformationController.getAll()
 
 GET   /kinds-of-package                api.controllers.KindsOfPackageController.getAll()

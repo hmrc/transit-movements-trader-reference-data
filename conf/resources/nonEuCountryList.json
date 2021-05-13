@@ -1,0 +1,22 @@
+[
+  {
+    "code": "GB",
+    "state": "valid",
+    "description": "United Kingdom"
+  },
+  {
+    "code": "US",
+    "state": "valid",
+    "description": "United States"
+  },
+  {
+    "code": "TR",
+    "state": "valid",
+    "description": "Turkey"
+  },
+  {
+    "code": "RS",
+    "state": "valid",
+    "description": "Serbia"
+  }
+]
