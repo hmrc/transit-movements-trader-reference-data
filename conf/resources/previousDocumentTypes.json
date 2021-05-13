@@ -88,5 +88,10 @@
     "activeFrom": "2015-10-01",
     "code": "Test2",
     "description": "Test2 Description"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2015-10-01",
+    "code": "CodeOnly"
   }
 ]
