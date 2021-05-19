@@ -55,7 +55,9 @@ class ListCollectionIndexManager @Inject() (listRepository: ListRepository)(impl
     IndexOnList(TransportChargesMethodOfPaymentList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(TransportChargesMethodOfPaymentList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(ControlResultList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(ControlResultList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index")))
+    IndexOnList(ControlResultList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index")))
   )
 
   val started: Future[List[Boolean]] =
