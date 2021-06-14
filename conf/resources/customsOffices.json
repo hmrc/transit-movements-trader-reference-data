@@ -86,5 +86,42 @@
     "CUSTOMS_OFFICE_ROLES": [
       "ENT"
     ]
+  },
+  {
+    "CUST_OFF_ID": "XI000040",
+    "CUST_OFF_NAM": "Belfast EPU",
+    "COUNTRY_ID": "XI",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "BELFAST",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "XI005160",
+    "CUST_OFF_NAM": "Warrenpoint",
+    "COUNTRY_ID": "XI",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Warrenpoint",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "XI005220",
+    "CUST_OFF_NAM": "Larne",
+    "COUNTRY_ID": "XI",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "Larne",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
   }
+
 ]
