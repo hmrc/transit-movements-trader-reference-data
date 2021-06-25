@@ -6,9 +6,9 @@ GET   /customs-office/:id              api.controllers.CustomsOfficeController.g
 GET   /countries/:code                 api.controllers.CountryController.getCountry(code)
 GET   /countries-full-list             api.controllers.CountryController.countriesFullList
 
-GET   /transit-countries               api.controllers.TransitCountriesController.transitCountries()
+GET   /transit-countries               api.controllers.TransitCountriesController.transitCountries(excludeCountries: List[String] ?= Nil)
 
-GET   /non-eu-transit-countries        api.controllers.TransitCountriesController.nonEUTransitCountries
+GET   /non-eu-transit-countries        api.controllers.TransitCountriesController.nonEUTransitCountries(excludeCountries: List[String] ?= Nil)
 
 GET   /additional-information          api.controllers.AdditionalInformationController.getAll()
 

@@ -33,8 +33,8 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import scala.concurrent.ExecutionContext
 
 trait TransitCountriesController {
-  def transitCountries(): Action[AnyContent]
-  def nonEUTransitCountries(): Action[AnyContent]
+  def transitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent]
+  def nonEUTransitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent]
 }
 
 class TransitCountriesControllerMongo @Inject() (
@@ -45,26 +45,28 @@ class TransitCountriesControllerMongo @Inject() (
     with Logging
     with TransitCountriesController {
 
-  def transitCountries(): Action[AnyContent] =
+  import CountryFilter._
+
+  def transitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent] =
     Action.async {
       referenceDataService
         .many(CountryCodesCommonTransitList, Selector.All())
         .map {
-          case data if data.nonEmpty =>
-            Ok(Json.toJson(data))
+          case data if data.excludeCountries(excludeCountries).nonEmpty =>
+            Ok(Json.toJson(data.excludeCountries(excludeCountries)))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
             NotFound
         }
     }
 
-  def nonEUTransitCountries(): Action[AnyContent] =
+  def nonEUTransitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent] =
     Action.async {
       referenceDataService
         .many(CountryCodesCommonTransitOutsideCommunityList, Selector.All())
         .map {
-          case data if data.nonEmpty =>
-            Ok(Json.toJson(data))
+          case data if data.excludeCountries(excludeCountries).nonEmpty =>
+            Ok(Json.toJson(data.excludeCountries(excludeCountries)))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitOutsideCommunityList.listName}")
             NotFound
@@ -80,24 +82,26 @@ class TransitCountriesControllerRemote @Inject() (
     with Logging
     with TransitCountriesController {
 
-  def transitCountries(): Action[AnyContent] =
+  import CountryFilter._
+
+  def transitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CountryCodesCommonTransitList)
         .map {
-          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case data if data.excludeCountries(excludeCountries).nonEmpty => Ok(Json.toJson(data.excludeCountries(excludeCountries)))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
             NotFound
         }
     }
 
-  def nonEUTransitCountries(): Action[AnyContent] =
+  def nonEUTransitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CountryCodesCommonTransitOutsideCommunityList)
         .map {
-          case data if data.nonEmpty => Ok(Json.toJson(data))
+          case data if data.excludeCountries(excludeCountries).nonEmpty => Ok(Json.toJson(data.excludeCountries(excludeCountries)))
           case _ =>
             logger.error(s"No data found for ${CountryCodesCommonTransitOutsideCommunityList.listName}")
             NotFound
