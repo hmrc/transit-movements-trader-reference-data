@@ -34,8 +34,10 @@ import scala.concurrent.Future
 class TransitCountriesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
 
   private val ukCountry            = Country("valid", "GB", "United Kingdom")
-  private val countries            = Seq(ukCountry)
-  private val countriesAsJsObjects = Seq(Json.toJsObject(ukCountry))
+  private val otherCountry         = Country("active", "AA", "An AA")
+  private val anotherCountry       = Country("active", "BB", "A BB")
+  private val countries            = Seq(ukCountry, otherCountry, anotherCountry)
+  private val countriesAsJsObjects = countries.map(x => Json.toJsObject(x))
 
   private val mockDataRetrieval = mock[DataRetrieval]
 
@@ -50,7 +52,6 @@ class TransitCountriesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
 
   "transitCountries" - {
     "must return Ok when there are transit countries" in {
-
       when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
@@ -61,11 +62,37 @@ class TransitCountriesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
 
       status(result) mustBe OK
       contentAsJson(result) mustBe Json.toJson(countries)
+    }
 
+    "must return Ok when there are transit countries filtering out the excluded country" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        "/transit-movements-trader-reference-data/transit-countries?excludeCountries=GB"
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(Seq(otherCountry, anotherCountry))
+    }
+
+    "must return Ok when there are transit countries filtering out multiple excluded country" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        "/transit-movements-trader-reference-data/transit-countries?excludeCountries=GB&excludeCountries=aa"
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(Seq(anotherCountry))
     }
 
     "must return Not Found when the transit countries cannot be retrieved" in {
-
       when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Seq.empty))
 
       val request = FakeRequest(
@@ -75,8 +102,89 @@ class TransitCountriesControllerRemoteSpec extends SpecBaseWithAppPerSuite {
       val result = route(app, request).value
 
       status(result) mustBe NOT_FOUND
+    }
 
+    "must return Not Found when the transit countries exists but all are filtered out" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        "/transit-movements-trader-reference-data/transit-countries?excludeCountries=GB&excludeCountries=aa&excludeCountries=bb"
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
     }
   }
 
+  "nonEUTransitCountries" - {
+    "must return Ok when there are non eu transit countries" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.nonEUTransitCountries().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(countries)
+    }
+
+    "must return Ok when there are non eu transit countries filtering out the excluded country" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        "/transit-movements-trader-reference-data/non-eu-transit-countries?excludeCountries=GB"
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(Seq(otherCountry, anotherCountry))
+    }
+
+    "must return Ok when there are non eu transit countries filtering out multiple excluded country" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        "/transit-movements-trader-reference-data/non-eu-transit-countries?excludeCountries=GB&excludeCountries=aa"
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe OK
+      contentAsJson(result) mustBe Json.toJson(Seq(anotherCountry))
+    }
+
+    "must return Not Found when the non eu transit countries cannot be retrieved" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(Nil))
+
+      val request = FakeRequest(
+        GET,
+        routes.TransitCountriesController.nonEUTransitCountries().url
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
+    }
+
+    "must return Not Found when the non eu transit countries exists but all are filtered out" in {
+
+      when(mockDataRetrieval.getList(any())(any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+      val request = FakeRequest(
+        GET,
+        "/transit-movements-trader-reference-data/non-eu-transit-countries?excludeCountries=GB&excludeCountries=aa&excludeCountries=bb"
+      )
+      val result = route(app, request).value
+
+      status(result) mustBe NOT_FOUND
+    }
+  }
 }
