@@ -24,11 +24,17 @@ object CountryFilter {
   implicit class CountryFilter(countries: Seq[JsObject]) {
 
     def excludeCountries(excludedCountries: Seq[String]): Seq[JsObject] =
-      excludedCountries match {
-        case Nil => countries
-        case _ =>
-          countries
-            .filterNot(jsObj => excludedCountries.map(_.toUpperCase).toSet((jsObj \ CountryCodesFullListFieldNames.code).as[String].toUpperCase))
-      }
+      countries
+        .filterNot(
+          jsObj =>
+            excludedCountries
+              .map(_.toUpperCase)
+              .toSet(
+                (jsObj \ CountryCodesFullListFieldNames.code)
+                  .as[String]
+                  .toUpperCase
+              )
+        )
+
   }
 }
