@@ -48,6 +48,9 @@ class CountryFilterSpec extends AnyFreeSpec with Matchers {
     "return the filtered list if a list with one exclude item is present" in {
       countries.excludeCountries(List("AA")) must contain allElementsOf Seq(country2, country3, country4, country5)
     }
+    "return the filtered list if a list with one duplicated exclude item is present" in {
+      countries.excludeCountries(List("AA", "AA")) must contain allElementsOf Seq(country2, country3, country4, country5)
+    }
     "return the filtered list if a list with multiple exclude items are present" in {
       countries.excludeCountries(List("AA", "AC", "AD")) must contain allElementsOf Seq(country2, country5)
     }
