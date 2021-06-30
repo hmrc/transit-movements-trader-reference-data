@@ -38,6 +38,7 @@ class ListCollectionIndexManager @Inject() (listRepository: ListRepository)(impl
     IndexOnList(CustomsOfficesList, index(Seq("id" -> IndexType.Ascending), Some("id-index"))),
     IndexOnList(CustomsOfficesList, index(Seq("countryId" -> IndexType.Ascending), Some("country-id-index"))),
     IndexOnList(CustomsOfficesList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CustomsOfficesList, index(Seq("roles.role" -> IndexType.Ascending), Some("customs-role-index"))),
     IndexOnList(DocumentTypeCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(DocumentTypeCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(PreviousDocumentTypeCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
