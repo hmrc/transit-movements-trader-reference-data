@@ -16,8 +16,12 @@
 
 package api.controllers
 
+import api.models.CustomsOffice
+import api.models.CustomsOfficeJson
+import api.models.CustomsOfficesJson
 import api.services.ReferenceDataService
 import data.DataRetrieval
+
 import javax.inject.Inject
 import logging.Logging
 import models.CustomsOfficesList
@@ -26,13 +30,14 @@ import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import repositories.Selector
+import repositories.Selector.OptionallyByRole
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
 
 trait CustomsOfficeController {
-  def customsOffices(): Action[AnyContent]
-  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent]
+  def customsOffices(roles: Seq[String] = Nil): Action[AnyContent]
+  def customsOfficesOfTheCountry(countryId: String, roles: Seq[String] = Nil): Action[AnyContent]
   def getCustomsOffice(officeId: String): Action[AnyContent]
 }
 
@@ -44,12 +49,12 @@ class CustomsOfficeControllerMongo @Inject() (
     with CustomsOfficeController
     with Logging {
 
-  def customsOffices(): Action[AnyContent] =
+  def customsOffices(roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.All())
+        .many(CustomsOfficesList, Selector.All() and OptionallyByRole(roles))
         .map {
-          case data if data.nonEmpty =>
+          case CustomsOfficesJson(data) if data.nonEmpty =>
             Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CustomsOfficesList.listName}")
@@ -57,12 +62,12 @@ class CustomsOfficeControllerMongo @Inject() (
         }
     }
 
-  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent] =
+  def customsOfficesOfTheCountry(countryId: String, roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.ByCountry(countryId))
+        .many(CustomsOfficesList, Selector.ByCountry(countryId) and OptionallyByRole(roles))
         .map {
-          case data if data.nonEmpty =>
+          case CustomsOfficesJson(data) if data.nonEmpty =>
             Ok(Json.toJson(data))
           case _ =>
             logger.info(s"No ${CustomsOfficesList.listName} data found for country $countryId")
@@ -75,7 +80,7 @@ class CustomsOfficeControllerMongo @Inject() (
       referenceDataService
         .one(CustomsOfficesList, Selector.ById(officeId))
         .map {
-          case Some(value) =>
+          case Some(CustomsOfficeJson(value)) =>
             Ok(Json.toJson(value))
           case None =>
             logger.info(s"No ${CustomsOfficesList.listName} data found for id $officeId")
@@ -92,7 +97,7 @@ class CustomsOfficeControllerRemote @Inject() (
     with Logging
     with CustomsOfficeController {
 
-  def customsOffices(): Action[AnyContent] =
+  def customsOffices(roles: Seq[String]): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CustomsOfficesList)
@@ -104,7 +109,7 @@ class CustomsOfficeControllerRemote @Inject() (
         }
     }
 
-  def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] =
+  def customsOfficesOfTheCountry(countryCode: String, roles: Seq[String]): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CustomsOfficesList)

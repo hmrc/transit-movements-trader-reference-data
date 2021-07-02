@@ -1,6 +1,6 @@
 # microservice specific routes
-GET   /customs-offices                 api.controllers.CustomsOfficeController.customsOffices
-GET   /customs-offices/:code           api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code)
+GET   /customs-offices                 api.controllers.CustomsOfficeController.customsOffices(roles: Seq[String] ?= Nil)
+GET   /customs-offices/:code           api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code, roles: Seq[String] ?= Nil)
 GET   /customs-office/:id              api.controllers.CustomsOfficeController.getCustomsOffice(id)
 
 GET   /countries/:code                 api.controllers.CountryController.getCountry(code)

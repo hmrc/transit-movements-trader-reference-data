@@ -16,6 +16,7 @@
 
 package api.models
 
+import models.ReferenceDataList.Constants.CustomsOfficesListFieldNames
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
@@ -27,6 +28,14 @@ case class CustomsOffice(
   phoneNumber: Option[String],
   roles: Seq[String]
 )
+
+object CustomsOfficesJson {
+  def unapply(arg: Seq[JsObject]): Option[Seq[JsObject]] = Some(arg.map(_ - CustomsOfficesListFieldNames.roles))
+}
+
+object CustomsOfficeJson {
+  def unapply(arg: JsObject): Option[JsObject] = Some(arg - CustomsOfficesListFieldNames.roles)
+}
 
 object CustomsOffice {
 

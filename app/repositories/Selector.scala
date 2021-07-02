@@ -22,7 +22,13 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 
 trait Selector[A] {
+  self =>
   val expression: JsObject
+
+  def and[B <: A](other: Selector[B]): Selector[B] =
+    new Selector[B] {
+      val expression: JsObject = self.expression ++ other.expression
+    }
 }
 
 object Selector {
@@ -41,6 +47,14 @@ object Selector {
 
     val expression: JsObject =
       Json.obj()
+  }
+
+  case class OptionallyByRole(roles: Seq[String]) extends Selector[CustomsOfficesList.type] {
+
+    val expression: JsObject = roles.map(_.toUpperCase) match {
+      case Nil    => Json.obj()
+      case uRoles => Json.obj("roles.role" -> Json.obj("$all" -> uRoles))
+    }
   }
 
   case class ByCountry(countryId: String) extends Selector[CustomsOfficesList.type] {
