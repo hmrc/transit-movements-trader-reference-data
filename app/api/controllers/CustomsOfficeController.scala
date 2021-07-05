@@ -29,6 +29,8 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
+import repositories.Projection.SuppressRoles
+import repositories.Projection
 import repositories.Selector
 import repositories.Selector.OptionallyByRole
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -52,7 +54,7 @@ class CustomsOfficeControllerMongo @Inject() (
   def customsOffices(roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.All() and OptionallyByRole(roles))
+        .many(CustomsOfficesList, Selector.All() and OptionallyByRole(roles), Projection.SuppressId and SuppressRoles toOption)
         .map {
           case CustomsOfficesJson(data) if data.nonEmpty =>
             Ok(Json.toJson(data))
@@ -65,7 +67,7 @@ class CustomsOfficeControllerMongo @Inject() (
   def customsOfficesOfTheCountry(countryId: String, roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.ByCountry(countryId) and OptionallyByRole(roles))
+        .many(CustomsOfficesList, Selector.ByCountry(countryId) and OptionallyByRole(roles), (Projection.SuppressId and SuppressRoles) toOption)
         .map {
           case CustomsOfficesJson(data) if data.nonEmpty =>
             Ok(Json.toJson(data))
