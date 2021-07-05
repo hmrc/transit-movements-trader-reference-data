@@ -174,4 +174,16 @@ class RetrieveCustomsOfficesISpec extends AnyFreeSpec
       ).map(_ - "roles"))
     }
   }
+
+  "GET /customs-office/id" - {
+    "return the customs office" in new Setup {
+      val result: WSResponse = ws
+        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-office/AB00002")
+        .get()
+        .futureValue
+
+      result.status mustBe 200
+      result.body[JsValue].asOpt[JsObject].value mustEqual officeTwo - "roles"
+    }
+  }
 }

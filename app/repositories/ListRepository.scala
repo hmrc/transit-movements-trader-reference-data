@@ -37,13 +37,13 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
   def collection(list: ReferenceDataList): Future[JSONCollection] =
     mongo.database.map(_.collection[JSONCollection](list.listName))
 
-  def one[A <: ReferenceDataList](list: A, selector: Selector[A], projection: Option[Projection[A]] = None): Future[Option[JsObject]] =
+  def one[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
     collection(list).flatMap {
       _.find(selector.expression, projection = projection)
         .one[JsObject]
     }
 
-  def many[A <: ReferenceDataList](list: A, selector: Selector[A], projection: Option[Projection[A]] = None): Future[Seq[JsObject]] =
+  def many[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Seq[JsObject]] =
     collection(list).flatMap {
       _.find(selector.expression, projection = projection)
         .cursor[JsObject]()

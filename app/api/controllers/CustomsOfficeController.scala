@@ -16,13 +16,8 @@
 
 package api.controllers
 
-import api.models.CustomsOffice
-import api.models.CustomsOfficeJson
-import api.models.CustomsOfficesJson
 import api.services.ReferenceDataService
 import data.DataRetrieval
-
-import javax.inject.Inject
 import logging.Logging
 import models.CustomsOfficesList
 import play.api.libs.json.Json
@@ -35,6 +30,7 @@ import repositories.Selector
 import repositories.Selector.OptionallyByRole
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 trait CustomsOfficeController {
@@ -56,7 +52,7 @@ class CustomsOfficeControllerMongo @Inject() (
       referenceDataService
         .many(CustomsOfficesList, Selector.All() and OptionallyByRole(roles), Projection.SuppressId and SuppressRoles toOption)
         .map {
-          case CustomsOfficesJson(data) if data.nonEmpty =>
+          case data if data.nonEmpty =>
             Ok(Json.toJson(data))
           case _ =>
             logger.error(s"No data found for ${CustomsOfficesList.listName}")
@@ -69,7 +65,7 @@ class CustomsOfficeControllerMongo @Inject() (
       referenceDataService
         .many(CustomsOfficesList, Selector.ByCountry(countryId) and OptionallyByRole(roles), (Projection.SuppressId and SuppressRoles) toOption)
         .map {
-          case CustomsOfficesJson(data) if data.nonEmpty =>
+          case data if data.nonEmpty =>
             Ok(Json.toJson(data))
           case _ =>
             logger.info(s"No ${CustomsOfficesList.listName} data found for country $countryId")
@@ -80,9 +76,9 @@ class CustomsOfficeControllerMongo @Inject() (
   def getCustomsOffice(officeId: String): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .one(CustomsOfficesList, Selector.ById(officeId))
+        .one(CustomsOfficesList, Selector.ById(officeId), (Projection.SuppressId and SuppressRoles).toOption)
         .map {
-          case Some(CustomsOfficeJson(value)) =>
+          case Some(value) =>
             Ok(Json.toJson(value))
           case None =>
             logger.info(s"No ${CustomsOfficesList.listName} data found for id $officeId")

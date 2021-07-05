@@ -54,7 +54,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "countriesFullList" - {
       "must fetch country full list" in {
 
-        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(
           GET,
@@ -68,7 +68,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when there is no data" in {
 
-        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
 
         val request = FakeRequest(
           GET,
@@ -83,7 +83,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "getCountry" - {
       "must get correct country and return Ok" in {
 
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(Json.toJson(ukCountry).as[JsObject])))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(Some(Json.toJson(ukCountry).as[JsObject])))
 
         val validCountryCode = "GB"
 
@@ -99,7 +99,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no country is found" in {
 
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(None))
 
         val invalidCountryCode = "Invalid"
 

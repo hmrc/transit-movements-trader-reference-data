@@ -53,7 +53,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
   "transitCountries" - {
     "must return Ok when there are transit countries" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -67,7 +67,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Ok when there are transit countries filtering out the excluded country" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -81,7 +81,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Ok when there are transit countries filtering out multiple excluded country" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -95,7 +95,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Not Found when the transit countries cannot be retrieved" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
@@ -108,7 +108,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Not Found when the transit countries exists but all are filtered out" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -123,7 +123,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
   "nonEUTransitCountries" - {
     "must return Ok when there are non eu transit countries" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -137,7 +137,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Ok when there are non eu transit countries filtering out the excluded country" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -151,7 +151,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Ok when there are non eu transit countries filtering out multiple excluded country" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,
@@ -165,7 +165,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Not Found when the non eu transit countries cannot be retrieved" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
@@ -178,7 +178,7 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return Not Found when the non eu transit countries exists but all are filtered out" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
 
       val request = FakeRequest(
         GET,

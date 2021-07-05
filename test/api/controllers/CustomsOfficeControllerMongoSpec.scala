@@ -75,7 +75,7 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "customsOffices" - {
 
       "must fetch customs offices" in {
-        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(customsOfficesJsObjects))
+        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(customsOfficesJsObjects))
 
         val request =
           FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
@@ -86,7 +86,7 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
       }
 
       "must return Not Found when there are no customs offices" in {
-        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
 
         val request =
           FakeRequest(GET, routes.CustomsOfficeController.customsOffices().url)
@@ -100,7 +100,7 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return customs offices of the input country" in {
 
-        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(customsOfficesJsObjects))
+        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(customsOfficesJsObjects))
 
         val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry(countryCode).url)
 
@@ -112,7 +112,7 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
       }
 
       "must return Not Found when there are no customs offices for the country" in {
-        when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Seq.empty))
+        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Seq.empty))
 
         val request = FakeRequest(GET, routes.CustomsOfficeController.customsOfficesOfTheCountry("TEST").url)
 
@@ -132,7 +132,7 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return Ok with a customs office when there is a matching customs office for the office id" in {
 
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(customsOfficesJsObjects.head)))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(Some(customsOfficesJsObjects.head)))
 
         val customsOffice = customsOffices.head
 
@@ -146,7 +146,7 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
       }
 
       "must return NotFound when no matching customs office is found" in {
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(None))
 
         val request = FakeRequest(GET, routes.CustomsOfficeController.getCustomsOffice(invalidId).url)
         val result  = route(app, request).value

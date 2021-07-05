@@ -32,7 +32,7 @@ class ReferenceDataService @Inject() (
   listRepository: ListRepository
 )(implicit ec: ExecutionContext) {
 
-  def one[A <: ReferenceDataList](list: A, selector: Selector[A], projection: Option[Projection[A]] = None): Future[Option[JsObject]] =
+  def one[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
     dataImportRepository.currentImportId(list).flatMap {
       case Some(importId) =>
         listRepository.one(list, selector.forImport(importId), projection)
@@ -40,7 +40,7 @@ class ReferenceDataService @Inject() (
         Future.successful(None)
     }
 
-  def many[A <: ReferenceDataList](list: A, selector: Selector[A], projection: Option[Projection[A]] = None): Future[Seq[JsObject]] =
+  def many[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Seq[JsObject]] =
     dataImportRepository.currentImportId(list).flatMap {
       case Some(importId) =>
         listRepository.many(list, selector.forImport(importId), projection)

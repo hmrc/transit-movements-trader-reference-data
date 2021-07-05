@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
-import repositories.Selector.{All, ByCountry, OptionallyByRole}
+import repositories.Selector.{All, ByCountry, ById, OptionallyByRole}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -18,7 +18,7 @@ class CustomsOfficeListRepositorySpec extends AnyFreeSpec
   with ScalaFutures
   with IntegrationPatience
   with OptionValues
-  with BeforeAndAfterEach {
+  with BeforeAndAfterEach with FailOnUnindexedQueries {
 
   override def beforeEach(): Unit = {
     database.flatMap(_.drop).futureValue
@@ -29,7 +29,7 @@ class CustomsOfficeListRepositorySpec extends AnyFreeSpec
     private val appBuilder: Application =
       new GuiceApplicationBuilder().build()
 
-    val repo = appBuilder.injector.instanceOf[ListRepository]
+    val repo: ListRepository = appBuilder.injector.instanceOf[ListRepository]
 
     def genRole(role: String): JsObject = Json.obj(
       "seasonStartDate" -> "20180101",
@@ -74,7 +74,7 @@ class CustomsOfficeListRepositorySpec extends AnyFreeSpec
     val officeFour = Json.obj(
       "phoneNumber" -> "12345",
       "importId" -> 12345,
-      "name" -> "AB0002",
+      "name" -> "AB0004",
       "roles" -> Json.arr(genRole("DEP"), genRole("DES"), genRole("NPM")),
       "id" -> "AB00004",
       "countryId" -> "AB"
@@ -130,6 +130,12 @@ class CustomsOfficeListRepositorySpec extends AnyFreeSpec
       returnedOffices mustEqual Seq(
         officeFour
       )
+    }
+
+    "fetch office by id" in new Setup  {
+      val returnedOffices: JsObject = repo.one(CustomsOfficesList, ById("AB00002")).futureValue.map(_ - "_id").value
+
+      returnedOffices mustEqual officeTwo
     }
   }
 }

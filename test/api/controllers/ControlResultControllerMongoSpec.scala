@@ -53,7 +53,7 @@ class ControlResultControllerMongoSpec extends SpecBaseWithAppPerSuite {
       "must fetch all ControlResult data" in {
 
         val data = Seq(Json.obj("key" -> "value"))
-        when(mockReferenceDataService.many(eqTo(ControlResultList), any())).thenReturn(Future.successful(data))
+        when(mockReferenceDataService.many(eqTo(ControlResultList), any(), any())).thenReturn(Future.successful(data))
 
         val request = FakeRequest(
           GET,
@@ -67,7 +67,7 @@ class ControlResultControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "returns a 404 when no data is present" in {
 
-        when(mockReferenceDataService.many(eqTo(ControlResultList), any())).thenReturn(Future.successful(Seq.empty))
+        when(mockReferenceDataService.many(eqTo(ControlResultList), any(), any())).thenReturn(Future.successful(Seq.empty))
 
         val request = FakeRequest(
           GET,
@@ -84,7 +84,7 @@ class ControlResultControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
         val data = Some(Json.obj("key" -> "value"))
         val code = "value2"
-        when(mockReferenceDataService.one(eqTo(ControlResultList), eqTo(Selector.ByCode(code)))).thenReturn(Future.successful(data))
+        when(mockReferenceDataService.one(eqTo(ControlResultList), eqTo(Selector.ByCode(code)), any())).thenReturn(Future.successful(data))
 
         val request = FakeRequest(
           GET,
@@ -99,7 +99,7 @@ class ControlResultControllerMongoSpec extends SpecBaseWithAppPerSuite {
       "returns a 404 when no data is present" in {
 
         val code = "value2"
-        when(mockReferenceDataService.one(eqTo(ControlResultList), eqTo(Selector.ByCode(code)))).thenReturn(Future.successful(None))
+        when(mockReferenceDataService.one(eqTo(ControlResultList), eqTo(Selector.ByCode(code)), any())).thenReturn(Future.successful(None))
 
         val request = FakeRequest(
           GET,
