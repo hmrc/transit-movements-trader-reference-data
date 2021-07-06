@@ -117,7 +117,7 @@ class RetrieveCustomsOfficesISpec extends AnyFreeSpec
 
     "return records that match role for a single role" in new Setup {
       val result: WSResponse = ws
-        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices?roles=TRA")
+        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices?role=TRA")
         .get()
         .futureValue
 
@@ -129,7 +129,7 @@ class RetrieveCustomsOfficesISpec extends AnyFreeSpec
 
     "return records that match all roles" in new Setup {
       val result: WSResponse = ws
-        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices?roles=TRA&roles=DEP")
+        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices?role=TRA&role=DEP")
         .get()
         .futureValue
 
@@ -141,7 +141,7 @@ class RetrieveCustomsOfficesISpec extends AnyFreeSpec
 
     "return 404 if roles don't match" in new Setup {
       val result: WSResponse = ws
-        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices?roles=NOP")
+        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices?role=NOP")
         .get()
         .futureValue
 
@@ -164,7 +164,7 @@ class RetrieveCustomsOfficesISpec extends AnyFreeSpec
 
     "return records that match role for a single role" in new Setup {
       val result: WSResponse = ws
-        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices/AB?roles=NPM")
+        .url(s"http://localhost:$port/transit-movements-trader-reference-data/customs-offices/AB?role=NPM")
         .get()
         .futureValue
 
