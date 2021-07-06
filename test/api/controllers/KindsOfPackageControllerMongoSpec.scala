@@ -50,7 +50,7 @@ class KindsOfPackageControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "must fetch all kinds of packages data" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -64,7 +64,7 @@ class KindsOfPackageControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(eqTo(KindOfPackagesList), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,

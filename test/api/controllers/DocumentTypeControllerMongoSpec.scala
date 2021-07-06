@@ -50,7 +50,7 @@ class DocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "must fetch all document type data" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(DocumentTypeCommonList), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(eqTo(DocumentTypeCommonList), any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -64,7 +64,7 @@ class DocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockReferenceDataService.many(eqTo(DocumentTypeCommonList), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(eqTo(DocumentTypeCommonList), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,

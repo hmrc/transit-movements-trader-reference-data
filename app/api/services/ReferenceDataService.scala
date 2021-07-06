@@ -21,6 +21,7 @@ import models.ReferenceDataList
 import play.api.libs.json.JsObject
 import repositories.DataImportRepository
 import repositories.ListRepository
+import repositories.Projection
 import repositories.Selector
 
 import scala.concurrent.ExecutionContext
@@ -31,18 +32,18 @@ class ReferenceDataService @Inject() (
   listRepository: ListRepository
 )(implicit ec: ExecutionContext) {
 
-  def one[A <: ReferenceDataList](list: A, selector: Selector[A]): Future[Option[JsObject]] =
+  def one[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
     dataImportRepository.currentImportId(list).flatMap {
       case Some(importId) =>
-        listRepository.one(list, selector.forImport(importId))
+        listRepository.one(list, selector.forImport(importId), projection)
       case None =>
         Future.successful(None)
     }
 
-  def many[A <: ReferenceDataList](list: A, selector: Selector[A]): Future[Seq[JsObject]] =
+  def many[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Seq[JsObject]] =
     dataImportRepository.currentImportId(list).flatMap {
       case Some(importId) =>
-        listRepository.many(list, selector.forImport(importId))
+        listRepository.many(list, selector.forImport(importId), projection)
       case None =>
         Future.successful(Nil)
     }

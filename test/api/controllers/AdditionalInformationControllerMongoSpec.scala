@@ -50,7 +50,7 @@ class AdditionalInformationControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "must fetch all AdditionalInformation data" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(AdditionalInformationIdCommonList), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(eqTo(AdditionalInformationIdCommonList), any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -64,7 +64,7 @@ class AdditionalInformationControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockReferenceDataService.many(eqTo(AdditionalInformationIdCommonList), any())).thenReturn(Future.successful(Seq.empty))
+      when(mockReferenceDataService.many(eqTo(AdditionalInformationIdCommonList), any(), any())).thenReturn(Future.successful(Seq.empty))
 
       val request = FakeRequest(
         GET,

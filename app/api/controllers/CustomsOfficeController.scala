@@ -18,21 +18,24 @@ package api.controllers
 
 import api.services.ReferenceDataService
 import data.DataRetrieval
-import javax.inject.Inject
 import logging.Logging
 import models.CustomsOfficesList
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
+import repositories.Projection.SuppressRoles
+import repositories.Projection
 import repositories.Selector
+import repositories.Selector.OptionallyByRole
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 trait CustomsOfficeController {
-  def customsOffices(): Action[AnyContent]
-  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent]
+  def customsOffices(roles: Seq[String] = Nil): Action[AnyContent]
+  def customsOfficesOfTheCountry(countryId: String, roles: Seq[String] = Nil): Action[AnyContent]
   def getCustomsOffice(officeId: String): Action[AnyContent]
 }
 
@@ -44,10 +47,10 @@ class CustomsOfficeControllerMongo @Inject() (
     with CustomsOfficeController
     with Logging {
 
-  def customsOffices(): Action[AnyContent] =
+  def customsOffices(roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.All())
+        .many(CustomsOfficesList, Selector.All() and OptionallyByRole(roles), Projection.SuppressId and SuppressRoles toOption)
         .map {
           case data if data.nonEmpty =>
             Ok(Json.toJson(data))
@@ -57,10 +60,10 @@ class CustomsOfficeControllerMongo @Inject() (
         }
     }
 
-  def customsOfficesOfTheCountry(countryId: String): Action[AnyContent] =
+  def customsOfficesOfTheCountry(countryId: String, roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.ByCountry(countryId))
+        .many(CustomsOfficesList, Selector.ByCountry(countryId) and OptionallyByRole(roles), (Projection.SuppressId and SuppressRoles) toOption)
         .map {
           case data if data.nonEmpty =>
             Ok(Json.toJson(data))
@@ -73,7 +76,7 @@ class CustomsOfficeControllerMongo @Inject() (
   def getCustomsOffice(officeId: String): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .one(CustomsOfficesList, Selector.ById(officeId))
+        .one(CustomsOfficesList, Selector.ById(officeId), (Projection.SuppressId and SuppressRoles).toOption)
         .map {
           case Some(value) =>
             Ok(Json.toJson(value))
@@ -92,7 +95,7 @@ class CustomsOfficeControllerRemote @Inject() (
     with Logging
     with CustomsOfficeController {
 
-  def customsOffices(): Action[AnyContent] =
+  def customsOffices(roles: Seq[String]): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CustomsOfficesList)
@@ -104,7 +107,7 @@ class CustomsOfficeControllerRemote @Inject() (
         }
     }
 
-  def customsOfficesOfTheCountry(countryCode: String): Action[AnyContent] =
+  def customsOfficesOfTheCountry(countryCode: String, roles: Seq[String]): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CustomsOfficesList)

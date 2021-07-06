@@ -47,7 +47,7 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
     "must fetch all circumstance indicators" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -61,7 +61,7 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
 
     "must return NotFound when there is data" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
@@ -78,7 +78,7 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
         val code = "E"
 
         val data = Json.obj("code" -> code)
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(data)))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(Some(data)))
 
         val request = FakeRequest(
           GET,
@@ -92,7 +92,7 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
 
       "must return NotFound when no circumstance indicator found" in {
 
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"
 

@@ -49,7 +49,7 @@ class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -63,7 +63,7 @@ class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "must return NotFound if no data exists" in {
 
-      when(mockReferenceDataService.many(any(), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
@@ -80,7 +80,7 @@ class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
         val code = "T1"
 
         val data = Json.obj("code" -> code)
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(Some(data)))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(Some(data)))
 
         val request = FakeRequest(
           GET,
@@ -94,7 +94,7 @@ class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no transport mode is found" in {
 
-        when(mockReferenceDataService.one(any(), any())).thenReturn(Future.successful(None))
+        when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"
 

@@ -50,7 +50,7 @@ class MethodOfPaymentControllerMongoSpec extends SpecBaseWithAppPerSuite {
     "must fetch all transport modes" in {
 
       val data = Seq(Json.obj("key" -> "value"))
-      when(mockReferenceDataService.many(eqTo(TransportChargesMethodOfPaymentList), any())).thenReturn(Future.successful(data))
+      when(mockReferenceDataService.many(eqTo(TransportChargesMethodOfPaymentList), any(), any())).thenReturn(Future.successful(data))
 
       val request = FakeRequest(
         GET,
@@ -64,7 +64,7 @@ class MethodOfPaymentControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     "returns a 404 when no data is present" in {
 
-      when(mockReferenceDataService.many(eqTo(TransportChargesMethodOfPaymentList), any())).thenReturn(Future.successful(Nil))
+      when(mockReferenceDataService.many(eqTo(TransportChargesMethodOfPaymentList), any(), any())).thenReturn(Future.successful(Nil))
 
       val request = FakeRequest(
         GET,
