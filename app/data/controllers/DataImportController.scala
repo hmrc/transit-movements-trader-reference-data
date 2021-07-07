@@ -26,6 +26,7 @@ import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import scala.concurrent.ExecutionContext
+import java.util.UUID
 
 class DataImportController @Inject() (cc: ControllerComponents, loadDataService: DataImportService)(implicit ec: ExecutionContext)
     extends BackendController(cc)
@@ -34,12 +35,25 @@ class DataImportController @Inject() (cc: ControllerComponents, loadDataService:
   def post(list: ReferenceDataList): Action[Seq[JsObject]] =
     Action.async(parse.json[Seq[JsObject]]) {
       implicit request =>
+        val ingestLogId =
+          request.headers
+            .get("X-Request-Id")
+            .map(x => s"XRequestId=$x")
+            .getOrElse(s"GeneratedRequestId=${UUID.randomUUID()}")
+
+        logger.info(s"[DataImport][Start][$ingestLogId] List name = ${list.listName}")
+
         loadDataService
           .importData(list, request.body)
-          .map(_ => Ok)
+          .map {
+            _ =>
+              logger.info(s"[DataImport][Successful][$ingestLogId] List name = ${list.listName}")
+
+              Ok
+          }
           .recover {
             case e: Exception =>
-              logger.error(s"Error trying to load ${list.listName} data", e)
+              logger.error(s"[DataImport][Failed][$ingestLogId] List name = ${list.listName}", e)
               InternalServerError
           }
     }
