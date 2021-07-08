@@ -1,7 +1,11 @@
 
 # transit-movements-trader-reference-data
 
-This is a placeholder README.md for a new repository
+## Development
+
+### Setting up the service - seeding service with data
+- Follow the [instructions in the test repo](https://github.com/hmrc/customs-reference-data-postman#working-with-the-collection-via-command-line-interface)
+
 
 ### License
 
