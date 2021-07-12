@@ -35,6 +35,8 @@ class ListCollectionIndexManager @Inject() (listRepository: ListRepository)(impl
     IndexOnList(CountryCodesFullList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(CountryCodesCommonTransitList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(CountryCodesCommonTransitList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CountryCodesCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(CustomsOfficesList, index(Seq("id" -> IndexType.Ascending), Some("id-index"))),
     IndexOnList(CustomsOfficesList, index(Seq("countryId" -> IndexType.Ascending), Some("country-id-index"))),
     IndexOnList(CustomsOfficesList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),

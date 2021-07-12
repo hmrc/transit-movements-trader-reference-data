@@ -28,6 +28,7 @@ sealed abstract class ReferenceDataList(val listName: String)
 
 object CountryCodesFullList                          extends ReferenceDataList("CountryCodesFullList")
 object CountryCodesCommonTransitList                 extends ReferenceDataList("CountryCodesCommonTransit")
+object CountryCodesCommunityList                     extends ReferenceDataList("CountryCodesCommunity")
 object CustomsOfficesList                            extends ReferenceDataList("CustomsOffices")
 object DocumentTypeCommonList                        extends ReferenceDataList("DocumentTypeCommon")
 object PreviousDocumentTypeCommonList                extends ReferenceDataList("PreviousDocumentTypeCommon")
@@ -46,6 +47,7 @@ object ReferenceDataList {
     NonEmptyList.of(
       CountryCodesFullList,
       CountryCodesCommonTransitList,
+      CountryCodesCommunityList,
       CustomsOfficesList,
       DocumentTypeCommonList,
       PreviousDocumentTypeCommonList,
@@ -141,7 +143,5 @@ object ReferenceDataList {
     object CountryCodesCommonTransitOutsideCommunityListFieldNames {
       val code = "code"
     }
-
   }
-
 }
