@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.MethodOfPayment
+import api.models.KindOfPackage
 import base.SpecBaseWithAppPerSuite
 
-class MethodOfPaymentServiceSpec extends SpecBaseWithAppPerSuite {
+class KindOfPackageServiceSpec extends SpecBaseWithAppPerSuite {
 
-  "must return method of payment" in {
-    val service = app.injector.instanceOf[MethodOfPaymentService]
+  "must return kinds of package" in {
+    val service = app.injector.instanceOf[KindOfPackageService]
 
-    val expectedFirstItem = MethodOfPayment("A", "Payment in cash")
+    val expectedFirstValue = KindOfPackage("1A", "Drum, steel")
 
-    service.methodOfPayment.head mustEqual expectedFirstItem
+    service.kindsOfPackage.head mustEqual expectedFirstValue
   }
 }

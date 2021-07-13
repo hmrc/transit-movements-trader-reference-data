@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.KindOfPackage
+import api.models.DocumentType
 import javax.inject.Inject
 import play.api.Environment
 
-class KindOfPackageService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class DocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val kindsOfPackage: Seq[KindOfPackage] =
-    getData[KindOfPackage](config.kindsOfPackage)
+  val documentTypes: Seq[DocumentType] =
+    getData[DocumentType](config.documentTypes)
 }

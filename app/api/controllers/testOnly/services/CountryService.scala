@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.MethodOfPayment
+import api.models.Country
 import javax.inject.Inject
 import play.api.Environment
 
-class MethodOfPaymentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class CountryService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val methodOfPayment: Seq[MethodOfPayment] =
-    getData[MethodOfPayment](config.methodOfPayment)
+  val countries: Seq[Country] =
+    getData[Country](config.countryCodes).sortBy(_.description)
+
+  val nonEuCountries: Seq[Country] =
+    getData[Country](config.nonEuCountryList).sortBy(_.description)
+
+  def getCountryByCode(code: String): Option[Country] =
+    getData[Country](config.countryCodes).find(_.code == code)
+
 }

@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.Country
-import javax.inject.Inject
-import play.api.Environment
+import api.models.DocumentType
+import base.SpecBaseWithAppPerSuite
 
-class CountryService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
-  val countries: Seq[Country] =
-    getData[Country](config.countryCodes).sortBy(_.description)
+  "must return document types" in {
+    val service = app.injector.instanceOf[DocumentTypeService]
 
-  val nonEuCountries: Seq[Country] =
-    getData[Country](config.nonEuCountryList).sortBy(_.description)
+    val expectedFirstItem = DocumentType("18", "Movement certificate A.TR.1", transportDocument = false)
 
-  def getCountryByCode(code: String): Option[Country] =
-    getData[Country](config.countryCodes).find(_.code == code)
-
+    service.documentTypes.head mustEqual expectedFirstItem
+  }
 }

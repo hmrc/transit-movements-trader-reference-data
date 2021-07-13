@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.DocumentType
+import api.models.CustomsOffice
 import javax.inject.Inject
 import play.api.Environment
 
-class DocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class CustomsOfficesService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val documentTypes: Seq[DocumentType] =
-    getData[DocumentType](config.documentTypes)
+  val customsOffices: Seq[CustomsOffice] =
+    getData[CustomsOffice](config.customsOffice).sortBy(_.name)
+
+  def getCustomsOffice(officeId: String): Option[CustomsOffice] =
+    getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
+
+  def getCustomsOfficesOfTheCountry(countryId: String): Seq[CustomsOffice] =
+    getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
 }

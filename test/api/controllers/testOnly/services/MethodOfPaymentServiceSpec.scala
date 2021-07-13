@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.TransportMode
-import javax.inject.Inject
-import play.api.Environment
+import api.models.MethodOfPayment
+import base.SpecBaseWithAppPerSuite
 
-class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+class MethodOfPaymentServiceSpec extends SpecBaseWithAppPerSuite {
 
-  val transportModes: Seq[TransportMode] =
-    getData[TransportMode](config.transportModes)
+  "must return method of payment" in {
+    val service = app.injector.instanceOf[MethodOfPaymentService]
 
-  def getTransportModeByCode(code: String): Option[TransportMode] =
-    getData[TransportMode](config.transportModes).find(_.code == code)
+    val expectedFirstItem = MethodOfPayment("A", "Payment in cash")
+
+    service.methodOfPayment.head mustEqual expectedFirstItem
+  }
 }

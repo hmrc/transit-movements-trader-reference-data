@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.DocumentType
-import base.SpecBaseWithAppPerSuite
+import api.models.MethodOfPayment
+import javax.inject.Inject
+import play.api.Environment
 
-class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
+private[testOnly] class MethodOfPaymentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  "must return document types" in {
-    val service = app.injector.instanceOf[DocumentTypeService]
-
-    val expectedFirstItem = DocumentType("18", "Movement certificate A.TR.1", transportDocument = false)
-
-    service.documentTypes.head mustEqual expectedFirstItem
-  }
+  val methodOfPayment: Seq[MethodOfPayment] =
+    getData[MethodOfPayment](config.methodOfPayment)
 }

@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.Country
+import api.models.DangerousGoodsCode
 import javax.inject.Inject
 import play.api.Environment
 
-class TransitCountryService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class DangerousGoodsCodeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val transitCountryCodes: Seq[Country] =
-    getData[Country](config.transitCountryCodes).sortBy(_.description)
+  val dangerousGoodsCodes: Seq[DangerousGoodsCode] =
+    getData[DangerousGoodsCode](config.dangerousGoodsCode).sortBy(_.code)
+
+  def getDangerousGoodsCodeByCode(code: String): Option[DangerousGoodsCode] =
+    getData[DangerousGoodsCode](config.dangerousGoodsCode).find(_.code == code)
 }

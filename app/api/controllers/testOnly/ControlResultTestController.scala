@@ -17,7 +17,7 @@
 package api.controllers.testOnly
 
 import api.controllers.ControlResultController
-import api.services.ControlResultService
+import api.controllers.testOnly.services.ControlResultService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -25,13 +25,11 @@ import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class ControlResultTestController @Inject() (
   cc: ControllerComponents,
   controlResultService: ControlResultService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
+) extends BackendController(cc)
     with ControlResultController {
 
   override def getAll(): Action[AnyContent] =

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
 import api.models.PreviousDocumentType
 import javax.inject.Inject
 import play.api.Environment
 
-class PreviousDocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class PreviousDocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val previousDocumentTypes: Seq[PreviousDocumentType] =
     getData[PreviousDocumentType](config.previousDocumentTypes)

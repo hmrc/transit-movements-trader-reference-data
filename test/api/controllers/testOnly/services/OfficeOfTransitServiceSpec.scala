@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
 import api.models.OfficeOfTransit
 import base.SpecBaseWithAppPerSuite

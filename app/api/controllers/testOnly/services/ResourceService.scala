@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.CustomsOffice
-import javax.inject.Inject
 import play.api.Environment
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
 
-class CustomsOfficesService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+import scala.io.Source
 
-  val customsOffices: Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice).sortBy(_.name)
+trait ResourceService {
 
-  def getCustomsOffice(officeId: String): Option[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
+  val env: Environment
 
-  def getCustomsOfficesOfTheCountry(countryId: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
+  protected def getData[A](dataFile: String)(implicit ev: Reads[A]): Seq[A] =
+    env
+      .resourceAsStream(dataFile)
+      .map {
+        inputStream =>
+          val rawData = Source.fromInputStream(inputStream).mkString
+
+          Json.parse(rawData).as[Seq[A]]
+      }
+      .getOrElse(throw new Exception(s"Could not find file $dataFile"))
 }
