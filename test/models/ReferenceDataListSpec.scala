@@ -73,7 +73,11 @@ class ReferenceDataListSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must fail for any string that isn't a valid list name" in {
 
-      forAll(arbitrary[String] suchThat (s => !ReferenceDataList.values.toList.map(_.listName).contains(s))) {
+      forAll(
+        arbitrary[String] suchThat (
+          s => !ReferenceDataList.values.toList.map(_.listName).contains(s)
+        )
+      ) {
         string =>
           JsString(string).validate[ReferenceDataList] mustBe a[JsError]
       }

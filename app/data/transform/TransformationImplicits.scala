@@ -91,7 +91,9 @@ trait TransformationImplicits {
             case Some(value: JsObject) => Reads.pure(value)
             case _ =>
               array.headOption
-                .map(value => Reads.pure(value.as[JsObject]))
+                .map(
+                  value => Reads.pure(value.as[JsObject])
+                )
                 .getOrElse(Reads.failed("Transformation failed due to empty array of customsOfficesDetails"))
           }
       }

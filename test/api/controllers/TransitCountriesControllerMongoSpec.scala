@@ -33,11 +33,14 @@ import scala.concurrent.Future
 
 class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
-  private val ukCountry            = Country("valid", "GB", "United Kingdom")
-  private val otherCountry         = Country("active", "AA", "An AA")
-  private val anotherCountry       = Country("active", "BB", "A BB")
-  private val countries            = Seq(ukCountry, otherCountry, anotherCountry)
-  private val countriesAsJsObjects = countries.map(x => Json.toJsObject(x))
+  private val ukCountry      = Country("valid", "GB", "United Kingdom")
+  private val otherCountry   = Country("active", "AA", "An AA")
+  private val anotherCountry = Country("active", "BB", "A BB")
+  private val countries      = Seq(ukCountry, otherCountry, anotherCountry)
+
+  private val countriesAsJsObjects = countries.map(
+    x => Json.toJsObject(x)
+  )
 
   private val mockReferenceDataService = mock[ReferenceDataService]
 

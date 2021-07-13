@@ -73,7 +73,9 @@ class CustomsOfficeSpec extends SpecBase with ScalaCheckPropertyChecks with Mode
 
   def validCustomsOfficeJson(office: CustomsOffice): JsValue = {
 
-    val phoneNumber: String = office.phoneNumber.fold("")(telephone => s""""PHONE_NUMBER":"$telephone",""")
+    val phoneNumber: String = office.phoneNumber.fold("")(
+      telephone => s""""PHONE_NUMBER":"$telephone","""
+    )
 
     Json.parse(s"""
          |{

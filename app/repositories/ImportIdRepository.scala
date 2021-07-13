@@ -36,7 +36,11 @@ class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Execut
   val startingSeed: Int      = 0
 
   implicit private val importIdReads: Reads[ImportId] =
-    (__ \ fieldName).read[Int].map(x => ImportId(x))
+    (__ \ fieldName)
+      .read[Int]
+      .map(
+        x => ImportId(x)
+      )
 
   private def collection: Future[JSONCollection] =
     for {
@@ -55,7 +59,9 @@ class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Execut
     coll.flatMap {
       _.insert(ordered = false)
         .one(document)
-        .map(_ => true)
+        .map(
+          _ => true
+        )
     } recover {
       case e: LastError if e.code contains documentExists =>
         true
