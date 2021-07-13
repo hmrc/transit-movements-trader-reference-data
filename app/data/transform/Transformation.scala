@@ -16,7 +16,6 @@
 
 package data.transform
 
-import api.models.CustomsOffice
 import models.ReferenceDataList
 import play.api.libs.json.JsObject
 import play.api.libs.json.JsResult
