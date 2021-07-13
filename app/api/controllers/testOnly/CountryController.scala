@@ -41,6 +41,11 @@ class CountryController @Inject() (
       Ok(Json.toJson(transitCountryService.transitCountryCodes))
     }
 
+  def getEuCountries(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(countryService.euCountries))
+    }
+
   def getCountry(code: String): Action[AnyContent] =
     Action {
 
