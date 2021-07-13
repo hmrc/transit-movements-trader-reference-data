@@ -25,7 +25,6 @@ import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
-
 class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService,
