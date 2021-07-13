@@ -38,7 +38,9 @@ class DataImportController @Inject() (cc: ControllerComponents, loadDataService:
         val ingestLogId =
           request.headers
             .get("X-Request-Id")
-            .map(x => s"XRequestId=$x")
+            .map(
+              x => s"XRequestId=$x"
+            )
             .getOrElse(s"GeneratedRequestId=${UUID.randomUUID()}")
 
         logger.info(s"[DataImport][Start][$ingestLogId] List name = ${list.listName}")

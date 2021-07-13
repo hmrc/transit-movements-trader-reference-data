@@ -57,7 +57,9 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
     collection(list).flatMap {
       _.insert(ordered = false)
         .many[JsObject](enrichedValues)
-        .map(_ => true)
+        .map(
+          _ => true
+        )
         .recover {
           case e: Throwable =>
             logger.error(s"Error inserting s${list.listName}", e)

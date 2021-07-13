@@ -57,7 +57,9 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
     collection.flatMap {
       _.insert(ordered = false)
         .one(dataImport)
-        .map(_ => true)
+        .map(
+          _ => true
+        )
     } recover {
       case e: Throwable =>
         logger.error("Error creating a DataImport record", e)
