@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
 import play.api.Configuration
 
 import javax.inject.Inject
 
-class ResourceConfig @Inject() (config: Configuration) {
+private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val additionalInformation: String =
     config.get[String]("resourceFiles.additionalInformation")

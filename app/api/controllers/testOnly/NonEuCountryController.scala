@@ -16,8 +16,7 @@
 
 package api.controllers.testOnly
 
-import api.services.CountryService
-import api.services.TransitCountryService
+import api.controllers.testOnly.services.CountryService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -25,13 +24,11 @@ import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class NonEuCountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+) extends BackendController(cc) {
 
   def countriesFullList(): Action[AnyContent] =
     Action {

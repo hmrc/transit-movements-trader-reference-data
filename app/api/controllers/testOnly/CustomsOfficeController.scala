@@ -21,7 +21,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import api.services._
+import api.controllers.testOnly.services.CustomsOfficesService
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
 
 class CustomsOfficeController @Inject() (

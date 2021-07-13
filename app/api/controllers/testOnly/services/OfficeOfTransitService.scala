@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.ControlResult
+import api.models.OfficeOfTransit
+import javax.inject.Inject
 import play.api.Environment
 
-import javax.inject.Inject
+private[testOnly] class OfficeOfTransitService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-class ControlResultService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+  val officesOfTransit: Seq[OfficeOfTransit] =
+    getData[OfficeOfTransit](config.officeOfTransit).sortBy(_.id)
 
-  val controlResults: Seq[ControlResult] =
-    getData[ControlResult](config.controlResult).sortBy(_.code)
+  def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
+    getData[OfficeOfTransit](config.officeOfTransit).find(_.id == officeId)
 
-  def getControlResultByCode(code: String): Option[ControlResult] =
-    getData[ControlResult](config.controlResult).find(_.code == code)
 }

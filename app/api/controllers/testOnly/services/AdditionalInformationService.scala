@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
 import api.models.AdditionalInformation
-import base.SpecBaseWithAppPerSuite
+import javax.inject.Inject
+import play.api.Environment
 
-class AdditionalInformationServiceSpec extends SpecBaseWithAppPerSuite {
+private[testOnly] class AdditionalInformationService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  "must return additional information" in {
-    val service = app.injector.instanceOf[AdditionalInformationService]
-
-    val expectedFirstItem = AdditionalInformation("10600", "Negotiable Bill of lading 'to order blank endorsed'")
-
-    service.additionalInformation.head mustEqual expectedFirstItem
-  }
+  val additionalInformation: Seq[AdditionalInformation] =
+    getData[AdditionalInformation](config.additionalInformation)
 }

@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly
 
-import api.services._
+import api.controllers.testOnly.services._
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
 import api.models.CircumstanceIndicator
 import javax.inject.Inject
 import play.api.Environment
 
-class CircumstanceIndicatorService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class CircumstanceIndicatorService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val circumstanceIndicators: Seq[CircumstanceIndicator] =
     getData[CircumstanceIndicator](config.circumstanceIndicators)

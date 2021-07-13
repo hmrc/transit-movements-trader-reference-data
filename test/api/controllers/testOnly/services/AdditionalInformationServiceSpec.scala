@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import com.google.inject.AbstractModule
+import api.models.AdditionalInformation
+import base.SpecBaseWithAppPerSuite
 
-class ServicesModules extends AbstractModule {
+class AdditionalInformationServiceSpec extends SpecBaseWithAppPerSuite {
 
-  override def configure(): Unit =
-    bind(classOf[ResourceConfig]).asEagerSingleton()
+  "must return additional information" in {
+    val service = app.injector.instanceOf[AdditionalInformationService]
+
+    val expectedFirstItem = AdditionalInformation("10600", "Negotiable Bill of lading 'to order blank endorsed'")
+
+    service.additionalInformation.head mustEqual expectedFirstItem
+  }
 }

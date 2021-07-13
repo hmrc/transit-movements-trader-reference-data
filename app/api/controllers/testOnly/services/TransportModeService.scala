@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.KindOfPackage
-import base.SpecBaseWithAppPerSuite
+import api.models.TransportMode
+import javax.inject.Inject
+import play.api.Environment
 
-class KindOfPackageServiceSpec extends SpecBaseWithAppPerSuite {
+private[testOnly] class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  "must return kinds of package" in {
-    val service = app.injector.instanceOf[KindOfPackageService]
+  val transportModes: Seq[TransportMode] =
+    getData[TransportMode](config.transportModes)
 
-    val expectedFirstValue = KindOfPackage("1A", "Drum, steel")
-
-    service.kindsOfPackage.head mustEqual expectedFirstValue
-  }
+  def getTransportModeByCode(code: String): Option[TransportMode] =
+    getData[TransportMode](config.transportModes).find(_.code == code)
 }

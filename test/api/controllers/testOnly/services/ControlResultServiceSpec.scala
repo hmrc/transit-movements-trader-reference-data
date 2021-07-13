@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
 import api.models.ControlResult
-import api.models.DangerousGoodsCode
 import base.SpecBaseWithAppPerSuite
 
 class ControlResultServiceSpec extends SpecBaseWithAppPerSuite {

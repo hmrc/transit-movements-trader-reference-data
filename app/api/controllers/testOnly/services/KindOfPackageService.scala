@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package api.services
+package api.controllers.testOnly.services
 
-import api.models.AdditionalInformation
+import api.models.KindOfPackage
 import javax.inject.Inject
 import play.api.Environment
 
-class AdditionalInformationService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class KindOfPackageService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val additionalInformation: Seq[AdditionalInformation] =
-    getData[AdditionalInformation](config.additionalInformation)
+  val kindsOfPackage: Seq[KindOfPackage] =
+    getData[KindOfPackage](config.kindsOfPackage)
 }
