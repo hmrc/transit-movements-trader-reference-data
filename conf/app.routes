@@ -3,6 +3,7 @@ GET   /customs-offices                 api.controllers.CustomsOfficeController.c
 GET   /customs-offices/:code           api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code, role: Seq[String] ?= Nil)
 GET   /customs-office/:id              api.controllers.CustomsOfficeController.getCustomsOffice(id)
 
+GET   /countries                       api.controllers.CountryController.get(countryQueryFilter: CountryQueryFilter ?= CountryQueryFilter.noFilters)
 GET   /countries/:code                 api.controllers.CountryController.getCountry(code)
 GET   /countries-full-list             api.controllers.CountryController.countriesFullList
 GET   /eu-countries                    api.controllers.EuCountriesController.getEUCountries()

@@ -19,6 +19,9 @@ package api.controllers
 import api.models.Country
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
+import models.CountryCodesCustomsOfficeLists
+import models.CountryCodesFullList
+import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
@@ -50,6 +53,42 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
       )
 
   "CountryController" - {
+
+    "get" - {
+      "when the request doesn't have filters, then all countries are returned" in {
+        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesFullList), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries")
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+      }
+
+      "when the request filter for customsOffice is false, then all countries are returned" in {
+        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesFullList), any(), any()))
+          .thenReturn(Future.successful(countriesAsJsObjects))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOffice=false")
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+
+      }
+
+      "when the request filter for customsOffice is true, then countries with only customs offices are returned" in {
+        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesCustomsOfficeLists), any(), any()))
+          .thenReturn(Future.successful(countriesAsJsObjects))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOffice=true")
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+      }
+
+    }
 
     "countriesFullList" - {
       "must fetch country full list" in {
