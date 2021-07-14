@@ -14,6 +14,7 @@ GET        /transit-movements-trader-reference-data/customs-offices             
 GET        /transit-movements-trader-reference-data/customs-offices/:code                             api.controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code)
 GET        /transit-movements-trader-reference-data/customs-office/:id                                api.controllers.testOnly.CustomsOfficeController.getCustomsOffice(id)
 
+GET        /transit-movements-trader-reference-data/countries                                         api.controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter ?= CountryQueryFilter.noFilters)
 GET        /transit-movements-trader-reference-data/countries/:code                                   api.controllers.testOnly.CountryController.getCountry(code)
 GET        /transit-movements-trader-reference-data/countries-full-list                               api.controllers.testOnly.CountryController.countriesFullList
 GET        /transit-movements-trader-reference-data/transit-countries                                 api.controllers.testOnly.CountryController.transitCountries
