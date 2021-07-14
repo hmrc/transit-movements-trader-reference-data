@@ -27,12 +27,19 @@ import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import repositories.Selector
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
+import api.models.requests.CountryQueryFilter
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 trait CountryController {
+
+  def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent]
+
   def countriesFullList(): Action[AnyContent]
+
   def getCountry(code: String): Action[AnyContent]
+
 }
 
 class CountryControllerMongo @Inject() (
@@ -42,7 +49,27 @@ class CountryControllerMongo @Inject() (
     extends BackendController(cc)
     with CountryController {
 
-  def countriesFullList(): Action[AnyContent] =
+  override def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
+    Action.async {
+      countryQueryFilter.queryParamters match {
+        case None =>
+          // This case is unreachable at the moment but if there are more
+          // query paramters we need to add tests for this case
+          Future.successful(BadRequest)
+        case Some((list, query, projection)) =>
+          referenceDataService
+            .many(list, query, projection)
+            .map {
+              case data if data.nonEmpty =>
+                Ok(Json.toJson(data))
+              case _ =>
+                NotFound
+            }
+
+      }
+    }
+
+  override def countriesFullList(): Action[AnyContent] =
     Action.async {
       referenceDataService
         .many(CountryCodesFullList, Selector.All())
@@ -54,7 +81,7 @@ class CountryControllerMongo @Inject() (
         }
     }
 
-  def getCountry(code: String): Action[AnyContent] =
+  override def getCountry(code: String): Action[AnyContent] =
     Action.async {
       referenceDataService
         .one(CountryCodesFullList, Selector.ByCode(code))
@@ -65,6 +92,7 @@ class CountryControllerMongo @Inject() (
             NotFound
         }
     }
+
 }
 
 class CountryControllerRemote @Inject() (
@@ -74,7 +102,9 @@ class CountryControllerRemote @Inject() (
     extends BackendController(cc)
     with CountryController {
 
-  def countriesFullList(): Action[AnyContent] =
+  override def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] = Action(NotImplemented)
+
+  override def countriesFullList(): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CountryCodesFullList)
@@ -83,7 +113,7 @@ class CountryControllerRemote @Inject() (
         )
     }
 
-  def getCountry(code: String): Action[AnyContent] =
+  override def getCountry(code: String): Action[AnyContent] =
     Action.async {
       dataRetrieval
         .getList(CountryCodesFullList)

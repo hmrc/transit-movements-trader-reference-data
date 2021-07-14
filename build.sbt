@@ -19,7 +19,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     majorVersion := 0,
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
-    scalafmtOnCompile in ThisBuild := true,
+    scalafmtOnCompile in ThisBuild := false,
     useSuperShell in ThisBuild := false
   )
   .settings(scalaVersion := "2.12.12")
@@ -30,7 +30,12 @@ lazy val microservice = Project(appName, file("."))
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(PlayKeys.playDefaultPort := 9482)
   .settings(scoverageSettings: _*)
-  .settings(RoutesKeys.routesImport += "models.ReferenceDataList")
+  .settings(
+    RoutesKeys.routesImport ++= Seq(
+      "models.ReferenceDataList",
+      "api.models.requests.CountryQueryFilter"
+    )
+  )
   .settings(
     // ***************
     // Use the silencer plugin to suppress warnings
@@ -44,7 +49,7 @@ lazy val microservice = Project(appName, file("."))
     // ***************
   )
 
-lazy val scoverageSettings = {
+lazy val scoverageSettings =
   Seq(
     ScoverageKeys.coverageExcludedPackages := List(
       "<empty>",
@@ -61,7 +66,6 @@ lazy val scoverageSettings = {
     ScoverageKeys.coverageHighlighting := true,
     parallelExecution in Test := false
   )
-}
 
 lazy val testSettings: Seq[Def.Setting[_]] = Seq(
   fork := true,
