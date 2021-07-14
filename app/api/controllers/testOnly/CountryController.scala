@@ -24,12 +24,30 @@ import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.controller.BackendController
+import api.models.requests.CountryQueryFilter
 
 class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService,
   transitCountryService: TransitCountryService
 ) extends BackendController(cc) {
+
+  def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
+    Action {
+      countryQueryFilter match {
+        case CountryQueryFilter(true) => Ok(Json.toJson(countryService.countries))
+        case CountryQueryFilter(false) =>
+          val customsOffices = Seq(
+            api.models.Country("active", "GB", "United Kingdom (GB)"),
+            api.models.Country("active", "IT", "Italy"),
+            api.models.Country("active", "FR", "France"),
+            api.models.Country("active", "XI", "United Kingdom (NI)")
+          )
+
+          Ok(Json.toJson(customsOffices))
+
+      }
+    }
 
   def countriesFullList(): Action[AnyContent] =
     Action {
