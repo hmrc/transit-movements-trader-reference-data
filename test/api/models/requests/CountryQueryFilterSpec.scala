@@ -20,6 +20,8 @@ import base.SpecBase
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import models._
 import repositories.Selector
+import play.api.libs.json.Json
+import play.api.libs.json.JsObject
 
 class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
   import CountryQueryFilter.FilterKeys._
@@ -33,7 +35,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result mustEqual CountryQueryFilter(true)
+          result.customsOffices mustEqual true
         }
 
         "false, then the customs office filter flag should be false" in {
@@ -41,7 +43,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result mustEqual CountryQueryFilter(false)
+          result.customsOffices mustEqual false
         }
 
         "has a value that isn't valid, then it should fail to bind" - {
@@ -53,12 +55,39 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
           }
         }
 
-        "is missing, then customs office filter defaults to false" - {
+        "is missing, then customs office filter defaults to false" in {
           val query = Map.empty[String, Seq[String]]
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result mustEqual CountryQueryFilter(false)
+          result.customsOffices mustEqual false
+        }
+      }
+
+      "when excludeCountries" - {
+        "is present once, then the excluded countries should be that value" in {
+          val query = Map(excludeCountries -> Seq("asdf"))
+
+          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+
+          result.excludeCountries mustEqual Seq("asdf")
+        }
+
+        "has multiple values, then the excluded countries should contain all the values" in {
+          val excludeCountriesValues = Seq("asdf", "qwer", "zxcv")
+          val query                  = Map(excludeCountries -> excludeCountriesValues)
+
+          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+
+          result.excludeCountries must contain theSameElementsAs excludeCountriesValues
+        }
+
+        "is missing, then the excluded countries must be empty" in {
+          val query = Map.empty[String, Seq[String]]
+
+          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+
+          result.excludeCountries mustEqual Seq.empty
         }
       }
 
@@ -68,50 +97,60 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result mustEqual CountryQueryFilter(false)
+          result mustEqual CountryQueryFilter(false, Seq.empty)
         }
       }
 
     }
 
     "when unbinding to a url fragment" - {
-      "customs office" in {
-        val countryQueryFilter = CountryQueryFilter(false)
+      "customs office must unbind to value for customsOffice" in {
+        val countryQueryFilter = CountryQueryFilter(false, Seq.empty)
 
         Binders.unbind(customsOffice, countryQueryFilter) mustEqual "customsOffice=false"
       }
-    }
-  }
 
-  def countryQueryFilter(customsOfficeValue: Boolean): CountryQueryFilter = {
-    val query = Map(customsOffice -> Seq(customsOfficeValue.toString()))
-    Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+      "excluded countries, then each contry is added as a query paramter " in {
+        val countryQueryFilter = CountryQueryFilter(false, Seq("aaa", "bbb", "ccc"))
+
+        Binders.unbind(excludeCountries, countryQueryFilter) mustEqual "excludeCountries=aaa&excludeCountries=bbb&excludeCountries=ccc"
+      }
+    }
   }
 
   "queryParameters" - {
 
     "when customs office is false" - {
       "list name must be CountryCodesFullList" in {
-        countryQueryFilter(false).queryParamters.value._1 mustEqual CountryCodesFullList
+        CountryQueryFilter(false, Seq.empty).queryParamters.value._1 mustEqual CountryCodesFullList
       }
 
       "query must be for all elements" in {
-        countryQueryFilter(false).queryParamters.value._2 mustEqual Selector.All()
+        CountryQueryFilter(false, Seq.empty).queryParamters.value._2 mustEqual Selector.All()
       }
 
       "projection must be None" in {
-        countryQueryFilter(false).queryParamters.value._3 mustEqual None
+        CountryQueryFilter(false, Seq.empty).queryParamters.value._3 mustEqual None
       }
     }
 
     "when customs office is true" - {
       "list name must be CountryCodesFullList" in {
-        countryQueryFilter(true).queryParamters.value._1 mustEqual CountryCodesCustomsOfficeLists
+        CountryQueryFilter(true, Seq.empty).queryParamters.value._1 mustEqual CountryCodesCustomsOfficeLists
       }
 
       "query must be for all elements" in {
-        countryQueryFilter(true).queryParamters.value._2 mustEqual Selector.All()
+        CountryQueryFilter(true, Seq.empty).queryParamters.value._2 mustEqual Selector.All()
       }
+    }
+
+    "when excludedCoutries is nonempty query must return a query that excludes those countries" in {
+      val sut: JsObject = CountryQueryFilter(true, Seq("one", "two")).queryParamters.value._2.expression
+
+      val result = (sut \ ReferenceDataList.Constants.CountryCodesCustomsOfficeLists.code).as[JsObject]
+
+      result mustEqual Json.obj("$nin" -> Seq("one", "two"))
+
     }
   }
 }

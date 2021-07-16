@@ -50,7 +50,7 @@ class CustomsOfficeControllerMongo @Inject() (
   def customsOffices(roles: Seq[String]): Action[AnyContent] =
     Action.async {
       referenceDataService
-        .many(CustomsOfficesList, Selector.All() and OptionallyByRole(roles), Projection.SuppressId and SuppressRoles toOption)
+        .many(CustomsOfficesList, OptionallyByRole(roles), Projection.SuppressId and SuppressRoles toOption)
         .map {
           case data if data.nonEmpty =>
             Ok(Json.toJson(data))

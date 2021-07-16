@@ -17,7 +17,6 @@
 package api.models.requests
 
 import play.api.mvc.QueryStringBindable
-import cats.data._
 import cats.implicits._
 import models.ReferenceDataList
 import repositories.Selector
@@ -26,13 +25,15 @@ import models.CountryCodesFullList
 import models.CountryCodesCustomsOfficeLists
 
 final case class CountryQueryFilter(
-  customsOffices: Boolean
+  customsOffices: Boolean,
+  excludeCountries: Seq[String]
 ) {
 
   def queryParamters: Option[(ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]])] =
-    customsOffices match {
-      case true  => Some((CountryCodesCustomsOfficeLists, Selector.All(), None))
-      case false => Some((CountryCodesFullList, Selector.All(), None))
+    this match {
+      case CountryQueryFilter(true, Nil) => Some((CountryCodesCustomsOfficeLists, Selector.All(), None))
+      case CountryQueryFilter(true, x)   => Some((CountryCodesCustomsOfficeLists, Selector.excludeCountriesCodes(x), None))
+      case CountryQueryFilter(false, _)  => Some((CountryCodesFullList, Selector.All(), None))
     }
 }
 
@@ -40,30 +41,26 @@ object CountryQueryFilter {
 
   object FilterKeys {
 
-    val customsOffice: String = "customsOffice"
-
-    val all: Seq[String] = Seq(customsOffice)
+    val customsOffice: String    = "customsOffice"
+    val excludeCountries: String = "excludeCountries"
 
   }
 
-  val noFilters: CountryQueryFilter = CountryQueryFilter(false)
+  val noFilters: CountryQueryFilter = CountryQueryFilter(false, Seq.empty)
 
   implicit val queryStringBindableCountryQueryFilter: QueryStringBindable[CountryQueryFilter] =
     new QueryStringBindable[CountryQueryFilter] {
 
-      def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, CountryQueryFilter]] =
-        Binders
-          .bind[Option[Boolean]](FilterKeys.customsOffice, params)
-          .flatMap {
-            case Some(x) => EitherT.right[String](Option(CountryQueryFilter(x)))
-            case None    => EitherT.right[String](Option(CountryQueryFilter(false)))
-          }
-          .value
+      def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, CountryQueryFilter]] = (
+        Binders.bind[Boolean](false)(FilterKeys.customsOffice, params),
+        Binders.bind[Seq[String]](Seq.empty)(FilterKeys.excludeCountries, params)
+      ).mapN(CountryQueryFilter.apply).value
 
       def unbind(key: String, value: CountryQueryFilter): String =
-        value match {
-          case CountryQueryFilter(customsOffices) =>
-            QueryStringBindable.bindableBoolean.unbind(FilterKeys.customsOffice, customsOffices)
+        key match {
+          case x if x == FilterKeys.customsOffice    => QueryStringBindable.bindableBoolean.unbind(FilterKeys.customsOffice, value.customsOffices)
+          case x if x == FilterKeys.excludeCountries => QueryStringBindable.bindableSeq[String].unbind(FilterKeys.excludeCountries, value.excludeCountries)
+          case _                                     => ""
         }
 
     }
