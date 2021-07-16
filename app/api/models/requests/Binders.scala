@@ -21,12 +21,14 @@ import play.api.mvc.QueryStringBindable
 
 object Binders {
 
+  type BinderResult[A] = EitherT[Option, String, A]
+
   def bindable[T](implicit binder: QueryStringBindable[T]) = binder
 
-  def bind[T](key: String, params: Map[String, Seq[String]])(implicit binder: QueryStringBindable[T]): EitherT[Option, String, T] =
+  def bind[T](key: String, params: Map[String, Seq[String]])(implicit binder: QueryStringBindable[T]): BinderResult[T] =
     EitherT(binder.bind(key, params))
 
-  def bind[T](default: => T)(key: String, params: Map[String, Seq[String]])(implicit binder: QueryStringBindable[T]): EitherT[Option, String, T] =
+  def bind[T](default: => T)(key: String, params: Map[String, Seq[String]])(implicit binder: QueryStringBindable[T]): BinderResult[T] =
     EitherT(binder.bind(key, params).orElse(Some(Right(default))))
 
   def unbind[T](key: String, value: T)(implicit binder: QueryStringBindable[T]): String =
