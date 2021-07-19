@@ -65,22 +65,22 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
-      "when excludeCountries" - {
+      "when exclude" - {
         "is present once, then the excluded countries should be that value" in {
-          val query = Map(excludeCountries -> Seq("asdf"))
+          val query = Map(exclude -> Seq("asdf"))
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result.excludeCountries mustEqual Seq("asdf")
+          result.excludeCountryCodes mustEqual Seq("asdf")
         }
 
         "has multiple values, then the excluded countries should contain all the values" in {
-          val excludeCountriesValues = Seq("asdf", "qwer", "zxcv")
-          val query                  = Map(excludeCountries -> excludeCountriesValues)
+          val excludeValues = Seq("asdf", "qwer", "zxcv")
+          val query         = Map(exclude -> excludeValues)
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result.excludeCountries must contain theSameElementsAs excludeCountriesValues
+          result.excludeCountryCodes must contain theSameElementsAs excludeValues
         }
 
         "is missing, then the excluded countries must be empty" in {
@@ -88,7 +88,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
 
-          result.excludeCountries mustEqual Seq.empty
+          result.excludeCountryCodes mustEqual Seq.empty
         }
       }
 
@@ -114,7 +114,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       "excluded countries, then each contry is added as a query paramter " in {
         val countryQueryFilter = CountryQueryFilter(false, Seq("aaa", "bbb", "ccc"))
 
-        Binders.unbind(excludeCountries, countryQueryFilter) mustEqual "excludeCountries=aaa&excludeCountries=bbb&excludeCountries=ccc"
+        Binders.unbind(exclude, countryQueryFilter) mustEqual "exclude=aaa&exclude=bbb&exclude=ccc"
       }
     }
   }

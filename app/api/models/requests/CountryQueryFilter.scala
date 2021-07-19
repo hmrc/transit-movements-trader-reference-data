@@ -26,7 +26,7 @@ import models.CountryCodesCustomsOfficeLists
 
 final case class CountryQueryFilter(
   customsOffices: Boolean,
-  excludeCountries: Seq[String]
+  excludeCountryCodes: Seq[String]
 ) {
 
   def queryParamters: Option[(ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]])] =
@@ -42,8 +42,8 @@ object CountryQueryFilter {
 
   object FilterKeys {
 
-    val customsOffice: String    = "customsOffice"
-    val excludeCountries: String = "excludeCountries"
+    val customsOffice: String = "customsOffice"
+    val exclude: String       = "exclude"
 
   }
 
@@ -54,14 +54,14 @@ object CountryQueryFilter {
 
       def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, CountryQueryFilter]] = (
         Binders.bind[Boolean](false)(FilterKeys.customsOffice, params),
-        Binders.bind[Seq[String]](Seq.empty)(FilterKeys.excludeCountries, params)
+        Binders.bind[Seq[String]](Seq.empty)(FilterKeys.exclude, params)
       ).mapN(CountryQueryFilter.apply).value
 
       def unbind(key: String, value: CountryQueryFilter): String =
         key match {
-          case x if x == FilterKeys.customsOffice    => QueryStringBindable.bindableBoolean.unbind(FilterKeys.customsOffice, value.customsOffices)
-          case x if x == FilterKeys.excludeCountries => QueryStringBindable.bindableSeq[String].unbind(FilterKeys.excludeCountries, value.excludeCountries)
-          case _                                     => ""
+          case x if x == FilterKeys.customsOffice => QueryStringBindable.bindableBoolean.unbind(FilterKeys.customsOffice, value.customsOffices)
+          case x if x == FilterKeys.exclude       => QueryStringBindable.bindableSeq[String].unbind(FilterKeys.exclude, value.excludeCountryCodes)
+          case _                                  => ""
         }
 
     }
