@@ -31,9 +31,10 @@ final case class CountryQueryFilter(
 
   def queryParamters: Option[(ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]])] =
     this match {
-      case CountryQueryFilter(true, Nil) => Some((CountryCodesCustomsOfficeLists, Selector.All(), None))
-      case CountryQueryFilter(true, x)   => Some((CountryCodesCustomsOfficeLists, Selector.excludeCountriesCodes(x), None))
-      case CountryQueryFilter(false, _)  => Some((CountryCodesFullList, Selector.All(), None))
+      case CountryQueryFilter(true, Nil)  => Some((CountryCodesCustomsOfficeLists, Selector.All(), None))
+      case CountryQueryFilter(false, Nil) => Some((CountryCodesFullList, Selector.All(), None))
+      case CountryQueryFilter(true, x)    => Some((CountryCodesCustomsOfficeLists, Selector.excludeCountriesCodes(x), None))
+      case CountryQueryFilter(false, x)   => Some((CountryCodesFullList, Selector.excludeCountriesCodes(x), None))
     }
 }
 

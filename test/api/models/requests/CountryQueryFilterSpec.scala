@@ -22,6 +22,7 @@ import models._
 import repositories.Selector
 import play.api.libs.json.Json
 import play.api.libs.json.JsObject
+import org.scalacheck.Arbitrary
 
 class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
   import CountryQueryFilter.FilterKeys._
@@ -145,12 +146,15 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     }
 
     "when excludedCoutries is nonempty query must return a query that excludes those countries" in {
-      val sut: JsObject = CountryQueryFilter(true, Seq("one", "two")).queryParamters.value._2.expression
+      forAll(Arbitrary.arbitrary[Boolean]) {
+        booleanVal =>
+          val sut: JsObject = CountryQueryFilter(booleanVal, Seq("one", "two")).queryParamters.value._2.expression
 
-      val result = (sut \ ReferenceDataList.Constants.CountryCodesCustomsOfficeLists.code).as[JsObject]
+          val result = (sut \ ReferenceDataList.Constants.CountryCodesCustomsOfficeLists.code).as[JsObject]
 
-      result mustEqual Json.obj("$nin" -> Seq("one", "two"))
+          result mustEqual Json.obj("$nin" -> Seq("one", "two"))
 
+      }
     }
   }
 }
