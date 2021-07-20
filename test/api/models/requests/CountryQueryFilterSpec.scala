@@ -91,22 +91,33 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     }
 
     "when unbinding to a url fragment" - {
-      "when customsOfficeRole is defined, must unbind to value for customsOfficeRole" in {
-        val countryQueryFilter = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq.empty)
+      "when there are no restrictions on customs office roles" - {
+        "when there are no excluded countries codes" in {
+          val countryQueryFilter = CountryQueryFilter(None, Seq.empty)
 
-        Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual "customsOfficeRole=ANY"
+          Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual ""
+        }
+
+        "when there are are excluded coutries" in {
+          val countryQueryFilter = CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"))
+
+          Binders.unbind(exclude, countryQueryFilter) mustEqual "exclude=aaa&exclude=bbb&exclude=ccc"
+        }
       }
 
-      "when customsOfficeRole is not defined, must unbind to empty string" in {
-        val countryQueryFilter = CountryQueryFilter(None, Seq.empty)
+      "when there must be customs offices with any role" - {
+        "when there are no excluded countries" in {
+          val countryQueryFilter = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq.empty)
 
-        Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual ""
-      }
+          Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual "customsOfficeRole=ANY"
+        }
 
-      "excluded countries, then each contry is added as a query paramter " in {
-        val countryQueryFilter = CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"))
+        "when there are are excluded coutries" in {
+          val countryQueryFilter = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"))
 
-        Binders.unbind(exclude, countryQueryFilter) mustEqual "exclude=aaa&exclude=bbb&exclude=ccc"
+          Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual "customsOfficeRole=ANY&exclude=aaa&exclude=bbb&exclude=ccc"
+
+        }
       }
     }
   }

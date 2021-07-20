@@ -66,13 +66,10 @@ object CountryQueryFilter {
           .value
 
       def unbind(key: String, value: CountryQueryFilter): String =
-        key match {
-          case x if x == FilterKeys.customsOfficeRole =>
-            Binders.unbind(FilterKeys.customsOfficeRole, value.customsOfficesRole)
-          case x if x == FilterKeys.exclude =>
-            QueryStringBindable.bindableSeq[String].unbind(FilterKeys.exclude, value.excludeCountryCodes)
-          case _ => ""
-        }
+        Seq(
+          Binders.unbind(FilterKeys.customsOfficeRole, value.customsOfficesRole),
+          Binders.unbind(FilterKeys.exclude, value.excludeCountryCodes)
+        ).filterNot(_.isEmpty).mkString("&")
 
     }
 
