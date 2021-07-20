@@ -1,13 +1,10 @@
 package repositories
-
-import models.{CountryCodesCommonTransitList, CountryCodesFullList, CustomsOfficesList}
 import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
-import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.ExecutionContext.Implicits.global

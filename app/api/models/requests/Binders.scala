@@ -23,6 +23,10 @@ object Binders {
 
   type BinderResult[A] = EitherT[Option, String, A]
 
+  def successful[A](a: => A): BinderResult[A] = EitherT[Option, String, A](Some(Right(a)))
+
+  def failed[A]: BinderResult[A] = EitherT[Option, String, A](None)
+
   def bindable[T](implicit binder: QueryStringBindable[T]) = binder
 
   def bind[T](key: String, params: Map[String, Seq[String]])(implicit binder: QueryStringBindable[T]): BinderResult[T] =
