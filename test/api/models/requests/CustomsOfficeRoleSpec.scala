@@ -40,6 +40,14 @@ class CustomsOfficeRoleSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           result must include("Cannot parse parameter")
         }
+
+        "must fail when there is not query values for customs office role" in {
+          val query = Map.empty[String, Seq[String]]
+
+          val result = Binders.bind[Option[CustomsOfficeRole]](customsOfficeRole, query).value
+
+          result mustEqual Some(Right(None))
+        }
       }
 
     }

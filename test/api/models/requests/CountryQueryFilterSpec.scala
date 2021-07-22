@@ -84,7 +84,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value
 
-          result mustEqual None
+          result mustEqual Some(Right(CountryQueryFilter(None, Seq.empty)))
         }
       }
 

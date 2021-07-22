@@ -59,7 +59,7 @@ object CountryQueryFilter {
           Binders.bind[Option[CustomsOfficeRole]](None)(FilterKeys.customsOfficeRole, params),
           Binders.bind[Seq[String]](FilterKeys.exclude, params)
         ).mapN[Binders.BinderResult[CountryQueryFilter]] {
-          case (None, Nil)                       => Binders.failed
+          case (None, Nil)                       => Binders.successful(CountryQueryFilter(None, Nil))
           case (Some(AnyCustomsOfficeRole), Nil) => Binders.successful(CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil))
           case (role, excludesCountryCodes)      => Binders.successful(CountryQueryFilter(role, excludesCountryCodes))
         }.flatten
