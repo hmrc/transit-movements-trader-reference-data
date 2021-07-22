@@ -49,8 +49,6 @@ object CountryQueryFilter {
 
   }
 
-  val noFilters: CountryQueryFilter = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq.empty)
-
   implicit val queryStringBindableCountryQueryFilter: QueryStringBindable[CountryQueryFilter] =
     new QueryStringBindable[CountryQueryFilter] {
 
