@@ -20,97 +20,147 @@ import base.SpecBase
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import models._
 import repositories.Selector
+import play.api.libs.json.Json
+import play.api.libs.json.JsObject
 
 class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
   import CountryQueryFilter.FilterKeys._
 
   "QueryStringBindable" - {
 
-    "when binding data from url queries" - {
-      "when customs office is" - {
-        "true, then the customs office filter flag should be true" in {
-          val query = Map(customsOffice -> Seq("true"))
+    "binding data from url queries" - {
+      "when there is a query paramter for customs office role only" - {
+        "must pass when value is ANY, then the customs office role should be defined as CustomsOfficeRoleAny" in {
+          val query = Map(customsOfficeRole -> Seq("ANY"))
 
-          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
 
-          result mustEqual CountryQueryFilter(true)
+          result.customsOfficesRole mustEqual Some(CustomsOfficeRole.AnyCustomsOfficeRole)
         }
 
-        "false, then the customs office filter flag should be false" in {
-          val query = Map(customsOffice -> Seq("false"))
+        "must fail when there is a value other than ANY" in {
+          val query  = Map(customsOfficeRole -> Seq("invalid_query_paramter"))
+          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value
 
-          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
-
-          result mustEqual CountryQueryFilter(false)
+          result.left.value must include("Cannot parse parameter")
         }
 
-        "has a value that isn't valid, then it should fail to bind" - {
-          "then it should sucessfully bind from query with false for customs office" in {
-            val query  = Map(customsOffice -> Seq("invalid_query_paramter"))
-            val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value
+      }
 
-            result.left.value must include("Cannot parse parameter")
-          }
+      "when there is a query for exclude only" - {
+        "is present once, then the excluded countries should be that value" in {
+          val query = Map(exclude -> Seq("asdf"))
+
+          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+
+          result.excludeCountryCodes mustEqual Seq("asdf")
         }
 
-        "is missing, then customs office filter defaults to false" - {
-          val query = Map.empty[String, Seq[String]]
+        "has multiple values, then the excluded countries should contain all the values" in {
+          val excludeValues = Seq("asdf", "qwer", "zxcv")
+          val query         = Map(exclude -> excludeValues)
 
-          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
 
-          result mustEqual CountryQueryFilter(false)
+          result.excludeCountryCodes must contain theSameElementsAs excludeValues
         }
+      }
+
+      "when there are a query parameters for customs office role and exclude" in {
+        val query = Map(
+          exclude           -> Seq("asdf"),
+          customsOfficeRole -> Seq("ANY")
+        )
+
+        val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+
+        result.excludeCountryCodes mustEqual Seq("asdf")
+
       }
 
       "when there are no filters" - {
         "then it should sucessfully bind from query with false for customs office" in {
           val query = Map.empty[String, Seq[String]]
 
-          val result = Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
+          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value
 
-          result mustEqual CountryQueryFilter(false)
+          result mustEqual Some(Right(CountryQueryFilter(None, Seq.empty)))
         }
       }
 
     }
 
     "when unbinding to a url fragment" - {
-      "customs office" in {
-        val countryQueryFilter = CountryQueryFilter(false)
+      "when there are no restrictions on customs office roles" - {
+        "when there are no excluded countries codes" in {
+          val countryQueryFilter = CountryQueryFilter(None, Seq.empty)
 
-        Binders.unbind(customsOffice, countryQueryFilter) mustEqual "customsOffice=false"
+          Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual ""
+        }
+
+        "when there are are excluded coutries" in {
+          val countryQueryFilter = CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"))
+
+          Binders.unbind(exclude, countryQueryFilter) mustEqual "exclude=aaa&exclude=bbb&exclude=ccc"
+        }
+      }
+
+      "when there must be customs offices with any role" - {
+        "when there are no excluded countries" in {
+          val countryQueryFilter = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq.empty)
+
+          Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual "customsOfficeRole=ANY"
+        }
+
+        "when there are are excluded coutries" in {
+          val countryQueryFilter = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"))
+
+          Binders.unbind(customsOfficeRole, countryQueryFilter) mustEqual "customsOfficeRole=ANY&exclude=aaa&exclude=bbb&exclude=ccc"
+
+        }
       }
     }
-  }
-
-  def countryQueryFilter(customsOfficeValue: Boolean): CountryQueryFilter = {
-    val query = Map(customsOffice -> Seq(customsOfficeValue.toString()))
-    Binders.bind[CountryQueryFilter](customsOffice, query).value.value.right.value
   }
 
   "queryParameters" - {
+    "when there are no restrictions on customs office roles" - {
+      "when there are no excluded countries codes, then list name must be CountryCodesFullList with no selectors for roles and no projection" in {
+        val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty).queryParamters
 
-    "when customs office is false" - {
-      "list name must be CountryCodesFullList" in {
-        countryQueryFilter(false).queryParamters.value._1 mustEqual CountryCodesFullList
+        listName mustEqual CountryCodesFullList
+        selector mustEqual Selector.All()
+        projection mustEqual None
       }
 
-      "query must be for all elements" in {
-        countryQueryFilter(false).queryParamters.value._2 mustEqual Selector.All()
-      }
+      "when there are are excluded coutries, then list name must be CountryCodeFullList with a query that excludes those countries and no projection" in {
+        val (listName, selector, projection) = CountryQueryFilter(None, Seq("one", "two")).queryParamters
 
-      "projection must be None" in {
-        countryQueryFilter(false).queryParamters.value._3 mustEqual None
+        val selectorJson = (selector.expression \ ReferenceDataList.Constants.CountryCodesCustomsOfficeLists.code).as[JsObject]
+
+        listName mustEqual CountryCodesFullList
+        selectorJson mustEqual Json.obj("$nin" -> Seq("one", "two"))
+        projection mustEqual None
       }
     }
 
-    "when customs office is true" - {
-      "list name must be CountryCodesFullList" in {
-        countryQueryFilter(true).queryParamters.value._1 mustEqual CountryCodesCustomsOfficeLists
+    "when there must be customs offices with any role" - {
+      "when there are no excluded countries then list name must be CountryCodesCustomsOfficeLists with no selectors for roles" in {
+        val (listName, selector, projection) = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq.empty).queryParamters
+
+        listName mustEqual CountryCodesCustomsOfficeLists
+        selector mustEqual Selector.All()
+        projection mustEqual None
       }
 
-      "query must be for all elements" in {
-        countryQueryFilter(true).queryParamters.value._2 mustEqual Selector.All()
+      "when there are are excluded coutries, then list name must be CountryCodesCustomsOfficeLists with a query that excludes those countries and no projection" in {
+        val (listName, selector, projection) = CountryQueryFilter(Some(CustomsOfficeRole.AnyCustomsOfficeRole), Seq("one", "two")).queryParamters
+
+        val selectorJson = (selector.expression \ ReferenceDataList.Constants.CountryCodesCustomsOfficeLists.code).as[JsObject]
+
+        listName mustEqual CountryCodesCustomsOfficeLists
+        selectorJson mustEqual Json.obj("$nin" -> Seq("one", "two"))
+        projection mustEqual None
+
       }
     }
   }

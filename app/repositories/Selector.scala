@@ -20,15 +20,25 @@ import models.CustomsOfficesList
 import models.ReferenceDataList
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
+import cats._
+import cats.data._
+import models.CountryCodesCustomsOfficeLists
 
-trait Selector[A] {
+trait Selector[+A] {
   self =>
-  val expression: JsObject
+  def expression: JsObject
 
-  def and[B <: A](other: Selector[B]): Selector[B] =
-    new Selector[B] {
-      val expression: JsObject = self.expression ++ other.expression
-    }
+  def and[B >: A](other: Selector[B]): Selector[B] =
+    new CompoundSelector[B](NonEmptyList.of(this, other))
+
+}
+
+final class CompoundSelector[A](selectors: NonEmptyList[Selector[A]]) extends Selector[A] {
+  implicit val monodJsObject = Monoid.instance[JsObject](JsObject.empty, (x, y) => x ++ y)
+
+  final override def expression: JsObject =
+    Monoid.combineAll(selectors.toList.map(_.expression))
+
 }
 
 object Selector {
@@ -72,5 +82,16 @@ object Selector {
   case class ByCode(code: String) extends Selector[ReferenceDataList] {
 
     val expression: JsObject = Json.obj("code" -> code)
+  }
+
+  case class excludeCountriesCodes(countryCodes: Seq[String]) extends Selector[CountryCodesCustomsOfficeLists.type] {
+
+    override def expression: JsObject =
+      Json.obj(
+        "code" ->
+          Json.obj(
+            "$nin" -> countryCodes
+          )
+      )
   }
 }

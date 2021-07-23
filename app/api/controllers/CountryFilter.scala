@@ -23,11 +23,11 @@ object CountryFilter {
 
   implicit class CountryFilter(countries: Seq[JsObject]) {
 
-    def excludeCountries(excludedCountries: Seq[String]): Seq[JsObject] =
+    def excludeCountries(excludeCountries: Seq[String]): Seq[JsObject] =
       countries
         .filterNot(
           jsObj =>
-            excludedCountries
+            excludeCountries
               .map(_.toUpperCase)
               .toSet(
                 (jsObj \ CountryCodesFullListFieldNames.code)

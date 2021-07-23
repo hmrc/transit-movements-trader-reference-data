@@ -20,7 +20,6 @@ import api.models.Country
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
 import models.CountryCodesCustomsOfficeLists
-import models.CountryCodesFullList
 import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -34,6 +33,8 @@ import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
+import models.CountryCodesFullList
+import repositories.Selector
 
 class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
@@ -55,8 +56,9 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
   "CountryController" - {
 
     "get" - {
-      "when the request doesn't have filters, then all countries are returned" in {
-        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesFullList), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
+      "when the request doesn't have filters, then results from the repoistory returned" in {
+        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesFullList), ArgumentMatchers.eq(Selector.All()), any()))
+          .thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries")
         val result  = route(app, request).value
@@ -65,11 +67,11 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
         contentAsJson(result) mustBe Json.toJson(countries)
       }
 
-      "when the request filter for customsOffice is false, then all countries are returned" in {
-        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesFullList), any(), any()))
+      "when the request filter for customs Offices with any role, then results from the repoistory returned" in {
+        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesCustomsOfficeLists), ArgumentMatchers.eq(Selector.All()), any()))
           .thenReturn(Future.successful(countriesAsJsObjects))
 
-        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOffice=false")
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOfficeRole=ANY")
         val result  = route(app, request).value
 
         status(result) mustBe OK
@@ -77,15 +79,48 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       }
 
-      "when the request filter for customsOffice is true, then countries with only customs offices are returned" in {
-        when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesCustomsOfficeLists), any(), any()))
+      "when the request filter for customs office with any role and excluded coutnries, then results from the repository returned" in {
+        when(
+          mockReferenceDataService.many(
+            ArgumentMatchers.eq(CountryCodesCustomsOfficeLists),
+            ArgumentMatchers.eq(Selector.excludeCountriesCodes(Seq("AA", "BB"))),
+            any()
+          )
+        )
           .thenReturn(Future.successful(countriesAsJsObjects))
 
-        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOffice=true")
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOfficeRole=ANY&exclude=AA&exclude=BB")
         val result  = route(app, request).value
 
         status(result) mustBe OK
         contentAsJson(result) mustBe Json.toJson(countries)
+      }
+
+      "when the request filter for and excluded coutnries, then results from the repository returned" in {
+        when(
+          mockReferenceDataService.many(
+            ArgumentMatchers.eq(CountryCodesFullList),
+            ArgumentMatchers.eq(Selector.excludeCountriesCodes(Seq("AA", "BB"))),
+            any()
+          )
+        )
+          .thenReturn(Future.successful(countriesAsJsObjects))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?exclude=AA&exclude=BB")
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+      }
+
+      "when the call to the repository returns an empty result set then a Not Found is returned" in {
+        when(mockReferenceDataService.many(any(), any(), any()))
+          .thenReturn(Future.successful(Seq.empty))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?customsOffice=true")
+        val result  = route(app, request).value
+
+        status(result) mustBe NOT_FOUND
       }
 
     }

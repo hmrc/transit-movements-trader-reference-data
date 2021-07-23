@@ -17,54 +17,57 @@
 package api.models.requests
 
 import play.api.mvc.QueryStringBindable
-import cats.data._
 import cats.implicits._
 import models.ReferenceDataList
 import repositories.Selector
 import repositories.Projection
 import models.CountryCodesFullList
 import models.CountryCodesCustomsOfficeLists
+import CustomsOfficeRole._
 
 final case class CountryQueryFilter(
-  customsOffices: Boolean
+  customsOfficesRole: Option[CustomsOfficeRole],
+  excludeCountryCodes: Seq[String]
 ) {
 
-  def queryParamters: Option[(ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]])] =
-    customsOffices match {
-      case true  => Some((CountryCodesCustomsOfficeLists, Selector.All(), None))
-      case false => Some((CountryCodesFullList, Selector.All(), None))
+  def queryParamters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
+    this match {
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil)   => (CountryCodesCustomsOfficeLists, Selector.All(), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes) => (CountryCodesCustomsOfficeLists, Selector.excludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, Nil)                         => (CountryCodesFullList, Selector.All(), None)
+      case CountryQueryFilter(_, x)                              => (CountryCodesFullList, Selector.excludeCountriesCodes(x), None)
     }
 }
 
 object CountryQueryFilter {
+  import CustomsOfficeRole._
 
   object FilterKeys {
 
-    val customsOffice: String = "customsOffice"
-
-    val all: Seq[String] = Seq(customsOffice)
+    val customsOfficeRole: String = "customsOfficeRole"
+    val exclude: String           = "exclude"
 
   }
-
-  val noFilters: CountryQueryFilter = CountryQueryFilter(false)
 
   implicit val queryStringBindableCountryQueryFilter: QueryStringBindable[CountryQueryFilter] =
     new QueryStringBindable[CountryQueryFilter] {
 
       def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, CountryQueryFilter]] =
-        Binders
-          .bind[Option[Boolean]](FilterKeys.customsOffice, params)
-          .flatMap {
-            case Some(x) => EitherT.right[String](Option(CountryQueryFilter(x)))
-            case None    => EitherT.right[String](Option(CountryQueryFilter(false)))
-          }
+        (
+          Binders.bind[Option[CustomsOfficeRole]](None)(FilterKeys.customsOfficeRole, params),
+          Binders.bind[Seq[String]](FilterKeys.exclude, params)
+        ).mapN[Binders.BinderResult[CountryQueryFilter]] {
+          case (None, Nil)                       => Binders.successful(CountryQueryFilter(None, Nil))
+          case (Some(AnyCustomsOfficeRole), Nil) => Binders.successful(CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil))
+          case (role, excludesCountryCodes)      => Binders.successful(CountryQueryFilter(role, excludesCountryCodes))
+        }.flatten
           .value
 
       def unbind(key: String, value: CountryQueryFilter): String =
-        value match {
-          case CountryQueryFilter(customsOffices) =>
-            QueryStringBindable.bindableBoolean.unbind(FilterKeys.customsOffice, customsOffices)
-        }
+        Seq(
+          Binders.unbind(FilterKeys.customsOfficeRole, value.customsOfficesRole),
+          Binders.unbind(FilterKeys.exclude, value.excludeCountryCodes)
+        ).filterNot(_.isEmpty).mkString("&")
 
     }
 
