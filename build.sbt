@@ -1,6 +1,5 @@
 import play.sbt.routes.RoutesKeys
 import scoverage.ScoverageKeys
-import uk.gov.hmrc.SbtArtifactory
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "transit-movements-trader-reference-data"
@@ -12,8 +11,7 @@ lazy val microservice = Project(appName, file("."))
     play.sbt.PlayScala,
     SbtAutoBuildPlugin,
     SbtGitVersioning,
-    SbtDistributablesPlugin,
-    SbtArtifactory
+    SbtDistributablesPlugin
   )
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(
