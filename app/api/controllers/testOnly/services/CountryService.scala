@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.Country
+import api.controllers.testOnly.models.Country
 import javax.inject.Inject
 import play.api.Environment
 

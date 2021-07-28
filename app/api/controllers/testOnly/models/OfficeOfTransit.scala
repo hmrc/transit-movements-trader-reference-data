@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
+import play.api.libs.functional.syntax._
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
+import play.api.libs.json.__
 
-case class AdditionalInformation(code: String, description: String)
+case class OfficeOfTransit(id: String, name: String)
 
-object AdditionalInformation {
+object OfficeOfTransit {
 
-  implicit val writes: OWrites[AdditionalInformation] = Json.writes[AdditionalInformation]
+  implicit val writes: OWrites[OfficeOfTransit] = Json.writes[OfficeOfTransit]
 
-  implicit val readFromFile: Reads[AdditionalInformation] = Json.reads[AdditionalInformation]
+  implicit val readFromFile: Reads[OfficeOfTransit] =
+    ((__ \ "ID").read[String] and
+      (__ \ "NAME").read[String])(OfficeOfTransit.apply _)
+
 }

@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.MethodOfPayment
+import api.controllers.testOnly.models.MethodOfPayment
 import base.SpecBaseWithAppPerSuite
 
 class MethodOfPaymentServiceSpec extends SpecBaseWithAppPerSuite {

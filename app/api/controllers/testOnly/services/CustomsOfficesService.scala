@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.CustomsOffice
+import api.controllers.testOnly.models.CustomsOffice
 import javax.inject.Inject
 import play.api.Environment
 

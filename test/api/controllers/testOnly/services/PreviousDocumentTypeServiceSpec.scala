@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.PreviousDocumentType
+import api.controllers.testOnly.models.PreviousDocumentType
 import base.SpecBaseWithAppPerSuite
 
 class PreviousDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {

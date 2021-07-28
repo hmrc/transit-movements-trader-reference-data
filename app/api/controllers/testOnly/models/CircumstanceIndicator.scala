@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-case class ControlResult(code: String, description: String)
+case class CircumstanceIndicator(code: String, description: String)
 
-object ControlResult {
+object CircumstanceIndicator {
 
-  implicit val writes: OWrites[ControlResult] = Json.writes[ControlResult]
+  implicit val writes: OWrites[CircumstanceIndicator] = Json.writes[CircumstanceIndicator]
 
-  implicit val readFromFile: Reads[ControlResult] = Json.reads[ControlResult]
+  implicit val readFromFile: Reads[CircumstanceIndicator] = Json.reads[CircumstanceIndicator]
+
 }

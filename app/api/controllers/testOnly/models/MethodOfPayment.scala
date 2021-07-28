@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-case class TransportMode(state: State, activeFrom: String, code: String, description: String)
+final case class MethodOfPayment(code: String, description: String)
 
-object TransportMode {
+object MethodOfPayment {
 
-  implicit val writes: OWrites[TransportMode] = Json.writes[TransportMode]
+  implicit val writes: OWrites[MethodOfPayment] = Json.writes[MethodOfPayment]
 
-  implicit val readFromFile: Reads[TransportMode] = Json.reads[TransportMode]
+  implicit val readFromFile: Reads[MethodOfPayment] = Json.reads[MethodOfPayment]
 
 }

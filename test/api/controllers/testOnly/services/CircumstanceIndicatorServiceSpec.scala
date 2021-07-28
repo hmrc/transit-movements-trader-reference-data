@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.CircumstanceIndicator
+import api.controllers.testOnly.models.CircumstanceIndicator
 import base.SpecBaseWithAppPerSuite
 
 class CircumstanceIndicatorServiceSpec extends SpecBaseWithAppPerSuite {

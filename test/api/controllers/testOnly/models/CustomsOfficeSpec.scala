@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import api.generators.ModelGenerators
 import base.SpecBase

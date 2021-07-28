@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-final case class DangerousGoodsCode(code: String, description: String)
+case class KindOfPackage(code: String, description: String)
 
-object DangerousGoodsCode {
+object KindOfPackage {
 
-  implicit val writes: OWrites[DangerousGoodsCode] = Json.writes[DangerousGoodsCode]
+  implicit val writes: OWrites[KindOfPackage] = Json.writes[KindOfPackage]
 
-  implicit val readFromFile: Reads[DangerousGoodsCode] = Json.reads[DangerousGoodsCode]
+  implicit val readFromFile: Reads[KindOfPackage] = Json.reads[KindOfPackage]
 
 }
