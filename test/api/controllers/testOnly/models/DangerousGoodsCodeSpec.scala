@@ -14,38 +14,38 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import api.generators.ModelGenerators
 import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import org.scalacheck.Gen
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.libs.json._
 
-class OfficeOfTransitSpec extends SpecBase with ScalaCheckPropertyChecks with ModelGenerators {
+class DangerousGoodsCodeSpec extends SpecBase with ScalaCheckPropertyChecks with ModelGenerators {
 
-  private val officesOfTransit = OfficeOfTransit("DE009583", "Stuttgart, Stuttgart-Hauptbahnhof")
+  private val dangerousGoodsCode = DangerousGoodsCode("0004", "AMMONIUM PICRATE dry or wetted with less than 10% water, by mass")
 
   "Transit Office model" - {
 
     "must deserialise from json to a valid model" in {
 
-      val result = validOfficeOfTransitsJson(officesOfTransit).as[OfficeOfTransit]
+      val result = validDangerousGoodsCodeJson(dangerousGoodsCode).as[DangerousGoodsCode]
 
-      result mustBe officesOfTransit
+      result mustBe dangerousGoodsCode
     }
 
     "must serialize to json from valid json model" in {
-      val result = Json.toJson(officesOfTransit)
-      result mustBe expectedOfficesOfTransitJson()
+      val result = Json.toJson(dangerousGoodsCode)
+      result mustBe expectedDangerousGoodsCodeJson()
     }
 
     "must serialize to json and deserialize to a valid model" in {
-      forAll(arbitrary[OfficeOfTransit]) {
-        officeOfTransit =>
-          val json = validOfficeOfTransitsJson(officeOfTransit)
-          json.as[OfficeOfTransit] mustBe officeOfTransit
+      forAll(arbitrary[DangerousGoodsCode]) {
+        dangerousGoodsCode =>
+          val json = validDangerousGoodsCodeJson(dangerousGoodsCode)
+          json.as[DangerousGoodsCode] mustBe dangerousGoodsCode
       }
     }
 
@@ -58,22 +58,22 @@ class OfficeOfTransitSpec extends SpecBase with ScalaCheckPropertyChecks with Mo
 
       forAll(invalidJsonGenerator) {
         invalidJson =>
-          intercept[JsResultException](invalidJson.as[OfficeOfTransit])
+          intercept[JsResultException](invalidJson.as[DangerousGoodsCode])
       }
     }
   }
 
-  def expectedOfficesOfTransitJson(officeOfTransit: OfficeOfTransit = officesOfTransit): JsValue =
+  def expectedDangerousGoodsCodeJson(dangerousGoodsCode: DangerousGoodsCode = dangerousGoodsCode): JsValue =
     Json.obj(
-      "id"   -> officeOfTransit.id,
-      "name" -> officeOfTransit.name
+      "code"        -> dangerousGoodsCode.code,
+      "description" -> dangerousGoodsCode.description
     )
 
-  def validOfficeOfTransitsJson(office: OfficeOfTransit): JsValue =
+  def validDangerousGoodsCodeJson(dangerousGoodsCode: DangerousGoodsCode): JsValue =
     Json.parse(s"""
                   |{
-                  |  "ID":"${office.id}",
-                  |  "NAME":"${office.name}"
+                  |  "code":"${dangerousGoodsCode.code}",
+                  |  "description":"${dangerousGoodsCode.description}"
                   |  }
                   |""".stripMargin)
 

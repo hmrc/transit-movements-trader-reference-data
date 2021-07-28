@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-final case class SpecialMention(code: String, description: String)
+final case class DangerousGoodsCode(code: String, description: String)
 
-object SpecialMention {
+object DangerousGoodsCode {
 
-  implicit val writes: OWrites[SpecialMention] = Json.writes[SpecialMention]
+  implicit val writes: OWrites[DangerousGoodsCode] = Json.writes[DangerousGoodsCode]
 
-  implicit val readFromFile: Reads[SpecialMention] = Json.reads[SpecialMention]
+  implicit val readFromFile: Reads[DangerousGoodsCode] = Json.reads[DangerousGoodsCode]
 
 }

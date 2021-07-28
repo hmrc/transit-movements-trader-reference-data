@@ -16,8 +16,8 @@
 
 package api.controllers.testOnly.services
 
-import api.models.TransportMode
-import api.models.Valid
+import api.controllers.testOnly.models.TransportMode
+import api.controllers.testOnly.models.Valid
 import base.SpecBaseWithAppPerSuite
 
 class TransportModeServiceSpec extends SpecBaseWithAppPerSuite {

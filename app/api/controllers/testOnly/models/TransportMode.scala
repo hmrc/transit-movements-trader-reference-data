@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package api.controllers.testOnly.services
+package api.controllers.testOnly.models
 
-import api.controllers.testOnly.models.MethodOfPayment
-import javax.inject.Inject
-import play.api.Environment
+import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
-private[testOnly] class MethodOfPaymentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+case class TransportMode(state: State, activeFrom: String, code: String, description: String)
 
-  val methodOfPayment: Seq[MethodOfPayment] =
-    getData[MethodOfPayment](config.methodOfPayment)
+object TransportMode {
+
+  implicit val writes: OWrites[TransportMode] = Json.writes[TransportMode]
+
+  implicit val readFromFile: Reads[TransportMode] = Json.reads[TransportMode]
+
 }
