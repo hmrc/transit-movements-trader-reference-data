@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-final case class MethodOfPayment(code: String, description: String)
+case class Country(state: String, code: String, description: String)
 
-object MethodOfPayment {
+object Country {
 
-  implicit val writes: OWrites[MethodOfPayment] = Json.writes[MethodOfPayment]
+  implicit val writes: OWrites[Country] = Json.writes[Country]
 
-  implicit val readFromFile: Reads[MethodOfPayment] = Json.reads[MethodOfPayment]
+  implicit val readFromFile: Reads[Country] = Json.reads[Country]
 
 }

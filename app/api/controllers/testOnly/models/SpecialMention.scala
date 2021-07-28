@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package api.models
+package api.controllers.testOnly.models
 
 import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
-final case class DocumentType(code: String, description: String, transportDocument: Boolean)
+final case class SpecialMention(code: String, description: String)
 
-object DocumentType {
+object SpecialMention {
 
-  implicit val writes: OWrites[DocumentType] = Json.writes[DocumentType]
+  implicit val writes: OWrites[SpecialMention] = Json.writes[SpecialMention]
 
-  implicit val readFromFile: Reads[DocumentType] = Json.reads[DocumentType]
+  implicit val readFromFile: Reads[SpecialMention] = Json.reads[SpecialMention]
 
 }

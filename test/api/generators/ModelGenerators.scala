@@ -16,10 +16,10 @@
 
 package api.generators
 
-import api.models.Country
-import api.models.CustomsOffice
-import api.models.DangerousGoodsCode
-import api.models.OfficeOfTransit
+import api.controllers.testOnly.models.Country
+import api.controllers.testOnly.models.CustomsOffice
+import api.controllers.testOnly.models.DangerousGoodsCode
+import api.controllers.testOnly.models.OfficeOfTransit
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 

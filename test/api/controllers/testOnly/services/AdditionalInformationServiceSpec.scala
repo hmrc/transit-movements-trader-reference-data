@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.AdditionalInformation
+import api.controllers.testOnly.models.AdditionalInformation
 import base.SpecBaseWithAppPerSuite
 
 class AdditionalInformationServiceSpec extends SpecBaseWithAppPerSuite {

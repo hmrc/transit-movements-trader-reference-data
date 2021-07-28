@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.DangerousGoodsCode
+import api.controllers.testOnly.models.DangerousGoodsCode
 import base.SpecBaseWithAppPerSuite
 
 class DangerousGoodsCodeServiceSpec extends SpecBaseWithAppPerSuite {

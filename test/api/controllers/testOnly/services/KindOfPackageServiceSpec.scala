@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.KindOfPackage
+import api.controllers.testOnly.models.KindOfPackage
 import base.SpecBaseWithAppPerSuite
 
 class KindOfPackageServiceSpec extends SpecBaseWithAppPerSuite {

@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.ControlResult
+import api.controllers.testOnly.models.ControlResult
 import play.api.Environment
 
 import javax.inject.Inject

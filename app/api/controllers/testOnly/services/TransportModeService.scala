@@ -16,7 +16,7 @@
 
 package api.controllers.testOnly.services
 
-import api.models.TransportMode
+import api.controllers.testOnly.models.TransportMode
 import javax.inject.Inject
 import play.api.Environment
 
