@@ -17,16 +17,15 @@
 package api.models.requests
 
 import play.api.mvc.QueryStringBindable
-import cats.data._
 import cats.implicits._
 
-sealed trait CustomsOfficeRole
+sealed abstract class CustomsOfficeRole(value: String) {
+  override def toString(): String = value
+}
 
 object CustomsOfficeRole {
 
-  object AnyCustomsOfficeRole extends CustomsOfficeRole {
-    override def toString(): String = "ANY"
-  }
+  object AnyCustomsOfficeRole extends CustomsOfficeRole("ANY")
 
   implicit val CustomOfficeRole: QueryStringBindable[CustomsOfficeRole] = new QueryStringBindable[CustomsOfficeRole] {
 
@@ -40,8 +39,8 @@ object CustomsOfficeRole {
         .flatMap[String, CustomsOfficeRole] {
           x =>
             mapping.get(x) match {
-              case None        => EitherT.left[CustomsOfficeRole](Option(s"Cannot parse parameter for ${CountryQueryFilter.FilterKeys.customsOfficeRole}"))
-              case x @ Some(_) => EitherT.right[String](x)
+              case None    => Binders.failed(s"Cannot parse parameter for ${CountryQueryFilter.FilterKeys.customsOfficeRole}")
+              case Some(y) => Binders.successful(y)
             }
 
         }

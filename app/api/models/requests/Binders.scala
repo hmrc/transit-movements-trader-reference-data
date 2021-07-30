@@ -71,7 +71,7 @@ object Binders {
 
   /** Implicitly resolve for a QueryStringBindable[T] at the call site.
     */
-  def bindable[T](implicit binder: QueryStringBindable[T]) = binder
+  def bindable[T](implicit binder: QueryStringBindable[T]): QueryStringBindable[T] = binder
 
   def bind[T](key: String, params: Map[String, Seq[String]])(implicit binder: QueryStringBindable[T]): BinderResult[T] =
     EitherT(binder.bind(key, params))
