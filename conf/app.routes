@@ -5,11 +5,10 @@ GET   /customs-office/:id              api.controllers.CustomsOfficeController.g
 
 GET   /countries                       api.controllers.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET   /countries/:code                 api.controllers.CountryController.getCountry(code)
+
 GET   /countries-full-list             api.controllers.CountryController.countriesFullList
 GET   /eu-countries                    api.controllers.EuCountriesController.getEUCountries()
-
 GET   /transit-countries               api.controllers.TransitCountriesController.transitCountries(excludeCountries: List[String] ?= Nil)
-
 GET   /non-eu-transit-countries        api.controllers.TransitCountriesController.nonEUTransitCountries(excludeCountries: List[String] ?= Nil)
 
 GET   /additional-information          api.controllers.AdditionalInformationController.getAll()

@@ -294,12 +294,8 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(CtcMember)).queryParamters
 
-      listName mustEqual CountryCodesFullList
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("TOC", "EEC")
-        )
-      )
+      listName mustEqual CountryCodesCommonTransitList
+      selector.expression mustEqual Json.obj()
       projection mustEqual None
     }
 
@@ -307,12 +303,8 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(EuMember)).queryParamters
 
-      listName mustEqual CountryCodesFullList
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$eq" -> "EEC"
-        )
-      )
+      listName mustEqual CountryCodesCommunityList
+      selector.expression mustEqual Json.obj()
       projection mustEqual None
     }
 
@@ -363,11 +355,8 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       val (listName, selector, projection) =
         CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParamters
 
-      listName mustEqual CountryCodesFullList
+      listName mustEqual CountryCodesCommunityList
       selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$eq" -> "EEC"
-        ),
         CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
           "$nin" -> Seq("aaa", "bbb", "ccc")
         )
@@ -380,11 +369,8 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       val (listName, selector, projection) =
         CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParamters
 
-      listName mustEqual CountryCodesFullList
+      listName mustEqual CountryCodesCommonTransitList
       selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("TOC", "EEC")
-        ),
         CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
           "$nin" -> Seq("aaa", "bbb", "ccc")
         )
