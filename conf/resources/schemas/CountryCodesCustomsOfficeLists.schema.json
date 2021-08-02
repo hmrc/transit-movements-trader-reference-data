@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "examples": [
+    {
+      "code": "AA",
+      "description": "A country name",
+      "countryRegimeCode": "TOC"
+    },
+    {
+      "code": "BB",
+      "description": "B country name",
+      "countryRegimeCode": "EEC"
+    }
+  ],
+  "required": ["code", "description", "countryRegimeCode"],
+  "properties": {
+    "code": {
+      "$id": "#/properties/code",
+      "type": "string",
+      "title": "Country code",
+      "description": "The two character country code",
+      "minLength": 2,
+      "maxLength": 2,
+      "pattern": "^[A-Z]{2}$",
+      "examples": ["AA", "GB", "XI"]
+    },
+    "description": {
+      "$id": "#/properties/description",
+      "type": "string",
+      "title": "Description",
+      "description": "The full name of the country",
+      "examples": ["A country name"]
+    },
+    "countryRegimeCode": {
+      "$id": "#/properties/countryRegimeCode",
+      "type": "string",
+      "title": "Country Regime Code",
+      "description": "The country regime code that the country belongs to",
+      "minLength": 3,
+      "maxLength": 3,
+      "pattern": "^(?:TOC|EEC)$",
+      "examples": ["TOC", "EEC"]
+    }
+  },
+  "additionalProperties": false
+}

@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package config
+package api.models.schemas
 
 import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import javax.inject.Singleton
+import org.leadpony.justify.api.JsonSchema
 
 @Singleton
-class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
+class CountryCodesCustomsOfficeListsSchema @Inject() (schemaLoader: JsonSchemaLoader) extends JsonSchemaProvider {
 
-  val authBaseUrl: String =
-    servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean =
-    config.get[Boolean]("auditing.enabled")
-
-  val graphiteHost: String =
-    config.get[String]("microservice.metrics.graphite.host")
+  def schema: JsonSchema = schemaLoader.loadSchema("schemas/CountryCodesCustomsOfficeLists.schema.json")
 
 }

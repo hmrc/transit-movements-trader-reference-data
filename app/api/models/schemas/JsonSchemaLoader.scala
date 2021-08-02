@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package config
+package api.models.schemas
 
+import java.io.FileNotFoundException
+
+import org.leadpony.justify.api.JsonSchema
+import org.leadpony.justify.api.JsonValidationService
+import play.api.Environment
 import javax.inject.Inject
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import javax.inject.Singleton
 
-@Singleton
-class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
+private[schemas] class JsonSchemaLoader @Inject() (env: Environment, jsonValidationService: JsonValidationService) {
 
-  val authBaseUrl: String =
-    servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean =
-    config.get[Boolean]("auditing.enabled")
-
-  val graphiteHost: String =
-    config.get[String]("microservice.metrics.graphite.host")
+  def loadSchema(path: String): JsonSchema =
+    env
+      .resourceAsStream(path)
+      .fold(throw new FileNotFoundException(s"File for schema: ${getClass.getSimpleName} not find file at path $path"))(jsonValidationService.readSchema)
 
 }

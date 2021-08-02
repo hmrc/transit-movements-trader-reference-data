@@ -19,14 +19,31 @@ package config
 import java.time.Clock
 import java.time.ZoneOffset
 
-import com.google.inject.AbstractModule
 import repositories.ListCollectionIndexManager
+import api.models.schemas.CountryCodesCustomsOfficeListsSchema
+import org.leadpony.justify.api.JsonValidationService
+import play.api.inject._
 
-class Modules extends AbstractModule {
+class Modules
+    extends SimpleModule(
+      (_, _) => {
+        val jsonValidationService: JsonValidationService = JsonValidationService.newInstance()
 
-  override def configure(): Unit = {
-    bind(classOf[AppConfig]).asEagerSingleton()
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-    bind(classOf[ListCollectionIndexManager]).asEagerSingleton()
-  }
-}
+        /*
+         *These modules are all bound eagerly so that the application will fail on application start
+         *if they are misconfigured or if key resources are not available
+         */
+        val eagerModules = Seq(
+          bind[AppConfig].toSelf,
+          bind[ListCollectionIndexManager].toSelf,
+          bind[CountryCodesCustomsOfficeListsSchema].toSelf,
+          bind[JsonValidationService].toInstance(jsonValidationService)
+        ).map(_.eagerly())
+
+        val regularModules = Seq(
+          bind[Clock].toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
+        )
+
+        eagerModules ++ regularModules
+      }
+    )

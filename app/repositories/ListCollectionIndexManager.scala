@@ -18,6 +18,7 @@ package repositories
 
 import IndexUtils.index
 import javax.inject.Inject
+import javax.inject.Singleton
 import models._
 import reactivemongo.api.bson.collection.BSONSerializationPack
 import reactivemongo.api.indexes.Index.Aux
@@ -27,6 +28,7 @@ import ReferenceDataList.Constants._
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
+@Singleton
 class ListCollectionIndexManager @Inject() (listRepository: ListRepository)(implicit ec: ExecutionContext) {
 
   case class IndexOnList(list: ReferenceDataList, index: Aux[BSONSerializationPack.type])
