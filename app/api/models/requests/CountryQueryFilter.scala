@@ -84,8 +84,8 @@ object CountryQueryFilter {
 
       def unbind(key: String, value: CountryQueryFilter): String =
         Seq(
-          Binders.unbind(FilterKeys.customsOfficeRole, value.customsOfficesRole),
-          Binders.unbind(FilterKeys.exclude, value.membership),
+          Binders.unbind("", value.customsOfficesRole),
+          Binders.unbind("", value.membership),
           Binders.unbind(FilterKeys.exclude, value.excludeCountryCodes)
         ).filterNot(_.isEmpty).mkString("&")
 
