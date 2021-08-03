@@ -95,20 +95,11 @@ object Selector {
 
   case class CountryMembershipQuery(membership: CountryMembership*) extends Selector[CountryCodesFullList.type] {
 
-    val query = membership.toList match {
-      case head :: Nil =>
-        Json.obj(
-          "$eq" -> head.dbValue
-        )
-      case lst =>
-        Json.obj(
-          "$in" -> lst.map(_.dbValue)
-        )
-    }
-
     override def expression: JsObject =
       Json.obj(
-        "countryRegimeCode" -> query
+        "countryRegimeCode" -> Json.obj(
+          "$in" -> membership.toList.map(_.dbValue)
+        )
       )
   }
 }

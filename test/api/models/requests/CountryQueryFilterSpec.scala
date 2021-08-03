@@ -343,7 +343,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
         Common.countryRegimeCode -> Json.obj(
-          "$eq" -> "EEC"
+          "$in" -> Seq("EEC")
         )
       )
       projection mustEqual None
@@ -405,7 +405,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
         Common.countryRegimeCode -> Json.obj(
-          "$eq" -> "EEC"
+          "$in" -> Seq("EEC")
         ),
         CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
           "$nin" -> Seq("aaa", "bbb", "ccc")
