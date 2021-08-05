@@ -20,12 +20,16 @@ import org.scalatest.TestSuite
 import org.scalatestplus.play.FakeApplicationFactory
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.inject._
+import com.kenshoo.play.metrics.Metrics
 
 private[base] trait TestWithApplication {
   this: TestSuite with FakeApplicationFactory =>
 
   final override def fakeApplication(): Application =
-    guiceApplicationBuilder.build()
+    guiceApplicationBuilder
+      .overrides(bind[Metrics].toInstance(new TestMetric))
+      .build()
 
   /** An overrideable hook that allows for the extension of the [[GuiceApplicationBuilder]] or
     * if overridden, can wipe way some of the assumption in this builder.

@@ -24,39 +24,64 @@ import play.api.libs.json.JsObject
 import play.api.mvc.Action
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-
+import com.kenshoo.play.metrics.Metrics
 import scala.concurrent.ExecutionContext
 import java.util.UUID
+import metrics.HasActionMetrics
+import play.api.mvc.Request
+import scala.util.control.NonFatal
 
-class DataImportController @Inject() (cc: ControllerComponents, loadDataService: DataImportService)(implicit ec: ExecutionContext)
+class DataImportController @Inject() (
+  cc: ControllerComponents,
+  loadDataService: DataImportService,
+  val metrics: Metrics
+)(implicit ec: ExecutionContext)
     extends BackendController(cc)
-    with Logging {
+    with Logging
+    with HasActionMetrics {
+
+  private def requestItemCountHistogram(list: ReferenceDataList) = histo(s"data-ingest-item-count.${list.listName}")
+  private def requestSizeHistogram(list: ReferenceDataList)      = histo(s"data-ingest-request-size.${list.listName}")
 
   def post(list: ReferenceDataList): Action[Seq[JsObject]] =
-    Action.async(parse.json[Seq[JsObject]]) {
-      implicit request =>
-        val ingestLogId =
-          request.headers
-            .get("X-Request-Id")
-            .map(
-              x => s"XRequestId=$x"
-            )
-            .getOrElse(s"GeneratedRequestId=${UUID.randomUUID()}")
+    withMetricsTimerAction(s"data-ingest-timer-${list.listName}") {
+      Action.async(parse.json[Seq[JsObject]]) {
+        implicit request: Request[Seq[JsObject]] =>
+          val ingestLogId =
+            request.headers
+              .get("X-Request-Id")
+              .map(
+                x => s"XRequestId=$x"
+              )
+              .getOrElse(s"GeneratedRequestId=${UUID.randomUUID()}")
 
-        logger.info(s"[DataImport][Start][$ingestLogId] List name = ${list.listName}")
+          logger.info(s"[DataImport][Start][$ingestLogId] List name = ${list.listName}")
 
-        loadDataService
-          .importData(list, request.body)
-          .map {
-            _ =>
-              logger.info(s"[DataImport][Successful][$ingestLogId] List name = ${list.listName}")
+          loadDataService
+            .importData(list, request.body)
+            .map {
+              dataImportDetails =>
+                logger.info(s"[DataImport][Successful][$ingestLogId] List name = ${list.listName}")
 
-              Ok
-          }
-          .recover {
-            case e: Exception =>
-              logger.error(s"[DataImport][Failed][$ingestLogId] List name = ${list.listName}", e)
-              InternalServerError
-          }
+                requestItemCountHistogram(list).update(dataImportDetails.records)
+                request.headers
+                  .get(CONTENT_LENGTH)
+                  .foreach(
+                    contentLength =>
+                      try requestSizeHistogram(list).update(contentLength.toInt)
+                      catch {
+                        case NonFatal(e) => ()
+                      }
+                  )
+
+                Ok
+            }
+            .recover {
+              case e: Exception =>
+                logger.error(s"[DataImport][Failed][$ingestLogId] List name = ${list.listName}", e)
+                InternalServerError
+            }
+      }
+
     }
 }
