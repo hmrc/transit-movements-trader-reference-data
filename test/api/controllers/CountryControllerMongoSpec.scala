@@ -83,7 +83,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
         when(
           mockReferenceDataService.many(
             ArgumentMatchers.eq(CountryCodesCustomsOfficeLists),
-            ArgumentMatchers.eq(Selector.excludeCountriesCodes(Seq("AA", "BB"))),
+            ArgumentMatchers.eq(Selector.ExcludeCountriesCodes(Seq("AA", "BB"))),
             any()
           )
         )
@@ -100,7 +100,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
         when(
           mockReferenceDataService.many(
             ArgumentMatchers.eq(CountryCodesFullList),
-            ArgumentMatchers.eq(Selector.excludeCountriesCodes(Seq("AA", "BB"))),
+            ArgumentMatchers.eq(Selector.ExcludeCountriesCodes(Seq("AA", "BB"))),
             any()
           )
         )

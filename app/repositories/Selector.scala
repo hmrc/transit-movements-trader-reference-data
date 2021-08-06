@@ -16,13 +16,12 @@
 
 package repositories
 
-import models.CustomsOfficesList
-import models.ReferenceDataList
+import models._
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import cats._
 import cats.data._
-import models.CountryCodesCustomsOfficeLists
+import api.models.requests._
 
 trait Selector[+A] {
   self =>
@@ -73,7 +72,6 @@ object Selector {
       Json.obj("countryId" -> countryId)
   }
 
-  // TODO: Type reference data lists to restrict this to those which make sense
   case class ById(id: String) extends Selector[ReferenceDataList] {
 
     val expression: JsObject = Json.obj("id" -> id)
@@ -84,7 +82,7 @@ object Selector {
     val expression: JsObject = Json.obj("code" -> code)
   }
 
-  case class excludeCountriesCodes(countryCodes: Seq[String]) extends Selector[CountryCodesCustomsOfficeLists.type] {
+  case class ExcludeCountriesCodes(countryCodes: Seq[String]) extends Selector[CountryCodesCustomsOfficeLists.type] {
 
     override def expression: JsObject =
       Json.obj(
@@ -92,6 +90,16 @@ object Selector {
           Json.obj(
             "$nin" -> countryCodes
           )
+      )
+  }
+
+  case class CountryMembershipQuery(membership: CountryMembership*) extends Selector[CountryCodesFullList.type] {
+
+    override def expression: JsObject =
+      Json.obj(
+        "countryRegimeCode" -> Json.obj(
+          "$in" -> membership.toList.map(_.dbValue)
+        )
       )
   }
 }

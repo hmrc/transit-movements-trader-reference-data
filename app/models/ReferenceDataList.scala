@@ -98,15 +98,16 @@ object ReferenceDataList {
   object Constants {
 
     object Common {
-      val activeFrom  = "activeFrom"
-      val state       = "state"
-      val description = "description"
-      val en          = "en"
-      val valid       = "valid"
-      val name        = "name"
+      val activeFrom        = "activeFrom"
+      val state             = "state"
+      val description       = "description"
+      val en                = "en"
+      val valid             = "valid"
+      val name              = "name"
+      val countryRegimeCode = "countryRegimeCode"
     }
 
-    object CountryCodesCustomsOfficeLists {
+    object CountryCodesCustomsOfficeListsFieldNames {
       val code = "code"
     }
 

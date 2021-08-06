@@ -22,30 +22,53 @@ import models.ReferenceDataList
 import repositories.Selector
 import repositories.Projection
 import models.CountryCodesFullList
+import models.CountryCodesCommunityList
+import models.CountryCodesFullList
 import models.CountryCodesCustomsOfficeLists
+import models.CountryCodesCommonTransitList
 import CustomsOfficeRole._
+import CountryMembership._
 
 final case class CountryQueryFilter(
   customsOfficesRole: Option[CustomsOfficeRole],
-  excludeCountryCodes: Seq[String]
+  excludeCountryCodes: Seq[String],
+  membership: Option[CountryMembership]
 ) {
 
   def queryParamters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
     this match {
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil)   => (CountryCodesCustomsOfficeLists, Selector.All(), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes) => (CountryCodesCustomsOfficeLists, Selector.excludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, Nil)                         => (CountryCodesFullList, Selector.All(), None)
-      case CountryQueryFilter(_, x)                              => (CountryCodesFullList, Selector.excludeCountriesCodes(x), None)
+      case CountryQueryFilter(None, Nil, None) => (CountryCodesFullList, Selector.All(), None)
+
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, None) => (CountryCodesCustomsOfficeLists, Selector.All(), None)
+      case CountryQueryFilter(None, codes, None)                     => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, Nil, Some(EuMember))             => (CountryCodesCommunityList, Selector.All(), None)
+      case CountryQueryFilter(None, Nil, Some(CtcMember))            => (CountryCodesCommonTransitList, Selector.All(), None)
+
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(EuMember)) =>
+        (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(EuMember), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(CtcMember)) =>
+        (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(CtcMember, EuMember), None)
+      case CountryQueryFilter(None, codes, Some(EuMember)) =>
+        (CountryCodesCommunityList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, codes, Some(CtcMember)) =>
+        (CountryCodesCommonTransitList, Selector.ExcludeCountriesCodes(codes), None)
+
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(EuMember)) =>
+        (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(EuMember), None)
+
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(CtcMember)) =>
+        (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(CtcMember, EuMember), None)
     }
 }
 
 object CountryQueryFilter {
-  import CustomsOfficeRole._
 
   object FilterKeys {
 
     val customsOfficeRole: String = "customsOfficeRole"
     val exclude: String           = "exclude"
+    val membership: String        = "membership"
 
   }
 
@@ -55,17 +78,14 @@ object CountryQueryFilter {
       def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, CountryQueryFilter]] =
         (
           Binders.bind[Option[CustomsOfficeRole]](None)(FilterKeys.customsOfficeRole, params),
-          Binders.bind[Seq[String]](FilterKeys.exclude, params)
-        ).mapN[Binders.BinderResult[CountryQueryFilter]] {
-          case (None, Nil)                       => Binders.successful(CountryQueryFilter(None, Nil))
-          case (Some(AnyCustomsOfficeRole), Nil) => Binders.successful(CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil))
-          case (role, excludesCountryCodes)      => Binders.successful(CountryQueryFilter(role, excludesCountryCodes))
-        }.flatten
-          .value
+          Binders.bind[Seq[String]](FilterKeys.exclude, params),
+          Binders.bind[Option[CountryMembership]](None)(FilterKeys.membership, params)
+        ).mapN(CountryQueryFilter.apply).value
 
       def unbind(key: String, value: CountryQueryFilter): String =
         Seq(
-          Binders.unbind(FilterKeys.customsOfficeRole, value.customsOfficesRole),
+          Binders.unbind("", value.customsOfficesRole),
+          Binders.unbind("", value.membership),
           Binders.unbind(FilterKeys.exclude, value.excludeCountryCodes)
         ).filterNot(_.isEmpty).mkString("&")
 

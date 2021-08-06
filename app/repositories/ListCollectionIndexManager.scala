@@ -22,6 +22,7 @@ import models._
 import reactivemongo.api.bson.collection.BSONSerializationPack
 import reactivemongo.api.indexes.Index.Aux
 import reactivemongo.api.indexes.IndexType
+import ReferenceDataList.Constants._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
@@ -33,6 +34,10 @@ class ListCollectionIndexManager @Inject() (listRepository: ListRepository)(impl
   val indexes: List[IndexOnList] = List(
     IndexOnList(CountryCodesFullList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(CountryCodesFullList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(
+      CountryCodesFullList,
+      index(Seq(Common.countryRegimeCode -> IndexType.Descending, "code" -> IndexType.Ascending), Some("countryRegimeCode-code-index"))
+    ),
     IndexOnList(CountryCodesCommonTransitList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(CountryCodesCommonTransitList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(CountryCodesCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
@@ -62,7 +67,11 @@ class ListCollectionIndexManager @Inject() (listRepository: ListRepository)(impl
     IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index")))
+    IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(
+      CountryCodesCustomsOfficeLists,
+      index(Seq(Common.countryRegimeCode -> IndexType.Descending, "code" -> IndexType.Ascending), Some("countryRegimeCode-code-index"))
+    )
   )
 
   val started: Future[List[Boolean]] =

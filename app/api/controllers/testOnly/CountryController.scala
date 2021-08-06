@@ -34,19 +34,7 @@ class CountryController @Inject() (
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action {
-      countryQueryFilter match {
-        case CountryQueryFilter(_, _) => Ok(Json.toJson(countryService.countries))
-        case CountryQueryFilter(_, _) =>
-          val customsOffices = Seq(
-            api.models.Country("active", "GB", "United Kingdom (GB)"),
-            api.models.Country("active", "IT", "Italy"),
-            api.models.Country("active", "FR", "France"),
-            api.models.Country("active", "XI", "United Kingdom (NI)")
-          )
-
-          Ok(Json.toJson(customsOffices))
-
-      }
+      Ok(Json.toJson(countryService.countries))
     }
 
   def countriesFullList(): Action[AnyContent] =
