@@ -25,8 +25,6 @@ import play.api.libs.json.JsObject
 import api.models.requests.CustomsOfficeRole._
 import api.models.requests.CountryMembership._
 import ReferenceDataList.Constants._
-import api.models.requests.CountryMembership
-
 import org.scalacheck.Gen
 
 class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {

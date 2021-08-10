@@ -16,9 +16,7 @@
 
 package data
 
-import akka.NotUsed
 import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import data.connector.RefDataConnector
 import javax.inject.Inject
 import models.ReferenceDataList

@@ -92,7 +92,6 @@ class DangerousGoodsCodesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no transport mode is found" in {
 
-        val validCountryCode = "GB"
         when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"

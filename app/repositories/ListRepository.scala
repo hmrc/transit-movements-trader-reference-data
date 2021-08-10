@@ -23,7 +23,6 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.Cursor
-import reactivemongo.api.commands.LastError
 import reactivemongo.play.json.collection.Helpers.idWrites
 import reactivemongo.play.json.collection.JSONCollection
 
@@ -31,8 +30,6 @@ import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) extends Logging {
-
-  private val duplicateErrorCode = 11000
 
   def collection(list: ReferenceDataList): Future[JSONCollection] =
     mongo.database.map(_.collection[JSONCollection](list.listName))

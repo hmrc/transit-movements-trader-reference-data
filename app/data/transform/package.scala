@@ -16,12 +16,10 @@
 
 package data
 
-import models.DocumentTypeCommonList
 import models.ReferenceDataList
 import play.api.libs.json.JsBoolean
 import play.api.libs.json.JsError
 import play.api.libs.json.JsPath
-import play.api.libs.json.JsResult
 import play.api.libs.json.JsString
 import play.api.libs.json.JsSuccess
 import play.api.libs.json.JsValue
