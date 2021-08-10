@@ -17,7 +17,6 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.AdditionalInformationIdCommonList
@@ -47,25 +46,6 @@ class AdditionalInformationControllerMongo @Inject() (
       referenceDataService.many(AdditionalInformationIdCommonList, Selector.All()).map {
         case data if data.nonEmpty =>
           Ok(Json.toJson(data))
-        case _ =>
-          logger.error(s"No data found for ${AdditionalInformationIdCommonList.listName}")
-          NotFound
-      }
-    }
-}
-
-class AdditionalInformationControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with AdditionalInformationController
-    with Logging {
-
-  def getAll(): Action[AnyContent] =
-    Action.async {
-      dataRetrieval.getList(AdditionalInformationIdCommonList).map {
-        case data if data.nonEmpty => Ok(Json.toJson(data))
         case _ =>
           logger.error(s"No data found for ${AdditionalInformationIdCommonList.listName}")
           NotFound

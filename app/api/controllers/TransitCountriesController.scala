@@ -17,7 +17,6 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 
 import javax.inject.Inject
 import logging.Logging
@@ -72,40 +71,4 @@ class TransitCountriesControllerMongo @Inject() (
             NotFound
         }
     }
-}
-
-class TransitCountriesControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with Logging
-    with TransitCountriesController {
-
-  import CountryFilter._
-
-  def transitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CountryCodesCommonTransitList)
-        .map {
-          case data if data.excludeCountries(excludeCountries).nonEmpty => Ok(Json.toJson(data.excludeCountries(excludeCountries)))
-          case _ =>
-            logger.error(s"No data found for ${CountryCodesCommonTransitList.listName}")
-            NotFound
-        }
-    }
-
-  def nonEUTransitCountries(excludeCountries: Seq[String] = Nil): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CountryCodesCommonTransitOutsideCommunityList)
-        .map {
-          case data if data.excludeCountries(excludeCountries).nonEmpty => Ok(Json.toJson(data.excludeCountries(excludeCountries)))
-          case _ =>
-            logger.error(s"No data found for ${CountryCodesCommonTransitOutsideCommunityList.listName}")
-            NotFound
-        }
-    }
-
 }

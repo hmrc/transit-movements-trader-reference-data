@@ -17,7 +17,6 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.KindOfPackagesList
@@ -47,25 +46,6 @@ class KindsOfPackageControllerMongo @Inject() (
       referenceDataService.many(KindOfPackagesList, Selector.All()).map {
         case data if data.nonEmpty =>
           Ok(Json.toJson(data))
-        case _ =>
-          logger.error(s"No data found for ${KindOfPackagesList.listName}")
-          NotFound
-      }
-    }
-}
-
-class KindsOfPackageControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with Logging
-    with KindsOfPackageController {
-
-  def getAll(): Action[AnyContent] =
-    Action.async {
-      dataRetrieval.getList(KindOfPackagesList).map {
-        case data if data.nonEmpty => Ok(Json.toJson(data))
         case _ =>
           logger.error(s"No data found for ${KindOfPackagesList.listName}")
           NotFound
