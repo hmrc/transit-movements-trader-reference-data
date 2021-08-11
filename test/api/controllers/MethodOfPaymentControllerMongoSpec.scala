@@ -42,7 +42,6 @@ class MethodOfPaymentControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[MethodOfPaymentController].to[MethodOfPaymentControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

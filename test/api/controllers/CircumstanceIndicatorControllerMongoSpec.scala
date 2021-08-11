@@ -38,7 +38,6 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[CircumstanceIndicatorController].to[CircumstanceIndicatorControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

@@ -43,7 +43,6 @@ class ControlResultControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[ControlResultController].to[ControlResultControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

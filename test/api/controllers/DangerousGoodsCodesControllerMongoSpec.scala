@@ -40,7 +40,6 @@ class DangerousGoodsCodesControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DangerousGoodsCodesController].to[DangerousGoodsCodesControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
