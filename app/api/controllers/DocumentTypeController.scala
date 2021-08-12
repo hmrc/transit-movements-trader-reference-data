@@ -17,7 +17,6 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 import javax.inject.Inject
 import logging.Logging
 import models.DocumentTypeCommonList
@@ -52,24 +51,4 @@ class DocumentTypeControllerMongo @Inject() (
           NotFound
       }
     }
-}
-
-class DocumentTypeControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with Logging
-    with DocumentTypeController {
-
-  def getAll(): Action[AnyContent] =
-    Action.async {
-      dataRetrieval.getList(DocumentTypeCommonList).map {
-        case data if data.nonEmpty => Ok(Json.toJson(data))
-        case _ =>
-          logger.error(s"No data found for ${DocumentTypeCommonList.listName}")
-          NotFound
-      }
-    }
-
 }

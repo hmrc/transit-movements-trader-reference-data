@@ -49,7 +49,6 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[CountryController].to[CountryControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

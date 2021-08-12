@@ -42,7 +42,6 @@ class KindsOfPackageControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[KindsOfPackageController].to[KindsOfPackageControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

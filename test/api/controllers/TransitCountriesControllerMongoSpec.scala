@@ -49,7 +49,6 @@ class TransitCountriesControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[TransitCountriesController].to[TransitCountriesControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

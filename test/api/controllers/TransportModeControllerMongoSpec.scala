@@ -40,7 +40,6 @@ class TransportModeControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[TransportModeController].to[TransportModeControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

@@ -17,7 +17,6 @@
 package logging
 
 import akka.actor.ActorSystem
-import akka.event.Logging
 import akka.event.LoggingAdapter
 
 trait StreamLoggerAdapter {
@@ -25,6 +24,6 @@ trait StreamLoggerAdapter {
   final val loggerName: String = s"application.${this.getClass.getCanonicalName}"
 
   implicit def adapter(implicit actorSystem: ActorSystem): LoggingAdapter =
-    Logging(actorSystem, loggerName)
+    akka.event.Logging(actorSystem, loggerName)
 
 }

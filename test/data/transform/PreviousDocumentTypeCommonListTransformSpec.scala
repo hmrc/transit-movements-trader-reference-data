@@ -19,7 +19,6 @@ package data.transform
 import java.time.format.DateTimeFormatter
 
 import base.SpecBase
-import models.DocumentTypeCommonList
 import models.PreviousDocumentTypeCommonList
 import models.ReferenceDataList.Constants.Common._
 import models.ReferenceDataList.Constants.DocumentTypeCommonListFieldNames._

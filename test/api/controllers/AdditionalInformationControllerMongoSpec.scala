@@ -42,7 +42,6 @@ class AdditionalInformationControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[AdditionalInformationController].to[AdditionalInformationControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

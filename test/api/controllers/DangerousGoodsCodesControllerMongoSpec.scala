@@ -40,7 +40,6 @@ class DangerousGoodsCodesControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DangerousGoodsCodesController].to[DangerousGoodsCodesControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 
@@ -92,7 +91,6 @@ class DangerousGoodsCodesControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       "must return NotFound when no transport mode is found" in {
 
-        val validCountryCode = "GB"
         when(mockReferenceDataService.one(any(), any(), any())).thenReturn(Future.successful(None))
 
         val invalidCode = "Invalid"

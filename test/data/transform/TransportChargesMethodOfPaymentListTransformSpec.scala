@@ -19,7 +19,6 @@ package data.transform
 import base.SpecBase
 import models.ReferenceDataList.Constants.Common._
 import models.ReferenceDataList.Constants.TransportModeListFieldNames._
-import models.SpecificCircumstanceIndicatorList
 import models.TransportChargesMethodOfPaymentList
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks

@@ -16,7 +16,6 @@
 
 package data
 
-import akka.event.Logging
 import akka.event.Logging.LogLevel
 import play.api.ConfigLoader
 import play.api.Configuration

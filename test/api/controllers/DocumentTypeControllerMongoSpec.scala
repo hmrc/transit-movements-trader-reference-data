@@ -42,7 +42,6 @@ class DocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[DocumentTypeController].to[DocumentTypeControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

@@ -18,7 +18,6 @@ package api.controllers
 
 import api.services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import models.AdditionalInformationIdCommonList
 import models.ControlResultList
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.{eq => eqTo}
@@ -44,7 +43,6 @@ class ControlResultControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[ControlResultController].to[ControlResultControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

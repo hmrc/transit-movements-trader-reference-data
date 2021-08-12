@@ -17,10 +17,8 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 import javax.inject.Inject
 import models.CountryCodesFullList
-import models.ReferenceDataList.Constants.CountryCodesFullListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -87,41 +85,4 @@ class CountryControllerMongo @Inject() (
         }
     }
 
-}
-
-class CountryControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with CountryController {
-
-  override def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] = Action(NotImplemented)
-
-  override def countriesFullList(): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CountryCodesFullList)
-        .map(
-          data => if (data.nonEmpty) Ok(Json.toJson(data)) else NotFound
-        )
-    }
-
-  override def getCountry(code: String): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CountryCodesFullList)
-        .map {
-          data =>
-            val response = data.find(
-              json => (json \ CountryCodesFullListFieldNames.code).as[String] == code
-            )
-
-            response match {
-              case Some(country) => Ok(Json.toJson(country))
-              case None          => NotFound
-            }
-        }
-
-    }
 }

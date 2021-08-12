@@ -17,7 +17,6 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 import logging.Logging
 import models.CustomsOfficesList
 import play.api.libs.json.Json
@@ -83,62 +82,6 @@ class CustomsOfficeControllerMongo @Inject() (
           case None =>
             logger.info(s"No ${CustomsOfficesList.listName} data found for id $officeId")
             NotFound
-        }
-    }
-}
-
-class CustomsOfficeControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with Logging
-    with CustomsOfficeController {
-
-  def customsOffices(roles: Seq[String]): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CustomsOfficesList)
-        .map {
-          case data if data.nonEmpty => Ok(Json.toJson(data))
-          case _ =>
-            logger.error(s"No data found for ${CustomsOfficesList.listName}")
-            NotFound
-        }
-    }
-
-  def customsOfficesOfTheCountry(countryCode: String, roles: Seq[String]): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CustomsOfficesList)
-        .map {
-          data =>
-            val response = data.filter(
-              json => (json \ "countryId").as[String] == countryCode
-            )
-
-            if (data.nonEmpty)
-              Ok(Json.toJson(response))
-            else
-              NotFound
-        }
-    }
-
-  def getCustomsOffice(officeId: String): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(CustomsOfficesList)
-        .map {
-          data =>
-            val response = data
-              .find(
-                json => (json \ "id").as[String] == officeId
-              )
-
-            response match {
-              case Some(value) => Ok(Json.toJson(value))
-              case None        => NotFound
-            }
         }
     }
 }

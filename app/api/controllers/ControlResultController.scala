@@ -17,10 +17,8 @@
 package api.controllers
 
 import api.services.ReferenceDataService
-import data.DataRetrieval
 import logging.Logging
 import models.ControlResultList
-import models.ReferenceDataList.Constants.ControlResultsListFieldNames
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -62,47 +60,5 @@ class ControlResultControllerMongo @Inject() (
           logger.warn(s"No data found for code: $code for list: ${ControlResultList.listName}")
           NotFound
       }
-    }
-}
-
-class ControlResultControllerRemote @Inject() (
-  cc: ControllerComponents,
-  dataRetrieval: DataRetrieval
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
-    with ControlResultController
-    with Logging {
-
-  def getAll(): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(ControlResultList)
-        .map(
-          data =>
-            if (data.nonEmpty) Ok(Json.toJson(data))
-            else {
-              logger.warn(s"No data found for ${ControlResultList.listName}")
-              NotFound
-            }
-        )
-    }
-
-  def getControlResult(code: String): Action[AnyContent] =
-    Action.async {
-      dataRetrieval
-        .getList(ControlResultList)
-        .map {
-          data =>
-            val response = data.find(
-              json => (json \ ControlResultsListFieldNames.code).as[String] == code
-            )
-
-            response match {
-              case Some(controlResult) => Ok(Json.toJson(controlResult))
-              case None =>
-                logger.warn(s"No data found for code: $code for list: ${ControlResultList.listName}")
-                NotFound
-            }
-        }
     }
 }

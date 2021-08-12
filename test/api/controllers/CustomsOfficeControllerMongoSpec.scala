@@ -66,7 +66,6 @@ class CustomsOfficeControllerMongoSpec extends SpecBaseWithAppPerSuite {
   override def guiceApplicationBuilder: GuiceApplicationBuilder =
     super.guiceApplicationBuilder
       .overrides(
-        bind[CustomsOfficeController].to[CustomsOfficeControllerMongo],
         bind[ReferenceDataService].toInstance(mockReferenceDataService)
       )
 

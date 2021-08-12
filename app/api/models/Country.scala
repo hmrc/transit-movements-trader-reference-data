@@ -20,6 +20,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.OWrites
 import play.api.libs.json.Reads
 
+// TODO: Investigate if we can delete
 case class Country(state: String, code: String, description: String)
 
 object Country {

@@ -19,7 +19,6 @@ package data.transform
 import java.time.format.DateTimeFormatter
 
 import base.SpecBase
-import models.CountryCodesFullList
 import models.CustomsOfficesList
 import org.scalacheck.Gen
 import org.scalacheck.Shrink
