@@ -31,7 +31,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     RoutesKeys.routesImport ++= Seq(
       "models.ReferenceDataList",
-      "api.models.requests.CountryQueryFilter"
+      "models.requests.CountryQueryFilter"
     )
   )
   .settings(
@@ -54,8 +54,8 @@ lazy val scoverageSettings =
       "Reverse.*",
       "config.*",
       "logging.*",
-      "api.controllers.testOnly.*",
-      "data.config.*",
+      "controllers.testOnly.*",
+      "config.*",
       ".*(BuildInfo|Routes).*"
     ).mkString(";"),
     ScoverageKeys.coverageMinimum := 85.00,
