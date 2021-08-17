@@ -1,37 +1,37 @@
 # microservice specific routes
-GET   /customs-offices                 api.controllers.CustomsOfficeController.customsOffices(role: Seq[String] ?= Nil)
-GET   /customs-offices/:code           api.controllers.CustomsOfficeController.customsOfficesOfTheCountry(code, role: Seq[String] ?= Nil)
-GET   /customs-office/:id              api.controllers.CustomsOfficeController.getCustomsOffice(id)
+GET   /customs-offices                 controllers.consumption.CustomsOfficeController.customsOffices(role: Seq[String] ?= Nil)
+GET   /customs-offices/:code           controllers.consumption.CustomsOfficeController.customsOfficesOfTheCountry(code, role: Seq[String] ?= Nil)
+GET   /customs-office/:id              controllers.consumption.CustomsOfficeController.getCustomsOffice(id)
 
-GET   /countries                       api.controllers.CountryController.get(countryQueryFilter: CountryQueryFilter)
-GET   /countries/:code                 api.controllers.CountryController.getCountry(code)
+GET   /countries                       controllers.consumption.CountryController.get(countryQueryFilter: CountryQueryFilter)
+GET   /countries/:code                 controllers.consumption.CountryController.getCountry(code)
 
-GET   /countries-full-list             api.controllers.CountryController.countriesFullList
-GET   /eu-countries                    api.controllers.EuCountriesController.getEUCountries()
-GET   /transit-countries               api.controllers.TransitCountriesController.transitCountries(excludeCountries: List[String] ?= Nil)
-GET   /non-eu-transit-countries        api.controllers.TransitCountriesController.nonEUTransitCountries(excludeCountries: List[String] ?= Nil)
+GET   /countries-full-list             controllers.consumption.CountryController.countriesFullList
+GET   /eu-countries                    controllers.consumption.EuCountriesController.getEUCountries()
+GET   /transit-countries               controllers.consumption.TransitCountriesController.transitCountries(excludeCountries: List[String] ?= Nil)
+GET   /non-eu-transit-countries        controllers.consumption.TransitCountriesController.nonEUTransitCountries(excludeCountries: List[String] ?= Nil)
 
-GET   /additional-information          api.controllers.AdditionalInformationController.getAll()
+GET   /additional-information          controllers.consumption.AdditionalInformationController.getAll()
 
-GET   /kinds-of-package                api.controllers.KindsOfPackageController.getAll()
+GET   /kinds-of-package                controllers.consumption.KindsOfPackageController.getAll()
 
-GET   /document-types                  api.controllers.DocumentTypeController.getAll()
+GET   /document-types                  controllers.consumption.DocumentTypeController.getAll()
 
-GET   /transport-modes                 api.controllers.TransportModeController.transportModes
-GET   /transport-mode/:code            api.controllers.TransportModeController.getTransportMode(code)
+GET   /transport-modes                 controllers.consumption.TransportModeController.transportModes
+GET   /transport-mode/:code            controllers.consumption.TransportModeController.getTransportMode(code)
 
-GET   /previous-document-types         api.controllers.PreviousDocumentTypeController.previousDocumentTypes
-GET   /previous-document-type/:code    api.controllers.PreviousDocumentTypeController.getPreviousDocumentType(code)
+GET   /previous-document-types         controllers.consumption.PreviousDocumentTypeController.previousDocumentTypes
+GET   /previous-document-type/:code    controllers.consumption.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
-GET   /method-of-payment               api.controllers.MethodOfPaymentController.getAll()
+GET   /method-of-payment               controllers.consumption.MethodOfPaymentController.getAll()
 
-GET   /dangerous-goods-codes            api.controllers.DangerousGoodsCodesController.dangerousGoodsCodes()
-GET   /dangerous-goods-code/:code      api.controllers.DangerousGoodsCodesController.getDangerousGoodsCode(code)
+GET   /dangerous-goods-codes            controllers.consumption.DangerousGoodsCodesController.dangerousGoodsCodes()
+GET   /dangerous-goods-code/:code      controllers.consumption.DangerousGoodsCodesController.getDangerousGoodsCode(code)
 
-GET   /circumstance-indicators         api.controllers.CircumstanceIndicatorController.circumstanceIndicators
-GET   /circumstance-indicator/:code    api.controllers.CircumstanceIndicatorController.getCircumstanceIndicator(code)
+GET   /circumstance-indicators         controllers.consumption.CircumstanceIndicatorController.circumstanceIndicators
+GET   /circumstance-indicator/:code    controllers.consumption.CircumstanceIndicatorController.getCircumstanceIndicator(code)
 
-GET   /control-results                 api.controllers.ControlResultController.getAll()
-GET   /control-results/:code           api.controllers.ControlResultController.getControlResult(code)
+GET   /control-results                 controllers.consumption.ControlResultController.getAll()
+GET   /control-results/:code           controllers.consumption.ControlResultController.getControlResult(code)
 
-POST  /data/:list                      data.controllers.DataImportController.post(list: ReferenceDataList)
+POST  /data/:list                      controllers.ingestion.DataImportController.post(list: ReferenceDataList)

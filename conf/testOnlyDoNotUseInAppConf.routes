@@ -10,38 +10,38 @@
 # Failing to follow this rule may result in test routes deployed in production.
 
 # microservice specific routes
-GET        /transit-movements-trader-reference-data/customs-offices                                   api.controllers.testOnly.CustomsOfficeController.customsOffices
-GET        /transit-movements-trader-reference-data/customs-offices/:code                             api.controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code)
-GET        /transit-movements-trader-reference-data/customs-office/:id                                api.controllers.testOnly.CustomsOfficeController.getCustomsOffice(id)
+GET        /transit-movements-trader-reference-data/customs-offices                                   controllers.testOnly.CustomsOfficeController.customsOffices
+GET        /transit-movements-trader-reference-data/customs-offices/:code                             controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code)
+GET        /transit-movements-trader-reference-data/customs-office/:id                                controllers.testOnly.CustomsOfficeController.getCustomsOffice(id)
 
-GET        /transit-movements-trader-reference-data/countries                                         api.controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
-GET        /transit-movements-trader-reference-data/countries/:code                                   api.controllers.testOnly.CountryController.getCountry(code)
-GET        /transit-movements-trader-reference-data/countries-full-list                               api.controllers.testOnly.CountryController.countriesFullList
-GET        /transit-movements-trader-reference-data/transit-countries                                 api.controllers.testOnly.CountryController.transitCountries
+GET        /transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
+GET        /transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)
+GET        /transit-movements-trader-reference-data/countries-full-list                               controllers.testOnly.CountryController.countriesFullList
+GET        /transit-movements-trader-reference-data/transit-countries                                 controllers.testOnly.CountryController.transitCountries
 
-GET        /transit-movements-trader-reference-data/office-transit                                    api.controllers.testOnly.OfficeOfTransitController.officesOfTransit
-GET        /transit-movements-trader-reference-data/office-transit/:id                                api.controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)
+GET        /transit-movements-trader-reference-data/office-transit                                    controllers.testOnly.OfficeOfTransitController.officesOfTransit
+GET        /transit-movements-trader-reference-data/office-transit/:id                                controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)
 
-GET        /transit-movements-trader-reference-data/transport-modes                                   api.controllers.testOnly.TransportModeController.transportModes
-GET        /transit-movements-trader-reference-data/transport-mode/:code                              api.controllers.testOnly.TransportModeController.getTransportMode(code)
+GET        /transit-movements-trader-reference-data/transport-modes                                   controllers.testOnly.TransportModeController.transportModes
+GET        /transit-movements-trader-reference-data/transport-mode/:code                              controllers.testOnly.TransportModeController.getTransportMode(code)
 
-GET        /transit-movements-trader-reference-data/previous-document-types                           api.controllers.testOnly.PreviousDocumentTypeController.previousDocumentTypes
-GET        /transit-movements-trader-reference-data/previous-document-type/:code                      api.controllers.testOnly.PreviousDocumentTypeController.getPreviousDocumentType(code)
+GET        /transit-movements-trader-reference-data/previous-document-types                           controllers.testOnly.PreviousDocumentTypeController.previousDocumentTypes
+GET        /transit-movements-trader-reference-data/previous-document-type/:code                      controllers.testOnly.PreviousDocumentTypeController.getPreviousDocumentType(code)
 
-GET        /transit-movements-trader-reference-data/circumstance-indicators                           api.controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
-GET        /transit-movements-trader-reference-data/circumstance-indicator/:code                      api.controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
+GET        /transit-movements-trader-reference-data/circumstance-indicators                           controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
+GET        /transit-movements-trader-reference-data/circumstance-indicator/:code                      controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
 
-GET        /transit-movements-trader-reference-data/non-eu-transit-countries                          api.controllers.testOnly.NonEuCountryController.countriesFullList
+GET        /transit-movements-trader-reference-data/non-eu-transit-countries                          controllers.testOnly.NonEuCountryController.countriesFullList
 
-GET        /transit-movements-trader-reference-data/control-results                                   api.controllers.testOnly.ControlResultTestController.getAll()
-GET        /transit-movements-trader-reference-data/control-results/:code                             api.controllers.testOnly.ControlResultTestController.getControlResult(code)
+GET        /transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
+GET        /transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)
 
-GET        /transit-movements-trader-reference-data/method-of-payment                                 api.controllers.testOnly.ReferenceDataController.methodOfPayment
-GET        /transit-movements-trader-reference-data/dangerous-goods-codes                              api.controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
-GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        api.controllers.testOnly.ReferenceDataController.getDangerousGoodsCode(code)
-GET        /transit-movements-trader-reference-data/additional-information                            api.controllers.testOnly.ReferenceDataController.additionalInformation
-GET        /transit-movements-trader-reference-data/kinds-of-package                                  api.controllers.testOnly.ReferenceDataController.kindsOfPackage
-GET        /transit-movements-trader-reference-data/document-types                                    api.controllers.testOnly.ReferenceDataController.documentTypes
+GET        /transit-movements-trader-reference-data/method-of-payment                                 controllers.testOnly.ReferenceDataController.methodOfPayment
+GET        /transit-movements-trader-reference-data/dangerous-goods-codes                              controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
+GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        controllers.testOnly.ReferenceDataController.getDangerousGoodsCode(code)
+GET        /transit-movements-trader-reference-data/additional-information                            controllers.testOnly.ReferenceDataController.additionalInformation
+GET        /transit-movements-trader-reference-data/kinds-of-package                                  controllers.testOnly.ReferenceDataController.kindsOfPackage
+GET        /transit-movements-trader-reference-data/document-types                                    controllers.testOnly.ReferenceDataController.documentTypes
 
 # Add all the application routes to the prod.routes file
 ->         /                          health.Routes

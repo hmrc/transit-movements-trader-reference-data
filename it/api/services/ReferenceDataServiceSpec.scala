@@ -2,7 +2,7 @@ package repositories.services
 
 import java.time.Instant
 
-import api.services.ReferenceDataService
+import services.ReferenceDataService
 import models.ReferenceDataList
 import org.scalacheck.Gen
 import org.scalactic.Uniformity

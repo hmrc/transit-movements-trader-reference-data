@@ -21,7 +21,7 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import cats._
 import cats.data._
-import api.models.requests._
+import models.requests._
 
 trait Selector[+A] {
   self =>

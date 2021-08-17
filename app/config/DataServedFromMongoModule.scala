@@ -16,7 +16,7 @@
 
 package config
 
-import api.controllers._
+import controllers.consumption._
 import com.google.inject.AbstractModule
 import logging.Logging
 
