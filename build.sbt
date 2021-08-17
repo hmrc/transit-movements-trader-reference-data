@@ -74,7 +74,8 @@ lazy val testSettings: Seq[Def.Setting[_]] = Seq(
 
 lazy val itSettings = Defaults.itSettings ++ Seq(
   unmanagedSourceDirectories := Seq(
-    baseDirectory.value / "it"
+    baseDirectory.value / "it",
+    baseDirectory.value / "test" / "base"
   ),
   unmanagedResourceDirectories := Seq(
     baseDirectory.value / "it" / "resources"

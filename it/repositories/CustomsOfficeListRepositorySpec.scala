@@ -1,43 +1,33 @@
 package repositories
 
 import models.CustomsOfficesList
-import org.scalatest.concurrent.IntegrationPatience
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.must.Matchers
 import org.scalatest.BeforeAndAfterEach
-import org.scalatest.OptionValues
-import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import repositories.Selector.ByCountry
 import repositories.Selector.ById
 import repositories.Selector.OptionallyByRole
-
 import scala.concurrent.ExecutionContext.Implicits.global
+import base.SpecBaseWithAppPerSuite
+import reactivemongo.play.json.collection.Helpers.idWrites
+import reactivemongo.play.json.collection.JSONCollection
 
-class CustomsOfficeListRepositorySpec
-    extends AnyFreeSpec
-    with Matchers
-    with MongoSuite
-    with ScalaFutures
-    with IntegrationPatience
-    with OptionValues
-    with BeforeAndAfterEach
-    with FailOnUnindexedQueries {
+class CustomsOfficeListRepositorySpec extends SpecBaseWithAppPerSuite with MongoSuite with BeforeAndAfterEach with FailOnUnindexedQueries {
 
-  override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
-    super.beforeEach()
-  }
+  override def beforeEachBlocks: Seq[() => Unit] = super.beforeEachBlocks ++ Seq(
+    () =>
+      (for {
+        db <- database
+        coll <- db
+          .collection[JSONCollection](CustomsOfficesList.listName)
+          .delete(ordered = false)
+          .one(Json.obj())
+      } yield ()).futureValue
+  )
 
   class Setup {
 
-    private val appBuilder: Application =
-      new GuiceApplicationBuilder().build()
-
-    val repo: ListRepository = appBuilder.injector.instanceOf[ListRepository]
+    val repo: ListRepository = app.injector.instanceOf[ListRepository]
 
     def genRole(role: String): JsObject = Json.obj(
       "seasonStartDate"                 -> "20180101",
