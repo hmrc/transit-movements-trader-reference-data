@@ -5,8 +5,8 @@ object AppDependencies {
   private val catsVersion = "2.1.1"
 
   val compile = Seq(
-    "uk.gov.hmrc"        %% "bootstrap-backend-play-27"          % "5.7.0",
-    "org.reactivemongo"  %% "play2-reactivemongo"                % "0.20.11-play27",
+    "uk.gov.hmrc"        %% "bootstrap-backend-play-27"          % "5.12.0",
+    "org.reactivemongo"  %% "play2-reactivemongo"                % "0.20.13-play27",
     "com.typesafe.play"  %% "play-iteratees"                     % "2.6.1",
     "com.typesafe.play"  %% "play-iteratees-reactive-streams"    % "2.6.1",
     "org.typelevel"      %% "cats-core"                          % catsVersion,
@@ -23,9 +23,8 @@ object AppDependencies {
     "org.scalatestplus"      %% "scalatestplus-scalacheck" % "3.1.0.0-RC2",
     "com.typesafe.akka"      %% "akka-stream-testkit"      % "2.6.10",
     "com.typesafe.akka"      %% "akka-slf4j"               % "2.6.10",
-    "org.pegdown"             % "pegdown"                  % "1.6.0",
     "com.vladsch.flexmark"    % "flexmark-all"             % "0.35.10",
-    "com.github.tomakehurst"  % "wiremock-standalone"      % "2.27.1"
+    "com.github.tomakehurst"  % "wiremock-standalone"      % "2.27.2"
   ).map(_ % "test, it")
 
 }
