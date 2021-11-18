@@ -52,7 +52,7 @@ class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       val request = FakeRequest(
         GET,
-        routes.PreviousDocumentTypeController.previousDocumentTypes().url
+        routes.PreviousDocumentTypeController.previousDocumentTypes.url
       )
       val result = route(app, request).value
 
@@ -66,7 +66,7 @@ class PreviousDocumentTypeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       val request = FakeRequest(
         GET,
-        routes.PreviousDocumentTypeController.previousDocumentTypes().url
+        routes.PreviousDocumentTypeController.previousDocumentTypes.url
       )
       val result = route(app, request).value
 

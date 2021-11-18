@@ -51,7 +51,7 @@ class TransportModeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       val request = FakeRequest(
         GET,
-        routes.TransportModeController.transportModes().url
+        routes.TransportModeController.transportModes.url
       )
       val result = route(app, request).value
 
@@ -65,7 +65,7 @@ class TransportModeControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       val request = FakeRequest(
         GET,
-        routes.TransportModeController.transportModes().url
+        routes.TransportModeController.transportModes.url
       )
       val result = route(app, request).value
 
