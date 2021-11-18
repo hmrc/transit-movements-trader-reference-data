@@ -22,9 +22,7 @@ import java.time.Instant
 import javax.inject.Inject
 import models.ReferenceDataList
 import play.api.Logging
-import play.api.libs.json.JsObject
-import play.api.libs.json.Json
-import play.api.libs.json.OFormat
+import play.api.libs.json.{JsObject, Json, OFormat, Writes}
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
@@ -38,6 +36,8 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
   val collectionName: String = "data-imports"
 
   implicit private val dataImportFormat: OFormat[DataImport] = DataImport.mongoFormat
+
+  implicit val writes: Writes[ImportStatus.Complete.type] = implicitly[Writes[String]].contramap(_.toString)
 
   private val importIdIndex =
     IndexUtils.index(
