@@ -22,7 +22,10 @@ import java.time.Instant
 import javax.inject.Inject
 import models.ReferenceDataList
 import play.api.Logging
-import play.api.libs.json.{JsObject, Json, OFormat, Writes}
+import play.api.libs.json.JsObject
+import play.api.libs.json.Json
+import play.api.libs.json.OFormat
+import play.api.libs.json.Writes
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
