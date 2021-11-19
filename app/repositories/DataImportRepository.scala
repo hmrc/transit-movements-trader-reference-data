@@ -19,7 +19,8 @@ package repositories
 import java.time.Clock
 import java.time.Instant
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
+import javax.inject.Singleton
 import models.ReferenceDataList
 import play.api.Logging
 import play.api.libs.json.JsObject

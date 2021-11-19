@@ -16,21 +16,25 @@
 
 package repositories
 
-import javax.inject.{Inject, Singleton}
-import play.api.libs.json.{Json, Reads, __}
+import javax.inject.Inject
+import javax.inject.Singleton
+import play.api.libs.json.Json
+import play.api.libs.json.Reads
+import play.api.libs.json.__
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.commands.LastError
 import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
 import reactivemongo.play.json.collection.JSONCollection
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 @Singleton
 class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) {
 
-  val recordId: String       = "last-id"
-  val fieldName: String      = "import-id"
-  val startingSeed: Int      = 0
+  val recordId: String  = "last-id"
+  val fieldName: String = "import-id"
+  val startingSeed: Int = 0
 
   implicit private val importIdReads: Reads[ImportId] =
     (__ \ fieldName)

@@ -16,10 +16,26 @@
 
 package repositories
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
+import javax.inject.Singleton
 import logging.Logging
 import models.ReferenceDataList.Constants.Common
-import models.{AdditionalInformationIdCommonList, ControlResultList, CountryCodesCommonTransitList, CountryCodesCommonTransitOutsideCommunityList, CountryCodesCommunityList, CountryCodesCustomsOfficeLists, CountryCodesFullList, CustomsOfficesList, DocumentTypeCommonList, KindOfPackagesList, PreviousDocumentTypeCommonList, ReferenceDataList, SpecificCircumstanceIndicatorList, TransportChargesMethodOfPaymentList, TransportModeList, UnDangerousGoodsCodeList}
+import models.AdditionalInformationIdCommonList
+import models.ControlResultList
+import models.CountryCodesCommonTransitList
+import models.CountryCodesCommonTransitOutsideCommunityList
+import models.CountryCodesCommunityList
+import models.CountryCodesCustomsOfficeLists
+import models.CountryCodesFullList
+import models.CustomsOfficesList
+import models.DocumentTypeCommonList
+import models.KindOfPackagesList
+import models.PreviousDocumentTypeCommonList
+import models.ReferenceDataList
+import models.SpecificCircumstanceIndicatorList
+import models.TransportChargesMethodOfPaymentList
+import models.TransportModeList
+import models.UnDangerousGoodsCodeList
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoApi
@@ -97,7 +113,7 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
     Future.sequence(
       ListRepository.indexes.map {
         indexOnList =>
-            innerCollection(indexOnList.list)
+          innerCollection(indexOnList.list)
             .flatMap(
               _.indexesManager.ensure(indexOnList.index)
             )
