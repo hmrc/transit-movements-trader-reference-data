@@ -1,4 +1,5 @@
 
+import play.core.PlayVersion.akkaVersion
 import play.core.PlayVersion.current
 import sbt._
 
@@ -22,8 +23,8 @@ object AppDependencies {
     "org.scalatestplus"      %% "mockito-3-2"              % "3.1.2.0",
     "org.scalatestplus"      %% "scalatestplus-scalacheck" % "3.1.0.0-RC2",
     "org.scalacheck"         %% "scalacheck"               % "1.14.3",
-    "com.typesafe.akka"      %% "akka-stream-testkit"      % "2.6.14",
-    "com.typesafe.akka"      %% "akka-slf4j"               % "2.6.14",
+    "com.typesafe.akka"      %% "akka-stream-testkit"      % akkaVersion,
+    "com.typesafe.akka"      %% "akka-slf4j"               % akkaVersion,
     "com.vladsch.flexmark"    % "flexmark-all"             % "0.35.10",
     "com.github.tomakehurst"  % "wiremock-standalone"      % "2.27.2"
   ).map(_ % "test, it")
