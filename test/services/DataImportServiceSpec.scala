@@ -16,13 +16,20 @@
 
 package services
 
-import java.time.{Clock, Instant, ZoneId}
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 
 import models.ReferenceDataList
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
-import org.mockito.Mockito.{reset, times, verify, when}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{eq => eqTo}
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.when
 import org.scalacheck.Gen
-import org.scalatest.{BeforeAndAfterEach, OptionValues}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.OptionValues
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -39,10 +46,10 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
 
   private val instant: Instant = Instant.now
 
-  private val stubClock: Clock               = Clock.fixed(instant, ZoneId.systemDefault)
-  private val mockImportIdRepo               = mock[ImportIdRepository]
-  private val mockDataImportRepo             = mock[DataImportRepository]
-  private val mockListRepo                   = mock[ListRepository]
+  private val stubClock: Clock   = Clock.fixed(instant, ZoneId.systemDefault)
+  private val mockImportIdRepo   = mock[ImportIdRepository]
+  private val mockDataImportRepo = mock[DataImportRepository]
+  private val mockListRepo       = mock[ListRepository]
 
   private val appBuilder: GuiceApplicationBuilder =
     new GuiceApplicationBuilder()

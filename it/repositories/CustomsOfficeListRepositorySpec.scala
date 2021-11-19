@@ -30,12 +30,6 @@ class CustomsOfficeListRepositorySpec
 
   override def beforeEach(): Unit = {
     dropDatabase()
-//    database.map {
-//      db =>
-//        for {
-//          _ <- db.collection[JSONCollection](ListRepository.collectionName).drop(failIfNotFound = false)
-//        } yield ()
-//    }.futureValue
     super.beforeEach()
   }
 

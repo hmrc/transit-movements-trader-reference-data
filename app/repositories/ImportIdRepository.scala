@@ -23,7 +23,7 @@ import play.api.libs.json.Reads
 import play.api.libs.json.__
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.commands.LastError
-import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
+import reactivemongo.play.json.collection.Helpers.idWrites
 import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.ExecutionContext

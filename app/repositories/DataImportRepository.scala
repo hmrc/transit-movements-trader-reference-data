@@ -30,7 +30,7 @@ import play.api.libs.json.Writes
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
-import reactivemongo.play.json.ImplicitBSONHandlers._
+import reactivemongo.play.json.collection.Helpers.idWrites
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
