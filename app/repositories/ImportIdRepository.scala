@@ -16,21 +16,18 @@
 
 package repositories
 
-import javax.inject.Inject
-import play.api.libs.json.Json
-import play.api.libs.json.Reads
-import play.api.libs.json.__
+import javax.inject.{Inject, Singleton}
+import play.api.libs.json.{Json, Reads, __}
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.commands.LastError
-import reactivemongo.play.json.collection.JSONCollection
 import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
+import reactivemongo.play.json.collection.JSONCollection
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) {
 
-  val collectionName: String = "import-ids"
   val recordId: String       = "last-id"
   val fieldName: String      = "import-id"
   val startingSeed: Int      = 0
@@ -45,7 +42,7 @@ class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Execut
   private def collection: Future[JSONCollection] =
     for {
       _    <- seed
-      coll <- mongo.database.map(_.collection[JSONCollection](collectionName))
+      coll <- mongo.database.map(_.collection[JSONCollection](ImportIdRepository.collectionName))
     } yield coll
 
   private val seed: Future[Boolean] = {
@@ -54,7 +51,7 @@ class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Execut
     val documentExists = 11000
 
     def coll: Future[JSONCollection] =
-      mongo.database.map(_.collection[JSONCollection](collectionName))
+      mongo.database.map(_.collection[JSONCollection](ImportIdRepository.collectionName))
 
     coll.flatMap {
       _.insert(ordered = false)
@@ -82,4 +79,8 @@ class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: Execut
         }
     }
   }
+}
+
+object ImportIdRepository {
+  val collectionName: String = "import-ids"
 }

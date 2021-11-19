@@ -16,23 +16,16 @@
 
 package services
 
-import java.time.Clock
-import java.time.Instant
-import java.time.ZoneId
+import java.time.{Clock, Instant, ZoneId}
 
 import models.ReferenceDataList
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.{eq => eqTo}
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.when
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.mockito.Mockito.{reset, times, verify, when}
 import org.scalacheck.Gen
+import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.OptionValues
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -50,7 +43,6 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
   private val mockImportIdRepo               = mock[ImportIdRepository]
   private val mockDataImportRepo             = mock[DataImportRepository]
   private val mockListRepo                   = mock[ListRepository]
-  private val mockListCollectionIndexManager = mock[ListCollectionIndexManager]
 
   private val appBuilder: GuiceApplicationBuilder =
     new GuiceApplicationBuilder()
@@ -58,8 +50,7 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
         bind[ImportIdRepository].toInstance(mockImportIdRepo),
         bind[DataImportRepository].toInstance(mockDataImportRepo),
         bind[ListRepository].toInstance(mockListRepo),
-        bind[Clock].toInstance(stubClock),
-        bind[ListCollectionIndexManager].toInstance(mockListCollectionIndexManager)
+        bind[Clock].toInstance(stubClock)
       )
 
   override def beforeEach(): Unit = {

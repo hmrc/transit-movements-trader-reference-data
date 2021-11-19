@@ -11,6 +11,7 @@ import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
+import reactivemongo.play.json.collection.JSONCollection
 import repositories.Selector.ByCountry
 import repositories.Selector.ById
 import repositories.Selector.OptionallyByRole
@@ -28,7 +29,13 @@ class CustomsOfficeListRepositorySpec
     with FailOnUnindexedQueries {
 
   override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
+    dropDatabase()
+//    database.map {
+//      db =>
+//        for {
+//          _ <- db.collection[JSONCollection](ListRepository.collectionName).drop(failIfNotFound = false)
+//        } yield ()
+//    }.futureValue
     super.beforeEach()
   }
 

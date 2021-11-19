@@ -19,7 +19,7 @@ package repositories
 import java.time.Clock
 import java.time.Instant
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 import models.ReferenceDataList
 import play.api.Logging
 import play.api.libs.json.JsObject
@@ -34,9 +34,8 @@ import reactivemongo.play.json.ImplicitBSONHandlers._
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
+@Singleton
 class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(implicit ec: ExecutionContext) extends Logging {
-
-  val collectionName: String = "data-imports"
 
   implicit private val dataImportFormat: OFormat[DataImport] = DataImport.mongoFormat
 
@@ -51,7 +50,7 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
 
   private def collection: Future[JSONCollection] =
     for {
-      coll <- mongo.database.map(_.collection[JSONCollection](collectionName))
+      coll <- mongo.database.map(_.collection[JSONCollection](DataImportRepository.collectionName))
       _    <- coll.indexesManager.ensure(importIdIndex)
     } yield coll
 
@@ -116,4 +115,8 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
         .map(_.map(_.importId))
     }
   }
+}
+
+object DataImportRepository {
+  val collectionName: String = "data-imports"
 }

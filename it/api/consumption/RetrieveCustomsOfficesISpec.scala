@@ -24,7 +24,7 @@ class RetrieveCustomsOfficesISpec extends AnyFreeSpec
   with OptionValues with GuiceOneServerPerSuite {
 
   override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
+    dropDatabase()
     super.beforeEach()
   }
 
