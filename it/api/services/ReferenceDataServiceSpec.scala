@@ -14,7 +14,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers.running
 import repositories.{DataImport, DataImportRepository, ImportId, ImportStatus, ListRepository, MongoSuite, Selector}
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class ReferenceDataServiceSpec
   extends AnyFreeSpec

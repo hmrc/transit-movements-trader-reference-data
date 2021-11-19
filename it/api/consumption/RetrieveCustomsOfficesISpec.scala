@@ -1,5 +1,7 @@
 package api.consumption
 
+import java.time.Instant
+
 import models.CustomsOfficesList
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -11,9 +13,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 import repositories._
-
-import java.time.Instant
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class RetrieveCustomsOfficesISpec extends AnyFreeSpec
   with Matchers

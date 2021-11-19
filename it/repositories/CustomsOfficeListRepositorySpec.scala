@@ -11,12 +11,9 @@ import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
-import reactivemongo.play.json.collection.JSONCollection
 import repositories.Selector.ByCountry
 import repositories.Selector.ById
 import repositories.Selector.OptionallyByRole
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 class CustomsOfficeListRepositorySpec
     extends AnyFreeSpec
