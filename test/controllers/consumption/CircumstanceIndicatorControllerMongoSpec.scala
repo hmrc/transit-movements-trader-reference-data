@@ -50,7 +50,7 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
 
       val request = FakeRequest(
         GET,
-        routes.CircumstanceIndicatorController.circumstanceIndicators().url
+        routes.CircumstanceIndicatorController.circumstanceIndicators.url
       )
       val result = route(app, request).value
 
@@ -64,7 +64,7 @@ class CircumstanceIndicatorControllerMongoSpec extends SpecBaseWithAppPerSuite w
 
       val request = FakeRequest(
         GET,
-        routes.CircumstanceIndicatorController.circumstanceIndicators().url
+        routes.CircumstanceIndicatorController.circumstanceIndicators.url
       )
       val result = route(app, request).value
 

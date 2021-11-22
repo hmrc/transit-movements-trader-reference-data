@@ -17,8 +17,6 @@ trait FailOnUnindexedQueries extends MongoSuite with BeforeAndAfterAll with Scal
   override protected def beforeAll(): Unit = {
     super.beforeAll()
 
-    database.map(_.drop()).futureValue
-
     commandRunner(
       db = MongoSuite.connection.flatMap(_._2.database("admin")).futureValue,
       command = commandRunner.rawCommand(BSONDocument("setParameter" -> 1, "notablescan" -> 1))

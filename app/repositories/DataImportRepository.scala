@@ -20,24 +20,27 @@ import java.time.Clock
 import java.time.Instant
 
 import javax.inject.Inject
+import javax.inject.Singleton
 import models.ReferenceDataList
 import play.api.Logging
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.api.libs.json.OFormat
+import play.api.libs.json.Writes
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.JSONCollection
-import reactivemongo.play.json.ImplicitBSONHandlers._
+import reactivemongo.play.json.collection.Helpers.idWrites
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
+@Singleton
 class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(implicit ec: ExecutionContext) extends Logging {
 
-  val collectionName: String = "data-imports"
-
   implicit private val dataImportFormat: OFormat[DataImport] = DataImport.mongoFormat
+
+  implicit val writes: Writes[ImportStatus.Complete.type] = implicitly[Writes[String]].contramap(_.toString)
 
   private val importIdIndex =
     IndexUtils.index(
@@ -48,7 +51,7 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
 
   private def collection: Future[JSONCollection] =
     for {
-      coll <- mongo.database.map(_.collection[JSONCollection](collectionName))
+      coll <- mongo.database.map(_.collection[JSONCollection](DataImportRepository.collectionName))
       _    <- coll.indexesManager.ensure(importIdIndex)
     } yield coll
 
@@ -113,4 +116,8 @@ class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(imp
         .map(_.map(_.importId))
     }
   }
+}
+
+object DataImportRepository {
+  val collectionName: String = "data-imports"
 }

@@ -42,7 +42,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       "when there are no filters" in {
         val query = Map.empty[String, Seq[String]]
 
-        val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+        val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
         result mustEqual CountryQueryFilter(None, Seq.empty, None)
       }
@@ -52,7 +52,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
           "must pass when value is ANY, then the customs office role should be defined as CustomsOfficeRoleAny" in {
             val query = Map(customsOfficeRole -> Seq("ANY"))
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, None)
           }
@@ -69,7 +69,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
           "is present once, then the excluded countries should be that value" in {
             val query = Map(exclude -> Seq("asdf"))
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result.excludeCountryCodes mustEqual Seq("asdf")
           }
@@ -78,7 +78,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
             val excludeValues = Seq("asdf", "qwer", "zxcv")
             val query         = Map(exclude -> excludeValues)
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result.excludeCountryCodes must contain theSameElementsAs excludeValues
           }
@@ -88,7 +88,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
           "and the value is for CTC" in {
             val query = Map(membership -> Seq("ctc"))
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(None, Seq.empty, Some(CtcMember))
           }
@@ -96,7 +96,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
           "and the value is for EU" in {
             val query = Map(membership -> Seq("eu"))
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(None, Seq.empty, Some(EuMember))
           }
@@ -117,7 +117,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
             customsOfficeRole -> Seq("ANY")
           )
 
-          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+          val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
           result mustEqual CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("asdf"), None)
         }
@@ -129,7 +129,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
               membership        -> Seq("ctc")
             )
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(CtcMember))
           }
@@ -140,7 +140,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
               membership        -> Seq("eu")
             )
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(EuMember))
           }
@@ -153,7 +153,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
               membership -> Seq("ctc")
             )
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(None, Seq("asdf", "qwer", "zxcv"), Some(CtcMember))
           }
@@ -164,7 +164,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
               membership -> Seq("eu")
             )
 
-            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+            val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
             result mustEqual CountryQueryFilter(None, Seq("asdf", "qwer", "zxcv"), Some(EuMember))
           }
@@ -178,7 +178,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
           membership        -> Seq("eu")
         )
 
-        val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.right.value
+        val result = Binders.bind[CountryQueryFilter](customsOfficeRole, query).value.value.value
 
         result mustEqual CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("asdf", "qwer", "zxcv"), Some(EuMember))
       }

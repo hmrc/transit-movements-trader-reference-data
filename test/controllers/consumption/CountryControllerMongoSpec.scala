@@ -131,7 +131,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
         val request = FakeRequest(
           GET,
-          routes.CountryController.countriesFullList().url
+          routes.CountryController.countriesFullList.url
         )
         val result = route(app, request).value
 
@@ -145,7 +145,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
         val request = FakeRequest(
           GET,
-          routes.CountryController.countriesFullList().url
+          routes.CountryController.countriesFullList.url
         )
         val result = route(app, request).value
 

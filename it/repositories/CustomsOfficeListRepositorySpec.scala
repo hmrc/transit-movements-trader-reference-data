@@ -15,8 +15,6 @@ import repositories.Selector.ByCountry
 import repositories.Selector.ById
 import repositories.Selector.OptionallyByRole
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 class CustomsOfficeListRepositorySpec
     extends AnyFreeSpec
     with Matchers
@@ -28,7 +26,7 @@ class CustomsOfficeListRepositorySpec
     with FailOnUnindexedQueries {
 
   override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
+    dropDatabase()
     super.beforeEach()
   }
 

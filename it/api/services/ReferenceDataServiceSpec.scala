@@ -15,8 +15,6 @@ import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers.running
 import repositories.{DataImport, DataImportRepository, ImportId, ImportStatus, ListRepository, MongoSuite, Selector}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 class ReferenceDataServiceSpec
   extends AnyFreeSpec
     with Matchers
@@ -27,7 +25,7 @@ class ReferenceDataServiceSpec
     with OptionValues {
 
   override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
+    dropDatabase()
     super.beforeEach()
   }
 

@@ -12,8 +12,6 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers.running
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 class DataImportRepositorySpec
   extends AnyFreeSpec
     with Matchers
@@ -24,7 +22,7 @@ class DataImportRepositorySpec
     with BeforeAndAfterEach {
 
   override def beforeEach(): Unit = {
-    database.flatMap(_.drop).futureValue
+    dropDatabase()
     super.beforeEach()
   }
 

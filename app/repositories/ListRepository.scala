@@ -17,22 +17,48 @@
 package repositories
 
 import javax.inject.Inject
+import javax.inject.Singleton
 import logging.Logging
+import models.ReferenceDataList.Constants.Common
+import models.AdditionalInformationIdCommonList
+import models.ControlResultList
+import models.CountryCodesCommonTransitList
+import models.CountryCodesCommonTransitOutsideCommunityList
+import models.CountryCodesCommunityList
+import models.CountryCodesCustomsOfficeLists
+import models.CountryCodesFullList
+import models.CustomsOfficesList
+import models.DocumentTypeCommonList
+import models.KindOfPackagesList
+import models.PreviousDocumentTypeCommonList
 import models.ReferenceDataList
+import models.SpecificCircumstanceIndicatorList
+import models.TransportChargesMethodOfPaymentList
+import models.TransportModeList
+import models.UnDangerousGoodsCodeList
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.Cursor
+import reactivemongo.api.bson.collection.BSONSerializationPack
+import reactivemongo.api.indexes.Index.Aux
+import reactivemongo.api.indexes.IndexType
 import reactivemongo.play.json.collection.Helpers.idWrites
 import reactivemongo.play.json.collection.JSONCollection
+import repositories.IndexUtils.index
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
+@Singleton
 class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) extends Logging {
 
+  private def innerCollection(list: ReferenceDataList): Future[JSONCollection] = mongo.database.map(_.collection[JSONCollection](list.listName))
+
   def collection(list: ReferenceDataList): Future[JSONCollection] =
-    mongo.database.map(_.collection[JSONCollection](list.listName))
+    started.flatMap {
+      _ => innerCollection(list)
+    }
 
   def one[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
     collection(list).flatMap {
@@ -82,4 +108,62 @@ class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionC
         false
     }
   }
+
+  private lazy val started: Future[List[Boolean]] =
+    Future.sequence(
+      ListRepository.indexes.map {
+        indexOnList =>
+          innerCollection(indexOnList.list)
+            .flatMap(
+              _.indexesManager.ensure(indexOnList.index)
+            )
+      }
+    )
+}
+
+object ListRepository {
+  case class IndexOnList(list: ReferenceDataList, index: Aux[BSONSerializationPack.type])
+
+  val indexes: List[IndexOnList] = List(
+    IndexOnList(CountryCodesFullList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesFullList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(
+      CountryCodesFullList,
+      index(Seq(Common.countryRegimeCode -> IndexType.Descending, "code" -> IndexType.Ascending), Some("countryRegimeCode-code-index"))
+    ),
+    IndexOnList(CountryCodesCommonTransitList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCommonTransitList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CountryCodesCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CustomsOfficesList, index(Seq("id" -> IndexType.Ascending), Some("id-index"))),
+    IndexOnList(CustomsOfficesList, index(Seq("countryId" -> IndexType.Ascending), Some("country-id-index"))),
+    IndexOnList(CustomsOfficesList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CustomsOfficesList, index(Seq("roles.role" -> IndexType.Ascending), Some("customs-role-index"))),
+    IndexOnList(DocumentTypeCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(DocumentTypeCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(PreviousDocumentTypeCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(PreviousDocumentTypeCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(KindOfPackagesList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(KindOfPackagesList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(TransportModeList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(TransportModeList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(AdditionalInformationIdCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(AdditionalInformationIdCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(SpecificCircumstanceIndicatorList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(SpecificCircumstanceIndicatorList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(UnDangerousGoodsCodeList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(UnDangerousGoodsCodeList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(TransportChargesMethodOfPaymentList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(TransportChargesMethodOfPaymentList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(ControlResultList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(ControlResultList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(
+      CountryCodesCustomsOfficeLists,
+      index(Seq(Common.countryRegimeCode -> IndexType.Descending, "code" -> IndexType.Ascending), Some("countryRegimeCode-code-index"))
+    )
+  )
 }
