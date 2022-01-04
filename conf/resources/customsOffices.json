@@ -1,29 +1,29 @@
 [
   {
-  "CUST_OFF_ID": "GB000040",
-  "CUST_OFF_NAM": "Dover (OTS) Freight Clearance",
-  "COUNTRY_ID": "GB",
-  "PHONE_NUMBER": "+44 (0)3000 575 988",
-  "CITY": "HARWICH",
-  "CUSTOMS_OFFICE_ROLES": [
-    "ENT",
-    "EXP",
-    "EXT"
-  ]
-},
+    "CUST_OFF_ID": "GB000040",
+    "CUST_OFF_NAM": "Dover (OTS) Freight Clearance",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 575 988",
+    "CITY": "HARWICH",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
   {
-  "CUST_OFF_ID": "GB000060",
-  "CUST_OFF_NAM": "Dover/Folkestone Eurotunnel Freight",
-  "COUNTRY_ID": "GB",
-  "PHONE_NUMBER": "+44 (0)3000 515831",
-  "CITY": "DOVER",
-  "CUSTOMS_OFFICE_ROLES": [
-  "DEP",
-  "DES",
-  "ENT",
-  "EXP",
-  "TRA"
-  ]
+    "CUST_OFF_ID": "GB000060",
+    "CUST_OFF_NAM": "Dover/Folkestone Eurotunnel Freight",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)3000 515831",
+    "CITY": "DOVER",
+    "CUSTOMS_OFFICE_ROLES": [
+      "DEP",
+      "DES",
+      "ENT",
+      "EXP",
+      "TRA"
+    ]
   },
   {
     "CUST_OFF_ID": "GB000244",
@@ -53,6 +53,16 @@
     "COUNTRY_ID": "GB",
     "PHONE_NUMBER": "+44 (0)3000 575 988",
     "CITY": "Harwich",
+    "CUSTOMS_OFFICE_ROLES": [
+      "ENT"
+    ]
+  },
+  {
+    "CUST_OFF_ID": "GB000218",
+    "CUST_OFF_NAM": "Newcastle Airport",
+    "COUNTRY_ID": "GB",
+    "PHONE_NUMBER": "+44 (0)191 123 456",
+    "CITY": "Newcastle",
     "CUSTOMS_OFFICE_ROLES": [
       "ENT"
     ]
