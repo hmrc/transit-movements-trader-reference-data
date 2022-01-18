@@ -4,22 +4,22 @@ import play.core.PlayVersion.current
 import sbt._
 
 object AppDependencies {
-  private val catsVersion = "2.1.1"
+  private val catsVersion = "2.7.0"
 
   val compile = Seq(
-    "uk.gov.hmrc"        %% "bootstrap-backend-play-28"          % "5.16.0",
+    "uk.gov.hmrc"        %% "bootstrap-backend-play-28"          % "5.19.0",
     "org.reactivemongo"  %% "play2-reactivemongo"                % "0.20.13-play28",
     "com.typesafe.play"  %% "play-iteratees"                     % "2.6.1",
     "com.typesafe.play"  %% "play-iteratees-reactive-streams"    % "2.6.1",
     "org.typelevel"      %% "cats-core"                          % catsVersion,
-    "com.lightbend.akka" %% "akka-stream-alpakka-json-streaming" % "2.0.2"
+    "com.lightbend.akka" %% "akka-stream-alpakka-json-streaming" % "3.0.4"
   )
 
   val test = Seq(
     "org.scalatest"          %% "scalatest"                % "3.2.9",
     "com.typesafe.play"      %% "play-test"                % current,
     "org.scalatestplus.play" %% "scalatestplus-play"       % "5.1.0",
-    "org.mockito"            % "mockito-core"              % "3.3.3",
+    "org.mockito"            % "mockito-core"              % "4.2.0",
     "org.scalatestplus"      %% "mockito-3-2"              % "3.1.2.0",
     "org.scalatestplus"      %% "scalatestplus-scalacheck" % "3.1.0.0-RC2",
     "org.scalacheck"         %% "scalacheck"               % "1.14.3",
