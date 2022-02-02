@@ -32,8 +32,9 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
   def getCountryByCode(code: String): Option[Country] =
     getData[Country](config.countryCodes).find(_.code == code)
 
-  def filterCountries(countryQueryFilter: CountryQueryFilter): Seq[Country] = {
-    getData[Country](config.countryCodes).filterNot(country => countryQueryFilter.excludeCountryCodes.contains(country.code))
-  }
+  def filterCountries(countryQueryFilter: CountryQueryFilter): Seq[Country] =
+    getData[Country](config.countryCodes).filterNot(
+      country => countryQueryFilter.excludeCountryCodes.contains(country.code)
+    )
 
 }
