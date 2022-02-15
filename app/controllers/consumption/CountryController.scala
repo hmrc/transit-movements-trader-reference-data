@@ -39,11 +39,11 @@ trait CountryController {
 
 }
 
-class CountryControllerMongo @Inject() (
-  cc: ControllerComponents,
-  referenceDataService: ReferenceDataService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc)
+class CountryControllerMongo @Inject()(
+                                        cc: ControllerComponents,
+                                        referenceDataService: ReferenceDataService
+                                      )(implicit ec: ExecutionContext)
+  extends BackendController(cc)
     with CountryController {
 
   override def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
@@ -53,7 +53,7 @@ class CountryControllerMongo @Inject() (
           referenceDataService
             .many(list, query, projection)
             .map {
-              case Nil  => NotFound
+              case Nil => NotFound
               case data => Ok(Json.toJson(data))
 
             }

@@ -30,24 +30,24 @@ import CustomsOfficeRole._
 import CountryMembership._
 
 final case class CountryQueryFilter(
-  customsOfficesRole: Option[CustomsOfficeRole],
-  excludeCountryCodes: Seq[String],
-  membership: Option[CountryMembership]
-) {
+                                     customsOfficesRole: Option[CustomsOfficeRole],
+                                     excludeCountryCodes: Seq[String],
+                                     membership: Option[CountryMembership]
+                                   ) {
 
   def queryParamters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
     this match {
-      case CountryQueryFilter(None, Nil, None)                                    => (CountryCodesFullList, Selector.All(), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, None)              => (CountryCodesCustomsOfficeLists, Selector.All(), None)
-      case CountryQueryFilter(None, codes, None)                                  => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, Nil, Some(EuMember))                          => (CountryCodesCommunityList, Selector.All(), None)
-      case CountryQueryFilter(None, Nil, Some(CtcMember))                         => (CountryCodesCommonTransitList, Selector.All(), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None)            => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(EuMember))    => (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(EuMember), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(CtcMember))   => (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(CtcMember, EuMember), None)
-      case CountryQueryFilter(None, codes, Some(EuMember))                        => (CountryCodesCommunityList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, codes, Some(CtcMember))                       => (CountryCodesCommonTransitList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(EuMember))  => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(EuMember), None)
+      case CountryQueryFilter(None, Nil, None) => (CountryCodesFullList, Selector.All(), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, None) => (CountryCodesCustomsOfficeLists, Selector.All(), None)
+      case CountryQueryFilter(None, codes, None) => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, Nil, Some(EuMember)) => (CountryCodesCommunityList, Selector.All(), None)
+      case CountryQueryFilter(None, Nil, Some(CtcMember)) => (CountryCodesCommonTransitList, Selector.All(), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(EuMember)) => (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(EuMember), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(CtcMember)) => (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(CtcMember, EuMember), None)
+      case CountryQueryFilter(None, codes, Some(EuMember)) => (CountryCodesCommunityList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, codes, Some(CtcMember)) => (CountryCodesCommonTransitList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(EuMember)) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(EuMember), None)
       case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(CtcMember)) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(CtcMember, EuMember), None)
     }
 }
@@ -57,8 +57,8 @@ object CountryQueryFilter {
   object FilterKeys {
 
     val customsOfficeRole: String = "customsOfficeRole"
-    val exclude: String           = "exclude"
-    val membership: String        = "membership"
+    val exclude: String = "exclude"
+    val membership: String = "membership"
 
   }
 
@@ -70,7 +70,7 @@ object CountryQueryFilter {
           Binders.bind[Option[CustomsOfficeRole]](None)(FilterKeys.customsOfficeRole, params),
           Binders.bind[Seq[String]](FilterKeys.exclude, params),
           Binders.bind[Option[CountryMembership]](None)(FilterKeys.membership, params)
-        ).mapN(CountryQueryFilter.apply).value
+          ).mapN(CountryQueryFilter.apply).value
 
       def unbind(key: String, value: CountryQueryFilter): String =
         Seq(
