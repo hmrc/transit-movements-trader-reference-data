@@ -37,28 +37,18 @@ final case class CountryQueryFilter(
 
   def queryParamters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
     this match {
-      case CountryQueryFilter(None, Nil, None) => (CountryCodesFullList, Selector.All(), None)
-
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, None) => (CountryCodesCustomsOfficeLists, Selector.All(), None)
-      case CountryQueryFilter(None, codes, None)                     => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, Nil, Some(EuMember))             => (CountryCodesCommunityList, Selector.All(), None)
-      case CountryQueryFilter(None, Nil, Some(CtcMember))            => (CountryCodesCommonTransitList, Selector.All(), None)
-
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(EuMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(EuMember), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(CtcMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(CtcMember, EuMember), None)
-      case CountryQueryFilter(None, codes, Some(EuMember)) =>
-        (CountryCodesCommunityList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, codes, Some(CtcMember)) =>
-        (CountryCodesCommonTransitList, Selector.ExcludeCountriesCodes(codes), None)
-
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(EuMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(EuMember), None)
-
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(CtcMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(CtcMember, EuMember), None)
+      case CountryQueryFilter(None, Nil, None)                                    => (CountryCodesFullList, Selector.All(), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, None)              => (CountryCodesCustomsOfficeLists, Selector.All(), None)
+      case CountryQueryFilter(None, codes, None)                                  => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, Nil, Some(EuMember))                          => (CountryCodesCommunityList, Selector.All(), None)
+      case CountryQueryFilter(None, Nil, Some(CtcMember))                         => (CountryCodesCommonTransitList, Selector.All(), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None)            => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(EuMember))    => (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(EuMember), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(CtcMember))   => (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(CtcMember, EuMember), None)
+      case CountryQueryFilter(None, codes, Some(EuMember))                        => (CountryCodesCommunityList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(None, codes, Some(CtcMember))                       => (CountryCodesCommonTransitList, Selector.ExcludeCountriesCodes(codes), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(EuMember))  => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(EuMember), None)
+      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(CtcMember)) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(CtcMember, EuMember), None)
     }
 }
 
