@@ -43,7 +43,7 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
 
     val countryList = (countryQueryFilter.customsOfficesRole, countryQueryFilter.membership) match {
       case (Some(_), Some(EuMember)) => getData[Country](config.countryCodesWithCustomsOffices)
-      case _    => getData[Country](config.countryCodes)
+      case _                         => getData[Country](config.countryCodes)
     }
 
     countryList.filterNot(
