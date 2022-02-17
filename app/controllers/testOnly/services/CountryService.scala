@@ -17,7 +17,9 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.Country
+import models.requests.CountryMembership.EuMember
 import models.requests.CountryQueryFilter
+
 import javax.inject.Inject
 import play.api.Environment
 
@@ -29,14 +31,19 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
   val nonEuCountries: Seq[Country] =
     getData[Country](config.nonEuCountryList).sortBy(_.description)
 
+  def filterTransitCountries(excludedCountries: List[String]) =
+    getData[Country](config.transitCountryCodes).filterNot(
+      country => excludedCountries.contains(country.code)
+    )
+
   def getCountryByCode(code: String): Option[Country] =
     getData[Country](config.countryCodes).find(_.code == code)
 
   def filterCountries(countryQueryFilter: CountryQueryFilter): Seq[Country] = {
 
-    val countryList = countryQueryFilter.customsOfficesRole match {
-      case Some(_) => getData[Country](config.countryCodesWithCustomsOffices)
-      case None    => getData[Country](config.countryCodes)
+    val countryList = (countryQueryFilter.customsOfficesRole, countryQueryFilter.membership) match {
+      case (Some(_), Some(EuMember)) => getData[Country](config.countryCodesWithCustomsOffices)
+      case _    => getData[Country](config.countryCodes)
     }
 
     countryList.filterNot(
