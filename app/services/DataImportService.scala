@@ -45,12 +45,12 @@ class DataImportService @Inject() (
     for {
       importId <- importIdRepository.nextId
       dataImport = DataImport(importId, list, data.size, ImportStatus.Started, Instant.now(clock))
-      _            <- dataImportRepository.insert(dataImport)
       insertResult <- insertData(list, importId, data)
-      importStatus = if (insertResult) ImportStatus.Complete else ImportStatus.Failed
-      updateResult <- dataImportRepository.markFinished(importId, importStatus)
-      _            <- cleanUp(list, importId, importStatus)
-    } yield updateResult
+      importStatus      = if (insertResult) ImportStatus.Complete else ImportStatus.Failed
+      updatedDataImport = dataImport.copy(status = importStatus, finished = Some(Instant.now(clock)))
+      _ <- dataImportRepository.insert(updatedDataImport)
+      _ <- cleanUp(list, importId, importStatus)
+    } yield updatedDataImport
 
   private def insertData(list: ReferenceDataList, importId: ImportId, data: Seq[JsObject]): Future[Boolean] =
     listRepository
