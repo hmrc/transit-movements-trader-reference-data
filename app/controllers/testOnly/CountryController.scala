@@ -34,7 +34,7 @@ class CountryController @Inject() (
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(countryService.countries))
+      Ok(Json.toJson(countryService.filterCountries(countryQueryFilter)))
     }
 
   def countriesFullList(): Action[AnyContent] =

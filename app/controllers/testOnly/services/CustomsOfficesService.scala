@@ -28,6 +28,14 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
 
-  def getCustomsOfficesOfTheCountry(countryId: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
+  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
+    (countryId, excludedRoles) match {
+      case ("SM", List("TRA")) =>
+        getData[CustomsOffice](config.customsOffice)
+          .filter(
+            x => x.countryId == countryId && !x.roles.contains("TRA")
+          )
+          .sortBy(_.name)
+      case _ => getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
+    }
 }
