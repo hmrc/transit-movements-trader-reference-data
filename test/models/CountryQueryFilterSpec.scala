@@ -391,7 +391,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(NonEuMember)).queryParameters
 
-      listName mustEqual CountryCodesCommonTransitOutsideCommunityList
+      listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
         Common.countryRegimeCode -> Json.obj(
           "$in" -> Seq("TOC")
@@ -436,7 +436,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       listName mustEqual CountryCodesCommonTransitOutsideCommunityList
       selector.expression mustEqual Json.obj(
-        CountryCodesCommonTransitOutsideCommunityListFieldNames.code -> Json.obj(
+        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
           "$nin" -> Seq("aaa", "bbb", "ccc")
         )
       )
@@ -484,12 +484,12 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       val (listName, selector, projection) =
         CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
 
-      listName mustEqual CountryCodesCommonTransitOutsideCommunityList
+      listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
         Common.countryRegimeCode -> Json.obj(
           "$in" -> Seq("TOC")
         ),
-        CountryCodesCommonTransitOutsideCommunityListFieldNames.code -> Json.obj(
+        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
           "$nin" -> Seq("aaa", "bbb", "ccc")
         )
       )
