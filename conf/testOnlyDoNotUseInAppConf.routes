@@ -16,8 +16,6 @@ GET        /transit-movements-trader-reference-data/customs-office/:id          
 
 GET        /transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET        /transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)
-GET        /transit-movements-trader-reference-data/countries-full-list                               controllers.testOnly.CountryController.countriesFullList
-GET        /transit-movements-trader-reference-data/transit-countries                                 controllers.testOnly.CountryController.transitCountries
 
 GET        /transit-movements-trader-reference-data/office-transit                                    controllers.testOnly.OfficeOfTransitController.officesOfTransit
 GET        /transit-movements-trader-reference-data/office-transit/:id                                controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)
@@ -30,8 +28,6 @@ GET        /transit-movements-trader-reference-data/previous-document-type/:code
 
 GET        /transit-movements-trader-reference-data/circumstance-indicators                           controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
 GET        /transit-movements-trader-reference-data/circumstance-indicator/:code                      controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
-
-GET        /transit-movements-trader-reference-data/non-eu-transit-countries                          controllers.testOnly.NonEuCountryController.countriesFullList
 
 GET        /transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
 GET        /transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)

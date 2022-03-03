@@ -17,24 +17,12 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.EuMember
 import models.requests.CountryQueryFilter
-
-import javax.inject.Inject
 import play.api.Environment
 
+import javax.inject.Inject
+
 private[testOnly] class CountryService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
-
-  val countries: Seq[Country] =
-    getData[Country](config.countryCodes).sortBy(_.description)
-
-  val nonEuCountries: Seq[Country] =
-    getData[Country](config.nonEuCountryList).sortBy(_.description)
-
-  def filterTransitCountries(excludedCountries: List[String]) =
-    getData[Country](config.transitCountryCodes).filterNot(
-      country => excludedCountries.contains(country.code)
-    )
 
   def getCountryByCode(code: String): Option[Country] =
     getData[Country](config.countryCodes).find(_.code == code)
