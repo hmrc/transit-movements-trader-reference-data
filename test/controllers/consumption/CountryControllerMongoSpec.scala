@@ -124,35 +124,6 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
     }
 
-    "countriesFullList" - {
-      "must fetch country full list" in {
-
-        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(countriesAsJsObjects))
-
-        val request = FakeRequest(
-          GET,
-          routes.CountryController.countriesFullList.url
-        )
-        val result = route(app, request).value
-
-        status(result) mustBe OK
-        contentAsJson(result) mustBe Json.toJson(countries)
-      }
-
-      "must return NotFound when there is no data" in {
-
-        when(mockReferenceDataService.many(any(), any(), any())).thenReturn(Future.successful(Nil))
-
-        val request = FakeRequest(
-          GET,
-          routes.CountryController.countriesFullList.url
-        )
-        val result = route(app, request).value
-
-        status(result) mustBe NOT_FOUND
-      }
-    }
-
     "getCountry" - {
       "must get correct country and return Ok" in {
 
