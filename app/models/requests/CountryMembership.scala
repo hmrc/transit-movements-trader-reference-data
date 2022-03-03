@@ -23,9 +23,9 @@ sealed abstract class CountryMembership(val urlQueryValue: String, val dbValues:
 
 object CountryMembership {
 
-  case object CtcMember extends CountryMembership("ctc", "TOC", "EEC")
-  case object EuMember  extends CountryMembership("eu", "EEC")
-  case object NonEuMember  extends CountryMembership("non_eu", "TOC")
+  case object CtcMember   extends CountryMembership("ctc", "TOC", "EEC")
+  case object EuMember    extends CountryMembership("eu", "EEC")
+  case object NonEuMember extends CountryMembership("non_eu", "TOC")
 
   val values: Seq[CountryMembership] =
     Seq(CtcMember, EuMember, NonEuMember)

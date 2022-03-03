@@ -21,7 +21,8 @@ import models._
 import models.requests.CountryMembership._
 import models.requests.CustomsOfficeRole._
 import play.api.mvc.QueryStringBindable
-import repositories.{Projection, Selector}
+import repositories.Projection
+import repositories.Selector
 
 final case class CountryQueryFilter(
   customsOfficesRole: Option[CustomsOfficeRole],
@@ -37,7 +38,7 @@ final case class CountryQueryFilter(
       case CountryQueryFilter(None, codes, None)                     => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
       case CountryQueryFilter(None, Nil, Some(EuMember))             => (CountryCodesCommunityList, Selector.All(), None)
       case CountryQueryFilter(None, Nil, Some(CtcMember))            => (CountryCodesCommonTransitList, Selector.All(), None)
-      case CountryQueryFilter(None, Nil, Some(NonEuMember))            => (CountryCodesCommonTransitOutsideCommunityList, Selector.All(), None)
+      case CountryQueryFilter(None, Nil, Some(NonEuMember))          => (CountryCodesCommonTransitOutsideCommunityList, Selector.All(), None)
 
       case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
       case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(NonEuMember)) =>

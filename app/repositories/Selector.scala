@@ -93,12 +93,12 @@ object Selector {
       )
   }
 
-  case class CountryMembershipQuery(membership: CountryMembership*) extends Selector[CountryCodesFullList.type] {
+  case class CountryMembershipQuery(membership: CountryMembership) extends Selector[CountryCodesFullList.type] {
 
     override def expression: JsObject =
       Json.obj(
         "countryRegimeCode" -> Json.obj(
-          "$in" -> membership.toList.flatMap(_.dbValues.toList)
+          "$in" -> membership.dbValues
         )
       )
   }
