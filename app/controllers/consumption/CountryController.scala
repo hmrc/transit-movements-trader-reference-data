@@ -48,7 +48,7 @@ class CountryControllerMongo @Inject() (
 
   override def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action.async {
-      countryQueryFilter.queryParamters match {
+      countryQueryFilter.queryParameters match {
         case (list, query, projection) =>
           referenceDataService
             .many(list, query, projection)

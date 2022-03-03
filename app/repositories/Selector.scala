@@ -98,7 +98,7 @@ object Selector {
     override def expression: JsObject =
       Json.obj(
         "countryRegimeCode" -> Json.obj(
-          "$in" -> membership.toList.map(_.dbValue)
+          "$in" -> membership.toList.flatMap(_.dbValues.toList)
         )
       )
   }

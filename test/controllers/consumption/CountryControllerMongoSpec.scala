@@ -55,7 +55,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
   "CountryController" - {
 
     "get" - {
-      "when the request doesn't have filters, then results from the repoistory returned" in {
+      "when the request doesn't have filters, then results from the repository returned" in {
         when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesFullList), ArgumentMatchers.eq(Selector.All()), any()))
           .thenReturn(Future.successful(countriesAsJsObjects))
 
@@ -66,7 +66,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
         contentAsJson(result) mustBe Json.toJson(countries)
       }
 
-      "when the request filter for customs Offices with any role, then results from the repoistory returned" in {
+      "when the request filter for customs Offices with any role, then results from the repository returned" in {
         when(mockReferenceDataService.many(ArgumentMatchers.eq(CountryCodesCustomsOfficeLists), ArgumentMatchers.eq(Selector.All()), any()))
           .thenReturn(Future.successful(countriesAsJsObjects))
 
@@ -78,7 +78,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       }
 
-      "when the request filter for customs office with any role and excluded coutnries, then results from the repository returned" in {
+      "when the request filter for customs office with any role and excluded countries, then results from the repository returned" in {
         when(
           mockReferenceDataService.many(
             ArgumentMatchers.eq(CountryCodesCustomsOfficeLists),
@@ -95,7 +95,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
         contentAsJson(result) mustBe Json.toJson(countries)
       }
 
-      "when the request filter for and excluded coutnries, then results from the repository returned" in {
+      "when the request filter for and excluded countries, then results from the repository returned" in {
         when(
           mockReferenceDataService.many(
             ArgumentMatchers.eq(CountryCodesFullList),
