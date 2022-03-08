@@ -6,10 +6,13 @@ GET   /customs-office/:id              controllers.consumption.CustomsOfficeCont
 GET   /countries                       controllers.consumption.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET   /countries/:code                 controllers.consumption.CountryController.getCountry(code)
 
+#################
+# Deprecated - will be removed as part of CTCTRADERS-2588
 GET   /countries-full-list             controllers.consumption.CountryController.countriesFullList
 GET   /eu-countries                    controllers.consumption.EuCountriesController.getEUCountries()
 GET   /transit-countries               controllers.consumption.TransitCountriesController.transitCountries(excludeCountries: List[String] ?= Nil)
 GET   /non-eu-transit-countries        controllers.consumption.TransitCountriesController.nonEUTransitCountries(excludeCountries: List[String] ?= Nil)
+#################
 
 GET   /additional-information          controllers.consumption.AdditionalInformationController.getAll()
 

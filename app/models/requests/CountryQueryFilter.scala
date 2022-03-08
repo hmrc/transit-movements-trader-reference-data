@@ -16,18 +16,13 @@
 
 package models.requests
 
-import play.api.mvc.QueryStringBindable
 import cats.implicits._
-import models.ReferenceDataList
-import repositories.Selector
+import models._
+import models.requests.CountryMembership._
+import models.requests.CustomsOfficeRole._
+import play.api.mvc.QueryStringBindable
 import repositories.Projection
-import models.CountryCodesFullList
-import models.CountryCodesCommunityList
-import models.CountryCodesFullList
-import models.CountryCodesCustomsOfficeLists
-import models.CountryCodesCommonTransitList
-import CustomsOfficeRole._
-import CountryMembership._
+import repositories.Selector
 
 final case class CountryQueryFilter(
   customsOfficesRole: Option[CustomsOfficeRole],
@@ -35,30 +30,31 @@ final case class CountryQueryFilter(
   membership: Option[CountryMembership]
 ) {
 
-  def queryParamters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
+  def queryParameters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
     this match {
-      case CountryQueryFilter(None, Nil, None) => (CountryCodesFullList, Selector.All(), None)
+      case CountryQueryFilter(None, codes, membership)    => (referenceDataList(membership), countriesSelector(codes), None)
+      case CountryQueryFilter(Some(_), codes, membership) => (CountryCodesCustomsOfficeLists, customsOfficesSelector(codes, membership), None)
+    }
 
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, None) => (CountryCodesCustomsOfficeLists, Selector.All(), None)
-      case CountryQueryFilter(None, codes, None)                     => (CountryCodesFullList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, Nil, Some(EuMember))             => (CountryCodesCommunityList, Selector.All(), None)
-      case CountryQueryFilter(None, Nil, Some(CtcMember))            => (CountryCodesCommonTransitList, Selector.All(), None)
+  private def countriesSelector(codes: Seq[String]): Selector[ReferenceDataList] =
+    codes match {
+      case Nil => Selector.All()
+      case _   => Selector.ExcludeCountriesCodes(codes)
+    }
 
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, None) => (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(EuMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(EuMember), None)
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), Nil, Some(CtcMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.CountryMembershipQuery(CtcMember, EuMember), None)
-      case CountryQueryFilter(None, codes, Some(EuMember)) =>
-        (CountryCodesCommunityList, Selector.ExcludeCountriesCodes(codes), None)
-      case CountryQueryFilter(None, codes, Some(CtcMember)) =>
-        (CountryCodesCommonTransitList, Selector.ExcludeCountriesCodes(codes), None)
+  private def customsOfficesSelector(codes: Seq[String], membership: Option[CountryMembership]): Selector[ReferenceDataList] =
+    (codes, membership) match {
+      case (_, None)               => countriesSelector(codes)
+      case (Nil, Some(membership)) => Selector.CountryMembershipQuery(membership)
+      case (_, Some(membership))   => Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(membership)
+    }
 
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(EuMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(EuMember), None)
-
-      case CountryQueryFilter(Some(AnyCustomsOfficeRole), codes, Some(CtcMember)) =>
-        (CountryCodesCustomsOfficeLists, Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(CtcMember, EuMember), None)
+  private def referenceDataList(membership: Option[CountryMembership]): ReferenceDataList =
+    membership match {
+      case None              => CountryCodesFullList
+      case Some(CtcMember)   => CountryCodesCommonTransitList
+      case Some(EuMember)    => CountryCodesCommunityList
+      case Some(NonEuMember) => CountryCodesCommonTransitOutsideCommunityList
     }
 }
 

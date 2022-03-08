@@ -19,15 +19,16 @@ package models.requests
 import cats.implicits._
 import play.api.mvc.QueryStringBindable
 
-sealed abstract class CountryMembership(val urlQueryValue: String, val dbValue: String)
+sealed abstract class CountryMembership(val urlQueryValue: String, val dbValues: String*)
 
 object CountryMembership {
 
-  case object CtcMember extends CountryMembership("ctc", "TOC")
-  case object EuMember  extends CountryMembership("eu", "EEC")
+  case object CtcMember   extends CountryMembership("ctc", "TOC", "EEC")
+  case object EuMember    extends CountryMembership("eu", "EEC")
+  case object NonEuMember extends CountryMembership("non_eu", "TOC")
 
   val values: Seq[CountryMembership] =
-    Seq(CtcMember, EuMember)
+    Seq(CtcMember, EuMember, NonEuMember)
 
   val mapping: Map[String, CountryMembership] =
     values
