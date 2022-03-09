@@ -17,7 +17,6 @@
 package controllers.testOnly
 
 import controllers.testOnly.services.CountryService
-import controllers.testOnly.services.TransitCountryService
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -28,8 +27,7 @@ import models.requests.CountryQueryFilter
 
 class CountryController @Inject() (
   cc: ControllerComponents,
-  countryService: CountryService,
-  transitCountryService: TransitCountryService
+  countryService: CountryService
 ) extends BackendController(cc) {
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
@@ -37,19 +35,8 @@ class CountryController @Inject() (
       Ok(Json.toJson(countryService.filterCountries(countryQueryFilter)))
     }
 
-  def countriesFullList(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(countryService.countries))
-    }
-
-  def transitCountries(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(transitCountryService.transitCountryCodes))
-    }
-
   def getCountry(code: String): Action[AnyContent] =
     Action {
-
       countryService
         .getCountryByCode(code)
         .map {

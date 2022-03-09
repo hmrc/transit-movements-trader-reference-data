@@ -36,7 +36,6 @@ class DataServedFromMongoModule extends AbstractModule with Logging {
     bind(classOf[KindsOfPackageController]).to(classOf[KindsOfPackageControllerMongo]).asEagerSingleton()
     bind(classOf[MethodOfPaymentController]).to(classOf[MethodOfPaymentControllerMongo]).asEagerSingleton()
     bind(classOf[PreviousDocumentTypeController]).to(classOf[PreviousDocumentTypeControllerMongo]).asEagerSingleton()
-    bind(classOf[TransitCountriesController]).to(classOf[TransitCountriesControllerMongo]).asEagerSingleton()
     bind(classOf[TransportModeController]).to(classOf[TransportModeControllerMongo]).asEagerSingleton()
   }
 }

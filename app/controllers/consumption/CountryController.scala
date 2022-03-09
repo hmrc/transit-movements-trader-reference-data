@@ -30,13 +30,8 @@ import models.requests.CountryQueryFilter
 import scala.concurrent.ExecutionContext
 
 trait CountryController {
-
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent]
-
-  def countriesFullList(): Action[AnyContent]
-
   def getCountry(code: String): Action[AnyContent]
-
 }
 
 class CountryControllerMongo @Inject() (
@@ -55,22 +50,8 @@ class CountryControllerMongo @Inject() (
             .map {
               case Nil  => NotFound
               case data => Ok(Json.toJson(data))
-
             }
-
       }
-    }
-
-  override def countriesFullList(): Action[AnyContent] =
-    Action.async {
-      referenceDataService
-        .many(CountryCodesFullList, Selector.All())
-        .map {
-          case data if data.nonEmpty =>
-            Ok(Json.toJson(data))
-          case _ =>
-            NotFound
-        }
     }
 
   override def getCountry(code: String): Action[AnyContent] =
