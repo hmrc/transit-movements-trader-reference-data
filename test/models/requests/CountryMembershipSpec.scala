@@ -32,7 +32,7 @@ class CountryMembershipSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryMembership](membership, query).value
 
-          result mustEqual Some(Right(CtcMember))
+          result.value.value mustEqual CtcMember
         }
 
         "when value is eu, must successfully bind and return EuMembership" in {
@@ -40,7 +40,7 @@ class CountryMembershipSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CountryMembership](membership, query).value
 
-          result mustEqual Some(Right(EuMember))
+          result.value.value mustEqual EuMember
         }
 
         "must fail when the value is not recognised" in {
@@ -55,7 +55,7 @@ class CountryMembershipSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[Option[CountryMembership]](membership, query).value
 
-          result mustEqual Some(Right(None))
+          result.value.value must not be defined
         }
       }
 

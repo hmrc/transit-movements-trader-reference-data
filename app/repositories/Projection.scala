@@ -35,7 +35,6 @@ trait Projection[A] {
 }
 
 object Projection {
-  //implicit def writes[T]: OWrites[Projection[T]] = _.expression
 
   case object SuppressId extends Projection[ReferenceDataList] {
     override val expression: Bson = Projections.excludeId()

@@ -46,9 +46,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
         .getDatabase(name)
         .drop()
         .toFuture()
-        .map(
+        .map {
           _ => ()
-        )
+        }
         .recover {
           case _: Throwable => ()
         }
