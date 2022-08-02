@@ -17,15 +17,15 @@
 package models.requests
 
 import base.SpecBase
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import models.ReferenceDataList.Constants._
 import models._
-import repositories.Selector
-import play.api.libs.json.Json
-import play.api.libs.json.JsObject
-import models.requests.CustomsOfficeRole._
 import models.requests.CountryMembership._
-import ReferenceDataList.Constants._
+import models.requests.CustomsOfficeRole._
+import org.mongodb.scala.bson.BsonDocument
+import org.mongodb.scala.model.Filters
 import org.scalacheck.Gen
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import repositories.Selector
 
 class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
   import CountryQueryFilter.FilterKeys._
@@ -311,52 +311,43 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     "when there are excluded countries" in {
       val (listName, selector, projection) = CountryQueryFilter(None, Seq("one", "two"), None).queryParameters
 
-      val selectorJson = (selector.expression \ CountryCodesCustomsOfficeListsFieldNames.code).as[JsObject]
-
       listName mustEqual CountryCodesFullList
-      selectorJson mustEqual Json.obj("$nin" -> Seq("one", "two"))
+      selector.expression mustEqual Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "one", "two")
       projection mustBe None
     }
 
     "when there is restriction on membership when CTC" in {
-
       val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(CtcMember)).queryParameters
 
       listName mustEqual CountryCodesCommonTransitList
-      selector.expression mustEqual Json.obj()
+      selector.expression mustEqual BsonDocument()
       projection mustBe None
     }
 
     "when there is restriction on membership when EU" in {
-
       val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(EuMember)).queryParameters
 
       listName mustEqual CountryCodesCommunityList
-      selector.expression mustEqual Json.obj()
+      selector.expression mustEqual BsonDocument()
       projection mustBe None
     }
 
     "when there is restriction on membership when non-EU" in {
-
       val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(NonEuMember)).queryParameters
 
       listName mustEqual CountryCodesCommonTransitOutsideCommunityList
-      selector.expression mustEqual Json.obj()
+      selector.expression mustEqual BsonDocument()
       projection mustBe None
     }
-
   }
 
   "when there are two filters" - {
     "when there is a restriction on having customs offices with any role and when there are excluded countries" in {
       val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("one", "two"), None).queryParameters
 
-      val selectorJson = (selector.expression \ CountryCodesCustomsOfficeListsFieldNames.code).as[JsObject]
-
       listName mustEqual CountryCodesCustomsOfficeLists
-      selectorJson mustEqual Json.obj("$nin" -> Seq("one", "two"))
+      selector.expression mustEqual Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "one", "two")
       projection mustBe None
-
     }
 
     "when there is a restriction on having customs offices with any role and the membership being CTC" in {
@@ -364,134 +355,81 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(CtcMember)).queryParameters
 
       listName mustEqual CountryCodesCustomsOfficeLists
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("TOC", "EEC")
-        )
-      )
+      selector.expression mustEqual Filters.in(Common.countryRegimeCode, "TOC", "EEC")
       projection mustBe None
-
     }
 
     "when there is a restriction on having customs offices with any role and the membership being EU" in {
-
       val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(EuMember)).queryParameters
 
       listName mustEqual CountryCodesCustomsOfficeLists
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("EEC")
-        )
-      )
+      selector.expression mustEqual Filters.in(Common.countryRegimeCode, "EEC")
       projection mustBe None
-
     }
 
     "when there is a restriction on having customs offices with any role and the membership being non-EU" in {
-
       val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(NonEuMember)).queryParameters
 
       listName mustEqual CountryCodesCustomsOfficeLists
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("TOC")
-        )
-      )
+      selector.expression mustEqual Filters.in(Common.countryRegimeCode, "TOC")
       projection mustBe None
-
     }
 
     "when there are excluded countries and the membership is EU" in {
-
-      val (listName, selector, projection) =
-        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters
 
       listName mustEqual CountryCodesCommunityList
-      selector.expression mustEqual Json.obj(
-        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
-          "$nin" -> Seq("aaa", "bbb", "ccc")
-        )
-      )
+      selector.expression mustEqual Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "aaa", "bbb", "ccc")
       projection mustBe None
     }
 
     "when there are excluded countries and the membership is CTC" in {
-
-      val (listName, selector, projection) =
-        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters
 
       listName mustEqual CountryCodesCommonTransitList
-      selector.expression mustEqual Json.obj(
-        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
-          "$nin" -> Seq("aaa", "bbb", "ccc")
-        )
-      )
+      selector.expression mustEqual Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "aaa", "bbb", "ccc")
       projection mustBe None
     }
 
     "when there are excluded countries and the membership is non-EU" in {
-
-      val (listName, selector, projection) =
-        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
 
       listName mustEqual CountryCodesCommonTransitOutsideCommunityList
-      selector.expression mustEqual Json.obj(
-        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
-          "$nin" -> Seq("aaa", "bbb", "ccc")
-        )
-      )
+      selector.expression mustEqual Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "aaa", "bbb", "ccc")
       projection mustBe None
     }
   }
 
   "when there are three filters" - {
     "when there are is a customs office roles are excluded countries and there is country membership filter for CTC" in {
-
-      val (listName, selector, projection) =
-        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters
 
       listName mustEqual CountryCodesCustomsOfficeLists
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("TOC", "EEC")
-        ),
-        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
-          "$nin" -> Seq("aaa", "bbb", "ccc")
-        )
+      selector.expression mustEqual Filters.and(
+        Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "aaa", "bbb", "ccc"),
+        Filters.in(Common.countryRegimeCode, "TOC", "EEC")
       )
       projection mustBe None
     }
 
     "when there are is a customs office roles are excluded countries and there is country membership filter for EU" in {
-
-      val (listName, selector, projection) =
-        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters
 
       listName mustEqual CountryCodesCustomsOfficeLists
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("EEC")
-        ),
-        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
-          "$nin" -> Seq("aaa", "bbb", "ccc")
-        )
+      selector.expression mustEqual Filters.and(
+        Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "aaa", "bbb", "ccc"),
+        Filters.in(Common.countryRegimeCode, "EEC")
       )
       projection mustBe None
     }
 
     "when there are is a customs office roles are excluded countries and there is country membership filter for non-EU" in {
-
-      val (listName, selector, projection) =
-        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
 
       listName mustEqual CountryCodesCustomsOfficeLists
-      selector.expression mustEqual Json.obj(
-        Common.countryRegimeCode -> Json.obj(
-          "$in" -> Seq("TOC")
-        ),
-        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
-          "$nin" -> Seq("aaa", "bbb", "ccc")
-        )
+      selector.expression mustEqual Filters.and(
+        Filters.nin(CountryCodesCustomsOfficeListsFieldNames.code, "aaa", "bbb", "ccc"),
+        Filters.in(Common.countryRegimeCode, "TOC")
       )
       projection mustBe None
     }

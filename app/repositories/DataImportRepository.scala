@@ -16,108 +16,85 @@
 
 package repositories
 
+import models.ReferenceDataList
+import org.mongodb.scala.model.Indexes.ascending
+import org.mongodb.scala.model._
+import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
+
 import java.time.Clock
 import java.time.Instant
-
 import javax.inject.Inject
 import javax.inject.Singleton
-import models.ReferenceDataList
-import play.api.Logging
-import play.api.libs.json.JsObject
-import play.api.libs.json.Json
-import play.api.libs.json.OFormat
-import play.api.libs.json.Writes
-import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.api.indexes.IndexType
-import reactivemongo.play.json.collection.JSONCollection
-import reactivemongo.play.json.collection.Helpers.idWrites
-
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 @Singleton
-class DataImportRepository @Inject() (mongo: ReactiveMongoApi, clock: Clock)(implicit ec: ExecutionContext) extends Logging {
+class DataImportRepository @Inject() (
+  mongoComponent: MongoComponent,
+  clock: Clock
+)(implicit ec: ExecutionContext)
+    extends PlayMongoRepository[DataImport](
+      mongoComponent = mongoComponent,
+      collectionName = DataImportRepository.collectionName,
+      domainFormat = DataImport.format,
+      indexes = DataImportRepository.indexes
+    ) {
 
-  implicit private val dataImportFormat: OFormat[DataImport] = DataImport.mongoFormat
-
-  implicit val writes: Writes[ImportStatus.Complete.type] = implicitly[Writes[String]].contramap(_.toString)
-
-  private val importIdIndex =
-    IndexUtils.index(
-      key = Seq("importId" -> IndexType.Ascending),
-      name = Some("import-id-index"),
-      unique = true
-    )
-
-  private def collection: Future[JSONCollection] =
-    for {
-      coll <- mongo.database.map(_.collection[JSONCollection](DataImportRepository.collectionName))
-      _    <- coll.indexesManager.ensure(importIdIndex)
-    } yield coll
-
-  // TODO: Introduce e.g. InsertResult rather than Boolean?
   def insert(dataImport: DataImport): Future[Boolean] =
-    collection.flatMap {
-      _.insert(ordered = false)
-        .one(dataImport)
-        .map(
-          _ => true
-        )
-    } recover {
-      case e: Throwable =>
-        logger.error("Error creating a DataImport record", e)
-        false
-    }
+    collection
+      .insertOne(dataImport)
+      .toFuture()
+      .map(_.wasAcknowledged())
 
-  def get(importId: ImportId): Future[Option[DataImport]] = {
-
-    val selector = Json.obj("importId" -> importId)
-
-    collection.flatMap {
-      _.find[JsObject, DataImport](selector, projection = None)
-        .one[DataImport]
-    }
-  }
+  def get(importId: ImportId): Future[Option[DataImport]] =
+    collection
+      .find(Filters.eq("importId", importId.value))
+      .headOption()
 
   def markFinished(importId: ImportId, status: ImportStatus): Future[DataImport] = {
+    val filter = Filters.eq("importId", importId.value)
 
-    import MongoInstantFormats._
-
-    val selector = Json.obj("importId" -> Json.toJson(importId))
-
-    val update = Json.obj(
-      "$set" -> Json.obj(
-        "status"   -> Json.toJson(status),
-        "finished" -> Json.toJson(Instant.now(clock))
-      )
+    val update = Updates.combine(
+      Updates.set("status", status.toString),
+      Updates.set("finished", Instant.now(clock))
     )
 
-    collection.flatMap {
-      _.findAndUpdate(selector, update, upsert = false, fetchNewObject = true)
-        .map {
-          _.result[DataImport].getOrElse(throw new Exception(s"Unable to mark import ${importId.value} as finished"))
-        }
-    }
+    val options = FindOneAndUpdateOptions()
+      .upsert(false)
+      .returnDocument(ReturnDocument.AFTER)
+
+    collection
+      .findOneAndUpdate(filter, update, options)
+      .toFuture()
   }
 
   def currentImportId(list: ReferenceDataList): Future[Option[ImportId]] = {
-
-    val selector = Json.obj(
-      "list"   -> list.listName,
-      "status" -> Json.toJson(ImportStatus.Complete)
+    val filter = Filters.and(
+      Filters.eq("list", list.listName),
+      Filters.eq("status", ImportStatus.Complete.toString)
     )
 
-    val byMostRecent = Json.obj("importId" -> -1)
-
-    collection.flatMap {
-      _.find[JsObject, DataImport](selector, projection = None)
-        .sort(byMostRecent)
-        .one[DataImport]
-        .map(_.map(_.importId))
-    }
+    collection
+      .find(filter)
+      .sort(Sorts.descending("importId"))
+      .map(_.importId)
+      .headOption()
   }
 }
 
 object DataImportRepository {
   val collectionName: String = "data-imports"
+
+  val indexes: Seq[IndexModel] = {
+    val importIdIndex: IndexModel =
+      IndexModel(
+        keys = ascending("importId"),
+        indexOptions = IndexOptions().name("import-id-index").unique(true)
+      )
+
+    Seq(
+      importIdIndex
+    )
+  }
 }

@@ -10,7 +10,7 @@ object AppDependencies {
 
   val compile: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"        %% "bootstrap-backend-play-28"          % "5.24.0",
-    "org.reactivemongo"  %% "play2-reactivemongo"                % "0.20.13-play28",
+    "uk.gov.hmrc.mongo"  %% "hmrc-mongo-play-28"                 % mongoVersion,
     "com.typesafe.play"  %% "play-iteratees"                     % "2.6.1",
     "com.typesafe.play"  %% "play-iteratees-reactive-streams"    % "2.6.1",
     "org.typelevel"      %% "cats-core"                          % catsVersion,
@@ -18,6 +18,7 @@ object AppDependencies {
   )
 
   val test: Seq[ModuleID] = Seq(
+    "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-28"  % mongoVersion,
     "org.scalatest"          %% "scalatest"                % "3.2.12",
     "com.typesafe.play"      %% "play-test"                % current,
     "org.scalatestplus.play" %% "scalatestplus-play"       % "5.1.0",

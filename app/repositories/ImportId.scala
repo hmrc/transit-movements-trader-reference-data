@@ -16,13 +16,7 @@
 
 package repositories
 
-import play.api.libs.json.JsError
-import play.api.libs.json.JsNumber
-import play.api.libs.json.JsResult
-import play.api.libs.json.JsSuccess
-import play.api.libs.json.JsValue
-import play.api.libs.json.Reads
-import play.api.libs.json.Writes
+import play.api.libs.json._
 
 import scala.util.Failure
 import scala.util.Success
@@ -37,16 +31,31 @@ object ImportId {
       JsNumber(importId.value)
   }
 
-  implicit val reads: Reads[ImportId] = new Reads[ImportId] {
-
-    override def reads(json: JsValue): JsResult[ImportId] =
-      json match {
-        case JsNumber(num) =>
-          Try(num.toIntExact) match {
-            case Failure(_)     => JsError("Expected number to be an integer")
-            case Success(value) => JsSuccess(ImportId(value))
-          }
-        case _ => JsError("Expected JSON number type")
+  implicit val reads: Reads[ImportId] = {
+    case JsNumber(num) =>
+      Try(num.toIntExact) match {
+        case Failure(_)     => JsError("Expected number to be an integer")
+        case Success(value) => JsSuccess(ImportId(value))
       }
+    case _ => JsError("Expected JSON number type")
+  }
+
+  val mongoFormat: Format[ImportId] = {
+    val reads: Reads[ImportId] =
+      (__ \ "import-id")
+        .read[Int]
+        .map(
+          x => ImportId(x)
+        )
+
+    val writes: Writes[ImportId] = Writes {
+      importId =>
+        Json.obj(
+          "_id"       -> "last-id",
+          "import-id" -> importId.value
+        )
+    }
+
+    Format(reads, writes)
   }
 }

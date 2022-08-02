@@ -17,8 +17,8 @@
 package models.requests
 
 import base.SpecBase
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import models.requests.CountryMembership._
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class CountryMembershipSpec extends SpecBase with ScalaCheckPropertyChecks {
   import CountryQueryFilter.FilterKeys.membership

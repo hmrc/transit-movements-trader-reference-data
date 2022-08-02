@@ -16,154 +16,263 @@
 
 package repositories
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import logging.Logging
 import models.ReferenceDataList.Constants.Common
-import models.AdditionalInformationIdCommonList
-import models.ControlResultList
-import models.CountryCodesCommonTransitList
-import models.CountryCodesCommonTransitOutsideCommunityList
-import models.CountryCodesCommunityList
-import models.CountryCodesCustomsOfficeLists
-import models.CountryCodesFullList
-import models.CustomsOfficesList
-import models.DocumentTypeCommonList
-import models.KindOfPackagesList
-import models.PreviousDocumentTypeCommonList
-import models.ReferenceDataList
-import models.SpecificCircumstanceIndicatorList
-import models.TransportChargesMethodOfPaymentList
-import models.TransportModeList
-import models.UnDangerousGoodsCodeList
+import models._
+import org.mongodb.scala.bson.BsonDocument
+import org.mongodb.scala.model.Filters
+import org.mongodb.scala.model.IndexModel
+import org.mongodb.scala.model.IndexOptions
+import org.mongodb.scala.model.Indexes._
+import play.api.libs.json.Format
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
-import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.api.Cursor
-import reactivemongo.api.bson.collection.BSONSerializationPack
-import reactivemongo.api.indexes.Index.Aux
-import reactivemongo.api.indexes.IndexType
-import reactivemongo.play.json.collection.Helpers.idWrites
-import reactivemongo.play.json.collection.JSONCollection
-import repositories.IndexUtils.index
+import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
+import javax.inject.Inject
+import javax.inject.Singleton
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
-@Singleton
-class ListRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) extends Logging {
+class ListRepository @Inject() (
+  mongoComponent: MongoComponent,
+  referenceDataList: ReferenceDataList,
+  indexes: Seq[IndexModel]
+)(implicit ec: ExecutionContext)
+    extends PlayMongoRepository[JsObject](
+      mongoComponent = mongoComponent,
+      collectionName = referenceDataList.listName,
+      indexes = indexes,
+      domainFormat = implicitly[Format[JsObject]]
+    )
+    with Logging {
 
-  private def innerCollection(list: ReferenceDataList): Future[JSONCollection] = mongo.database.map(_.collection[JSONCollection](list.listName))
+  def one[A <: ReferenceDataList, B <: A](selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
+    collection
+      .find(selector.expression)
+      .projection(projection.map(_.expression).getOrElse(BsonDocument()))
+      .headOption()
 
-  def collection(list: ReferenceDataList): Future[JSONCollection] =
-    started.flatMap {
-      _ => innerCollection(list)
-    }
+  def many[A <: ReferenceDataList, B <: A](selector: Selector[A], projection: Option[Projection[B]] = None): Future[Seq[JsObject]] =
+    collection
+      .find(selector.expression)
+      .projection(projection.map(_.expression).getOrElse(BsonDocument()))
+      .toFuture()
 
-  def one[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
-    collection(list).flatMap {
-      _.find(selector.expression, projection = projection)
-        .one[JsObject]
-    }
-
-  def many[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Seq[JsObject]] =
-    collection(list).flatMap {
-      _.find(selector.expression, projection = projection)
-        .cursor[JsObject]()
-        .collect[Seq](-1, Cursor.FailOnError())
-    }
-
-  def insert(list: ReferenceDataList, importId: ImportId, values: Seq[JsObject]): Future[Boolean] = {
-
+  def insert(importId: ImportId, values: Seq[JsObject]): Future[Boolean] = {
     val enrichedValues = values.map(_ ++ Json.obj("importId" -> Json.toJson(importId)))
 
-    collection(list).flatMap {
-      _.insert(ordered = false)
-        .many[JsObject](enrichedValues)
-        .map(
-          _ => true
-        )
-        .recover {
-          case e: Throwable =>
-            logger.error(s"Error inserting s${list.listName}", e)
-            throw e
-        }
-    }
+    collection
+      .insertMany(enrichedValues)
+      .toFuture()
+      .map(_.wasAcknowledged())
   }
 
-  def deleteOldImports(list: ReferenceDataList, currentImportId: ImportId): Future[Boolean] = {
+  def deleteOldImports(currentImportId: ImportId): Future[Boolean] = {
+    val filter = Filters.lt("importId", currentImportId.value)
 
-    val selector = Json.obj("importId" -> Json.obj("$lt" -> Json.toJson(currentImportId)))
-
-    collection(list).flatMap {
-      _.remove(selector)
-        .map {
-          result =>
-            logger.info(s"Deleted ${result.n} ${list.listName} records with import ids less than $currentImportId")
-            true
-        }
-    } recover {
-      case e: Exception =>
-        logger.error(s"Error trying to delete ${list.listName} data with import ids less than ${currentImportId.value}", e)
-        false
-    }
-  }
-
-  private lazy val started: Future[List[Boolean]] =
-    Future.sequence(
-      ListRepository.indexes.map {
-        indexOnList =>
-          innerCollection(indexOnList.list)
-            .flatMap(
-              _.indexesManager.ensure(indexOnList.index)
-            )
+    collection
+      .deleteMany(filter)
+      .toFuture()
+      .map {
+        result =>
+          logger.info(s"Deleted ${result.getDeletedCount} $collectionName records with import ids less than $currentImportId")
+          result.wasAcknowledged()
       }
-    )
+  }
 }
 
 object ListRepository {
-  case class IndexOnList(list: ReferenceDataList, index: Aux[BSONSerializationPack.type])
 
-  val indexes: List[IndexOnList] = List(
-    IndexOnList(CountryCodesFullList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(CountryCodesFullList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(
-      CountryCodesFullList,
-      index(Seq(Common.countryRegimeCode -> IndexType.Descending, "code" -> IndexType.Ascending), Some("countryRegimeCode-code-index"))
-    ),
-    IndexOnList(CountryCodesCommonTransitList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(CountryCodesCommonTransitList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(CountryCodesCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(CountryCodesCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(CustomsOfficesList, index(Seq("id" -> IndexType.Ascending), Some("id-index"))),
-    IndexOnList(CustomsOfficesList, index(Seq("countryId" -> IndexType.Ascending), Some("country-id-index"))),
-    IndexOnList(CustomsOfficesList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(CustomsOfficesList, index(Seq("roles.role" -> IndexType.Ascending), Some("customs-role-index"))),
-    IndexOnList(DocumentTypeCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(DocumentTypeCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(PreviousDocumentTypeCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(PreviousDocumentTypeCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(KindOfPackagesList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(KindOfPackagesList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(TransportModeList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(TransportModeList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(AdditionalInformationIdCommonList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(AdditionalInformationIdCommonList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(SpecificCircumstanceIndicatorList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(SpecificCircumstanceIndicatorList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(UnDangerousGoodsCodeList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(UnDangerousGoodsCodeList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(TransportChargesMethodOfPaymentList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(TransportChargesMethodOfPaymentList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(ControlResultList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(ControlResultList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(CountryCodesCommonTransitOutsideCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
-    IndexOnList(CountryCodesCustomsOfficeLists, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
-    IndexOnList(
-      CountryCodesCustomsOfficeLists,
-      index(Seq(Common.countryRegimeCode -> IndexType.Descending, "code" -> IndexType.Ascending), Some("countryRegimeCode-code-index"))
-    )
-  )
+  class ListRepositoryProvider @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext) {
+
+    def apply(list: ReferenceDataList): ListRepository = list match {
+      case CountryCodesFullList                          => new CountryCodesFullListRepository(mongoComponent)
+      case CountryCodesCommonTransitList                 => new CountryCodesCommonTransitListRepository(mongoComponent)
+      case CountryCodesCommunityList                     => new CountryCodesCommunityListRepository(mongoComponent)
+      case CustomsOfficesList                            => new CustomsOfficesListRepository(mongoComponent)
+      case DocumentTypeCommonList                        => new DocumentTypeCommonListRepository(mongoComponent)
+      case PreviousDocumentTypeCommonList                => new PreviousDocumentTypeCommonListRepository(mongoComponent)
+      case KindOfPackagesList                            => new KindOfPackagesListRepository(mongoComponent)
+      case TransportModeList                             => new TransportModeListRepository(mongoComponent)
+      case AdditionalInformationIdCommonList             => new AdditionalInformationIdCommonListRepository(mongoComponent)
+      case SpecificCircumstanceIndicatorList             => new SpecificCircumstanceIndicatorListRepository(mongoComponent)
+      case UnDangerousGoodsCodeList                      => new UnDangerousGoodsCodeListRepository(mongoComponent)
+      case TransportChargesMethodOfPaymentList           => new TransportChargesMethodOfPaymentListRepository(mongoComponent)
+      case ControlResultList                             => new ControlResultListRepository(mongoComponent)
+      case CountryCodesCommonTransitOutsideCommunityList => new CountryCodesCommonTransitOutsideCommunityListRepository(mongoComponent)
+      case CountryCodesCustomsOfficeLists                => new CountryCodesCustomsOfficeListRepository(mongoComponent)
+    }
+  }
+
+  @Singleton
+  class CountryCodesFullListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = CountryCodesFullList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class CountryCodesCommonTransitListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = CountryCodesCommonTransitList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
+          IndexModel(compoundIndex(descending(Common.countryRegimeCode), ascending("code")), IndexOptions().name("countryRegimeCode-code-index"))
+        )
+      )
+
+  @Singleton
+  class CountryCodesCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = CountryCodesCommunityList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class CustomsOfficesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = CustomsOfficesList,
+        indexes = Seq(
+          IndexModel(ascending("id"), IndexOptions().name("id-index")),
+          IndexModel(ascending("countryId"), IndexOptions().name("country-id-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
+          IndexModel(ascending("roles.role"), IndexOptions().name("customs-role-index"))
+        )
+      )
+
+  @Singleton
+  class DocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = DocumentTypeCommonList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class PreviousDocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = PreviousDocumentTypeCommonList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class KindOfPackagesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = KindOfPackagesList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class TransportModeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = TransportModeList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class AdditionalInformationIdCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = AdditionalInformationIdCommonList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class SpecificCircumstanceIndicatorListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = SpecificCircumstanceIndicatorList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class UnDangerousGoodsCodeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = UnDangerousGoodsCodeList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class TransportChargesMethodOfPaymentListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = TransportChargesMethodOfPaymentList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class ControlResultListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = ControlResultList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class CountryCodesCommonTransitOutsideCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = CountryCodesCommonTransitOutsideCommunityList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
+      )
+
+  @Singleton
+  class CountryCodesCustomsOfficeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = CountryCodesCustomsOfficeLists,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
+          IndexModel(compoundIndex(descending(Common.countryRegimeCode), ascending("code")), IndexOptions().name("countryRegimeCode-code-index"))
+        )
+      )
+
 }

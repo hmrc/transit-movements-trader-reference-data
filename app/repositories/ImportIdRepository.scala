@@ -16,75 +16,39 @@
 
 package repositories
 
+import org.mongodb.scala.model._
+import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
+
 import javax.inject.Inject
 import javax.inject.Singleton
-import play.api.libs.json.Json
-import play.api.libs.json.Reads
-import play.api.libs.json.__
-import play.modules.reactivemongo.ReactiveMongoApi
-import reactivemongo.api.commands.LastError
-import reactivemongo.play.json.collection.Helpers.idWrites
-import reactivemongo.play.json.collection.JSONCollection
-
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 @Singleton
-class ImportIdRepository @Inject() (mongo: ReactiveMongoApi)(implicit ec: ExecutionContext) {
-
-  val recordId: String  = "last-id"
-  val fieldName: String = "import-id"
-  val startingSeed: Int = 0
-
-  implicit private val importIdReads: Reads[ImportId] =
-    (__ \ fieldName)
-      .read[Int]
-      .map(
-        x => ImportId(x)
-      )
-
-  private def collection: Future[JSONCollection] =
-    for {
-      _    <- seed
-      coll <- mongo.database.map(_.collection[JSONCollection](ImportIdRepository.collectionName))
-    } yield coll
-
-  private val seed: Future[Boolean] = {
-
-    val document       = Json.obj("_id" -> recordId, fieldName -> startingSeed)
-    val documentExists = 11000
-
-    def coll: Future[JSONCollection] =
-      mongo.database.map(_.collection[JSONCollection](ImportIdRepository.collectionName))
-
-    coll.flatMap {
-      _.insert(ordered = false)
-        .one(document)
-        .map(
-          _ => true
-        )
-    } recover {
-      case e: LastError if e.code contains documentExists =>
-        true
-    }
-  }
+class ImportIdRepository @Inject() (
+  mongoComponent: MongoComponent
+)(implicit ec: ExecutionContext)
+    extends PlayMongoRepository[ImportId](
+      mongoComponent = mongoComponent,
+      collectionName = ImportIdRepository.collectionName,
+      domainFormat = ImportId.mongoFormat,
+      indexes = ImportIdRepository.indexes
+    ) {
 
   def nextId: Future[ImportId] = {
+    val filter = Filters.eq("_id", "last-id")
 
-    val selector = Json.obj("_id" -> recordId)
+    val update = Updates.inc("import-id", 1)
 
-    val update = Json.obj("$inc" -> Json.obj(fieldName -> 1))
-
-    collection.flatMap {
-      _.findAndUpdate(selector, update, fetchNewObject = true)
-        .map {
-          _.result[ImportId]
-            .getOrElse(throw new Exception("Unable to generate the next import id"))
-        }
-    }
+    collection
+      .findOneAndUpdate(filter, update, FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER))
+      .toFuture()
   }
 }
 
 object ImportIdRepository {
   val collectionName: String = "import-ids"
+
+  val indexes: Seq[IndexModel] = Nil
 }
