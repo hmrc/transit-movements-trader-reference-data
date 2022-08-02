@@ -20,12 +20,15 @@ import models.ReferenceDataList
 import org.mongodb.scala.MongoClient
 import org.scalacheck.Gen
 import org.scalactic.Uniformity
-import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatest.concurrent.IntegrationPatience
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.{BeforeAndAfterEach, OptionValues}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.OptionValues
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.JsObject
+import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
@@ -43,7 +46,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
         .getDatabase(name)
         .drop()
         .toFuture()
-        .map(_ => ())
+        .map(
+          _ => ()
+        )
         .recover {
           case _: Throwable => ()
         }
