@@ -20,7 +20,7 @@ GET   /previous-document-type/:code    controllers.consumption.PreviousDocumentT
 
 GET   /method-of-payment               controllers.consumption.MethodOfPaymentController.getAll()
 
-GET   /dangerous-goods-codes            controllers.consumption.DangerousGoodsCodesController.dangerousGoodsCodes()
+GET   /dangerous-goods-codes           controllers.consumption.DangerousGoodsCodesController.dangerousGoodsCodes()
 GET   /dangerous-goods-code/:code      controllers.consumption.DangerousGoodsCodesController.getDangerousGoodsCode(code)
 
 GET   /circumstance-indicators         controllers.consumption.CircumstanceIndicatorController.circumstanceIndicators

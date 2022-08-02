@@ -20,20 +20,18 @@ import models.ReferenceDataList
 import org.mongodb.scala.MongoClient
 import org.scalacheck.Gen
 import org.scalactic.Uniformity
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.OptionValues
-import org.scalatest.concurrent.IntegrationPatience
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
+import org.scalatest.{BeforeAndAfterEach, OptionValues}
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.JsObject
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers.running
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
 
 import java.time.Instant
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndAfterEach with ScalaFutures with IntegrationPatience with OptionValues {
 
@@ -41,10 +39,15 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
     val client = MongoClient()
 
     def dropDatabase(name: String): Unit =
-      try client.getDatabase(name).drop().toFuture().futureValue
-      catch {
-        case _: Throwable => ()
-      }
+      client
+        .getDatabase(name)
+        .drop()
+        .toFuture()
+        .map(_ => ())
+        .recover {
+          case _: Throwable => ()
+        }
+        .futureValue
 
     client.listDatabaseNames().map(dropDatabase).toFuture().futureValue
   }
