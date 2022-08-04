@@ -291,7 +291,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
   "queryParameters" - {
 
     "when there are no filters" in {
-      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, None).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, None).queryParameters()
 
       listName mustEqual CountryCodesFullList
       selector mustEqual Selector.All()
@@ -300,7 +300,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is one filter" - {
       "when there is a restriction on having customs offices with any role" in {
-        val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, None).queryParameters
+        val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, None).queryParameters()
 
         listName mustEqual CountryCodesCustomsOfficeLists
         selector mustEqual Selector.All()
@@ -309,7 +309,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     }
 
     "when there are excluded countries" in {
-      val (listName, selector, projection) = CountryQueryFilter(None, Seq("one", "two"), None).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq("one", "two"), None).queryParameters()
 
       val selectorJson = (selector.expression \ CountryCodesCustomsOfficeListsFieldNames.code).as[JsObject]
 
@@ -320,7 +320,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is restriction on membership when CTC" in {
 
-      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(CtcMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(CtcMember)).queryParameters()
 
       listName mustEqual CountryCodesCommonTransitList
       selector.expression mustEqual Json.obj()
@@ -329,7 +329,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is restriction on membership when EU" in {
 
-      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(EuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(EuMember)).queryParameters()
 
       listName mustEqual CountryCodesCommunityList
       selector.expression mustEqual Json.obj()
@@ -338,7 +338,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is restriction on membership when non-EU" in {
 
-      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(NonEuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(None, Seq.empty, Some(NonEuMember)).queryParameters()
 
       listName mustEqual CountryCodesCommonTransitOutsideCommunityList
       selector.expression mustEqual Json.obj()
@@ -349,7 +349,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
   "when there are two filters" - {
     "when there is a restriction on having customs offices with any role and when there are excluded countries" in {
-      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("one", "two"), None).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("one", "two"), None).queryParameters()
 
       val selectorJson = (selector.expression \ CountryCodesCustomsOfficeListsFieldNames.code).as[JsObject]
 
@@ -361,7 +361,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is a restriction on having customs offices with any role and the membership being CTC" in {
 
-      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(CtcMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(CtcMember)).queryParameters()
 
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
@@ -375,7 +375,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is a restriction on having customs offices with any role and the membership being EU" in {
 
-      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(EuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(EuMember)).queryParameters()
 
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
@@ -389,7 +389,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "when there is a restriction on having customs offices with any role and the membership being non-EU" in {
 
-      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(NonEuMember)).queryParameters
+      val (listName, selector, projection) = CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq.empty, Some(NonEuMember)).queryParameters()
 
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
@@ -404,7 +404,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     "when there are excluded countries and the membership is EU" in {
 
       val (listName, selector, projection) =
-        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters
+        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters()
 
       listName mustEqual CountryCodesCommunityList
       selector.expression mustEqual Json.obj(
@@ -415,10 +415,10 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       projection mustBe None
     }
 
-    "when there are excluded countries and the membership is CTC" in {
+    "when there are excluded countries and the membership is CTC and we have no version" in {
 
       val (listName, selector, projection) =
-        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters
+        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters(None)
 
       listName mustEqual CountryCodesCommonTransitList
       selector.expression mustEqual Json.obj(
@@ -429,10 +429,39 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
       projection mustBe None
     }
 
+    "when there are excluded countries and the membership is CTC Version 1" in {
+
+      val (listName, selector, projection) =
+        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters(Some(Version1))
+
+      listName mustEqual CountryCodesCommonTransitList
+      selector.expression mustEqual Json.obj(
+        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
+          "$nin" -> Seq("aaa", "bbb", "ccc")
+        )
+      )
+      projection mustBe None
+    }
+
+    "when there are excluded countries and the membership is CTC Version 2" in {
+
+      val (listName, selector, projection) =
+        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters(Some(Version2))
+
+      listName mustEqual CountryCodesCommonTransitListVersion2
+      selector.expression mustEqual Json.obj(
+        CountryCodesCustomsOfficeListsFieldNames.code -> Json.obj(
+          "$nin" -> Seq("aaa", "bbb", "ccc")
+        )
+      )
+      projection mustBe None
+    }
+
+
     "when there are excluded countries and the membership is non-EU" in {
 
       val (listName, selector, projection) =
-        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
+        CountryQueryFilter(None, Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters()
 
       listName mustEqual CountryCodesCommonTransitOutsideCommunityList
       selector.expression mustEqual Json.obj(
@@ -448,7 +477,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     "when there are is a customs office roles are excluded countries and there is country membership filter for CTC" in {
 
       val (listName, selector, projection) =
-        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters
+        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(CtcMember)).queryParameters()
 
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
@@ -465,7 +494,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     "when there are is a customs office roles are excluded countries and there is country membership filter for EU" in {
 
       val (listName, selector, projection) =
-        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters
+        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(EuMember)).queryParameters()
 
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(
@@ -482,7 +511,7 @@ class CountryQueryFilterSpec extends SpecBase with ScalaCheckPropertyChecks {
     "when there are is a customs office roles are excluded countries and there is country membership filter for non-EU" in {
 
       val (listName, selector, projection) =
-        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters
+        CountryQueryFilter(Some(AnyCustomsOfficeRole), Seq("aaa", "bbb", "ccc"), Some(NonEuMember)).queryParameters()
 
       listName mustEqual CountryCodesCustomsOfficeLists
       selector.expression mustEqual Json.obj(

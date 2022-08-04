@@ -30,9 +30,9 @@ final case class CountryQueryFilter(
   membership: Option[CountryMembership]
 ) {
 
-  def queryParameters: (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
+  def queryParameters(version: Option[Version] = None): (ReferenceDataList, Selector[ReferenceDataList], Option[Projection[ReferenceDataList]]) =
     this match {
-      case CountryQueryFilter(None, codes, membership)    => (referenceDataList(membership), countriesSelector(codes), None)
+      case CountryQueryFilter(None, codes, membership)    => (referenceDataList(membership, version), countriesSelector(codes), None)
       case CountryQueryFilter(Some(_), codes, membership) => (CountryCodesCustomsOfficeLists, customsOfficesSelector(codes, membership), None)
     }
 
@@ -49,12 +49,13 @@ final case class CountryQueryFilter(
       case (_, Some(membership))   => Selector.ExcludeCountriesCodes(codes) and Selector.CountryMembershipQuery(membership)
     }
 
-  private def referenceDataList(membership: Option[CountryMembership]): ReferenceDataList =
-    membership match {
-      case None              => CountryCodesFullList
-      case Some(CtcMember)   => CountryCodesCommonTransitList
-      case Some(EuMember)    => CountryCodesCommunityList
-      case Some(NonEuMember) => CountryCodesCommonTransitOutsideCommunityList
+  private def referenceDataList(membership: Option[CountryMembership], version: Option[Version]): ReferenceDataList =
+    (membership, version) match {
+      case (None, _)                    => CountryCodesFullList
+      case (Some(CtcMember), Some(Version2))   => CountryCodesCommonTransitListVersion2
+      case (Some(CtcMember), _)         => CountryCodesCommonTransitList
+      case (Some(EuMember), _)          => CountryCodesCommunityList
+      case (Some(NonEuMember), _)       => CountryCodesCommonTransitOutsideCommunityList
     }
 }
 

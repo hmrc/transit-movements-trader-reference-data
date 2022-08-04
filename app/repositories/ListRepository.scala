@@ -20,22 +20,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import logging.Logging
 import models.ReferenceDataList.Constants.Common
-import models.AdditionalInformationIdCommonList
-import models.ControlResultList
-import models.CountryCodesCommonTransitList
-import models.CountryCodesCommonTransitOutsideCommunityList
-import models.CountryCodesCommunityList
-import models.CountryCodesCustomsOfficeLists
-import models.CountryCodesFullList
-import models.CustomsOfficesList
-import models.DocumentTypeCommonList
-import models.KindOfPackagesList
-import models.PreviousDocumentTypeCommonList
-import models.ReferenceDataList
-import models.SpecificCircumstanceIndicatorList
-import models.TransportChargesMethodOfPaymentList
-import models.TransportModeList
-import models.UnDangerousGoodsCodeList
+import models.{AdditionalInformationIdCommonList, ControlResultList, CountryCodesCommonTransitList, CountryCodesCommonTransitListVersion2, CountryCodesCommonTransitOutsideCommunityList, CountryCodesCommunityList, CountryCodesCustomsOfficeLists, CountryCodesFullList, CustomsOfficesList, DocumentTypeCommonList, KindOfPackagesList, PreviousDocumentTypeCommonList, ReferenceDataList, SpecificCircumstanceIndicatorList, TransportChargesMethodOfPaymentList, TransportModeList, UnDangerousGoodsCodeList}
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoApi
@@ -133,6 +118,8 @@ object ListRepository {
     ),
     IndexOnList(CountryCodesCommonTransitList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(CountryCodesCommonTransitList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
+    IndexOnList(CountryCodesCommonTransitListVersion2, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
+    IndexOnList(CountryCodesCommonTransitListVersion2, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(CountryCodesCommunityList, index(Seq("code" -> IndexType.Ascending), Some("code-index"))),
     IndexOnList(CountryCodesCommunityList, index(Seq("importId" -> IndexType.Ascending), Some("import-id-index"))),
     IndexOnList(CustomsOfficesList, index(Seq("id" -> IndexType.Ascending), Some("id-index"))),

@@ -16,6 +16,7 @@
 
 package controllers.consumption
 
+import config.Constants
 import services.ReferenceDataService
 import javax.inject.Inject
 import models.CountryCodesFullList
@@ -25,7 +26,7 @@ import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import repositories.Selector
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import models.requests.CountryQueryFilter
+import models.requests.{CountryQueryFilter, Version1, Version2}
 
 import scala.concurrent.ExecutionContext
 
@@ -43,15 +44,28 @@ class CountryControllerMongo @Inject() (
 
   override def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action.async {
-      countryQueryFilter.queryParameters match {
-        case (list, query, projection) =>
-          referenceDataService
-            .many(list, query, projection)
-            .map {
-              case Nil  => NotFound
-              case data => Ok(Json.toJson(data))
+      request =>
+        val version = request.headers.get("Accept") match {
+          case Some(value) =>
+            value match {
+              case Constants.AcceptHeaderPattern(version, contentType) =>
+                (version, contentType) match {
+                  case ("1.0", "json") => Some(Version1)
+                  case ("2.0", "json") => Some(Version2)
+                  case _ => None
+                }
             }
-      }
+          case None => None
+        }
+        countryQueryFilter.queryParameters(version) match {
+          case (list, query, projection) =>
+            referenceDataService
+              .many(list, query, projection)
+              .map {
+                case Nil  => NotFound
+                case data => Ok(Json.toJson(data))
+              }
+        }
     }
 
   override def getCountry(code: String): Action[AnyContent] =

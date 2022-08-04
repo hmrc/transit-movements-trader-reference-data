@@ -16,10 +16,9 @@
 
 package controllers.consumption
 
-import models.Country
+import models.{Country, CountryCodesCommonTransitList, CountryCodesCommonTransitListVersion2, CountryCodesCustomsOfficeLists, CountryCodesFullList}
 import services.ReferenceDataService
 import base.SpecBaseWithAppPerSuite
-import models.CountryCodesCustomsOfficeLists
 import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -33,7 +32,6 @@ import play.api.test.Helpers.status
 import play.api.test.Helpers._
 
 import scala.concurrent.Future
-import models.CountryCodesFullList
 import repositories.Selector
 
 class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
@@ -78,6 +76,7 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
 
       }
 
+
       "when the request filter for customs office with any role and excluded countries, then results from the repository returned" in {
         when(
           mockReferenceDataService.many(
@@ -106,6 +105,42 @@ class CountryControllerMongoSpec extends SpecBaseWithAppPerSuite {
           .thenReturn(Future.successful(countriesAsJsObjects))
 
         val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?exclude=AA&exclude=BB")
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+      }
+
+      "when the request filter for CTC Version1 and excluded countries, then results from the repository returned" in {
+        when(
+          mockReferenceDataService.many(
+            ArgumentMatchers.eq(CountryCodesCommonTransitList),
+            ArgumentMatchers.eq(Selector.ExcludeCountriesCodes(Seq("AA", "BB"))),
+            any()
+          )
+        )
+          .thenReturn(Future.successful(countriesAsJsObjects))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?exclude=AA&exclude=BB&membership=ctc")
+        val result  = route(app, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe Json.toJson(countries)
+      }
+
+      "when the request filter for CTC Version2 and excluded countries, then results from the repository returned" in {
+        val sampleAcceptHeader = "Accept" -> "application/vnd.hmrc.2.0+json"
+
+        when(
+          mockReferenceDataService.many(
+            ArgumentMatchers.eq(CountryCodesCommonTransitListVersion2),
+            ArgumentMatchers.eq(Selector.ExcludeCountriesCodes(Seq("AA", "BB"))),
+            any()
+          )
+        )
+          .thenReturn(Future.successful(countriesAsJsObjects))
+
+        val request = FakeRequest(GET, "/transit-movements-trader-reference-data/countries?exclude=AA&exclude=BB&membership=ctc").withHeaders(sampleAcceptHeader)
         val result  = route(app, request).value
 
         status(result) mustBe OK
