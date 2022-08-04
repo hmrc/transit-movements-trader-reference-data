@@ -15,8 +15,9 @@
  */
 
 package controllers.testOnly
-
+import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CountryService
+
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -25,6 +26,11 @@ import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import models.requests.CountryQueryFilter
 
+sealed trait Version
+
+case object Version1 extends Version
+case object Version2 extends Version
+
 class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService
@@ -32,7 +38,9 @@ class CountryController @Inject() (
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(countryService.filterCountries(countryQueryFilter)))
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(countryService.filterCountries(countryQueryFilter, version)))
     }
 
   def getCountry(code: String): Action[AnyContent] =

@@ -16,6 +16,7 @@
 
 package controllers.testOnly.services
 
+import controllers.testOnly.{Version, Version2}
 import controllers.testOnly.testmodels.Country
 import models.requests.CountryQueryFilter
 import play.api.Environment
@@ -27,8 +28,14 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
   def getCountryByCode(code: String): Option[Country] =
     getData[Country](config.countryCodes).find(_.code == code)
 
-  def filterCountries(countryQueryFilter: CountryQueryFilter): Seq[Country] =
-    getData[Country](config.countryCodes).filterNot(
+  def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
+
+    val resource = version.fold(config.countryCodes)(
+      version => if(version == Version2) config.countryCodesV2 else config.countryCodes
+    )
+
+    getData[Country](resource).filterNot(
       country => countryQueryFilter.excludeCountryCodes.contains(country.code)
     )
+  }
 }
