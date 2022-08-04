@@ -113,7 +113,8 @@ object ListRepository {
         referenceDataList = CountryCodesFullList,
         indexes = Seq(
           IndexModel(ascending("code"), IndexOptions().name("code-index")),
-          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
+          IndexModel(compoundIndex(descending(Common.countryRegimeCode), ascending("code")), IndexOptions().name("countryRegimeCode-code-index"))
         )
       )
 
@@ -124,8 +125,7 @@ object ListRepository {
         referenceDataList = CountryCodesCommonTransitList,
         indexes = Seq(
           IndexModel(ascending("code"), IndexOptions().name("code-index")),
-          IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
-          IndexModel(compoundIndex(descending(Common.countryRegimeCode), ascending("code")), IndexOptions().name("countryRegimeCode-code-index"))
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
         )
       )
 
