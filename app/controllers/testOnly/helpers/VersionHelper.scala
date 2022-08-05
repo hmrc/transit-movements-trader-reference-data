@@ -16,14 +16,17 @@
 
 package controllers.testOnly.helpers
 
-import controllers.testOnly.{Version, Version1, Version2}
-import play.api.mvc.{AnyContent, Request}
+import controllers.testOnly.Version
+import controllers.testOnly.Version1
+import controllers.testOnly.Version2
+import play.api.mvc.AnyContent
+import play.api.mvc.Request
 
 object VersionHelper {
 
   val acceptHeaderPattern = "^application/vnd[.]{1}hmrc[.]{1}(.*?)[+]{1}(.*)$".r
 
-  def getVersion(request: Request[AnyContent]): Option[Version] = {
+  def getVersion(request: Request[AnyContent]): Option[Version] =
     request.headers.get("Accept") match {
       case Some(value) =>
         value match {
@@ -31,11 +34,10 @@ object VersionHelper {
             (version, contentType) match {
               case ("1.0", "json") => Some(Version1)
               case ("2.0", "json") => Some(Version2)
-              case _ => None
+              case _               => None
             }
         }
       case None => None
     }
-  }
 
 }

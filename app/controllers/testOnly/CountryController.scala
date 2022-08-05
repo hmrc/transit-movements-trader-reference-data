@@ -15,6 +15,7 @@
  */
 
 package controllers.testOnly
+
 import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CountryService
 
@@ -43,20 +44,20 @@ class CountryController @Inject() (
         Ok(Json.toJson(countryService.filterCountries(countryQueryFilter, version)))
     }
 
-  def getCountryCustomsOfficeSecurityAgreementArea(): Action[AnyContent] = {
+  def getCountryCustomsOfficeSecurityAgreementArea(): Action[AnyContent] =
     Action {
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
-        version.fold(NoContent)(v =>
-          if(v == Version2)
-            Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
-          else
-            NoContent
+        version.fold(NoContent)(
+          v =>
+            if (v == Version2)
+              Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
+            else
+              NoContent
         )
 
     }
-  }
 
   def getCountry(code: String): Action[AnyContent] =
     Action {

@@ -16,10 +16,14 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.{Version, Version2}
+import controllers.testOnly.Version
+import controllers.testOnly.Version2
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
-import models.requests.{CountryMembership, CountryQueryFilter}
+import models.requests.CountryMembership.CtcMember
+import models.requests.CountryMembership.EuMember
+import models.requests.CountryMembership.NonEuMember
+import models.requests.CountryMembership
+import models.requests.CountryQueryFilter
 import play.api.Environment
 
 import javax.inject.Inject
@@ -31,11 +35,12 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
 
   def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
 
-    val resource = version.fold(config.countryCodes)(v =>
-      if(v == Version2)
-        checkMembership(countryQueryFilter.membership)
-      else
-        config.countryCodes
+    val resource = version.fold(config.countryCodes)(
+      v =>
+        if (v == Version2)
+          checkMembership(countryQueryFilter.membership)
+        else
+          config.countryCodes
     )
 
     getData[Country](resource).filterNot(

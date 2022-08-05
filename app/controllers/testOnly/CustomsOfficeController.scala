@@ -20,7 +20,9 @@ import controllers.testOnly.helpers.VersionHelper
 
 import javax.inject.Inject
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 import controllers.testOnly.services.CustomsOfficesService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -29,20 +31,20 @@ class CustomsOfficeController @Inject() (
   customsOfficesService: CustomsOfficesService
 ) extends BackendController(cc) {
 
-  def customsOfficeTransit(code: String): Action[AnyContent] = {
+  def customsOfficeTransit(code: String): Action[AnyContent] =
     Action {
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
-        version.fold(NoContent)(v =>
-          if(v == Version2)
-            Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
-          else
-            NoContent
+        version.fold(NoContent)(
+          v =>
+            if (v == Version2)
+              Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
+            else
+              NoContent
         )
 
     }
-  }
 
   def customsOffices(): Action[AnyContent] =
     Action {
