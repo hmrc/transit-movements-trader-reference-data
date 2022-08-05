@@ -17,6 +17,7 @@
 package controllers.testOnly.services
 
 import akka.stream.TLSProtocol.SessionTruncated
+import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl
 import play.api.Configuration
 
 import javax.inject.Inject
@@ -84,4 +85,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val customsOfficeTransit: String =
     config.get[String]("resourceFiles.customsOfficeTransit")
+
+  val countryCustomsOfficeSecurityAgreementArea: String =
+    config.get[String]("resourceFiles.countryCustomsOfficeSecurityAgreementArea")
 }
