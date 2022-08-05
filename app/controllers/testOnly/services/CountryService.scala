@@ -31,8 +31,8 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
 
   def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
 
-    val resource = version.fold(config.countryCodes)(
-      version => if(version == Version2)
+    val resource = version.fold(config.countryCodes)(v =>
+      if(v == Version2)
         checkMembership(countryQueryFilter.membership)
       else
         config.countryCodes

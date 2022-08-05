@@ -48,8 +48,8 @@ class CountryController @Inject() (
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
-        version.fold(NoContent)(_ =>
-          if(version == Version2)
+        version.fold(NoContent)(v =>
+          if(v == Version2)
             Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
           else
             NoContent
