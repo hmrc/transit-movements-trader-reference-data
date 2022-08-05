@@ -20,7 +20,7 @@ import controllers.testOnly.helpers.VersionHelper
 
 import javax.inject.Inject
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import controllers.testOnly.services.CustomsOfficesService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
