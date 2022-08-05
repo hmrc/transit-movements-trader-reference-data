@@ -16,6 +16,7 @@
 
 package controllers.testOnly.services
 
+import akka.stream.TLSProtocol.SessionTruncated
 import play.api.Configuration
 
 import javax.inject.Inject
@@ -60,6 +61,15 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val countryCodesV2: String =
     config.get[String]("resourceFiles.countryCodesFullListV2")
 
+  val countryCodesCommonTransitList: String =
+    config.get[String]("resourceFiles.countryCodesCommonTransitList")
+
+  val countryCodesCommunityList: String =
+    config.get[String]("resourceFiles.countryCodesCommunityList")
+
+  val countryCodesCommonTransitOutsideCommunityList: String =
+    config.get[String]("resourceFiles.countryCodesCommonTransitOutsideCommunityList")
+
   val countryCodesWithCustomsOffices: String =
     config.get[String]("resourceFiles.countryCodesCustomsOfficeLists")
 
@@ -71,4 +81,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val transitCountryCodes: String =
     config.get[String]("resourceFiles.transitCountryCodesFullList")
+
+  val customsOfficeTransit: String =
+    config.get[String]("resourceFiles.customsOfficeTransit")
 }

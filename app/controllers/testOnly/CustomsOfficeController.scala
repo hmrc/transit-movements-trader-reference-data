@@ -16,6 +16,8 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.VersionHelper
+
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -28,6 +30,16 @@ class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
 ) extends BackendController(cc) {
+
+  def customsOfficeTransit(): Action[AnyContent] = {
+    Action {
+      request =>
+
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(customsOfficesService.customsOffices))
+
+    }
+  }
 
   def customsOffices(): Action[AnyContent] =
     Action {

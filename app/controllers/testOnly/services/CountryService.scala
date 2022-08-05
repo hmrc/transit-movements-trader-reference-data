@@ -18,7 +18,8 @@ package controllers.testOnly.services
 
 import controllers.testOnly.{Version, Version2}
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryQueryFilter
+import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
+import models.requests.{CountryMembership, CountryQueryFilter}
 import play.api.Environment
 
 import javax.inject.Inject
@@ -31,11 +32,22 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
   def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
 
     val resource = version.fold(config.countryCodes)(
-      version => if(version == Version2) config.countryCodesV2 else config.countryCodes
+      version => if(version == Version2)
+        checkMembership(countryQueryFilter.membership)
+      else
+        config.countryCodes
     )
 
     getData[Country](resource).filterNot(
       country => countryQueryFilter.excludeCountryCodes.contains(country.code)
     )
   }
+
+  private def checkMembership(membership: Option[CountryMembership]): String =
+    membership match {
+      case None              => config.countryCodesV2
+      case Some(CtcMember)   => config.countryCodesCommonTransitList
+      case Some(EuMember)    => config.countryCodesCommunityList
+      case Some(NonEuMember) => config.countryCodesCommonTransitOutsideCommunityList
+    }
 }
