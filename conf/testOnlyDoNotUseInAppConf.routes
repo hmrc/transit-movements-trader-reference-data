@@ -13,7 +13,7 @@
 GET        /transit-movements-trader-reference-data/customs-offices                                   controllers.testOnly.CustomsOfficeController.customsOffices
 GET        /transit-movements-trader-reference-data/customs-offices/:code                             controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code, role: List[String] ?= Nil)
 GET        /transit-movements-trader-reference-data/customs-office/:id                                controllers.testOnly.CustomsOfficeController.getCustomsOffice(id)
-GET        /transit-movements-trader-reference-data/customs-office-transit                            controllers.testOnly.CustomsOfficeController.customsOfficeTransit
+GET        /transit-movements-trader-reference-data/customs-office-transit/:code                      controllers.testOnly.CustomsOfficeController.customsOfficeTransit(code)
 
 GET        /transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET        /transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)
@@ -35,7 +35,7 @@ GET        /transit-movements-trader-reference-data/control-results             
 GET        /transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)
 
 GET        /transit-movements-trader-reference-data/method-of-payment                                 controllers.testOnly.ReferenceDataController.methodOfPayment
-GET        /transit-movements-trader-reference-data/dangerous-goods-codes                              controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
+GET        /transit-movements-trader-reference-data/dangerous-goods-codes                             controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
 GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        controllers.testOnly.ReferenceDataController.getDangerousGoodsCode(code)
 GET        /transit-movements-trader-reference-data/additional-information                            controllers.testOnly.ReferenceDataController.additionalInformation
 GET        /transit-movements-trader-reference-data/kinds-of-package                                  controllers.testOnly.ReferenceDataController.kindsOfPackage

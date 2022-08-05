@@ -25,9 +25,8 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).sortBy(_.name)
 
-  // TODO - What is the type returned?
-  val customsOfficeTransit: Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeTransit).sortBy(_.name)
+  def customsOfficeTransit(code: String): Seq[CustomsOffice] =
+    getData[CustomsOffice](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)

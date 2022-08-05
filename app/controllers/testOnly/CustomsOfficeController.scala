@@ -29,14 +29,14 @@ class CustomsOfficeController @Inject() (
   customsOfficesService: CustomsOfficesService
 ) extends BackendController(cc) {
 
-  def customsOfficeTransit(): Action[AnyContent] = {
+  def customsOfficeTransit(code: String): Action[AnyContent] = {
     Action {
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
         version.fold(NoContent)(_ =>
           if(version == Version2)
-            Ok(Json.toJson(customsOfficesService.customsOfficeTransit))
+            Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
           else
             NoContent
         )
