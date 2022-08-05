@@ -5,16 +5,6 @@
     "description": "Andorra"
   },
   {
-    "code": "AR",
-    "state": "valid",
-    "description": "Argentina"
-  },
-  {
-    "code": "AU",
-    "state": "valid",
-    "description": "Australia"
-  },
-  {
     "code": "FR",
     "state": "valid",
     "description": "France"

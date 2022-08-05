@@ -28,6 +28,9 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def customsOfficeTransit(code: String): Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
 
+  def customsOfficeDestination(code: String): Seq[CustomsOffice] =
+    getData[CustomsOffice](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
+
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
 

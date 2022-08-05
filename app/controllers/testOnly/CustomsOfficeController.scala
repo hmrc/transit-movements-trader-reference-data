@@ -46,6 +46,21 @@ class CustomsOfficeController @Inject() (
 
     }
 
+  def customsOfficeDestination(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+
+        version.fold(NoContent)(
+          v =>
+            if (v == Version2)
+              Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
+            else
+              NoContent
+        )
+
+    }
+
   def customsOffices(): Action[AnyContent] =
     Action {
 

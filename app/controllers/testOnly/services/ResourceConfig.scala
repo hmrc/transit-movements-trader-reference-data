@@ -83,6 +83,9 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val customsOfficeTransit: String =
     config.get[String]("resourceFiles.customsOfficeTransit")
 
+  val customsOfficeDestination: String =
+    config.get[String]("resourceFiles.customsOfficeDestination")
+
   val countryCustomsOfficeSecurityAgreementArea: String =
     config.get[String]("resourceFiles.countryCustomsOfficeSecurityAgreementArea")
 }
