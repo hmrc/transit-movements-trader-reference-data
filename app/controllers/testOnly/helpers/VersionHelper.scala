@@ -16,7 +16,8 @@
 
 package controllers.testOnly.helpers
 
-import play.api.mvc.{AnyContent, Request}
+import play.api.mvc.AnyContent
+import play.api.mvc.Request
 
 import scala.util.matching.Regex
 
