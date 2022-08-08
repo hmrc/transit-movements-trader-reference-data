@@ -16,17 +16,13 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
-import controllers.testOnly.helpers.VersionHelper
+import controllers.testOnly.helpers.{P5, VersionHelper}
+import controllers.testOnly.services.CustomsOfficesService
+import play.api.libs.json.Json
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
-import play.api.libs.json.Json
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
-import controllers.testOnly.services.CustomsOfficesService
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
@@ -36,8 +32,6 @@ class CustomsOfficeController @Inject() (
   def customsOfficeTransit(code: String): Action[AnyContent] =
     Action {
       request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-
         VersionHelper.getVersion(request) match {
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
           case _        => NoContent
@@ -48,8 +42,6 @@ class CustomsOfficeController @Inject() (
   def customsOfficeDestination(code: String): Action[AnyContent] =
     Action {
       request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-
         VersionHelper.getVersion(request) match {
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
           case _        => NoContent

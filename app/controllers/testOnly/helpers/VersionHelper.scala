@@ -16,8 +16,9 @@
 
 package controllers.testOnly.helpers
 
-import play.api.mvc.AnyContent
-import play.api.mvc.Request
+import play.api.mvc.{AnyContent, Request}
+
+import scala.util.matching.Regex
 
 sealed trait Version
 
@@ -26,20 +27,17 @@ case object P5 extends Version
 
 object VersionHelper {
 
-  val acceptHeaderPattern = "^application/vnd[.]{1}hmrc[.]{1}(.*?)[+]{1}(.*)$".r
+  lazy val acceptHeaderPattern: Regex = "^application/vnd[.]{1}hmrc[.]{1}(.*?)[+]{1}(.*)$".r
 
   def getVersion(request: Request[AnyContent]): Option[Version] =
     request.headers.get("Accept") match {
-      case Some(value) =>
-        value match {
-          case acceptHeaderPattern(version, contentType) =>
-            (version, contentType) match {
-              case ("1.0", "json") => Some(P4)
-              case ("2.0", "json") => Some(P5)
-              case _               => None
-            }
+      case Some(acceptHeaderPattern(version, contentType)) =>
+        (version, contentType) match {
+          case ("1.0", "json") => Some(P4)
+          case ("2.0", "json") => Some(P5)
+          case _               => None
         }
-      case None => None
+      case _ => None
     }
 
 }
