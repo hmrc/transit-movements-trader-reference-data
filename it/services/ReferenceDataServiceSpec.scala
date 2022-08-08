@@ -1,35 +1,69 @@
-package repositories.services
+/*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import java.time.Instant
+package services
 
-import services.ReferenceDataService
 import models.ReferenceDataList
+import org.mongodb.scala.MongoClient
 import org.scalacheck.Gen
 import org.scalactic.Uniformity
-import org.scalatest.{BeforeAndAfterEach, OptionValues}
-import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatest.concurrent.IntegrationPatience
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.OptionValues
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.JsObject
+import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import repositories.{DataImport, DataImportRepository, ImportId, ImportStatus, ListRepository, MongoSuite, Selector}
+import repositories.ListRepository.ListRepositoryProvider
+import repositories._
 
-class ReferenceDataServiceSpec
-  extends AnyFreeSpec
-    with Matchers
-    with MongoSuite
-    with BeforeAndAfterEach
-    with ScalaFutures
-    with IntegrationPatience
-    with OptionValues {
+import java.time.Instant
+import scala.concurrent.ExecutionContext.Implicits.global
+
+class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndAfterEach with ScalaFutures with IntegrationPatience with OptionValues {
+
+  private def dropDatabases(): Unit = {
+    val client = MongoClient()
+
+    def dropDatabase(name: String): Unit =
+      client
+        .getDatabase(name)
+        .drop()
+        .toFuture()
+        .map {
+          _ => ()
+        }
+        .recover {
+          case _: Throwable => ()
+        }
+        .futureValue
+
+    client.listDatabaseNames().map(dropDatabase).toFuture().futureValue
+  }
 
   override def beforeEach(): Unit = {
-    dropDatabase()
+    dropDatabases()
     super.beforeEach()
   }
 
   private val madeMongoIdAgnostic: Uniformity[JsObject] = new Uniformity[JsObject] {
+
     override def normalizedOrSame(b: Any): Any =
       b match {
         case jsObject: JsObject => normalized(jsObject)
@@ -55,8 +89,8 @@ class ReferenceDataServiceSpec
 
             val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-            val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
-            val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import2     = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"))
             val import2Data = Seq(Json.obj("id" -> "1", "value" -> "import 2 value"))
 
@@ -64,20 +98,21 @@ class ReferenceDataServiceSpec
 
             running(app) {
 
-              val dataImportRepo = app.injector.instanceOf[DataImportRepository]
-              val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[ReferenceDataService]
+              val dataImportRepo   = app.injector.instanceOf[DataImportRepository]
+              val listRepoProvider = app.injector.instanceOf[ListRepositoryProvider]
+              val listRepo         = listRepoProvider.apply(list)
+              val service          = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
-              listRepo.insert(list, ImportId(1), import1Data).futureValue
-              listRepo.insert(list, ImportId(2), import2Data).futureValue
+              listRepo.insert(ImportId(1), import1Data).futureValue
+              listRepo.insert(ImportId(2), import2Data).futureValue
 
               val result = service.one(list, Selector.ById("1")).futureValue
 
               val expectedResult = import2Data.head ++ Json.obj("importId" -> 2)
 
-              result.value must equal(expectedResult) (after being madeMongoIdAgnostic)
+              result.value must equal(expectedResult)(after being madeMongoIdAgnostic)
             }
           }
         }
@@ -88,21 +123,22 @@ class ReferenceDataServiceSpec
 
             val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-            val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
-            val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import2     = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"))
 
             val app = new GuiceApplicationBuilder().build()
 
             running(app) {
 
-              val dataImportRepo = app.injector.instanceOf[DataImportRepository]
-              val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[ReferenceDataService]
+              val dataImportRepo   = app.injector.instanceOf[DataImportRepository]
+              val listRepoProvider = app.injector.instanceOf[ListRepositoryProvider]
+              val listRepo         = listRepoProvider.apply(list)
+              val service          = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
-              listRepo.insert(list, ImportId(1), import1Data).futureValue
+              listRepo.insert(ImportId(1), import1Data).futureValue
 
               val result = service.one(list, Selector.ById("1")).futureValue
 
@@ -118,19 +154,20 @@ class ReferenceDataServiceSpec
 
           val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-          val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+          val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
           val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"))
 
           val app = new GuiceApplicationBuilder().build()
 
           running(app) {
 
-            val dataImportRepo = app.injector.instanceOf[DataImportRepository]
-            val listRepo       = app.injector.instanceOf[ListRepository]
-            val service        = app.injector.instanceOf[ReferenceDataService]
+            val dataImportRepo   = app.injector.instanceOf[DataImportRepository]
+            val listRepoProvider = app.injector.instanceOf[ListRepositoryProvider]
+            val listRepo         = listRepoProvider.apply(list)
+            val service          = app.injector.instanceOf[ReferenceDataService]
 
             dataImportRepo.insert(import1).futureValue
-            listRepo.insert(list, ImportId(1), import1Data).futureValue
+            listRepo.insert(ImportId(1), import1Data).futureValue
 
             val result = service.one(list, Selector.ById("2")).futureValue
 
@@ -172,8 +209,8 @@ class ReferenceDataServiceSpec
 
             val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-            val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
-            val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import2     = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
             val import2Data = Seq(Json.obj("id" -> "1", "value" -> "import 2 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
 
@@ -181,18 +218,21 @@ class ReferenceDataServiceSpec
 
             running(app) {
 
-              val dataImportRepo = app.injector.instanceOf[DataImportRepository]
-              val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[ReferenceDataService]
+              val dataImportRepo   = app.injector.instanceOf[DataImportRepository]
+              val listRepoProvider = app.injector.instanceOf[ListRepositoryProvider]
+              val listRepo         = listRepoProvider.apply(list)
+              val service          = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
-              listRepo.insert(list, ImportId(1), import1Data).futureValue
-              listRepo.insert(list, ImportId(2), import2Data).futureValue
+              listRepo.insert(ImportId(1), import1Data).futureValue
+              listRepo.insert(ImportId(2), import2Data).futureValue
 
               val result = service.many(list, Selector.All()).futureValue
 
-              val expectedResult = import2Data.map(json => json ++ Json.obj("importId" -> 2))
+              val expectedResult = import2Data.map(
+                json => json ++ Json.obj("importId" -> 2)
+              )
 
               result.map(_ - "_id") must equal(expectedResult)
             }
@@ -205,21 +245,22 @@ class ReferenceDataServiceSpec
 
             val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-            val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
-            val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+            val import2     = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
 
             val app = new GuiceApplicationBuilder().build()
 
             running(app) {
 
-              val dataImportRepo = app.injector.instanceOf[DataImportRepository]
-              val listRepo       = app.injector.instanceOf[ListRepository]
-              val service        = app.injector.instanceOf[ReferenceDataService]
+              val dataImportRepo   = app.injector.instanceOf[DataImportRepository]
+              val listRepoProvider = app.injector.instanceOf[ListRepositoryProvider]
+              val listRepo         = listRepoProvider.apply(list)
+              val service          = app.injector.instanceOf[ReferenceDataService]
 
               dataImportRepo.insert(import1).futureValue
               dataImportRepo.insert(import2).futureValue
-              listRepo.insert(list, ImportId(1), import1Data).futureValue
+              listRepo.insert(ImportId(1), import1Data).futureValue
 
               val result = service.many(list, Selector.ById("1")).futureValue
 
@@ -235,19 +276,20 @@ class ReferenceDataServiceSpec
 
           val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-          val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
+          val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
           val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
 
           val app = new GuiceApplicationBuilder().build()
 
           running(app) {
 
-            val dataImportRepo = app.injector.instanceOf[DataImportRepository]
-            val listRepo       = app.injector.instanceOf[ListRepository]
-            val service        = app.injector.instanceOf[ReferenceDataService]
+            val dataImportRepo   = app.injector.instanceOf[DataImportRepository]
+            val listRepoProvider = app.injector.instanceOf[ListRepositoryProvider]
+            val listRepo         = listRepoProvider.apply(list)
+            val service          = app.injector.instanceOf[ReferenceDataService]
 
             dataImportRepo.insert(import1).futureValue
-            listRepo.insert(list, ImportId(1), import1Data).futureValue
+            listRepo.insert(ImportId(1), import1Data).futureValue
 
             val result = service.many(list, Selector.ById("3")).futureValue
 

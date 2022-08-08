@@ -16,11 +16,11 @@
 
 package repositories
 
-import java.time.Instant
-
 import models.ReferenceDataList
-import play.api.libs.json.Json
-import play.api.libs.json.OFormat
+import play.api.libs.json._
+import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
+
+import java.time.Instant
 
 case class DataImport(
   importId: ImportId,
@@ -32,10 +32,27 @@ case class DataImport(
 )
 
 object DataImport {
-  val jsonFormat: OFormat[DataImport] = Json.format[DataImport]
+  import play.api.libs.functional.syntax._
 
-  val mongoFormat: OFormat[DataImport] = {
-    import repositories.MongoInstantFormats._
-    Json.format[DataImport]
-  }
+  implicit lazy val reads: Reads[DataImport] =
+    (
+      (__ \ "importId").read[ImportId] and
+        (__ \ "list").read[ReferenceDataList] and
+        (__ \ "records").read[Int] and
+        (__ \ "status").read[ImportStatus] and
+        (__ \ "started").read(MongoJavatimeFormats.instantReads) and
+        (__ \ "finished").readNullable(MongoJavatimeFormats.instantReads)
+    )(DataImport.apply _)
+
+  implicit lazy val writes: Writes[DataImport] =
+    (
+      (__ \ "importId").write[ImportId] and
+        (__ \ "list").write[ReferenceDataList] and
+        (__ \ "records").write[Int] and
+        (__ \ "status").write[ImportStatus] and
+        (__ \ "started").write(MongoJavatimeFormats.instantWrites) and
+        (__ \ "finished").writeNullable(MongoJavatimeFormats.instantWrites)
+    )(unlift(DataImport.unapply))
+
+  implicit val format: Format[DataImport] = Format(reads, writes)
 }

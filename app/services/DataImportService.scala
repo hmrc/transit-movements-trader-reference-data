@@ -16,27 +16,22 @@
 
 package services
 
-import java.time.Clock
-import java.time.Instant
-
-import javax.inject.Inject
 import logging.Logging
 import models.ReferenceDataList
 import play.api.libs.json.JsObject
-import repositories.DataImport
-import repositories.DataImportRepository
-import repositories.ImportId
-import repositories.ImportIdRepository
-import repositories.ImportStatus
-import repositories.ListRepository
+import repositories.ListRepository.ListRepositoryProvider
+import repositories._
 
+import java.time.Clock
+import java.time.Instant
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 class DataImportService @Inject() (
   importIdRepository: ImportIdRepository,
   dataImportRepository: DataImportRepository,
-  listRepository: ListRepository,
+  listRepositoryProvider: ListRepositoryProvider,
   clock: Clock
 )(implicit ec: ExecutionContext)
     extends Logging {
@@ -53,8 +48,8 @@ class DataImportService @Inject() (
     } yield updateResult
 
   private def insertData(list: ReferenceDataList, importId: ImportId, data: Seq[JsObject]): Future[Boolean] =
-    listRepository
-      .insert(list, importId, data)
+    listRepositoryProvider(list)
+      .insert(importId, data)
       .recover {
         case e: Exception =>
           logger.error(s"Error inserting ${list.listName} data", e)
@@ -64,7 +59,7 @@ class DataImportService @Inject() (
   private def cleanUp(list: ReferenceDataList, currentImportId: ImportId, importStatus: ImportStatus): Future[Boolean] =
     if (importStatus == ImportStatus.Complete) {
       logger.info(s"Deleting ${list.listName} data with an import id less than ${currentImportId.value}")
-      listRepository.deleteOldImports(list, currentImportId)
+      listRepositoryProvider(list).deleteOldImports(currentImportId)
     } else {
       logger.warn(s"Not deleting any ${list.listName} data as the import failed")
       Future.successful(false)

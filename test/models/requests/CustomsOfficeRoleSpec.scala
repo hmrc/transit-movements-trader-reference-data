@@ -31,7 +31,7 @@ class CustomsOfficeRoleSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[CustomsOfficeRole](customsOfficeRole, query).value
 
-          result mustEqual Some(Right(CustomsOfficeRole.AnyCustomsOfficeRole))
+          result.value.value mustEqual CustomsOfficeRole.AnyCustomsOfficeRole
         }
 
         "must fail when there is a value other than ANY" in {
@@ -46,7 +46,7 @@ class CustomsOfficeRoleSpec extends SpecBase with ScalaCheckPropertyChecks {
 
           val result = Binders.bind[Option[CustomsOfficeRole]](customsOfficeRole, query).value
 
-          result mustEqual Some(Right(None))
+          result.value.value must not be defined
         }
       }
 

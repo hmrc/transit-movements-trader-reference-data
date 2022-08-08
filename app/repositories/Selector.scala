@@ -17,27 +17,22 @@
 package repositories
 
 import models._
-import play.api.libs.json.JsObject
-import play.api.libs.json.Json
-import cats._
-import cats.data._
 import models.requests._
+import org.bson.conversions.Bson
+import org.mongodb.scala.bson.BsonDocument
+import org.mongodb.scala.model.Filters
 
 trait Selector[+A] {
   self =>
-  def expression: JsObject
+
+  def expression: Bson
 
   def and[B >: A](other: Selector[B]): Selector[B] =
-    new CompoundSelector[B](NonEmptyList.of(this, other))
-
+    new CompoundSelector[B](self :: other :: Nil)
 }
 
-final class CompoundSelector[A](selectors: NonEmptyList[Selector[A]]) extends Selector[A] {
-  implicit val monodJsObject = Monoid.instance[JsObject](JsObject.empty, (x, y) => x ++ y)
-
-  final override def expression: JsObject =
-    Monoid.combineAll(selectors.toList.map(_.expression))
-
+final class CompoundSelector[A](selectors: Seq[Selector[A]]) extends Selector[A] {
+  override def expression: Bson = Filters.and(selectors.map(_.expression): _*)
 }
 
 object Selector {
@@ -47,59 +42,48 @@ object Selector {
     def forImport(importId: ImportId): Selector[A] =
       new Selector[A] {
 
-        val expression: JsObject =
-          Json.obj("importId" -> importId) ++ selector.expression
+        val expression: Bson = Filters.and(
+          Filters.eq("importId", importId.value),
+          selector.expression
+        )
       }
   }
 
   case class All() extends Selector[ReferenceDataList] {
 
-    val expression: JsObject =
-      Json.obj()
+    override val expression: Bson = BsonDocument()
   }
 
   case class OptionallyByRole(roles: Seq[String]) extends Selector[CustomsOfficesList.type] {
 
-    val expression: JsObject = roles.map(_.toUpperCase) match {
-      case Nil    => Json.obj()
-      case uRoles => Json.obj("roles.role" -> Json.obj("$all" -> uRoles))
+    override val expression: Bson = roles.map(_.toUpperCase) match {
+      case Nil    => BsonDocument()
+      case uRoles => Filters.all("roles.role", uRoles: _*)
     }
   }
 
   case class ByCountry(countryId: String) extends Selector[CustomsOfficesList.type] {
 
-    val expression: JsObject =
-      Json.obj("countryId" -> countryId)
+    override val expression: Bson = Filters.eq("countryId", countryId)
   }
 
   case class ById(id: String) extends Selector[ReferenceDataList] {
 
-    val expression: JsObject = Json.obj("id" -> id)
+    override val expression: Bson = Filters.eq("id", id)
   }
 
   case class ByCode(code: String) extends Selector[ReferenceDataList] {
 
-    val expression: JsObject = Json.obj("code" -> code)
+    override val expression: Bson = Filters.eq("code", code)
   }
 
   case class ExcludeCountriesCodes(countryCodes: Seq[String]) extends Selector[CountryCodesCustomsOfficeLists.type] {
 
-    override def expression: JsObject =
-      Json.obj(
-        "code" ->
-          Json.obj(
-            "$nin" -> countryCodes
-          )
-      )
+    override val expression: Bson = Filters.nin("code", countryCodes: _*)
   }
 
   case class CountryMembershipQuery(membership: CountryMembership) extends Selector[CountryCodesFullList.type] {
 
-    override def expression: JsObject =
-      Json.obj(
-        "countryRegimeCode" -> Json.obj(
-          "$in" -> membership.dbValues
-        )
-      )
+    override val expression: Bson = Filters.in("countryRegimeCode", membership.dbValues: _*)
   }
 }

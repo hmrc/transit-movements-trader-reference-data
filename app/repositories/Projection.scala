@@ -18,30 +18,29 @@ package repositories
 
 import models.CustomsOfficesList
 import models.ReferenceDataList
-import play.api.libs.json.JsObject
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
+import org.bson.conversions.Bson
+import org.mongodb.scala.model.Projections
 
 trait Projection[A] {
   self =>
-  val expression: JsObject
+
+  val expression: Bson
 
   def and[B <: A](other: Projection[B]): Projection[B] =
     new Projection[B] {
-      val expression: JsObject = self.expression ++ other.expression
+      val expression: Bson = Projections.fields(self.expression, other.expression)
     }
 
   def toOption: Option[Projection[A]] = Some(self)
 }
 
 object Projection {
-  implicit def writes[T]: OWrites[Projection[T]] = _.expression
 
   case object SuppressId extends Projection[ReferenceDataList] {
-    override val expression: JsObject = Json.obj("_id" -> 0)
+    override val expression: Bson = Projections.excludeId()
   }
 
   case object SuppressRoles extends Projection[CustomsOfficesList.type] {
-    override val expression: JsObject = Json.obj("roles" -> 0)
+    override val expression: Bson = Projections.exclude("roles")
   }
 }

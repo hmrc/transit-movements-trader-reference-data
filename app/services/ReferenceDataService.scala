@@ -16,26 +16,26 @@
 
 package services
 
-import javax.inject.Inject
 import models.ReferenceDataList
 import play.api.libs.json.JsObject
+import repositories.ListRepository.ListRepositoryProvider
 import repositories.DataImportRepository
-import repositories.ListRepository
 import repositories.Projection
 import repositories.Selector
 
+import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 class ReferenceDataService @Inject() (
   dataImportRepository: DataImportRepository,
-  listRepository: ListRepository
+  listRepositoryProvider: ListRepositoryProvider
 )(implicit ec: ExecutionContext) {
 
   def one[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
     dataImportRepository.currentImportId(list).flatMap {
       case Some(importId) =>
-        listRepository.one(list, selector.forImport(importId), projection)
+        listRepositoryProvider(list).one(selector.forImport(importId), projection)
       case None =>
         Future.successful(None)
     }
@@ -43,7 +43,7 @@ class ReferenceDataService @Inject() (
   def many[A <: ReferenceDataList, B <: A](list: A, selector: Selector[A], projection: Option[Projection[B]] = None): Future[Seq[JsObject]] =
     dataImportRepository.currentImportId(list).flatMap {
       case Some(importId) =>
-        listRepository.many(list, selector.forImport(importId), projection)
+        listRepositoryProvider(list).many(selector.forImport(importId), projection)
       case None =>
         Future.successful(Nil)
     }

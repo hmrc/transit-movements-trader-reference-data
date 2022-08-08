@@ -4,7 +4,7 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "transit-movements-trader-reference-data"
 
-val silencerVersion = "1.7.1"
+val silencerVersion = "1.7.9"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(
@@ -17,14 +17,17 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     majorVersion := 0,
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
-    scalafmtOnCompile in ThisBuild := false,
-    useSuperShell in ThisBuild := false
+    ThisBuild / scalafmtOnCompile := false,
+    ThisBuild / useSuperShell := false
   )
-  .settings(scalaVersion := "2.12.12")
+  .settings(scalaVersion := "2.12.15")
   .settings(publishingSettings: _*)
-  .configs(IntegrationTest)
   .settings(inConfig(Test)(testSettings): _*)
+  .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(itSettings): _*)
+  .settings(inConfig(IntegrationTest)(org.scalafmt.sbt.ScalafmtPlugin.scalafmtConfigSettings): _*)
+  .settings(headerSettings(IntegrationTest): _*)
+  .settings(automateHeaderSettings(IntegrationTest))
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(PlayKeys.playDefaultPort := 9482)
   .settings(scoverageSettings: _*)
@@ -62,7 +65,7 @@ lazy val scoverageSettings =
     ScoverageKeys.coverageExcludedFiles := "<empty>;.*javascript.*;.*Routes.*;",
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
-    parallelExecution in Test := false
+    Test / parallelExecution := false
   )
 
 lazy val testSettings: Seq[Def.Setting[_]] = Seq(
