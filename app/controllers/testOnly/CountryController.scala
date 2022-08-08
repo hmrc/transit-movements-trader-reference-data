@@ -46,13 +46,10 @@ class CountryController @Inject() (
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
-        version.fold(NoContent)(
-          v =>
-            if (v == P5)
-              Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
-            else
-              NoContent
-        )
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
+          case _        => NoContent
+        }
 
     }
 

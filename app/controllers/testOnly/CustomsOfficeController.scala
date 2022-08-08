@@ -38,13 +38,10 @@ class CustomsOfficeController @Inject() (
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
-        version.fold(NoContent)(
-          v =>
-            if (v == P5)
-              Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
-            else
-              NoContent
-        )
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
+          case _        => NoContent
+        }
 
     }
 
@@ -53,13 +50,10 @@ class CustomsOfficeController @Inject() (
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
 
-        version.fold(NoContent)(
-          v =>
-            if (v == P5)
-              Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
-            else
-              NoContent
-        )
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
+          case _        => NoContent
+        }
 
     }
 
