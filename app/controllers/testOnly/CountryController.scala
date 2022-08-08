@@ -16,6 +16,8 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
 import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CountryService
 
@@ -26,11 +28,6 @@ import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import models.requests.CountryQueryFilter
-
-sealed trait Version
-
-case object Version1 extends Version
-case object Version2 extends Version
 
 class CountryController @Inject() (
   cc: ControllerComponents,
@@ -51,7 +48,7 @@ class CountryController @Inject() (
 
         version.fold(NoContent)(
           v =>
-            if (v == Version2)
+            if (v == P5)
               Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
             else
               NoContent

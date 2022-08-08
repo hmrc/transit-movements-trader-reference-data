@@ -16,6 +16,8 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
 import controllers.testOnly.helpers.VersionHelper
 
 import javax.inject.Inject
@@ -38,7 +40,7 @@ class CustomsOfficeController @Inject() (
 
         version.fold(NoContent)(
           v =>
-            if (v == Version2)
+            if (v == P5)
               Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
             else
               NoContent
@@ -53,7 +55,7 @@ class CustomsOfficeController @Inject() (
 
         version.fold(NoContent)(
           v =>
-            if (v == Version2)
+            if (v == P5)
               Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
             else
               NoContent

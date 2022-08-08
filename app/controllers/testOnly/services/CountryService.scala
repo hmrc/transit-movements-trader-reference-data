@@ -16,8 +16,8 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.Version
-import controllers.testOnly.Version2
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.Country
 import models.requests.CountryMembership.CtcMember
 import models.requests.CountryMembership.EuMember
@@ -37,7 +37,7 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
 
     val resource = version.fold(config.countryCodes)(
       v =>
-        if (v == Version2)
+        if (v == P5)
           checkMembership(countryQueryFilter.membership)
         else
           config.countryCodes

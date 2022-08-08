@@ -16,11 +16,13 @@
 
 package controllers.testOnly.helpers
 
-import controllers.testOnly.Version
-import controllers.testOnly.Version1
-import controllers.testOnly.Version2
 import play.api.mvc.AnyContent
 import play.api.mvc.Request
+
+sealed trait Version
+
+case object P4 extends Version
+case object P5 extends Version
 
 object VersionHelper {
 
@@ -32,8 +34,8 @@ object VersionHelper {
         value match {
           case acceptHeaderPattern(version, contentType) =>
             (version, contentType) match {
-              case ("1.0", "json") => Some(Version1)
-              case ("2.0", "json") => Some(Version2)
+              case ("1.0", "json") => Some(P4)
+              case ("2.0", "json") => Some(P5)
               case _               => None
             }
         }
