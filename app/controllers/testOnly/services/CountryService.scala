@@ -16,7 +16,13 @@
 
 package controllers.testOnly.services
 
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.Country
+import models.requests.CountryMembership.CtcMember
+import models.requests.CountryMembership.EuMember
+import models.requests.CountryMembership.NonEuMember
+import models.requests.CountryMembership
 import models.requests.CountryQueryFilter
 import play.api.Environment
 
@@ -27,8 +33,27 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
   def getCountryByCode(code: String): Option[Country] =
     getData[Country](config.countryCodes).find(_.code == code)
 
-  def filterCountries(countryQueryFilter: CountryQueryFilter): Seq[Country] =
-    getData[Country](config.countryCodes).filterNot(
+  def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
+
+    val resource = version match {
+      case Some(P5) => checkMembership(countryQueryFilter.membership)
+      case _        => config.countryCodes
+    }
+
+    getData[Country](resource).filterNot(
       country => countryQueryFilter.excludeCountryCodes.contains(country.code)
     )
+  }
+
+  // TODO - Do we need any more filtering? I.e. like member etc?
+  val countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
+    getData[Country](config.countryCustomsOfficeSecurityAgreementArea)
+
+  private def checkMembership(membership: Option[CountryMembership]): String =
+    membership match {
+      case None              => config.countryCodesV2
+      case Some(CtcMember)   => config.countryCodesCommonTransitList
+      case Some(EuMember)    => config.countryCodesCommunityList
+      case Some(NonEuMember) => config.countryCodesCommonTransitOutsideCommunityList
+    }
 }

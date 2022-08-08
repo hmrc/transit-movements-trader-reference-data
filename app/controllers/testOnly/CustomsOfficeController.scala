@@ -16,6 +16,10 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.VersionHelper
+
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -28,6 +32,30 @@ class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
 ) extends BackendController(cc) {
+
+  def customsOfficeTransit(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
+          case _        => NoContent
+        }
+
+    }
+
+  def customsOfficeDestination(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
+          case _        => NoContent
+        }
+
+    }
 
   def customsOffices(): Action[AnyContent] =
     Action {
