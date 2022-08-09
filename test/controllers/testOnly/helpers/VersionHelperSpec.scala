@@ -18,7 +18,8 @@ package controllers.testOnly.helpers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{ACCEPT, GET}
+import play.api.test.Helpers.ACCEPT
+import play.api.test.Helpers.GET
 
 class VersionHelperSpec extends SpecBase {
 
