@@ -16,8 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.VersionHelper
+import controllers.testOnly.helpers.{P5, Version, VersionHelper}
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -64,6 +63,7 @@ class CustomsOfficeController @Inject() (
 
 
 
+
   def customsOffices(): Action[AnyContent] =
     Action {
 
@@ -72,8 +72,9 @@ class CustomsOfficeController @Inject() (
 
   def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
     Action {
-
-      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles, version)))
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =

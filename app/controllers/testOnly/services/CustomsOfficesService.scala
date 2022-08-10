@@ -16,7 +16,9 @@
 
 package controllers.testOnly.services
 
+import controllers.testOnly.helpers.{P5, Version}
 import controllers.testOnly.testmodels.CustomsOffice
+
 import javax.inject.Inject
 import play.api.Environment
 
@@ -34,17 +36,25 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def customsOfficeExit(code: String): Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOfficeExit).filter(_.countryId == code).sortBy(_.name)
 
+
+
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
 
-  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
+  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String], version: Option[Version] = None): Seq[CustomsOffice] = {
+    val resource = version match {
+      case Some(P5) => config.customsOfficeP5
+      case _ => config.customsOffice
+    }
+
     (countryId, excludedRoles) match {
       case ("SM", List("TRA")) =>
-        getData[CustomsOffice](config.customsOffice)
+        getData[CustomsOffice](resource)
           .filter(
             x => x.countryId == countryId && !x.roles.contains("TRA")
           )
           .sortBy(_.name)
-      case _ => getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
+      case _ => getData[CustomsOffice](resource).filter(_.countryId == countryId).sortBy(_.name)
     }
+  }
 }
