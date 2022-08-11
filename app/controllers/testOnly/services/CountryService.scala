@@ -30,8 +30,9 @@ import javax.inject.Inject
 
 private[testOnly] class CountryService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def getCountryByCode(code: String): Option[Country] =
+  def getCountryByCode(code: String): Option[Country] = {
     getData[Country](config.countryCodes).find(_.code == code)
+  }
 
   def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
 
