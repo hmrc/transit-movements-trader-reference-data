@@ -32,9 +32,6 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
   val customsOffice2: CustomsOffice =
     CustomsOffice(officeId2, "Wels, Terminal Wels", "AT", Some("+44 (0)3000 575 988"), List("ENT"))
 
-  val customsOffice3: CustomsOffice =
-    CustomsOffice(officeId2, "Wels, Terminal Wels", "AT", Some("+44 (0)3000 575 988"), List("ENT"))
-
   "must return customs office list" in {
     val service = app.injector.instanceOf[CustomsOfficesService]
 
