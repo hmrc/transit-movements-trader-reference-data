@@ -57,7 +57,7 @@ class CustomsOfficeController @Inject() (
       request =>
         VersionHelper.getVersion(request) match {
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
-          case _ => NoContent
+          case _        => NoContent
         }
 
     }
@@ -67,13 +67,10 @@ class CustomsOfficeController @Inject() (
       request =>
         VersionHelper.getVersion(request) match {
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
-          case _ => NoContent
+          case _        => NoContent
         }
 
     }
-
-
-
 
   def customsOffices(): Action[AnyContent] =
     Action {

@@ -17,7 +17,8 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
+import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.CustomsOfficeP5
 
 class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
@@ -46,7 +47,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     }
 
     "must return None for an invalid office value" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
+      val service            = app.injector.instanceOf[CustomsOfficesService]
       val invalidOfficeValue = "1234"
 
       service.getCustomsOffice(invalidOfficeValue) mustBe None
@@ -65,7 +66,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     }
 
     "must return empty list for invalid country code" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
+      val service            = app.injector.instanceOf[CustomsOfficesService]
       val invalidCountryCode = "123"
 
       service.customsOfficeExit(invalidCountryCode) mustBe empty
@@ -82,7 +83,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       "must return the offices of transit for a given country code" in {
 
-        val service = app.injector.instanceOf[CustomsOfficesService]
+        val service  = app.injector.instanceOf[CustomsOfficesService]
         val expected = Seq(CustomsOfficeP5("FR001260", "Dunkerque port bureau"))
 
         service.customsOfficeTransit("FR") mustBe expected
@@ -91,7 +92,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       "must return an empty list where no match" in {
 
-        val service = app.injector.instanceOf[CustomsOfficesService]
+        val service  = app.injector.instanceOf[CustomsOfficesService]
         val expected = Seq.empty
 
         service.customsOfficeTransit("12") mustBe expected
@@ -104,7 +105,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       "must return the offices of destination for a given country code" in {
 
-        val service = app.injector.instanceOf[CustomsOfficesService]
+        val service  = app.injector.instanceOf[CustomsOfficesService]
         val expected = Seq(CustomsOfficeP5("SM000001", "Ufficio Tributario Rep. San Marino"))
 
         service.customsOfficeDestination("SM") mustBe expected
@@ -113,7 +114,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       "must return an empty list where no match" in {
 
-        val service = app.injector.instanceOf[CustomsOfficesService]
+        val service  = app.injector.instanceOf[CustomsOfficesService]
         val expected = Seq.empty
 
         service.customsOfficeDestination("12") mustBe expected
@@ -135,7 +136,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
     "must return an empty list where no match" in {
 
-      val service = app.injector.instanceOf[CustomsOfficesService]
+      val service  = app.injector.instanceOf[CustomsOfficesService]
       val expected = Seq.empty
 
       service.customsOfficeDeparture("12") mustBe expected
