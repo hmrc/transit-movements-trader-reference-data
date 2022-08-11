@@ -17,7 +17,7 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.helpers.{P5, Version}
-import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
 
 import javax.inject.Inject
 import play.api.Environment
@@ -33,8 +33,8 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def customsOfficeDestination(code: String): Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
 
-  def customsOfficeExit(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeExit).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.countryId == code).sortBy(_.name)
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)

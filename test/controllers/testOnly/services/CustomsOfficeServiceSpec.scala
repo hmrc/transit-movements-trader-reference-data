@@ -17,7 +17,7 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
 
 //TODO: Update tests if content of P5 CustomsOffice data changes
 class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
@@ -53,6 +53,31 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
       service.getCustomsOffice(invalidOfficeValue) mustBe None
     }
 
+  }
+
+  "customs office exit" - {
+    val customsOfficeExit1: CustomsOfficeP5 = CustomsOfficeP5("CZ530299", "Letiště Tuřany, Brno-Tuřany", "CS")
+
+    "get customs office of exit based on country code" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      service.customsOfficeExit("CS").head mustBe customsOfficeExit1
+
+    }
+
+    "must return empty list for invalid country code" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
+      val invalidCountryCode = "123"
+
+      service.customsOfficeExit(invalidCountryCode) mustBe empty
+
+    }
+
+    "must only return list of customs offices from country code provided" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      service.customsOfficeExit("DE").filter(_.countryId != "DE") mustBe empty
+    }
   }
 
 }
