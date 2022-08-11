@@ -56,12 +56,12 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
   }
 
   "customs office exit" - {
-    val customsOfficeExit1: CustomsOfficeP5 = CustomsOfficeP5("CZ530299", "Letiště Tuřany, Brno-Tuřany", "CS")
+    val customsOfficeExit1: CustomsOfficeP5 = CustomsOfficeP5("CZ530299", "Letiště Tuřany, Brno-Tuřany")
 
     "get customs office of exit based on country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.customsOfficeExit("CS").head mustBe customsOfficeExit1
+      service.customsOfficeExit("CZ").head mustBe customsOfficeExit1
 
     }
 
@@ -76,8 +76,21 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     "must only return list of customs offices from country code provided" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.customsOfficeExit("DE").filter(_.countryId != "DE") mustBe empty
+      service.customsOfficeExit("DE").filter(_.getCountryCode() != "DE") mustBe empty
     }
+  }
+
+  "customs office departure" - {
+
+    val customsOfficeDeparture: CustomsOfficeP5 = CustomsOfficeP5("XI005160", "Warrenpoint")
+
+    "get customs office of departure based on country code" in {
+
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      service.customsOfficeDeparture("XI").head mustBe customsOfficeDeparture
+    }
+
   }
 
 }
