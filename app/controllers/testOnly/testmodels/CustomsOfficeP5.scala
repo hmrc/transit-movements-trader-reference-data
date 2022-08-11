@@ -23,8 +23,11 @@ import play.api.libs.json._
 case class CustomsOfficeP5(
   id: String,
   name: String,
-  countryId: String
 )
+{
+  def getCountryCode(): String = id.take(2)
+
+}
 
 object CustomsOfficeP5 {
 
