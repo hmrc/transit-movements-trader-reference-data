@@ -22,9 +22,12 @@ import play.api.libs.json._
 
 case class CustomsOfficeP5(
   id: String,
-  name: String,
-  countryId: String
-)
+  name: String
+) {
+
+  def getCountryCode(): String = id.take(2)
+
+}
 
 object CustomsOfficeP5 {
 
@@ -33,8 +36,7 @@ object CustomsOfficeP5 {
   implicit val readFromFile: Reads[CustomsOfficeP5] =
     (
       (__ \ "CUST_OFF_ID").read[String] and
-        (__ \ "CUST_OFF_NAM").read[String] and
-        (__ \ "COUNTRY_ID").read[String]
+        (__ \ "CUST_OFF_NAM").read[String]
     )(CustomsOfficeP5.apply _)
 
 }

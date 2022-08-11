@@ -53,6 +53,16 @@ class CustomsOfficeController @Inject() (
 
     }
 
+  def customsOfficeDeparture(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
+          case _        => NoContent
+        }
+
+    }
+
   def customsOfficeExit(code: String): Action[AnyContent] =
     Action {
       request =>
@@ -70,9 +80,7 @@ class CustomsOfficeController @Inject() (
 
   def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
     Action {
-      request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles, version)))
+      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =

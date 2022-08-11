@@ -16,13 +16,11 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.CustomsOffice
 import controllers.testOnly.testmodels.CustomsOfficeP5
+import play.api.Environment
 
 import javax.inject.Inject
-import play.api.Environment
 
 private[testOnly] class CustomsOfficesService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
@@ -30,31 +28,28 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
     getData[CustomsOffice](config.customsOffice).sortBy(_.name)
 
   def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.getCountryCode() == code).sortBy(_.name)
 
   def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.getCountryCode() == code).sortBy(_.name)
 
   def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.countryId == code).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.getCountryCode() == code).sortBy(_.name)
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
 
-  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String], version: Option[Version] = None): Seq[CustomsOffice] = {
-    val resource = version match {
-      case Some(P5) => config.customsOfficeP5
-      case _        => config.customsOffice
-    }
+  def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.getCountryCode() == countryId).sortBy(_.name)
 
+  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
     (countryId, excludedRoles) match {
       case ("SM", List("TRA")) =>
-        getData[CustomsOffice](resource)
+        getData[CustomsOffice](config.customsOffice)
           .filter(
             x => x.countryId == countryId && !x.roles.contains("TRA")
           )
           .sortBy(_.name)
-      case _ => getData[CustomsOffice](resource).filter(_.countryId == countryId).sortBy(_.name)
+      case _ => getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
     }
-  }
 }

@@ -53,8 +53,8 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val customsOffice: String =
     config.get[String]("resourceFiles.customsOffices")
 
-  val customsOfficeP5: String =
-    config.get[String]("resourceFiles.customsOfficesP5")
+  val customsOfficeDeparture: String =
+    config.get[String]("resourceFiles.customsOfficeDeparture")
 
   val countryCodes: String =
     config.get[String]("resourceFiles.countryCodesFullList")
