@@ -22,13 +22,16 @@ import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
 //TODO: Update tests if content of P5 CustomsOffice data changes
 class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
-  val officeId1 = "GB005010"
-  val officeId2 = "AT530100"
+  val officeId1   = "GB005010"
+  val officeId2   = "AT530100"
 
   val customsOffice1: CustomsOffice =
     CustomsOffice(officeId1, "Appledore", "GB",Some("+44 (0)1255 244725"),List("RSS"))
 
   val customsOffice2: CustomsOffice =
+    CustomsOffice(officeId2, "Wels, Terminal Wels", "AT", Some("+44 (0)3000 575 988"), List("ENT"))
+
+  val customsOffice3: CustomsOffice =
     CustomsOffice(officeId2, "Wels, Terminal Wels", "AT", Some("+44 (0)3000 575 988"), List("ENT"))
 
   "must return customs office list" in {
@@ -77,6 +80,50 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
       service.customsOfficeExit("DE").filter(_.countryId != "DE") mustBe empty
+    }
+
+    "customsOfficeTransit" - {
+
+      "must return the offices of transit for a given country code" in {
+
+        val service  = app.injector.instanceOf[CustomsOfficesService]
+        val expected = Seq(CustomsOfficeP5("FR001260", "Dunkerque port bureau", "FR"))
+
+        service.customsOfficeTransit("FR") mustBe expected
+
+      }
+
+      "must return an empty list where no match" in {
+
+        val service  = app.injector.instanceOf[CustomsOfficesService]
+        val expected = Seq.empty
+
+        service.customsOfficeTransit("12") mustBe expected
+
+      }
+
+    }
+
+    "customsOfficeDestination" - {
+
+      "must return the offices of destination for a given country code" in {
+
+        val service  = app.injector.instanceOf[CustomsOfficesService]
+        val expected = Seq(CustomsOfficeP5("SM000001", "Ufficio Tributario Rep. San Marino", "SM"))
+
+        service.customsOfficeDestination("SM") mustBe expected
+
+      }
+
+      "must return an empty list where no match" in {
+
+        val service  = app.injector.instanceOf[CustomsOfficesService]
+        val expected = Seq.empty
+
+        service.customsOfficeDestination("12") mustBe expected
+
+      }
+
     }
   }
 

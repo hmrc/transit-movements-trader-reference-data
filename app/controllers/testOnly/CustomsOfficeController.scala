@@ -16,7 +16,9 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.{P5, Version, VersionHelper}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -56,13 +58,10 @@ class CustomsOfficeController @Inject() (
       request =>
         VersionHelper.getVersion(request) match {
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
-          case _ => NoContent
+          case _        => NoContent
         }
 
     }
-
-
-
 
   def customsOffices(): Action[AnyContent] =
     Action {

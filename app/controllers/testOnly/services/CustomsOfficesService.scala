@@ -16,8 +16,10 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.{P5, Version}
-import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.CustomsOfficeP5
 
 import javax.inject.Inject
 import play.api.Environment
@@ -27,11 +29,11 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).sortBy(_.name)
 
-  def customsOfficeTransit(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
 
-  def customsOfficeDestination(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
 
   def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
     getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.countryId == code).sortBy(_.name)
@@ -42,7 +44,7 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String], version: Option[Version] = None): Seq[CustomsOffice] = {
     val resource = version match {
       case Some(P5) => config.customsOfficeP5
-      case _ => config.customsOffice
+      case _        => config.customsOffice
     }
 
     (countryId, excludedRoles) match {
