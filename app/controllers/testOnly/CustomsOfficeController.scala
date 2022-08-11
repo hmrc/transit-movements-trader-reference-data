@@ -66,7 +66,6 @@ class CustomsOfficeController @Inject() (
 
   def customsOffices(): Action[AnyContent] =
     Action {
-
       Ok(Json.toJson(customsOfficesService.customsOffices))
     }
 
