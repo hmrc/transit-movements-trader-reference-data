@@ -16,7 +16,8 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.{P5, VersionHelper}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -58,6 +59,7 @@ class CustomsOfficeController @Inject() (
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
           case _ => NoContent
         }
+
     }
 
   def customsOfficeExit(code: String): Action[AnyContent] =
@@ -67,7 +69,11 @@ class CustomsOfficeController @Inject() (
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
           case _ => NoContent
         }
+
     }
+
+
+
 
   def customsOffices(): Action[AnyContent] =
     Action {
@@ -76,7 +82,7 @@ class CustomsOfficeController @Inject() (
 
   def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
     Action {
-        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
+      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =

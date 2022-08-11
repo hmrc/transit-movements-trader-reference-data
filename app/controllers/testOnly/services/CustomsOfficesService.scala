@@ -25,11 +25,11 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).sortBy(_.name)
 
-  def customsOfficeTransit(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.getCountryCode() == code).sortBy(_.name)
 
-  def customsOfficeDestination(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.getCountryCode() == code).sortBy(_.name)
 
   def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
     getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.getCountryCode() == code).sortBy(_.name)
@@ -37,12 +37,10 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
 
-  def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] = {
+  def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] =
     getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.getCountryCode() == countryId).sortBy(_.name)
-  }
 
-  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] = {
-
+  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
     (countryId, excludedRoles) match {
       case ("SM", List("TRA")) =>
         getData[CustomsOffice](config.customsOffice)
@@ -52,5 +50,4 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
           .sortBy(_.name)
       case _ => getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
     }
-  }
 }
