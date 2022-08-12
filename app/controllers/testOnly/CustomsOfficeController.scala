@@ -16,7 +16,8 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.{P5, Version, VersionHelper}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -51,18 +52,25 @@ class CustomsOfficeController @Inject() (
 
     }
 
+  def customsOfficeDeparture(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
+          case _        => NoContent
+        }
+
+    }
+
   def customsOfficeExit(code: String): Action[AnyContent] =
     Action {
       request =>
         VersionHelper.getVersion(request) match {
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
-          case _ => NoContent
+          case _        => NoContent
         }
 
     }
-
-
-
 
   def customsOffices(): Action[AnyContent] =
     Action {
@@ -71,9 +79,7 @@ class CustomsOfficeController @Inject() (
 
   def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
     Action {
-      request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles, version)))
+      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
