@@ -31,9 +31,10 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
     "returns a country for a valid code" in {
 
-      val service = app.injector.instanceOf[CountryService]
+      val service  = app.injector.instanceOf[CountryService]
+      val expected = Some(Country("valid", "GB", "United Kingdom"))
 
-      service.getCountryByCode("GB") mustBe Some(Country("valid", "GB", "United Kingdom"))
+      service.getCountryByCode("GB") mustBe expected
 
     }
 
@@ -51,15 +52,18 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
     "For P4" - {
 
+      val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM")
+
       "ctc member" - {
 
         "returns the P4 list of countries" in {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
+          val result  = service.filterCountries(filter, Some(P4))
 
-          println(s"ACHI: ${service.filterCountries(filter, Some(P4))}")
-          service.filterCountries(filter, Some(P4)).length mustBe 8
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
@@ -71,8 +75,10 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, Some(EuMember))
+          val result  = service.filterCountries(filter, Some(P4))
 
-          service.filterCountries(filter, Some(P4)).length mustBe 8
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
@@ -84,8 +90,10 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
+          val result  = service.filterCountries(filter, Some(P4))
 
-          service.filterCountries(filter, Some(P4)).length mustBe 8
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
@@ -97,12 +105,18 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
       "ctc member" - {
 
+        val expectedIds = Seq("AD", "FR", "GB", "IT", "AT", "SM")
+
         "returns the P4 list of countries" in {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
+          val result  = service.filterCountries(filter, Some(P5))
 
-          service.filterCountries(filter, Some(P5)).length mustBe 6
+          println(result.toString())
+
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
@@ -110,12 +124,18 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
       "EU member" - {
 
+        val expectedIds = Seq("FR", "IT", "AT")
+
         "returns the P4 list of countries" in {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, Some(EuMember))
+          val result  = service.filterCountries(filter, Some(P5))
 
-          service.filterCountries(filter, Some(P5)).length mustBe 3
+          println(result.toString())
+
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
@@ -123,12 +143,16 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
       "Non EU member" - {
 
+        val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM")
+
         "returns the P4 list of countries" in {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
+          val result  = service.filterCountries(filter, Some(P5))
 
-          service.filterCountries(filter, Some(P5)).length mustBe 8
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
@@ -136,12 +160,16 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
       "None" - {
 
+        val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM")
+
         "returns the P4 list of countries" in {
 
           val service = app.injector.instanceOf[CountryService]
           val filter  = CountryQueryFilter(None, Seq.empty, None)
+          val result  = service.filterCountries(filter, Some(P5))
 
-          service.filterCountries(filter, Some(P5)).length mustBe 8
+          result.length mustBe expectedIds.length
+          expectedIds.map(result.toString.contains(_) mustBe true)
 
         }
 
