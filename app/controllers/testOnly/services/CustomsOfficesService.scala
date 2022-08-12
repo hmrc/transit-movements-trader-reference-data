@@ -28,19 +28,19 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
     getData[CustomsOffice](config.customsOffice)
 
   def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.getCountryCode() == code)
+    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.countryCode == code)
 
   def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.getCountryCode() == code)
+    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.countryCode == code)
 
   def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.getCountryCode() == code)
+    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.countryCode == code)
 
   def customsOfficeTransitExit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeTransitExit).filter(_.getCountryCode() == code)
+    getData[CustomsOfficeP5](config.customsOfficeTransitExit).filter(_.countryCode == code)
 
   def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.getCountryCode() == countryId)
+    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.countryCode == countryId)
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     customsOffices.find(_.id == officeId)

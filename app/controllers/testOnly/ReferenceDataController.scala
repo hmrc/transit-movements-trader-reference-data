@@ -16,20 +16,25 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services._
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.VersionHelper
+import play.api.libs.json.Json
+import play.api.libs.json.Writes
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
-class UnLocodeController @Inject() (
-  cc: ControllerComponents,
-  unLocodeService: UnLocodeService
-) extends ReferenceDataController(cc) {
+class ReferenceDataController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
 
-  def get(): Action[AnyContent] =
-    getIfP5 {
-      unLocodeService.get
-    }
+  def getIfP5[T](ts: => Seq[T])(implicit wts: Writes[T]): Action[AnyContent] = Action {
+    request =>
+      VersionHelper.getVersion(request) match {
+        case Some(P5) => Ok(Json.toJson(ts))
+        case _        => NoContent
+      }
+  }
+
 }

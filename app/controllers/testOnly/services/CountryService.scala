@@ -34,20 +34,22 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
     getData[Country](config.countryCodes).find(_.code == code)
 
   def filterCountries(countryQueryFilter: CountryQueryFilter, version: Option[Version] = None): Seq[Country] = {
-
     val resource = version match {
       case Some(P5) => checkMembership(countryQueryFilter.membership)
       case _        => config.countryCodes
     }
 
-    getData[Country](resource).filterNot(
+    getData[Country](resource).filterNot {
       country => countryQueryFilter.excludeCountryCodes.contains(country.code)
-    )
+    }
   }
 
   // TODO - Do we need any more filtering? I.e. like member etc?
   val countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
     getData[Country](config.countryCustomsOfficeSecurityAgreementArea)
+
+  val countryAddressPostcodeBased: Seq[Country] =
+    getData[Country](config.countryAddressPostcodeBased)
 
   private def checkMembership(membership: Option[CountryMembership]): String =
     membership match {

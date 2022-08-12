@@ -16,51 +16,38 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CustomsOfficesService
-import controllers.testOnly.testmodels.CustomsOfficeP5
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
-) extends BackendController(cc) {
+) extends ReferenceDataController(cc) {
 
-  def customsOfficeTransit(code: String): Action[AnyContent] = get {
+  def customsOfficeTransit(code: String): Action[AnyContent] = getIfP5 {
     customsOfficesService.customsOfficeTransit(code)
   }
 
-  def customsOfficeDestination(code: String): Action[AnyContent] = get {
+  def customsOfficeDestination(code: String): Action[AnyContent] = getIfP5 {
     customsOfficesService.customsOfficeDestination(code)
   }
 
-  def customsOfficeDeparture(code: String): Action[AnyContent] = get {
+  def customsOfficeDeparture(code: String): Action[AnyContent] = getIfP5 {
     customsOfficesService.customsOfficeDeparture(code)
   }
 
-  def customsOfficeExit(code: String): Action[AnyContent] = get {
+  def customsOfficeExit(code: String): Action[AnyContent] = getIfP5 {
     customsOfficesService.customsOfficeExit(code)
   }
 
-  def customsOfficeTransitExit(code: String): Action[AnyContent] = get {
+  def customsOfficeTransitExit(code: String): Action[AnyContent] = getIfP5 {
     customsOfficesService.customsOfficeTransitExit(code)
   }
-
-  private def get(offices: Seq[CustomsOfficeP5]): Action[AnyContent] =
-    Action {
-      request =>
-        VersionHelper.getVersion(request) match {
-          case Some(P5) => Ok(Json.toJson(offices))
-          case _        => NoContent
-        }
-    }
 
   def customsOffices(): Action[AnyContent] =
     Action {
