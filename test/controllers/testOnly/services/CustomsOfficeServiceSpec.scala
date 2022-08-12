@@ -17,8 +17,7 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.CustomsOffice
-import controllers.testOnly.testmodels.CustomsOfficeP5
+import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
 
 class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
@@ -78,48 +77,48 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       service.customsOfficeExit("DE").filter(_.getCountryCode() != "DE") mustBe empty
     }
+  }
 
-    "customsOfficeTransit" - {
+  "customsOfficeTransit" - {
 
-      "must return the offices of transit for a given country code" in {
+    "must return the offices of transit for a given country code" in {
 
-        val service  = app.injector.instanceOf[CustomsOfficesService]
-        val expected = Seq(CustomsOfficeP5("FR001260", "Dunkerque port bureau"))
+      val service  = app.injector.instanceOf[CustomsOfficesService]
+      val expected = Seq(CustomsOfficeP5("FR001260", "Dunkerque port bureau"))
 
-        service.customsOfficeTransit("FR") mustBe expected
-
-      }
-
-      "must return an empty list where no match" in {
-
-        val service  = app.injector.instanceOf[CustomsOfficesService]
-        val expected = Seq.empty
-
-        service.customsOfficeTransit("12") mustBe expected
-
-      }
+      service.customsOfficeTransit("FR") mustBe expected
 
     }
 
-    "customsOfficeDestination" - {
+    "must return an empty list where no match" in {
 
-      "must return the offices of destination for a given country code" in {
+      val service  = app.injector.instanceOf[CustomsOfficesService]
+      val expected = Seq.empty
 
-        val service  = app.injector.instanceOf[CustomsOfficesService]
-        val expected = Seq(CustomsOfficeP5("SM000001", "Ufficio Tributario Rep. San Marino"))
+      service.customsOfficeTransit("12") mustBe expected
 
-        service.customsOfficeDestination("SM") mustBe expected
+    }
 
-      }
+  }
 
-      "must return an empty list where no match" in {
+  "customsOfficeDestination" - {
 
-        val service  = app.injector.instanceOf[CustomsOfficesService]
-        val expected = Seq.empty
+    "must return the offices of destination for a given country code" in {
 
-        service.customsOfficeDestination("12") mustBe expected
+      val service  = app.injector.instanceOf[CustomsOfficesService]
+      val expected = Seq(CustomsOfficeP5("SM000001", "Ufficio Tributario Rep. San Marino"))
 
-      }
+      service.customsOfficeDestination("SM") mustBe expected
+
+    }
+
+    "must return an empty list where no match" in {
+
+      val service  = app.injector.instanceOf[CustomsOfficesService]
+      val expected = Seq.empty
+
+      service.customsOfficeDestination("12") mustBe expected
+
     }
   }
 
@@ -140,6 +139,28 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
       val expected = Seq.empty
 
       service.customsOfficeDeparture("12") mustBe expected
+    }
+  }
+
+  "customsOfficeTransitExit" - {
+
+    "get customs office of transit exit based on country code" in {
+
+      val service = app.injector.instanceOf[CustomsOfficesService]
+
+      val result = service.customsOfficeTransitExit("CY")
+      result.length mustBe 2
+      result mustBe Seq(
+        CustomsOfficeP5("CY000440", "LARNACA AIRPORT"),
+        CustomsOfficeP5("CY000640", "PAPHOS AIRPORT")
+      )
+    }
+
+    "must return an empty list when no match" in {
+
+      val service  = app.injector.instanceOf[CustomsOfficesService]
+
+      service.customsOfficeDeparture("12") mustBe Nil
     }
   }
 

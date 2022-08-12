@@ -17,6 +17,7 @@ GET        /transit-movements-trader-reference-data/customs-office-transit/:code
 GET        /transit-movements-trader-reference-data/customs-office-departure/:code                    controllers.testOnly.CustomsOfficeController.customsOfficeDeparture(code)
 GET        /transit-movements-trader-reference-data/customs-office-destination/:code                  controllers.testOnly.CustomsOfficeController.customsOfficeDestination(code)
 GET        /transit-movements-trader-reference-data/customs-office-exit/:code                         controllers.testOnly.CustomsOfficeController.customsOfficeExit(code)
+GET        /transit-movements-trader-reference-data/customs-office-transit-exit/:code                 controllers.testOnly.CustomsOfficeController.customsOfficeExit(code)
 
 GET        /transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET        /transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)

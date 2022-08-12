@@ -39,7 +39,6 @@ class CustomsOfficeController @Inject() (
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
           case _        => NoContent
         }
-
     }
 
   def customsOfficeDestination(code: String): Action[AnyContent] =
@@ -49,7 +48,6 @@ class CustomsOfficeController @Inject() (
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
           case _        => NoContent
         }
-
     }
 
   def customsOfficeDeparture(code: String): Action[AnyContent] =
@@ -59,7 +57,6 @@ class CustomsOfficeController @Inject() (
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
           case _        => NoContent
         }
-
     }
 
   def customsOfficeExit(code: String): Action[AnyContent] =
@@ -69,7 +66,15 @@ class CustomsOfficeController @Inject() (
           case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
           case _        => NoContent
         }
+    }
 
+  def customsOfficeTransitExit(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeTransitExit(code)))
+          case _        => NoContent
+        }
     }
 
   def customsOffices(): Action[AnyContent] =
@@ -84,7 +89,6 @@ class CustomsOfficeController @Inject() (
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
     Action {
-
       customsOfficesService
         .getCustomsOffice(officeId)
         .map {
