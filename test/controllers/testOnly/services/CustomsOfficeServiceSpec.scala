@@ -17,15 +17,16 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.{CustomsOffice, CustomsOfficeP5}
+import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.CustomsOfficeP5
 
 class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
-  val officeId1 = "GB005010"
+  val officeId1 = "GB000040"
   val officeId2 = "AT530100"
 
   val customsOffice1: CustomsOffice =
-    CustomsOffice(officeId1, "Appledore", "GB", Some("+44 (0)1255 244725"), List("RSS"))
+    CustomsOffice(officeId1, "Dover (OTS) Freight Clearance", "GB", Some("+44 (0)3000 575 988"), List("ENT", "EXP", "EXT"))
 
   val customsOffice2: CustomsOffice =
     CustomsOffice(officeId2, "Wels, Terminal Wels", "AT", Some("+44 (0)3000 575 988"), List("ENT"))
@@ -33,8 +34,9 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
   "must return customs office list" in {
     val service = app.injector.instanceOf[CustomsOfficesService]
 
-    service.customsOffices.head mustBe customsOffice1
-    service.customsOffices.last mustBe customsOffice2
+    val result = service.customsOffices
+    result.length mustBe 14
+    result.head mustBe customsOffice1
   }
 
   "getCustomsOffice" - {
@@ -46,22 +48,18 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     }
 
     "must return None for an invalid office value" in {
-      val service            = app.injector.instanceOf[CustomsOfficesService]
-      val invalidOfficeValue = "1234"
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOffice(invalidOfficeValue) mustBe None
+      service.getCustomsOffice("1234") mustBe None
     }
-
   }
 
   "customsOfficeExit" - {
-    val customsOfficeExit1: CustomsOfficeP5 = CustomsOfficeP5("CZ530299", "Letiště Tuřany, Brno-Tuřany")
 
     "get customs office of exit based on country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.customsOfficeExit("CZ").head mustBe customsOfficeExit1
-
+      service.customsOfficeExit("CZ").head mustBe CustomsOfficeP5("CZ530299", "Letiště Tuřany, Brno-Tuřany")
     }
 
     "must return empty list for invalid country code" in {
@@ -69,99 +67,82 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
       val invalidCountryCode = "123"
 
       service.customsOfficeExit(invalidCountryCode) mustBe empty
-
     }
 
     "must only return list of customs offices from country code provided" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.customsOfficeExit("DE").filter(_.getCountryCode() != "DE") mustBe empty
+      service.customsOfficeExit("DE") mustBe Seq(
+        CustomsOfficeP5("DE002705", "Weeze"),
+        CustomsOfficeP5("DE003030", "Erfurt-Flughafen Luftverkehr")
+      )
     }
   }
 
   "customsOfficeTransit" - {
 
     "must return the offices of transit for a given country code" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val service  = app.injector.instanceOf[CustomsOfficesService]
-      val expected = Seq(CustomsOfficeP5("FR001260", "Dunkerque port bureau"))
-
-      service.customsOfficeTransit("FR") mustBe expected
-
+      service.customsOfficeTransit("FR") mustBe Seq(
+        CustomsOfficeP5("FR001260", "Dunkerque port bureau")
+      )
     }
 
     "must return an empty list where no match" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val service  = app.injector.instanceOf[CustomsOfficesService]
-      val expected = Seq.empty
-
-      service.customsOfficeTransit("12") mustBe expected
-
+      service.customsOfficeTransit("12") mustBe empty
     }
-
   }
 
   "customsOfficeDestination" - {
 
     "must return the offices of destination for a given country code" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val service  = app.injector.instanceOf[CustomsOfficesService]
-      val expected = Seq(CustomsOfficeP5("SM000001", "Ufficio Tributario Rep. San Marino"))
-
-      service.customsOfficeDestination("SM") mustBe expected
-
+      service.customsOfficeDestination("SM") mustBe Seq(
+        CustomsOfficeP5("SM000001", "Ufficio Tributario Rep. San Marino")
+      )
     }
 
     "must return an empty list where no match" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val service  = app.injector.instanceOf[CustomsOfficesService]
-      val expected = Seq.empty
-
-      service.customsOfficeDestination("12") mustBe expected
-
+      service.customsOfficeDestination("12") mustBe empty
     }
   }
 
   "customsOfficeDeparture" - {
 
-    val customsOfficeDeparture: CustomsOfficeP5 = CustomsOfficeP5("XI000142", "Belfast")
-
     "get customs office of departure based on country code" in {
-
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.customsOfficeDeparture("XI").head mustBe customsOfficeDeparture
+      service.customsOfficeDeparture("XI").head mustBe CustomsOfficeP5("XI000142", "Belfast")
     }
 
     "must return an empty list where no match" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val service  = app.injector.instanceOf[CustomsOfficesService]
-      val expected = Seq.empty
-
-      service.customsOfficeDeparture("12") mustBe expected
+      service.customsOfficeDeparture("12") mustBe empty
     }
   }
 
   "customsOfficeTransitExit" - {
 
     "get customs office of transit exit based on country code" in {
-
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val result = service.customsOfficeTransitExit("CY")
-      result.length mustBe 2
-      result mustBe Seq(
+      service.customsOfficeTransitExit("CY") mustBe Seq(
         CustomsOfficeP5("CY000440", "LARNACA AIRPORT"),
         CustomsOfficeP5("CY000640", "PAPHOS AIRPORT")
       )
     }
 
     "must return an empty list when no match" in {
+      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      val service  = app.injector.instanceOf[CustomsOfficesService]
-
-      service.customsOfficeDeparture("12") mustBe Nil
+      service.customsOfficeDeparture("12") mustBe empty
     }
   }
-
 }

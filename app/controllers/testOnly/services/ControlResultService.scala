@@ -24,8 +24,8 @@ import javax.inject.Inject
 private[testOnly] class ControlResultService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val controlResults: Seq[ControlResult] =
-    getData[ControlResult](config.controlResult).sortBy(_.code)
+    getData[ControlResult](config.controlResult)
 
   def getControlResultByCode(code: String): Option[ControlResult] =
-    getData[ControlResult](config.controlResult).find(_.code == code)
+    controlResults.find(_.code == code)
 }

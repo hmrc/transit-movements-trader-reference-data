@@ -26,5 +26,5 @@ private[testOnly] class CircumstanceIndicatorService @Inject() (override val env
     getData[CircumstanceIndicator](config.circumstanceIndicators)
 
   def getCircumstanceIndicator(code: String): Option[CircumstanceIndicator] =
-    getData[CircumstanceIndicator](config.circumstanceIndicators).find(_.code == code)
+    circumstanceIndicators.find(_.code == code)
 }

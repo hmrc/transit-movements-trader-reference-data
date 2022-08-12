@@ -48,7 +48,6 @@ class CountryController @Inject() (
           case Some(P5) => Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
           case _        => NoContent
         }
-
     }
 
   def getCountry(code: String): Action[AnyContent] =

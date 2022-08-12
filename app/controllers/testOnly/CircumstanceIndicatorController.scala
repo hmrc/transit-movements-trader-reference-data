@@ -36,7 +36,6 @@ class CircumstanceIndicatorController @Inject() (
 
   def getCircumstanceIndicator(code: String): Action[AnyContent] =
     Action {
-
       circumstanceIndicatorService
         .getCircumstanceIndicator(code)
         .map {

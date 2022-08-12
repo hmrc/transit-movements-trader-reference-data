@@ -36,7 +36,6 @@ class TransportModeController @Inject() (
 
   def getTransportMode(code: String): Action[AnyContent] =
     Action {
-
       transportModeService
         .getTransportModeByCode(code)
         .map {

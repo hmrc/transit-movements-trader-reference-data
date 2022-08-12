@@ -36,7 +36,6 @@ class PreviousDocumentTypeController @Inject() (
 
   def getPreviousDocumentType(code: String): Action[AnyContent] =
     Action {
-
       previousDocumentTypeService
         .getPreviousDocumentTypeByCode(code)
         .map {
