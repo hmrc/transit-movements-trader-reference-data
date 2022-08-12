@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.services
+package controllers.testOnly
 
-import controllers.testOnly.testmodels.QualifierOfIdentificationIncident
-import play.api.Environment
+import controllers.testOnly.services._
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 
 import javax.inject.Inject
 
-private[testOnly] class QualifierOfIdentificationIncidentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+class CountryWithoutZipController @Inject() (
+  cc: ControllerComponents,
+  countryWithoutZipService: CountryWithoutZipService
+) extends ReferenceDataController(cc) {
 
-  def get: Seq[QualifierOfIdentificationIncident] =
-    getData[QualifierOfIdentificationIncident](config.qualifierOfIdentificationIncident)
+  def get(): Action[AnyContent] = getIfP5 {
+    countryWithoutZipService.get
+  }
 }

@@ -16,13 +16,13 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.QualifierOfIdentificationIncident
+import controllers.testOnly.testmodels.CountryWithoutZip
 import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class QualifierOfIdentificationIncidentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class CountryWithoutZipService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def get: Seq[QualifierOfIdentificationIncident] =
-    getData[QualifierOfIdentificationIncident](config.qualifierOfIdentificationIncident)
+  def get: Seq[CountryWithoutZip] =
+    getData[CountryWithoutZip](config.countryWithoutZip)
 }

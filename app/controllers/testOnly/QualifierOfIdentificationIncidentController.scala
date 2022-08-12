@@ -17,11 +17,13 @@
 package controllers.testOnly
 
 import controllers.testOnly.services._
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 
 import javax.inject.Inject
 
-class QualifierOfIdentificationIncidentController @Inject()(
+class QualifierOfIdentificationIncidentController @Inject() (
   cc: ControllerComponents,
   qualifierOfIdentificationIncidentService: QualifierOfIdentificationIncidentService
 ) extends ReferenceDataController(cc) {

@@ -54,6 +54,8 @@ GET        /transit-movements-trader-reference-data/un-locodes                  
 
 GET        /transit-movements-trader-reference-data/qualifier-of-identification-incident              controllers.testOnly.QualifierOfIdentificationIncidentController.get
 
+GET        /transit-movements-trader-reference-data/country-without-zip                               controllers.testOnly.CountryWithoutZipController.get
+
 # Add all the application routes to the prod.routes file
 ->         /                          health.Routes
 

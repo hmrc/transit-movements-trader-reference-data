@@ -106,4 +106,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val qualifierOfIdentificationIncident: String =
     config.get[String]("resourceFiles.qualifierOfIdentificationIncident")
+
+  val countryWithoutZip: String =
+    config.get[String]("resourceFiles.countryWithoutZip")
 }

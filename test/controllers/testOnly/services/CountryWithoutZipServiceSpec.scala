@@ -16,13 +16,21 @@
 
 package controllers.testOnly.services
 
+import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.testmodels.CountryWithoutZip
 import controllers.testOnly.testmodels.QualifierOfIdentificationIncident
-import play.api.Environment
 
-import javax.inject.Inject
+class CountryWithoutZipServiceSpec extends SpecBaseWithAppPerSuite {
 
-private[testOnly] class QualifierOfIdentificationIncidentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+  private val service = app.injector.instanceOf[CountryWithoutZipService]
 
-  def get: Seq[QualifierOfIdentificationIncident] =
-    getData[QualifierOfIdentificationIncident](config.qualifierOfIdentificationIncident)
+  "CountryWithoutZipService" - {
+    "get" - {
+      "must return every CountryWithoutZip" in {
+        val result = service.get
+        result.length mustBe 14
+        result.head mustBe CountryWithoutZip("AE")
+      }
+    }
+  }
 }

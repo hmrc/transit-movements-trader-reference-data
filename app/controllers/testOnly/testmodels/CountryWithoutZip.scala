@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.services
+package controllers.testOnly.testmodels
 
-import controllers.testOnly.testmodels.QualifierOfIdentificationIncident
-import play.api.Environment
+import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
-import javax.inject.Inject
+case class CountryWithoutZip(countryCode: String)
 
-private[testOnly] class QualifierOfIdentificationIncidentService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+object CountryWithoutZip {
 
-  def get: Seq[QualifierOfIdentificationIncident] =
-    getData[QualifierOfIdentificationIncident](config.qualifierOfIdentificationIncident)
+  implicit val writes: OWrites[CountryWithoutZip] = Json.writes[CountryWithoutZip]
+
+  implicit val readFromFile: Reads[CountryWithoutZip] = Json.reads[CountryWithoutZip]
+
 }
