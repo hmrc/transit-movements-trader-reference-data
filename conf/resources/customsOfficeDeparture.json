@@ -17,7 +17,7 @@
   },
   {
     "CUST_OFF_ID": "IT018100",
-    "CUST_OFF_NAM": "Bari"
+    "CUST_OFF_NAM": "BARI"
   },
   {
     "CUST_OFF_ID": "FR001260",
@@ -39,5 +39,4 @@
     "CUST_OFF_ID": "SM000001",
     "CUST_OFF_NAM": "Ufficio Tributario Rep. San Marino"
   }
-
 ]

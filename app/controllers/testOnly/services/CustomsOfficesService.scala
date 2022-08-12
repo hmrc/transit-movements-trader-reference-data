@@ -17,6 +17,7 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.CustomsOfficeP5
 import javax.inject.Inject
 import play.api.Environment
 
@@ -25,14 +26,20 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).sortBy(_.name)
 
-  def customsOfficeTransit(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeTransit).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.getCountryCode() == code).sortBy(_.name)
 
-  def customsOfficeDestination(code: String): Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeDestination).filter(_.countryId == code).sortBy(_.name)
+  def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.getCountryCode() == code).sortBy(_.name)
+
+  def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.getCountryCode() == code).sortBy(_.name)
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
+
+  def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.getCountryCode() == countryId).sortBy(_.name)
 
   def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
     (countryId, excludedRoles) match {

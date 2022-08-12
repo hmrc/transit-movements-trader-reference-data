@@ -52,15 +52,33 @@ class CustomsOfficeController @Inject() (
 
     }
 
+  def customsOfficeDeparture(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
+          case _        => NoContent
+        }
+
+    }
+
+  def customsOfficeExit(code: String): Action[AnyContent] =
+    Action {
+      request =>
+        VersionHelper.getVersion(request) match {
+          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
+          case _        => NoContent
+        }
+
+    }
+
   def customsOffices(): Action[AnyContent] =
     Action {
-
       Ok(Json.toJson(customsOfficesService.customsOffices))
     }
 
   def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
     Action {
-
       Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
     }
 
