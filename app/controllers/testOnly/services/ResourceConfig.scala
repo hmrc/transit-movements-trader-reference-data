@@ -97,4 +97,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val countryCustomsOfficeSecurityAgreementArea: String =
     config.get[String]("resourceFiles.countryCustomsOfficeSecurityAgreementArea")
+
+  val unLocodes: String =
+    config.get[String]("resourceFiles.unLocodes")
 }

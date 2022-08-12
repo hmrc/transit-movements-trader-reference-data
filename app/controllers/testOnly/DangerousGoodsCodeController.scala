@@ -17,41 +17,18 @@
 package controllers.testOnly
 
 import controllers.testOnly.services._
-import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-class ReferenceDataController @Inject() (
+import javax.inject.Inject
+
+class DangerousGoodsCodeController @Inject() (
   cc: ControllerComponents,
-  additionalInformationService: AdditionalInformationService,
-  kindOfPackagesService: KindOfPackageService,
-  documentTypeService: DocumentTypeService,
-  methodOfPaymentService: MethodOfPaymentService,
   dangerousGoodsCodeService: DangerousGoodsCodeService
 ) extends BackendController(cc) {
-
-  def additionalInformation(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(additionalInformationService.additionalInformation))
-    }
-
-  def kindsOfPackage(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(kindOfPackagesService.kindsOfPackage))
-    }
-
-  def documentTypes(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(documentTypeService.documentTypes))
-    }
-
-  def methodOfPayment(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(methodOfPaymentService.methodOfPayment))
-    }
 
   def dangerousGoodsCodes(): Action[AnyContent] =
     Action {
