@@ -17,12 +17,15 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers.{P4, P5}
+import controllers.testOnly.helpers.P4
+import controllers.testOnly.helpers.P5
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
+import models.requests.CountryMembership.CtcMember
+import models.requests.CountryMembership.EuMember
+import models.requests.CountryMembership.NonEuMember
 import models.requests.CountryQueryFilter
 
-class CountryServiceSpec  extends SpecBaseWithAppPerSuite {
+class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
   "getCountryByCode" - {
 
@@ -44,95 +47,108 @@ class CountryServiceSpec  extends SpecBaseWithAppPerSuite {
 
   }
 
+  "filterCountries" - {
 
-    "filterCountries" - {
+    "For P4" - {
 
-      "For P4" - {
+      "ctc member" - {
 
-        "ctc member" - {
+        "returns the P4 list of countries" in {
 
-          "returns the P4 list of countries" in {
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
 
-            val service = app.injector.instanceOf[CountryService]
-            val filter = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
-
-            service.filterCountries(filter, Some(P4)).length mustBe 3
-
-          }
-
-        }
-
-        "EU member" - {
-
-          "returns the P4 list of countries" in {
-
-            val service = app.injector.instanceOf[CountryService]
-            val filter = CountryQueryFilter(None, Seq.empty, Some(EuMember))
-
-            service.filterCountries(filter, Some(P4)).length mustBe 3
-
-          }
-
-        }
-
-        "Non EU member" - {
-
-          "returns the P4 list of countries" in {
-
-            val service = app.injector.instanceOf[CountryService]
-            val filter = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
-
-            service.filterCountries(filter, Some(P4)).length mustBe 3
-
-          }
+          println(s"ACHI: ${service.filterCountries(filter, Some(P4))}")
+          service.filterCountries(filter, Some(P4)).length mustBe 8
 
         }
 
       }
 
-      "For P5" - {
+      "EU member" - {
 
-        "ctc member" - {
+        "returns the P4 list of countries" in {
 
-          "returns the P4 list of countries" in {
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, Some(EuMember))
 
-            val service = app.injector.instanceOf[CountryService]
-            val filter = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
-
-            service.filterCountries(filter, Some(P5)).length mustBe 6
-
-          }
+          service.filterCountries(filter, Some(P4)).length mustBe 8
 
         }
 
-        "EU member" - {
+      }
 
-          "returns the P4 list of countries" in {
+      "Non EU member" - {
 
-            val service = app.injector.instanceOf[CountryService]
-            val filter = CountryQueryFilter(None, Seq.empty, Some(EuMember))
+        "returns the P4 list of countries" in {
 
-            service.filterCountries(filter, Some(P5)).length mustBe 3
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
 
-          }
-
-        }
-
-        "Non EU member" - {
-
-          "returns the P4 list of countries" in {
-
-            val service = app.injector.instanceOf[CountryService]
-            val filter = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
-
-            service.filterCountries(filter, Some(P5)).length mustBe 8
-
-          }
+          service.filterCountries(filter, Some(P4)).length mustBe 8
 
         }
 
       }
 
     }
+
+    "For P5" - {
+
+      "ctc member" - {
+
+        "returns the P4 list of countries" in {
+
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
+
+          service.filterCountries(filter, Some(P5)).length mustBe 6
+
+        }
+
+      }
+
+      "EU member" - {
+
+        "returns the P4 list of countries" in {
+
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, Some(EuMember))
+
+          service.filterCountries(filter, Some(P5)).length mustBe 3
+
+        }
+
+      }
+
+      "Non EU member" - {
+
+        "returns the P4 list of countries" in {
+
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
+
+          service.filterCountries(filter, Some(P5)).length mustBe 8
+
+        }
+
+      }
+
+      "None" - {
+
+        "returns the P4 list of countries" in {
+
+          val service = app.injector.instanceOf[CountryService]
+          val filter  = CountryQueryFilter(None, Seq.empty, None)
+
+          service.filterCountries(filter, Some(P5)).length mustBe 8
+
+        }
+
+      }
+
+    }
+
+  }
 
 }
