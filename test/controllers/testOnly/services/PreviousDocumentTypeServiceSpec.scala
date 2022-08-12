@@ -22,18 +22,19 @@ import base.SpecBaseWithAppPerSuite
 class PreviousDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
   val service               = app.injector.instanceOf[PreviousDocumentTypeService]
-  private val documentType1 = PreviousDocumentType("T2SM", Some("T2SM"))
-  private val documentType2 = PreviousDocumentType("CO", None)
+  private val documentType1 = PreviousDocumentType("T1", Some("Document T1"))
+  private val documentType2 = PreviousDocumentType("CO", Some("SAD - Community goods subject"))
+  private val documentType3 = PreviousDocumentType("821", None)
 
   "PreviousDocumentTypeService" - {
     "must return previous document types" in {
       service.previousDocumentTypes.headOption.value mustBe documentType1
-      service.previousDocumentTypes.lastOption.value mustBe documentType2
+      service.previousDocumentTypes.lastOption.value mustBe documentType3
     }
 
     "getPreviousDocumentTypeByCode" - {
       "must return correct previous document type for the input code with description" in {
-        service.getPreviousDocumentTypeByCode("T2SM").value mustBe documentType1
+        service.getPreviousDocumentTypeByCode("T1").value mustBe documentType1
       }
 
       "must return correct previous document type for the input code without description" in {

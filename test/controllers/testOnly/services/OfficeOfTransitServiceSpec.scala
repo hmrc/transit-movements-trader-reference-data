@@ -27,7 +27,7 @@ class OfficeOfTransitServiceSpec extends SpecBaseWithAppPerSuite {
     OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA")
 
   val officeOfTransit2: OfficeOfTransit =
-    OfficeOfTransit("DE006302", "Heiligenhafen, Heiligenhafen")
+    OfficeOfTransit("IT018105", "Roma")
 
   "must return offices of transit list" in {
     val service = app.injector.instanceOf[OfficeOfTransitService]
