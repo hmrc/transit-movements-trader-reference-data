@@ -27,13 +27,14 @@ class OfficeOfTransitServiceSpec extends SpecBaseWithAppPerSuite {
     OfficeOfTransit(officeId, "SANT JULIÀ DE LÒRIA, CUSTOMS OFFICE SANT JULIÀ DE LÒRIA")
 
   val officeOfTransit2: OfficeOfTransit =
-    OfficeOfTransit("DE006302", "Heiligenhafen, Heiligenhafen")
+    OfficeOfTransit("GB003250", "Newhaven")
 
   "must return offices of transit list" in {
     val service = app.injector.instanceOf[OfficeOfTransitService]
 
-    service.officesOfTransit.head mustBe officeOfTransit1
-    service.officesOfTransit.last mustBe officeOfTransit2
+    val result = service.officesOfTransit
+    result.head mustBe officeOfTransit1
+    result.last mustBe officeOfTransit2
   }
 
   "get office of transit" - {

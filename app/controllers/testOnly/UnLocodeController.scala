@@ -28,8 +28,7 @@ class UnLocodeController @Inject() (
   unLocodeService: UnLocodeService
 ) extends ReferenceDataController(cc) {
 
-  def get(): Action[AnyContent] =
-    getIfP5 {
-      unLocodeService.get
-    }
+  def get(): Action[AnyContent] = getIfP5 {
+    unLocodeService.get
+  }
 }

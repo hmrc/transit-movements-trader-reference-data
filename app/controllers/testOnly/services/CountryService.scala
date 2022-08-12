@@ -44,7 +44,6 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
     }
   }
 
-  // TODO - Do we need any more filtering? I.e. like member etc?
   val countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
     getData[Country](config.countryCustomsOfficeSecurityAgreementArea)
 
