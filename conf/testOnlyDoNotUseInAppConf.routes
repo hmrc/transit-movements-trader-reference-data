@@ -17,10 +17,12 @@ GET        /transit-movements-trader-reference-data/customs-office-transit/:code
 GET        /transit-movements-trader-reference-data/customs-office-departure/:code                    controllers.testOnly.CustomsOfficeController.customsOfficeDeparture(code)
 GET        /transit-movements-trader-reference-data/customs-office-destination/:code                  controllers.testOnly.CustomsOfficeController.customsOfficeDestination(code)
 GET        /transit-movements-trader-reference-data/customs-office-exit/:code                         controllers.testOnly.CustomsOfficeController.customsOfficeExit(code)
+GET        /transit-movements-trader-reference-data/customs-office-transit-exit/:code                 controllers.testOnly.CustomsOfficeController.customsOfficeTransitExit(code)
 
 GET        /transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET        /transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)
 GET        /transit-movements-trader-reference-data/country-customs-office-security-agreement-area    controllers.testOnly.CountryController.getCountryCustomsOfficeSecurityAgreementArea
+GET        /transit-movements-trader-reference-data/country-address-postcode-based                    controllers.testOnly.CountryController.getCountryAddressPostcodeBased
 
 GET        /transit-movements-trader-reference-data/office-transit                                    controllers.testOnly.OfficeOfTransitController.officesOfTransit
 GET        /transit-movements-trader-reference-data/office-transit/:id                                controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)
@@ -37,12 +39,18 @@ GET        /transit-movements-trader-reference-data/circumstance-indicator/:code
 GET        /transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
 GET        /transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)
 
-GET        /transit-movements-trader-reference-data/method-of-payment                                 controllers.testOnly.ReferenceDataController.methodOfPayment
-GET        /transit-movements-trader-reference-data/dangerous-goods-codes                             controllers.testOnly.ReferenceDataController.dangerousGoodsCodes
-GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        controllers.testOnly.ReferenceDataController.getDangerousGoodsCode(code)
-GET        /transit-movements-trader-reference-data/additional-information                            controllers.testOnly.ReferenceDataController.additionalInformation
-GET        /transit-movements-trader-reference-data/kinds-of-package                                  controllers.testOnly.ReferenceDataController.kindsOfPackage
-GET        /transit-movements-trader-reference-data/document-types                                    controllers.testOnly.ReferenceDataController.documentTypes
+GET        /transit-movements-trader-reference-data/method-of-payment                                 controllers.testOnly.MethodOfPaymentController.methodOfPayment
+
+GET        /transit-movements-trader-reference-data/dangerous-goods-codes                             controllers.testOnly.DangerousGoodsCodeController.dangerousGoodsCodes
+GET        /transit-movements-trader-reference-data/dangerous-goods-code/:code                        controllers.testOnly.DangerousGoodsCodeController.getDangerousGoodsCode(code)
+
+GET        /transit-movements-trader-reference-data/additional-information                            controllers.testOnly.AdditionalInformationController.additionalInformation
+
+GET        /transit-movements-trader-reference-data/kinds-of-package                                  controllers.testOnly.KindOfPackageController.kindsOfPackage
+
+GET        /transit-movements-trader-reference-data/document-types                                    controllers.testOnly.DocumentTypeController.documentTypes
+
+GET        /transit-movements-trader-reference-data/un-locodes                                        controllers.testOnly.UnLocodeController.get
 
 # Add all the application routes to the prod.routes file
 ->         /                          health.Routes

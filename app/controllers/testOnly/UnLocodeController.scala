@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.services
+package controllers.testOnly
 
-import controllers.testOnly.testmodels.OfficeOfTransit
+import controllers.testOnly.services._
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
+
 import javax.inject.Inject
-import play.api.Environment
 
-private[testOnly] class OfficeOfTransitService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+class UnLocodeController @Inject() (
+  cc: ControllerComponents,
+  unLocodeService: UnLocodeService
+) extends ReferenceDataController(cc) {
 
-  val officesOfTransit: Seq[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit)
-
-  def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
-    officesOfTransit.find(_.id == officeId)
-
+  def get(): Action[AnyContent] = getIfP5 {
+    unLocodeService.get
+  }
 }

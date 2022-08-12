@@ -24,9 +24,7 @@ case class CustomsOfficeP5(
   id: String,
   name: String
 ) {
-
-  def getCountryCode(): String = id.take(2)
-
+  val countryCode: String = id.take(2)
 }
 
 object CustomsOfficeP5 {

@@ -16,58 +16,25 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services._
-import javax.inject.Inject
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.VersionHelper
 import play.api.libs.json.Json
+import play.api.libs.json.Writes
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-class ReferenceDataController @Inject() (
-  cc: ControllerComponents,
-  additionalInformationService: AdditionalInformationService,
-  kindOfPackagesService: KindOfPackageService,
-  documentTypeService: DocumentTypeService,
-  methodOfPaymentService: MethodOfPaymentService,
-  dangerousGoodsCodeService: DangerousGoodsCodeService
-) extends BackendController(cc) {
+import javax.inject.Inject
 
-  def additionalInformation(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(additionalInformationService.additionalInformation))
-    }
+class ReferenceDataController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
 
-  def kindsOfPackage(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(kindOfPackagesService.kindsOfPackage))
-    }
+  def getIfP5[T](ts: => Seq[T])(implicit wts: Writes[T]): Action[AnyContent] = Action {
+    request =>
+      VersionHelper.getVersion(request) match {
+        case Some(P5) => Ok(Json.toJson(ts))
+        case _        => NoContent
+      }
+  }
 
-  def documentTypes(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(documentTypeService.documentTypes))
-    }
-
-  def methodOfPayment(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(methodOfPaymentService.methodOfPayment))
-    }
-
-  def dangerousGoodsCodes(): Action[AnyContent] =
-    Action {
-      Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCodes))
-    }
-
-  def getDangerousGoodsCode(code: String): Action[AnyContent] =
-    Action {
-      dangerousGoodsCodeService
-        .getDangerousGoodsCodeByCode(code)
-        .map {
-          dangerousGoodsCode =>
-            Ok(Json.toJson(dangerousGoodsCode))
-        }
-        .getOrElse {
-          NotFound
-        }
-    }
 }

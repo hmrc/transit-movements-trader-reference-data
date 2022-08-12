@@ -16,7 +16,6 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.P5
 import controllers.testOnly.helpers.Version
 import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CountryService
@@ -25,14 +24,13 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService
-) extends BackendController(cc) {
+) extends ReferenceDataController(cc) {
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action {
@@ -41,15 +39,13 @@ class CountryController @Inject() (
         Ok(Json.toJson(countryService.filterCountries(countryQueryFilter, version)))
     }
 
-  def getCountryCustomsOfficeSecurityAgreementArea(): Action[AnyContent] =
-    Action {
-      request =>
-        VersionHelper.getVersion(request) match {
-          case Some(P5) => Ok(Json.toJson(countryService.countryCustomsOfficeSecurityAgreementArea))
-          case _        => NoContent
-        }
+  def getCountryCustomsOfficeSecurityAgreementArea(): Action[AnyContent] = getIfP5 {
+    countryService.countryCustomsOfficeSecurityAgreementArea
+  }
 
-    }
+  def getCountryAddressPostcodeBased(): Action[AnyContent] = getIfP5 {
+    countryService.countryAddressPostcodeBased
+  }
 
   def getCountry(code: String): Action[AnyContent] =
     Action {

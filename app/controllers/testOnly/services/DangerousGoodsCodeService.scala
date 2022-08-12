@@ -17,14 +17,15 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.DangerousGoodsCode
-import javax.inject.Inject
 import play.api.Environment
+
+import javax.inject.Inject
 
 private[testOnly] class DangerousGoodsCodeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val dangerousGoodsCodes: Seq[DangerousGoodsCode] =
-    getData[DangerousGoodsCode](config.dangerousGoodsCode).sortBy(_.code)
+    getData[DangerousGoodsCode](config.dangerousGoodsCode)
 
   def getDangerousGoodsCodeByCode(code: String): Option[DangerousGoodsCode] =
-    getData[DangerousGoodsCode](config.dangerousGoodsCode).find(_.code == code)
+    dangerousGoodsCodes.find(_.code == code)
 }

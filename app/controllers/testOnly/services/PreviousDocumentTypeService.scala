@@ -17,8 +17,9 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.PreviousDocumentType
-import javax.inject.Inject
 import play.api.Environment
+
+import javax.inject.Inject
 
 private[testOnly] class PreviousDocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
@@ -26,5 +27,5 @@ private[testOnly] class PreviousDocumentTypeService @Inject() (override val env:
     getData[PreviousDocumentType](config.previousDocumentTypes)
 
   def getPreviousDocumentTypeByCode(code: String): Option[PreviousDocumentType] =
-    getData[PreviousDocumentType](config.previousDocumentTypes).find(_.code == code)
+    previousDocumentTypes.find(_.code == code)
 }

@@ -16,31 +16,32 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.TransportModeService
-import javax.inject.Inject
+import controllers.testOnly.services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-class TransportModeController @Inject() (
+import javax.inject.Inject
+
+class DangerousGoodsCodeController @Inject() (
   cc: ControllerComponents,
-  transportModeService: TransportModeService
+  dangerousGoodsCodeService: DangerousGoodsCodeService
 ) extends BackendController(cc) {
 
-  def transportModes(): Action[AnyContent] =
+  def dangerousGoodsCodes(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(transportModeService.transportModes))
+      Ok(Json.toJson(dangerousGoodsCodeService.dangerousGoodsCodes))
     }
 
-  def getTransportMode(code: String): Action[AnyContent] =
+  def getDangerousGoodsCode(code: String): Action[AnyContent] =
     Action {
-      transportModeService
-        .getTransportModeByCode(code)
+      dangerousGoodsCodeService
+        .getDangerousGoodsCodeByCode(code)
         .map {
-          transportMode =>
-            Ok(Json.toJson(transportMode))
+          dangerousGoodsCode =>
+            Ok(Json.toJson(dangerousGoodsCode))
         }
         .getOrElse {
           NotFound

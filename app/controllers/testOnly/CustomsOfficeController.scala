@@ -16,61 +16,38 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
-) extends BackendController(cc) {
+) extends ReferenceDataController(cc) {
 
-  def customsOfficeTransit(code: String): Action[AnyContent] =
-    Action {
-      request =>
-        VersionHelper.getVersion(request) match {
-          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeTransit(code)))
-          case _        => NoContent
-        }
+  def customsOfficeTransit(code: String): Action[AnyContent] = getIfP5 {
+    customsOfficesService.customsOfficeTransit(code)
+  }
 
-    }
+  def customsOfficeDestination(code: String): Action[AnyContent] = getIfP5 {
+    customsOfficesService.customsOfficeDestination(code)
+  }
 
-  def customsOfficeDestination(code: String): Action[AnyContent] =
-    Action {
-      request =>
-        VersionHelper.getVersion(request) match {
-          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDestination(code)))
-          case _        => NoContent
-        }
+  def customsOfficeDeparture(code: String): Action[AnyContent] = getIfP5 {
+    customsOfficesService.customsOfficeDeparture(code)
+  }
 
-    }
+  def customsOfficeExit(code: String): Action[AnyContent] = getIfP5 {
+    customsOfficesService.customsOfficeExit(code)
+  }
 
-  def customsOfficeDeparture(code: String): Action[AnyContent] =
-    Action {
-      request =>
-        VersionHelper.getVersion(request) match {
-          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeDeparture(code)))
-          case _        => NoContent
-        }
-
-    }
-
-  def customsOfficeExit(code: String): Action[AnyContent] =
-    Action {
-      request =>
-        VersionHelper.getVersion(request) match {
-          case Some(P5) => Ok(Json.toJson(customsOfficesService.customsOfficeExit(code)))
-          case _        => NoContent
-        }
-
-    }
+  def customsOfficeTransitExit(code: String): Action[AnyContent] = getIfP5 {
+    customsOfficesService.customsOfficeTransitExit(code)
+  }
 
   def customsOffices(): Action[AnyContent] =
     Action {
@@ -84,7 +61,6 @@ class CustomsOfficeController @Inject() (
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
     Action {
-
       customsOfficesService
         .getCustomsOffice(officeId)
         .map {

@@ -17,8 +17,9 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.TransportMode
-import javax.inject.Inject
 import play.api.Environment
+
+import javax.inject.Inject
 
 private[testOnly] class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
@@ -26,5 +27,5 @@ private[testOnly] class TransportModeService @Inject() (override val env: Enviro
     getData[TransportMode](config.transportModes)
 
   def getTransportModeByCode(code: String): Option[TransportMode] =
-    getData[TransportMode](config.transportModes).find(_.code == code)
+    transportModes.find(_.code == code)
 }

@@ -16,16 +16,13 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.OfficeOfTransit
-import javax.inject.Inject
+import controllers.testOnly.testmodels.UnLocode
 import play.api.Environment
 
-private[testOnly] class OfficeOfTransitService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+import javax.inject.Inject
 
-  val officesOfTransit: Seq[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit)
+private[testOnly] class UnLocodeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
-    officesOfTransit.find(_.id == officeId)
-
+  def get: Seq[UnLocode] =
+    getData[UnLocode](config.unLocodes)
 }

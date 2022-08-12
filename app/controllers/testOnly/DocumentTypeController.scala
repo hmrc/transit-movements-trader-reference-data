@@ -16,34 +16,22 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.TransportModeService
-import javax.inject.Inject
+import controllers.testOnly.services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-class TransportModeController @Inject() (
+import javax.inject.Inject
+
+class DocumentTypeController @Inject() (
   cc: ControllerComponents,
-  transportModeService: TransportModeService
+  documentTypeService: DocumentTypeService
 ) extends BackendController(cc) {
 
-  def transportModes(): Action[AnyContent] =
+  def documentTypes(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(transportModeService.transportModes))
-    }
-
-  def getTransportMode(code: String): Action[AnyContent] =
-    Action {
-      transportModeService
-        .getTransportModeByCode(code)
-        .map {
-          transportMode =>
-            Ok(Json.toJson(transportMode))
-        }
-        .getOrElse {
-          NotFound
-        }
+      Ok(Json.toJson(documentTypeService.documentTypes))
     }
 }

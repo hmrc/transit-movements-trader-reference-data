@@ -18,37 +18,41 @@ package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.CustomsOffice
 import controllers.testOnly.testmodels.CustomsOfficeP5
-import javax.inject.Inject
 import play.api.Environment
+
+import javax.inject.Inject
 
 private[testOnly] class CustomsOfficesService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val customsOffices: Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice).sortBy(_.name)
+    getData[CustomsOffice](config.customsOffice)
 
   def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.getCountryCode() == code).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.countryCode == code)
 
   def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.getCountryCode() == code).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.countryCode == code)
 
   def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.getCountryCode() == code).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.countryCode == code)
 
-  def getCustomsOffice(officeId: String): Option[CustomsOffice] =
-    getData[CustomsOffice](config.customsOffice).find(_.id == officeId)
+  def customsOfficeTransitExit(code: String): Seq[CustomsOfficeP5] =
+    getData[CustomsOfficeP5](config.customsOfficeTransitExit).filter(_.countryCode == code)
 
   def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.getCountryCode() == countryId).sortBy(_.name)
+    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.countryCode == countryId)
+
+  def getCustomsOffice(officeId: String): Option[CustomsOffice] =
+    customsOffices.find(_.id == officeId)
 
   def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
-    (countryId, excludedRoles) match {
-      case ("SM", List("TRA")) =>
-        getData[CustomsOffice](config.customsOffice)
-          .filter(
-            x => x.countryId == countryId && !x.roles.contains("TRA")
-          )
-          .sortBy(_.name)
-      case _ => getData[CustomsOffice](config.customsOffice).filter(_.countryId == countryId).sortBy(_.name)
-    }
+    customsOffices
+      .filter(_.countryId == countryId)
+      .filter {
+        x =>
+          (countryId, excludedRoles) match {
+            case ("SM", List("TRA")) => !x.roles.contains("TRA")
+            case _                   => true
+          }
+      }
 }

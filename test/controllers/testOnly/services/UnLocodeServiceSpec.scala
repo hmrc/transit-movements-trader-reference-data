@@ -16,16 +16,20 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.OfficeOfTransit
-import javax.inject.Inject
-import play.api.Environment
+import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.testmodels.UnLocode
 
-private[testOnly] class OfficeOfTransitService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+class UnLocodeServiceSpec extends SpecBaseWithAppPerSuite {
 
-  val officesOfTransit: Seq[OfficeOfTransit] =
-    getData[OfficeOfTransit](config.officeOfTransit)
+  private val service = app.injector.instanceOf[UnLocodeService]
 
-  def getOfficeOfTransit(officeId: String): Option[OfficeOfTransit] =
-    officesOfTransit.find(_.id == officeId)
-
+  "UnLocodeService" - {
+    "get" - {
+      "must return every UN/LOCODE" in {
+        val result = service.get
+        result.length mustBe 14
+        result.head mustBe UnLocode("ADALV", "Andorra la Vella", None, "--34-6--", "AI", "0601", Some("4230N 00131E"), Some("Muy Vella"))
+      }
+    }
+  }
 }

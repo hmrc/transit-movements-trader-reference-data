@@ -1,0 +1,118 @@
+[
+  {
+    "CUST_OFF_ID": "CY000440",
+    "CUST_OFF_NAM": "LARNACA AIRPORT"
+  },
+  {
+    "CUST_OFF_ID": "CY000640",
+    "CUST_OFF_NAM": "PAPHOS AIRPORT"
+  },
+  {
+    "CUST_OFF_ID": "CZ530201",
+    "CUST_OFF_NAM": "Celní, Brno-Slatina"
+  },
+  {
+    "CUST_OFF_ID": "CZ530299",
+    "CUST_OFF_NAM": "Letiště Tuřany, Brno-Tuřany"
+  },
+  {
+    "CUST_OFF_ID": "CZ580000",
+    "CUST_OFF_NAM": "pro Olomoucký kraj, Olomouc"
+  },
+  {
+    "CUST_OFF_ID": "CZ640203",
+    "CUST_OFF_NAM": "Celní, Uherské Hradiště"
+  },
+  {
+    "CUST_OFF_ID": "DE002301",
+    "CUST_OFF_NAM": "Bremen-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE002601",
+    "CUST_OFF_NAM": "Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE002705",
+    "CUST_OFF_NAM": "Weeze"
+  },
+  {
+    "CUST_OFF_ID": "DE003030",
+    "CUST_OFF_NAM": "Erfurt-Flughafen Luftverkehr"
+  },
+  {
+    "CUST_OFF_ID": "DE003302",
+    "CUST_OFF_NAM": "Fracht"
+  },
+  {
+    "CUST_OFF_ID": "DE003703",
+    "CUST_OFF_NAM": "Flughafen Berlin Brandenburg"
+  },
+  {
+    "CUST_OFF_ID": "DE004501",
+    "CUST_OFF_NAM": "Cuxhaven"
+  },
+  {
+    "CUST_OFF_ID": "DE004701",
+    "CUST_OFF_NAM": "Hamburg-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE004851",
+    "CUST_OFF_NAM": "Hamburg"
+  },
+  {
+    "CUST_OFF_ID": "DE005103",
+    "CUST_OFF_NAM": "Hannover-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE005552",
+    "CUST_OFF_NAM": "Dresden-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE005604",
+    "CUST_OFF_NAM": "Leipzig-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE005881",
+    "CUST_OFF_NAM": "Zollamt Baden-Baden"
+  },
+  {
+    "CUST_OFF_ID": "DE006756",
+    "CUST_OFF_NAM": "Hahn-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE007154",
+    "CUST_OFF_NAM": "Flughafen Köln/Bonn"
+  },
+  {
+    "CUST_OFF_ID": "DE007554",
+    "CUST_OFF_NAM": "Flughafen Memmingerberg"
+  },
+  {
+    "CUST_OFF_ID": "DE007650",
+    "CUST_OFF_NAM": "München - Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE008131",
+    "CUST_OFF_NAM": "Dortmund - Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE008306",
+    "CUST_OFF_NAM": "Münster-Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE008755",
+    "CUST_OFF_NAM": "Nürnberg Flughafen"
+  },
+  {
+    "CUST_OFF_ID": "DE009101",
+    "CUST_OFF_NAM": "Ludwigslust"
+  },
+  {
+    "CUST_OFF_ID": "DE009102",
+    "CUST_OFF_NAM": "Laage"
+  },
+  {
+    "CUST_OFF_ID": "DE009304",
+    "CUST_OFF_NAM": "Saarbrücken Flughafen"
+  }
+]

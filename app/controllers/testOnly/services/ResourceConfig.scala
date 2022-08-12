@@ -92,6 +92,15 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val customsOfficeExit: String =
     config.get[String]("resourceFiles.customsOfficeExit")
 
+  val customsOfficeTransitExit: String =
+    config.get[String]("resourceFiles.customsOfficeTransitExit")
+
   val countryCustomsOfficeSecurityAgreementArea: String =
     config.get[String]("resourceFiles.countryCustomsOfficeSecurityAgreementArea")
+
+  val countryAddressPostcodeBased: String =
+    config.get[String]("resourceFiles.countryAddressPostcodeBased")
+
+  val unLocodes: String =
+    config.get[String]("resourceFiles.unLocodes")
 }
