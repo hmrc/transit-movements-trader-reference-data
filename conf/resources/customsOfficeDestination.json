@@ -38,6 +38,21 @@
   {
     "CUST_OFF_ID": "SM000001",
     "CUST_OFF_NAM": "Ufficio Tributario Rep. San Marino"
+  },
+  {
+    "CUST_OFF_ID": "AT100000",
+    "CUST_OFF_NAM": "Wien"
+  },
+  {
+    "CUST_OFF_ID": "AT230000",
+    "CUST_OFF_NAM": "St. Pölten"
+  },
+  {
+    "CUST_OFF_ID": "AD000001",
+    "CUST_OFF_NAM": "CUSTOMS OFFICE SANT JULIÀ DE LÒRIA"
+  },
+  {
+    "CUST_OFF_ID": "AD000002",
+    "CUST_OFF_NAM": "DCNJ PORTA"
   }
-
 ]
