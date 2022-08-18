@@ -166,7 +166,7 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
   "countryCodesCTC" - {
     "must return the CTC countries" in {
       val result = service.countryCodesCTC
-      result.length mustBe 8
+      result.length mustBe 7
       result.head mustBe Country("valid", "CH", "Switzerland")
     }
   }
