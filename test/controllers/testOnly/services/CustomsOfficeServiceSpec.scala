@@ -131,18 +131,31 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
   "customsOfficeTransitExit" - {
 
     "get customs office of transit exit based on country code" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.customsOfficeTransitExit("CY") mustBe Seq(
+      val service = app.injector.instanceOf[CustomsOfficesService]
+      val offices = service.customsOfficeTransitExit(Some("CY"))
+
+      offices.length mustBe 2
+
+      offices mustBe Seq(
         CustomsOfficeP5("CY000440", "LARNACA AIRPORT"),
         CustomsOfficeP5("CY000640", "PAPHOS AIRPORT")
       )
+
+    }
+
+    "get customs office of transit exit all" in {
+
+      val service = app.injector.instanceOf[CustomsOfficesService]
+      service.customsOfficeTransitExit(None).length mustBe 29
+
     }
 
     "must return an empty list when no match" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
 
+      val service = app.injector.instanceOf[CustomsOfficesService]
       service.customsOfficeDeparture("12") mustBe empty
+
     }
   }
 }

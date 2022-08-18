@@ -45,7 +45,7 @@ class CustomsOfficeController @Inject() (
     customsOfficesService.customsOfficeExit(code)
   }
 
-  def customsOfficeTransitExit(code: String): Action[AnyContent] = getIfP5 {
+  def customsOfficeTransitExit(code: Option[String]): Action[AnyContent] = getIfP5 {
     customsOfficesService.customsOfficeTransitExit(code)
   }
 
