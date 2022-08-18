@@ -33,10 +33,5 @@
     "code": "TR",
     "state": "valid",
     "description": "Turkey"
-  },
-  {
-    "code": "NO",
-    "state": "valid",
-    "description": "Norway"
   }
 ]
