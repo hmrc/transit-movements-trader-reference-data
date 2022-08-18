@@ -109,4 +109,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val countryWithoutZip: String =
     config.get[String]("resourceFiles.countryWithoutZip")
+
+  val countryCodesCTC: String =
+    config.get[String]("resourceFiles.countryCodesCTC")
 }

@@ -18,7 +18,6 @@ package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.testmodels.CountryWithoutZip
-import controllers.testOnly.testmodels.QualifierOfIdentificationIncident
 
 class CountryWithoutZipServiceSpec extends SpecBaseWithAppPerSuite {
 
