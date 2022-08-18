@@ -23,6 +23,7 @@ GET        /transit-movements-trader-reference-data/countries                   
 GET        /transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)
 GET        /transit-movements-trader-reference-data/country-customs-office-security-agreement-area    controllers.testOnly.CountryController.getCountryCustomsOfficeSecurityAgreementArea
 GET        /transit-movements-trader-reference-data/country-address-postcode-based                    controllers.testOnly.CountryController.getCountryAddressPostcodeBased
+GET        /transit-movements-trader-reference-data/country-codes-ctc                                 controllers.testOnly.CountryController.getCountryCodesCTC
 
 GET        /transit-movements-trader-reference-data/office-transit                                    controllers.testOnly.OfficeOfTransitController.officesOfTransit
 GET        /transit-movements-trader-reference-data/office-transit/:id                                controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)

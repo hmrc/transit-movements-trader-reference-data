@@ -50,6 +50,9 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
   val countryAddressPostcodeBased: Seq[Country] =
     getData[Country](config.countryAddressPostcodeBased)
 
+  val countryCodesCTC: Seq[Country] =
+    getData[Country](config.countryCodesCTC)
+
   private def checkMembership(membership: Option[CountryMembership]): String =
     membership match {
       case None              => config.countryCodesV2
