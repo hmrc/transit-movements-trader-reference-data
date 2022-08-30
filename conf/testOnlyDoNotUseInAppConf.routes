@@ -58,6 +58,7 @@ GET        /test-only/transit-movements-trader-reference-data/qualifier-of-ident
 GET        /test-only/transit-movements-trader-reference-data/country-without-zip                               controllers.testOnly.CountryWithoutZipController.get
 
 # Add all the application routes to the prod.routes file
-->         /                          health.Routes
+->         /transit-movements-trader-reference-data                                                             app.Routes
+->         /                                                                                                    health.Routes
 
 GET        /admin/metrics             com.kenshoo.play.metrics.MetricsController.metrics
