@@ -131,7 +131,7 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
       "None" - {
 
-        val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM")
+        val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM", "DE")
 
         "returns the P4 list of countries" in {
           val filter = CountryQueryFilter(None, Seq.empty, None)
