@@ -8,6 +8,14 @@
     "CUST_OFF_NAM": "Newhaven"
   },
   {
+    "CUST_OFF_ID": "DE002102",
+    "CUST_OFF_NAM": "Schönefeld, Berlin-Flughafen Schönefeld"
+  },
+  {
+    "CUST_OFF_ID": "DE002105",
+    "CUST_OFF_NAM": "Berlin, Berlin-Flughafen-Tegel"
+  },
+  {
     "CUST_OFF_ID": "GB000218",
     "CUST_OFF_NAM": "Border Force, Port of Tyne"
   },
