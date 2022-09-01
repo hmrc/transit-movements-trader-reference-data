@@ -104,6 +104,9 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val unLocodes: String =
     config.get[String]("resourceFiles.unLocodes")
 
+  val locationTypes: String =
+    config.get[String]("resourceFiles.locationTypes")
+
   val qualifierOfIdentificationIncident: String =
     config.get[String]("resourceFiles.qualifierOfIdentificationIncident")
 

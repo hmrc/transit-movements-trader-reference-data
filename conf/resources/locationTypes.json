@@ -1,0 +1,26 @@
+[
+  {
+    "state": "valid",
+    "activeFrom": "2021-09-10",
+    "name": "A",
+    "description": "Designated location"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2021-09-10",
+    "name": "B",
+    "description": "Authorised place"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2021-09-10",
+    "name": "C",
+    "description": "Approved place"
+  },
+  {
+    "state": "valid",
+    "activeFrom": "2021-09-10",
+    "name": "D",
+    "description": "Other"
+  }
+]
