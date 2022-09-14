@@ -40,7 +40,10 @@ class DataImportRepositorySpec
 
   override protected def repository: DataImportRepository = new DataImportRepository(mongoComponent, stubClock)
 
-  private val stubClock: Clock = Clock.fixed(Instant.now, ZoneId.systemDefault)
+  private val stubClock: Clock = Clock.fixed(
+    Instant.now.truncatedTo(java.time.temporal.ChronoUnit.MILLIS),
+    ZoneId.systemDefault
+  )
 
   "Data Import Repository" - {
 
