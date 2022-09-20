@@ -147,7 +147,7 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
   "countryCustomsOfficeSecurityAgreementArea" - {
     "must return the customs office security agreement areas" in {
       val result = service.countryCustomsOfficeSecurityAgreementArea
-      result.length mustBe 4
+      result.length mustBe 5
       result.head mustBe Country("valid", "FR", "France")
     }
   }

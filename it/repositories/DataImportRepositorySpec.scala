@@ -25,6 +25,7 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 
+import java.time.temporal.ChronoUnit
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
@@ -42,12 +43,14 @@ class DataImportRepositorySpec
 
   private val stubClock: Clock = Clock.fixed(Instant.now, ZoneId.systemDefault)
 
+  private val now = Instant.now(stubClock).truncatedTo(ChronoUnit.MILLIS)
+
   "Data Import Repository" - {
 
     "must insert a new data import and retrieve it" in {
       val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-      val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Started, Instant.now(stubClock), None)
+      val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Started, now, None)
 
       val insertResult = repository.insert(dataImport).futureValue
       val getResult    = repository.get(dataImport.importId).futureValue
@@ -59,12 +62,12 @@ class DataImportRepositorySpec
     "must mark a record as finished" in {
       val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-      val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Started, Instant.now(stubClock), None)
+      val dataImport = DataImport(ImportId(1), list, 1, ImportStatus.Started, now, None)
 
       repository.insert(dataImport).futureValue
       val updateResult = repository.markFinished(ImportId(1), ImportStatus.Complete).futureValue
 
-      updateResult mustEqual DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
+      updateResult mustEqual DataImport(ImportId(1), list, 1, ImportStatus.Complete, now, Some(now))
     }
   }
 
@@ -73,10 +76,10 @@ class DataImportRepositorySpec
     "must return the highest import Id that's in a Complete status" in {
       val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-      val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
-      val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now(stubClock), Some(Instant.now(stubClock)))
-      val import3 = DataImport(ImportId(3), list, 1, ImportStatus.Failed, Instant.now(stubClock), Some(Instant.now(stubClock)))
-      val import4 = DataImport(ImportId(4), list, 1, ImportStatus.Started, Instant.now(stubClock), Some(Instant.now(stubClock)))
+      val import1 = DataImport(ImportId(1), list, 1, ImportStatus.Complete, now, Some(now))
+      val import2 = DataImport(ImportId(2), list, 1, ImportStatus.Complete, now, Some(now))
+      val import3 = DataImport(ImportId(3), list, 1, ImportStatus.Failed, now, Some(now))
+      val import4 = DataImport(ImportId(4), list, 1, ImportStatus.Started, now, Some(now))
 
       repository.insert(import1).futureValue
       repository.insert(import2).futureValue

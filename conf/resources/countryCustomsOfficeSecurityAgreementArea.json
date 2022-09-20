@@ -18,5 +18,10 @@
     "code": "XI",
     "state": "valid",
     "description": "United Kingdom (Northern Ireland)"
+  },
+  {
+    "code": "DE",
+    "state": "valid",
+    "description": "Germany"
   }
 ]
