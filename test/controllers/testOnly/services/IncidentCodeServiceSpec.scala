@@ -17,14 +17,17 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.{DocumentType, IncidentCode}
+import controllers.testOnly.testmodels.IncidentCode
 
 class IncidentCodeServiceSpec extends SpecBaseWithAppPerSuite {
 
   "must return incident codes" in {
     val service = app.injector.instanceOf[IncidentCodeService]
 
-    val expectedFirstItem =  IncidentCode("1", "The carrier is obliged to deviate from the itinerary prescribed in accordance with Article 298 of UCC/IA Regulation due to circumstances beyond his control.")
+    val expectedFirstItem = IncidentCode(
+      "1",
+      "The carrier is obliged to deviate from the itinerary prescribed in accordance with Article 298 of UCC/IA Regulation due to circumstances beyond his control."
+    )
 
     service.incidentCodes.head mustEqual expectedFirstItem
   }

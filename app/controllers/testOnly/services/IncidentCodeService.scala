@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class IncidentCodeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class IncidentCodeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val incidentCodes: Seq[IncidentCode] =
     getData[IncidentCode](config.incidentCodes)
