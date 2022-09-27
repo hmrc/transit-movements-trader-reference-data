@@ -57,6 +57,8 @@ GET        /test-only/transit-movements-trader-reference-data/qualifier-of-ident
 
 GET        /test-only/transit-movements-trader-reference-data/country-without-zip                               controllers.testOnly.CountryWithoutZipController.get
 
+GET        /test-only/transit-movements-trader-reference-data/incident-codes                                    controllers.testOnly.IncidentCodeController.incidentCodes
+
 # Add all the application routes to the prod.routes file
 ->         /transit-movements-trader-reference-data                                                             app.Routes
 ->         /                                                                                                    health.Routes
