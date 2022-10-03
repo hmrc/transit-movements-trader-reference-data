@@ -113,6 +113,4 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val countryCodesCTC: String =
     config.get[String]("resourceFiles.countryCodesCTC")
 
-  val incidentCodes: String =
-    config.get[String]("resourceFiles.incidentCodes")
 }
