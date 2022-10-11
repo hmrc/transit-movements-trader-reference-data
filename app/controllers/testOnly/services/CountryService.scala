@@ -16,10 +16,14 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.{P5, Version}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
-import models.requests.{CountryMembership, CountryQueryFilter}
+import models.requests.CountryMembership.CtcMember
+import models.requests.CountryMembership.EuMember
+import models.requests.CountryMembership.NonEuMember
+import models.requests.CountryMembership
+import models.requests.CountryQueryFilter
 import play.api.Environment
 
 import javax.inject.Inject
