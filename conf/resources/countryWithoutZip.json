@@ -1,44 +1,16 @@
 [
-  {
-    "countryCode": "AE"
-  },
-  {
-    "countryCode": "AG"
-  },
-  {
-    "countryCode": "AI"
-  },
-  {
-    "countryCode": "AO"
-  },
-  {
-    "countryCode": "AW"
-  },
-  {
-    "countryCode": "BF"
-  },
-  {
-    "countryCode": "BI"
-  },
-  {
-    "countryCode": "BJ"
-  },
-  {
-    "countryCode": "BM"
-  },
-  {
-    "countryCode": "BO"
-  },
-  {
-    "countryCode": "BQ"
-  },
-  {
-    "countryCode": "BS"
-  },
-  {
-    "countryCode": "BW"
-  },
-  {
-    "countryCode": "BZ"
-  }
+  "AE",
+  "AG",
+  "AI",
+  "AO",
+  "AW",
+  "BF",
+  "BI",
+  "BJ",
+  "BM",
+  "BO",
+  "BQ",
+  "BS",
+  "BW",
+  "BZ"
 ]

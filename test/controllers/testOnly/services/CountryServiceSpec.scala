@@ -17,12 +17,9 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers.P4
-import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.{P4, P5}
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.CtcMember
-import models.requests.CountryMembership.EuMember
-import models.requests.CountryMembership.NonEuMember
+import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
 import models.requests.CountryQueryFilter
 import org.scalacheck.Gen
 
@@ -168,6 +165,14 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
       val result = service.countryCodesCTC
       result.length mustBe 7
       result.head mustBe Country("valid", "CH", "Switzerland")
+    }
+  }
+
+  "countryCodesCTC" - {
+    "must return the countries without zip" in {
+      val result = service.countriesWithoutZip
+      result.length mustBe 14
+      result.head mustBe "AE"
     }
   }
 

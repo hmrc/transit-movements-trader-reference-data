@@ -16,14 +16,10 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.{P5, Version}
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.CtcMember
-import models.requests.CountryMembership.EuMember
-import models.requests.CountryMembership.NonEuMember
-import models.requests.CountryMembership
-import models.requests.CountryQueryFilter
+import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
+import models.requests.{CountryMembership, CountryQueryFilter}
 import play.api.Environment
 
 import javax.inject.Inject
@@ -44,14 +40,17 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
     }
   }
 
-  val countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
+  def countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
     getData[Country](config.countryCustomsOfficeSecurityAgreementArea)
 
-  val countryAddressPostcodeBased: Seq[Country] =
+  def countryAddressPostcodeBased: Seq[Country] =
     getData[Country](config.countryAddressPostcodeBased)
 
-  val countryCodesCTC: Seq[Country] =
+  def countryCodesCTC: Seq[Country] =
     getData[Country](config.countryCodesCTC)
+
+  def countriesWithoutZip: Seq[String] =
+    getData[String](config.countryWithoutZip)
 
   private def checkMembership(membership: Option[CountryMembership]): String =
     membership match {
