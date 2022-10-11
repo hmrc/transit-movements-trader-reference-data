@@ -44,14 +44,17 @@ private[testOnly] class CountryService @Inject() (override val env: Environment,
     }
   }
 
-  val countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
+  def countryCustomsOfficeSecurityAgreementArea: Seq[Country] =
     getData[Country](config.countryCustomsOfficeSecurityAgreementArea)
 
-  val countryAddressPostcodeBased: Seq[Country] =
+  def countryAddressPostcodeBased: Seq[Country] =
     getData[Country](config.countryAddressPostcodeBased)
 
-  val countryCodesCTC: Seq[Country] =
+  def countryCodesCTC: Seq[Country] =
     getData[Country](config.countryCodesCTC)
+
+  def countriesWithoutZip: Seq[String] =
+    getData[String](config.countryWithoutZip)
 
   private def checkMembership(membership: Option[CountryMembership]): String =
     membership match {

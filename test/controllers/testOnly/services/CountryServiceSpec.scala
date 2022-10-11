@@ -171,4 +171,12 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
     }
   }
 
+  "countryCodesCTC" - {
+    "must return the countries without zip" in {
+      val result = service.countriesWithoutZip
+      result.length mustBe 14
+      result.head mustBe "AE"
+    }
+  }
+
 }

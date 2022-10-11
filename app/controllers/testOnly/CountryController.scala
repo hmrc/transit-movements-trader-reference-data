@@ -51,6 +51,10 @@ class CountryController @Inject() (
     countryService.countryCodesCTC
   }
 
+  def getCountriesWithoutZip(): Action[AnyContent] = getIfP5 {
+    countryService.countriesWithoutZip
+  }
+
   def getCountry(code: String): Action[AnyContent] =
     Action {
       countryService
