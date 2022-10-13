@@ -5,6 +5,11 @@
     "description": "Andorra"
   },
   {
+    "code": "AE",
+    "state": "valid",
+    "description": "United Arab Emirates"
+  },
+  {
     "code": "AR",
     "state": "valid",
     "description": "Argentina"
