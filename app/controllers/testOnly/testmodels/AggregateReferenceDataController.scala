@@ -16,6 +16,4 @@
 
 package controllers.testOnly.testmodels
 
-class AggregateReferenceDataController {
-
-}
+class AggregateReferenceDataController {}

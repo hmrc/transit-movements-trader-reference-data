@@ -16,25 +16,22 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.{Nationality, TransportAggregateData, TransportMeans}
+import controllers.testOnly.testmodels.TransportAggregateData
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.Inject
+import javax.inject.Singleton
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 @Singleton
-class ReferenceDataService2 @Inject()(transportModeService: TransportModeService)(implicit ec:ExecutionContext)  {
-
+class TransportDataService @Inject() (transportModeService: TransportModeService)(implicit ec: ExecutionContext) {
 
   def aggregateData: TransportAggregateData = {
-    val nationalities: List[Nationality] = List(
-      Nationality("FR", "France"),
-      Nationality("DE", "Germany")
-    )
-    val means: List[TransportMeans] = List(TransportMeans("Name of a sea-going vehicle"),TransportMeans("IATA flight number"),
-                TransportMeans("Name of an inland waterways vehicle"), TransportMeans("IMO ship identification number"))
-    val modes = transportModeService.transportModes
+    val nationalities = transportModeService.nationalities
+    val means         = transportModeService.transportMeans
+    val modes         = transportModeService.transportModes
 
-    TransportAggregateData(modes.toList, means, nationalities)
+    TransportAggregateData(modes.toList, means.toList, nationalities.toList)
   }
 
   def getTransportAggregate: Future[TransportAggregateData] = Future {

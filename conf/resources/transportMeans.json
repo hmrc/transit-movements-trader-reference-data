@@ -1,0 +1,18 @@
+[
+  {
+    "name": "TestName1",
+    "desc": "Name of a sea-going vehicle"
+  },
+  {
+    "name": "testName2",
+    "desc": "IATA flight number"
+  },
+  {
+    "name": "testName3",
+    "desc": "Name of an inland waterways vehicle"
+  },
+  {
+    "name": "testName4",
+    "desc": "IMO ship identification number"
+  }
+]

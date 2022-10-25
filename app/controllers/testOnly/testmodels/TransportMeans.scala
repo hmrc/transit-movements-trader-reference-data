@@ -16,7 +16,8 @@
 
 package controllers.testOnly.testmodels
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.Format
+import play.api.libs.json.Json
 
 case class Nationality(code: String, desc: String)
 
@@ -24,7 +25,7 @@ object Nationality {
   implicit val format: Format[Nationality] = Json.format[Nationality]
 }
 
-case class TransportMeans(value: String)
+case class TransportMeans(name: String, desc: String)
 
 object TransportMeans {
   implicit val format: Format[TransportMeans] = Json.format[TransportMeans]
@@ -32,7 +33,7 @@ object TransportMeans {
 
 case class TransportAggregateData(modes: List[TransportMode], means: List[TransportMeans], nationalities: List[Nationality])
 
-object TransportAggregateData{
+object TransportAggregateData {
 
   implicit val format: Format[TransportAggregateData] = Json.format[TransportAggregateData]
 }
