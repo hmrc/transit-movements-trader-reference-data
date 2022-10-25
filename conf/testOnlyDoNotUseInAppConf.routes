@@ -56,6 +56,8 @@ GET        /test-only/transit-movements-trader-reference-data/un-locodes        
 
 GET        /test-only/transit-movements-trader-reference-data/qualifier-of-identification-incident              controllers.testOnly.QualifierOfIdentificationIncidentController.get
 
+GET        /test-only/transit-movements-trader-reference-data/transport                                         controllers.testOnly.TransportModeController.getAggregate()
+
 # Add all the application routes to the prod.routes file
 ->         /transit-movements-trader-reference-data                                                             app.Routes
 ->         /                                                                                                    health.Routes

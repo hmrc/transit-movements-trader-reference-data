@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.services
+package controllers.testOnly.testmodels
 
-import controllers.testOnly.testmodels.TransportMode
-import play.api.Environment
+class AggregateReferenceDataController {
 
-import javax.inject.Inject
-
-class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
-
-  val transportModes: Seq[TransportMode] =
-    getData[TransportMode](config.transportModes)
-
-  def getTransportModeByCode(code: String): Option[TransportMode] =
-    transportModes.find(_.code == code)
 }
