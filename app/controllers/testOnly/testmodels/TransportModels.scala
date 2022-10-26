@@ -25,13 +25,7 @@ object Nationality {
   implicit val format: Format[Nationality] = Json.format[Nationality]
 }
 
-case class TransportMeans(name: String, desc: String)
-
-object TransportMeans {
-  implicit val format: Format[TransportMeans] = Json.format[TransportMeans]
-}
-
-case class TransportAggregateData(modes: List[TransportMode], means: List[TransportMeans], nationalities: List[Nationality])
+case class TransportAggregateData(nationalities: List[Nationality])
 
 object TransportAggregateData {
 

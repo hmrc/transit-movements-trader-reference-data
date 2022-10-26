@@ -16,7 +16,8 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.TransportAggregateData
+import controllers.testOnly.testmodels.{Nationality, TransportAggregateData}
+import play.api.Environment
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,14 +25,15 @@ import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 @Singleton
-class TransportDataService @Inject() (transportModeService: TransportModeService)(implicit ec: ExecutionContext) {
+class TransportDataService @Inject() (override val env: Environment)(implicit ec: ExecutionContext) extends ResourceService {
+
+
+  val nationalities: Seq[Nationality] =
+    getData[Nationality]("resources/nationalities.json")
+
 
   def aggregateData: TransportAggregateData = {
-    val nationalities = transportModeService.nationalities
-    val means         = transportModeService.transportMeans
-    val modes         = transportModeService.transportModes
-
-    TransportAggregateData(modes.toList, means.toList, nationalities.toList)
+    TransportAggregateData(nationalities.toList)
   }
 
   def getTransportAggregate: Future[TransportAggregateData] = Future {

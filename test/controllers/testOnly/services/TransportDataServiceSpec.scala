@@ -18,24 +18,12 @@ package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.testmodels.Nationality
-import controllers.testOnly.testmodels.TransportMeans
-import controllers.testOnly.testmodels.TransportMode
-import controllers.testOnly.testmodels.Valid
 
 class TransportDataServiceSpec extends SpecBaseWithAppPerSuite {
   private val service       = app.injector.instanceOf[TransportDataService]
-  private val transportMode = TransportMode(Valid, "2015-07-01", "17", "(semi) Trailer on sea-going vessel")
-  private val transportMean = TransportMeans("TestName1", "Name of a sea-going vehicle")
   private val nationality   = Nationality("AR", "Argentina")
 
   "TransportModeService" - {
-    "must return transport modes" in {
-      service.aggregateData.modes.head mustBe transportMode
-    }
-
-    "must return transport means" in {
-      service.aggregateData.means.head mustBe transportMean
-    }
 
     "must return transport nationalities" in {
       service.aggregateData.nationalities.head mustBe nationality

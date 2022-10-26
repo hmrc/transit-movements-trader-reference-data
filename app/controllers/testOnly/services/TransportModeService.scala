@@ -16,8 +16,6 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.Nationality
-import controllers.testOnly.testmodels.TransportMeans
 import controllers.testOnly.testmodels.TransportMode
 import play.api.Environment
 
@@ -31,9 +29,4 @@ class TransportModeService @Inject() (override val env: Environment, config: Res
   def getTransportModeByCode(code: String): Option[TransportMode] =
     transportModes.find(_.code == code)
 
-  val transportMeans: Seq[TransportMeans] =
-    getData[TransportMeans](config.transportMeans)
-
-  val nationalities: Seq[Nationality] =
-    getData[Nationality](config.nationalities)
 }

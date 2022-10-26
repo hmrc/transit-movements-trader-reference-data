@@ -53,7 +53,7 @@ class TransportModeController @Inject() (
         }
     }
 
-  def getAggregate() = Action.async {
+  def getAggregate: Action[AnyContent] = Action.async {
     for {
       data <- referenceDataService.getTransportAggregate
     } yield Ok(Json.toJson(data))
