@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val transportModes: Seq[TransportMode] =
     getData[TransportMode](config.transportModes)

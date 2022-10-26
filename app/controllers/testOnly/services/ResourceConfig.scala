@@ -35,9 +35,6 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val transportModes: String =
     config.get[String]("resourceFiles.transportModes")
 
-  val transportMeans: String =
-    config.get[String]("resourceFiles.transportMeans")
-
   val nationalities: String =
     config.get[String]("resourceFiles.nationalities")
 
