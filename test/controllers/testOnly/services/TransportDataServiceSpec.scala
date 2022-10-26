@@ -20,8 +20,8 @@ import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.testmodels.Nationality
 
 class TransportDataServiceSpec extends SpecBaseWithAppPerSuite {
-  private val service       = app.injector.instanceOf[TransportDataService]
-  private val nationality   = Nationality("AR", "Argentina")
+  private val service     = app.injector.instanceOf[TransportDataService]
+  private val nationality = Nationality("AR", "Argentina")
 
   "TransportModeService" - {
 
