@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.services
+package controllers.testOnly.testmodels
 
-import controllers.testOnly.testmodels.TransportMode
-import play.api.Environment
+import play.api.libs.json.Format
+import play.api.libs.json.Json
 
-import javax.inject.Inject
+case class Nationality(code: String, desc: String)
 
-private[testOnly] class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+object Nationality {
+  implicit val format: Format[Nationality] = Json.format[Nationality]
+}
 
-  val transportModes: Seq[TransportMode] =
-    getData[TransportMode](config.transportModes)
+case class TransportAggregateData(nationalities: List[Nationality])
 
-  def getTransportModeByCode(code: String): Option[TransportMode] =
-    transportModes.find(_.code == code)
+object TransportAggregateData {
 
+  implicit val format: Format[TransportAggregateData] = Json.format[TransportAggregateData]
 }

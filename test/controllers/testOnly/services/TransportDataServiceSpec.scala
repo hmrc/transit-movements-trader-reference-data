@@ -16,17 +16,18 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.TransportMode
-import play.api.Environment
+import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.testmodels.Nationality
 
-import javax.inject.Inject
+class TransportDataServiceSpec extends SpecBaseWithAppPerSuite {
+  private val service     = app.injector.instanceOf[TransportDataService]
+  private val nationality = Nationality("AR", "Argentina")
 
-private[testOnly] class TransportModeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
+  "TransportModeService" - {
 
-  val transportModes: Seq[TransportMode] =
-    getData[TransportMode](config.transportModes)
+    "must return transport nationalities" in {
+      service.aggregateData.nationalities.head mustBe nationality
+    }
 
-  def getTransportModeByCode(code: String): Option[TransportMode] =
-    transportModes.find(_.code == code)
-
+  }
 }

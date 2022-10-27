@@ -16,7 +16,9 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.TransportModeService
+import services.TransportDataService
+import services.TransportModeService
+
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -24,10 +26,14 @@ import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import scala.concurrent.ExecutionContext
+
 class TransportModeController @Inject() (
   cc: ControllerComponents,
-  transportModeService: TransportModeService
-) extends BackendController(cc) {
+  transportModeService: TransportModeService,
+  referenceDataService: TransportDataService
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc) {
 
   def transportModes(): Action[AnyContent] =
     Action {
@@ -46,4 +52,10 @@ class TransportModeController @Inject() (
           NotFound
         }
     }
+
+  def getAggregate: Action[AnyContent] = Action.async {
+    for {
+      data <- referenceDataService.getTransportAggregate
+    } yield Ok(Json.toJson(data))
+  }
 }
