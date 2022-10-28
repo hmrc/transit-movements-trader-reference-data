@@ -4,8 +4,6 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "transit-movements-trader-reference-data"
 
-val silencerVersion = "1.7.9"
-
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(
     play.sbt.PlayScala,
@@ -20,7 +18,7 @@ lazy val microservice = Project(appName, file("."))
     ThisBuild / scalafmtOnCompile := false,
     ThisBuild / useSuperShell := false
   )
-  .settings(scalaVersion := "2.12.15")
+  .settings(scalaVersion := "2.13.8")
   .settings(publishingSettings: _*)
   .settings(inConfig(Test)(testSettings): _*)
   .configs(IntegrationTest)
@@ -37,18 +35,7 @@ lazy val microservice = Project(appName, file("."))
       "models.requests.CountryQueryFilter"
     )
   )
-  .settings(
-    // ***************
-    // Use the silencer plugin to suppress warnings
-    scalacOptions += "-P:silencer:pathFilters=routes",
-    libraryDependencies ++= Seq(
-      compilerPlugin(
-        "com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full
-      ),
-      "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
-    )
-    // ***************
-  )
+  .settings(scalacOptions += "-Wconf:src=routes/.*:s")
 
 lazy val scoverageSettings =
   Seq(

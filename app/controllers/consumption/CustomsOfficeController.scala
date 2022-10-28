@@ -16,21 +16,19 @@
 
 package controllers.consumption
 
-import services.ReferenceDataService
 import logging.Logging
 import models.CustomsOfficesList
 import play.api.libs.json.Json
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import repositories.Projection.SuppressRoles
-import repositories.Projection
-import repositories.Selector
+import repositories.{Projection, Selector}
 import repositories.Selector.OptionallyByRole
+import services.ReferenceDataService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
+import scala.language.postfixOps
 
 trait CustomsOfficeController {
   def customsOffices(roles: Seq[String] = Nil): Action[AnyContent]

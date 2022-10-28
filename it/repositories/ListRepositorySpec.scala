@@ -50,7 +50,7 @@ class ListRepositorySpec
 
       result mustEqual true
 
-      val databaseRecords = repository.collection.find
+      val databaseRecords = repository.collection.find()
         .projection(Projections.excludeId())
         .toFuture()
         .futureValue
