@@ -31,7 +31,6 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.Helpers.running
-import repositories.ListRepository.CountryCodesFullListRepository
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
 
@@ -48,7 +47,7 @@ class DataImportServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar 
   private val mockImportIdRepo     = mock[ImportIdRepository]
   private val mockDataImportRepo   = mock[DataImportRepository]
   private val mockListRepoProvider = mock[ListRepositoryProvider]
-  private val mockListRepo         = mock[CountryCodesFullListRepository]
+  private val mockListRepo         = mock[ListRepository]
 
   private val appBuilder: GuiceApplicationBuilder =
     new GuiceApplicationBuilder()
