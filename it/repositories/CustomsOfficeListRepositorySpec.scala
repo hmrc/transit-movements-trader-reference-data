@@ -16,6 +16,7 @@
 
 package repositories
 
+import models.CustomsOfficesList
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.IntegrationPatience
 import org.scalatest.concurrent.ScalaFutures
@@ -23,7 +24,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
-import repositories.ListRepository.CustomsOfficesListRepository
+import repositories.ListRepository.ListRepositoryProvider
 import repositories.Selector.ByCountry
 import repositories.Selector.ById
 import repositories.Selector.OptionallyByRole
@@ -39,7 +40,7 @@ class CustomsOfficeListRepositorySpec
     with OptionValues
     with DefaultPlayMongoRepositorySupport[JsObject] {
 
-  override protected def repository: CustomsOfficesListRepository = new CustomsOfficesListRepository(mongoComponent)
+  override protected def repository: ListRepository = new ListRepositoryProvider(mongoComponent).apply(CustomsOfficesList)
 
   class Setup {
 

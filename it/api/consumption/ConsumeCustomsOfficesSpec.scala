@@ -28,7 +28,7 @@ import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.WSResponse
-import repositories.ListRepository.CustomsOfficesListRepository
+import repositories.ListRepository.ListRepositoryProvider
 import repositories._
 
 import java.time.Instant
@@ -40,9 +40,10 @@ class ConsumeCustomsOfficesSpec extends AnyFreeSpec with Matchers with ScalaFutu
 
   class Setup {
 
-    val listRepo: ListRepository             = app.injector.instanceOf[CustomsOfficesListRepository]
-    val importRepo: ImportIdRepository       = app.injector.instanceOf[ImportIdRepository]
-    val dataImportRepo: DataImportRepository = app.injector.instanceOf[DataImportRepository]
+    val listRepoProvider: ListRepositoryProvider = app.injector.instanceOf[ListRepositoryProvider]
+    val listRepo: ListRepository                 = listRepoProvider.apply(CustomsOfficesList)
+    val importRepo: ImportIdRepository           = app.injector.instanceOf[ImportIdRepository]
+    val dataImportRepo: DataImportRepository     = app.injector.instanceOf[DataImportRepository]
 
     val nextId: ImportId = importRepo.nextId.futureValue
 

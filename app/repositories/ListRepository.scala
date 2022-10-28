@@ -107,7 +107,7 @@ object ListRepository {
   }
 
   @Singleton
-  class CountryCodesFullListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class CountryCodesFullListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = CountryCodesFullList,
@@ -119,7 +119,7 @@ object ListRepository {
       )
 
   @Singleton
-  class CountryCodesCommonTransitListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class CountryCodesCommonTransitListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = CountryCodesCommonTransitList,
@@ -130,7 +130,7 @@ object ListRepository {
       )
 
   @Singleton
-  class CountryCodesCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class CountryCodesCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = CountryCodesCommunityList,
@@ -141,7 +141,7 @@ object ListRepository {
       )
 
   @Singleton
-  class CustomsOfficesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class CustomsOfficesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = CustomsOfficesList,
@@ -154,7 +154,7 @@ object ListRepository {
       )
 
   @Singleton
-  class DocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class DocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = DocumentTypeCommonList,
@@ -165,7 +165,7 @@ object ListRepository {
       )
 
   @Singleton
-  class PreviousDocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class PreviousDocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = PreviousDocumentTypeCommonList,
@@ -176,7 +176,7 @@ object ListRepository {
       )
 
   @Singleton
-  class KindOfPackagesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class KindOfPackagesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = KindOfPackagesList,
@@ -187,7 +187,7 @@ object ListRepository {
       )
 
   @Singleton
-  class TransportModeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class TransportModeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = TransportModeList,
@@ -198,7 +198,7 @@ object ListRepository {
       )
 
   @Singleton
-  class AdditionalInformationIdCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class AdditionalInformationIdCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = AdditionalInformationIdCommonList,
@@ -209,7 +209,7 @@ object ListRepository {
       )
 
   @Singleton
-  class SpecificCircumstanceIndicatorListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class SpecificCircumstanceIndicatorListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = SpecificCircumstanceIndicatorList,
@@ -220,7 +220,7 @@ object ListRepository {
       )
 
   @Singleton
-  class UnDangerousGoodsCodeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class UnDangerousGoodsCodeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = UnDangerousGoodsCodeList,
@@ -231,7 +231,7 @@ object ListRepository {
       )
 
   @Singleton
-  class TransportChargesMethodOfPaymentListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class TransportChargesMethodOfPaymentListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = TransportChargesMethodOfPaymentList,
@@ -242,7 +242,7 @@ object ListRepository {
       )
 
   @Singleton
-  class ControlResultListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class ControlResultListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = ControlResultList,
@@ -253,7 +253,7 @@ object ListRepository {
       )
 
   @Singleton
-  class CountryCodesCommonTransitOutsideCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class CountryCodesCommonTransitOutsideCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = CountryCodesCommonTransitOutsideCommunityList,
@@ -264,7 +264,7 @@ object ListRepository {
       )
 
   @Singleton
-  class CountryCodesCustomsOfficeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+  private class CountryCodesCustomsOfficeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
         mongoComponent = mongoComponent,
         referenceDataList = CountryCodesCustomsOfficeLists,

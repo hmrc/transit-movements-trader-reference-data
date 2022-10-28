@@ -16,6 +16,7 @@
 
 package repositories
 
+import models.CountryCodesFullList
 import org.mongodb.scala.model.Projections
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
@@ -24,12 +25,12 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.OptionValues
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json
-import repositories.ListRepository.CountryCodesFullListRepository
+import repositories.ListRepository.ListRepositoryProvider
 import uk.gov.hmrc.mongo.test.DefaultPlayMongoRepositorySupport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ListRepositorySpec
+class CountryCodesFullListRepositorySpec
     extends AnyFreeSpec
     with Matchers
     with BeforeAndAfterEach
@@ -37,7 +38,7 @@ class ListRepositorySpec
     with OptionValues
     with DefaultPlayMongoRepositorySupport[JsObject] {
 
-  override protected def repository: CountryCodesFullListRepository = new CountryCodesFullListRepository(mongoComponent)
+  override protected def repository: ListRepository = new ListRepositoryProvider(mongoComponent).apply(CountryCodesFullList)
 
   ".insert" - {
 
