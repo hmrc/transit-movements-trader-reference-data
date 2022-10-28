@@ -19,9 +19,12 @@ package controllers.consumption
 import logging.Logging
 import models.CustomsOfficesList
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 import repositories.Projection.SuppressRoles
-import repositories.{Projection, Selector}
+import repositories.Projection
+import repositories.Selector
 import repositories.Selector.OptionallyByRole
 import services.ReferenceDataService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
