@@ -48,7 +48,7 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
       val version = Gen.oneOf(Some(P4), None).sample.value
 
-      val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM")
+      val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM", "AE")
 
       "ctc member" - {
 
