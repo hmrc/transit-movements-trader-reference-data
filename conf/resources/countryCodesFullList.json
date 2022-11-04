@@ -38,5 +38,10 @@
     "code": "SM",
     "state": "valid",
     "description": "San Marino"
+  },
+  {
+    "code": "AE",
+    "state": "valid",
+    "description": "United Arab Emirates"
   }
 ]
