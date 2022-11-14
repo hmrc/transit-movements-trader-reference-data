@@ -29,26 +29,6 @@ class CustomsOfficeController @Inject() (
   customsOfficesService: CustomsOfficesService
 ) extends ReferenceDataController(cc) {
 
-  def customsOfficeTransit(code: String): Action[AnyContent] = getIfP5 {
-    customsOfficesService.customsOfficeTransit(code)
-  }
-
-  def customsOfficeDestination(code: String): Action[AnyContent] = getIfP5 {
-    customsOfficesService.customsOfficeDestination(code)
-  }
-
-  def customsOfficeDeparture(code: String): Action[AnyContent] = getIfP5 {
-    customsOfficesService.customsOfficeDeparture(code)
-  }
-
-  def customsOfficeExit(code: String): Action[AnyContent] = getIfP5 {
-    customsOfficesService.customsOfficeExit(code)
-  }
-
-  def customsOfficeTransitExit(code: String): Action[AnyContent] = getIfP5 {
-    customsOfficesService.customsOfficeTransitExit(code)
-  }
-
   def customsOffices(): Action[AnyContent] =
     Action {
       Ok(Json.toJson(customsOfficesService.customsOffices))
@@ -57,6 +37,11 @@ class CustomsOfficeController @Inject() (
   def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
     Action {
       Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
+    }
+
+  def customsOfficesOfTheCountryP5(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountryP5(countryCode, excludedRoles)))
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =

@@ -56,8 +56,8 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val customsOffice: String =
     config.get[String]("resourceFiles.customsOffices")
 
-  val customsOfficeDeparture: String =
-    config.get[String]("resourceFiles.customsOfficeDeparture")
+  val customsOfficeP5: String =
+    config.get[String]("resourceFiles.customsOfficesP5")
 
   val countryCodes: String =
     config.get[String]("resourceFiles.countryCodesFullList")
@@ -85,18 +85,6 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val transitCountryCodes: String =
     config.get[String]("resourceFiles.transitCountryCodesFullList")
-
-  val customsOfficeTransit: String =
-    config.get[String]("resourceFiles.customsOfficeTransit")
-
-  val customsOfficeDestination: String =
-    config.get[String]("resourceFiles.customsOfficeDestination")
-
-  val customsOfficeExit: String =
-    config.get[String]("resourceFiles.customsOfficeExit")
-
-  val customsOfficeTransitExit: String =
-    config.get[String]("resourceFiles.customsOfficeTransitExit")
 
   val countryCustomsOfficeSecurityAgreementArea: String =
     config.get[String]("resourceFiles.countryCustomsOfficeSecurityAgreementArea")

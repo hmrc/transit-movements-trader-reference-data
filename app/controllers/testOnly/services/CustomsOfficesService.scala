@@ -17,7 +17,6 @@
 package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.CustomsOffice
-import controllers.testOnly.testmodels.CustomsOfficeP5
 import play.api.Environment
 
 import javax.inject.Inject
@@ -27,20 +26,8 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice)
 
-  def customsOfficeTransit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeTransit).filter(_.countryCode == code)
-
-  def customsOfficeDestination(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDestination).filter(_.countryCode == code)
-
-  def customsOfficeExit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeExit).filter(_.countryCode == code)
-
-  def customsOfficeTransitExit(code: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeTransitExit).filter(_.countryCode == code)
-
-  def customsOfficeDeparture(countryId: String): Seq[CustomsOfficeP5] =
-    getData[CustomsOfficeP5](config.customsOfficeDeparture).filter(_.countryCode == countryId)
+  val customsOfficesP5: Seq[CustomsOffice] =
+    getData[CustomsOffice](config.customsOfficeP5)
 
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     customsOffices.find(_.id == officeId)
@@ -55,4 +42,8 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
             case _                   => true
           }
       }
+
+  def getCustomsOfficesOfTheCountryP5(countryId: String, roles: List[String]): Seq[CustomsOffice] =
+    customsOfficesP5.filter(_.countryId == countryId).filter(_.roles.exists(roles.contains _))
+
 }
