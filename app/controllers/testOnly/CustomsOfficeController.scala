@@ -39,9 +39,9 @@ class CustomsOfficeController @Inject() (
       Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
     }
 
-  def customsOfficesOfTheCountryP5(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
+  def customsOfficesOfTheCountryP5(countryCode: String, roles: List[String]): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountryP5(countryCode, excludedRoles)))
+      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountryP5(countryCode, roles)))
     }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
