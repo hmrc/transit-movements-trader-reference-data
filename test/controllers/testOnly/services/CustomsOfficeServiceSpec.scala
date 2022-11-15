@@ -59,7 +59,13 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
       service.getCustomsOfficesOfTheCountryP5("GB", List("EXT")).head mustBe
-        CustomsOffice("GB000040", "Dover (OTS) Freight Clearance", "GB", Some("+44 (0)3000 575 988"), Seq("ENT", "EXP", "EXT"))
+        CustomsOffice(
+          "GB000011",
+          "Birmingham Airport",
+          "GB",
+          Some("+44 (0)121 781 7850"),
+          List("DEP", "DEP", "DES", "DES", "ENT", "EXP", "EXP", "EXT", "EXT", "TRA", "TRA")
+        )
     }
 
     "must return empty list for invalid country code" in {
@@ -73,9 +79,87 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
       service.getCustomsOfficesOfTheCountryP5("XI", List("EXT")) mustBe Seq(
-        CustomsOffice("XI000142", "Belfast EPU", "XI", Some("+44 (0)3000 575 988"), Seq("ENT", "EXP", "EXT")),
-        CustomsOffice("XI005160", "Warrenpoint", "XI", Some("+44 (0)3000 575 988"), List("ENT", "EXP", "EXT")),
-        CustomsOffice("XI005220", "Larne", "XI", Some("+44 (0)3000 575 988"), Seq("ENT", "EXP", "EXT"))
+        CustomsOffice(
+          "XI000142",
+          "Belfast EPU",
+          "XI",
+          Some("+44 (0)02896 931537"),
+          List("DEP", "AUT", "DEP", "DEP", "DES", "DES", "DES", "ENT", "ENT", "EXT", "EXT", "EXT", "TRA", "TRA", "TRA")
+        ),
+        CustomsOffice(
+          "XIREX001",
+          "Implementation of IE/NI protocol",
+          "XI",
+          None,
+          List(
+            "RRG",
+            "RRG",
+            "RRG",
+            "RRG",
+            "DEP",
+            "RCA",
+            "DEP",
+            "DEP",
+            "DES",
+            "DES",
+            "DES",
+            "ENT",
+            "EXP",
+            "EXP",
+            "EXT",
+            "EXT",
+            "TRA",
+            "TRA",
+            "TRA",
+            "ACE",
+            "ACP",
+            "ACR",
+            "ACT",
+            "AUT",
+            "AWB",
+            "BTI",
+            "CAE",
+            "CAU",
+            "CCA",
+            "CCD",
+            "CCL",
+            "CGU",
+            "CND",
+            "CVA",
+            "CWP",
+            "DIS",
+            "DPO",
+            "EIN",
+            "EIR",
+            "ENL",
+            "ENQ",
+            "ETD",
+            "EUS",
+            "EXC",
+            "EXL",
+            "GUA",
+            "INC",
+            "INC",
+            "IPO",
+            "MCA",
+            "OPO",
+            "PLA",
+            "PRT",
+            "RAC",
+            "REC",
+            "REG",
+            "RFC",
+            "RSS",
+            "SAS",
+            "SCO",
+            "SDE",
+            "SSE",
+            "TEA",
+            "TRD",
+            "TST",
+            "TXT"
+          )
+        )
       )
     }
   }
@@ -85,15 +169,8 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     "must return the offices of transit for a given country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountryP5("GB", List("TRA")) mustBe Seq(
-        CustomsOffice(
-          "GB000060",
-          "Dover/Folkestone Eurotunnel Freight",
-          "GB",
-          Some("+44 (0)3000 515831"),
-          List("DEP", "DES", "ENT", "EXP", "TRA")
-        )
-      )
+      service.getCustomsOfficesOfTheCountryP5("GB", List("TRA")).head mustBe
+        CustomsOffice("GB000001", "Central Community Transit Office.", "GB", Some("+44 01268666688"), List("AUT", "RCA", "TRA", "CAU", "ENQ", "GUA", "REC"))
     }
 
     "must return an empty list where no match" in {
@@ -108,15 +185,14 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     "must return the offices of destination for a given country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountryP5("GB", List("DES")) mustBe Seq(
+      service.getCustomsOfficesOfTheCountryP5("GB", List("DES")).head mustBe
         CustomsOffice(
-          "GB000060",
-          "Dover/Folkestone Eurotunnel Freight",
+          "GB000011",
+          "Birmingham Airport",
           "GB",
-          Some("+44 (0)3000 515831"),
-          List("DEP", "DES", "ENT", "EXP", "TRA")
+          Some("+44 (0)121 781 7850"),
+          List("DEP", "DEP", "DES", "DES", "ENT", "EXP", "EXP", "EXT", "EXT", "TRA", "TRA")
         )
-      )
     }
 
     "must return an empty list where no match" in {
@@ -131,15 +207,8 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     "get customs office of departure based on country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountryP5("GB", List("DEP")) mustBe Seq(
-        CustomsOffice(
-          "GB000060",
-          "Dover/Folkestone Eurotunnel Freight",
-          "GB",
-          Some("+44 (0)3000 515831"),
-          List("DEP", "DES", "ENT", "EXP", "TRA")
-        )
-      )
+      service.getCustomsOfficesOfTheCountryP5("GB", List("DEP")).head mustBe
+        CustomsOffice("GB000008", "Heysham", "GB", Some("03000599436"), List("DEP"))
     }
 
     "must return an empty list where no match" in {
@@ -154,9 +223,48 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     "get customs office of transit exit based on country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountryP5("CY", List("TXT")) mustBe Seq(
-        CustomsOffice("CY000440", "LARNACA AIRPORT", "CY", Some("+378 0549 885472"), List("TXT"))
-      )
+      service.getCustomsOfficesOfTheCountryP5("CY", List("TXT")).head mustBe
+        CustomsOffice(
+          "CY000440",
+          "LARNACA AIRPORT",
+          "CY",
+          Some("00357.24.816057"),
+          List(
+            "CAE",
+            "TXT",
+            "PLA",
+            "DIS",
+            "RFC",
+            "SCO",
+            "CAU",
+            "CAU",
+            "CAU",
+            "DEP",
+            "DEP",
+            "DES",
+            "DES",
+            "EIN",
+            "ENL",
+            "ENL",
+            "ENL",
+            "ENQ",
+            "ENT",
+            "ENT",
+            "ENT",
+            "EXC",
+            "EXC",
+            "EXL",
+            "EXL",
+            "EXL",
+            "EXP",
+            "EXP",
+            "EXT",
+            "EXT",
+            "GUA",
+            "GUA",
+            "REC"
+          )
+        )
     }
 
     "must return an empty list when no match" in {
