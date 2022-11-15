@@ -87,7 +87,11 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       service.getCustomsOfficesOfTheCountryP5("GB", List("TRA")) mustBe Seq(
         CustomsOffice(
-          "GB000060", "Dover/Folkestone Eurotunnel Freight", "GB", Some("+44 (0)3000 515831"), List("DEP", "DES", "ENT", "EXP", "TRA")
+          "GB000060",
+          "Dover/Folkestone Eurotunnel Freight",
+          "GB",
+          Some("+44 (0)3000 515831"),
+          List("DEP", "DES", "ENT", "EXP", "TRA")
         )
       )
     }
@@ -106,7 +110,11 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       service.getCustomsOfficesOfTheCountryP5("GB", List("DES")) mustBe Seq(
         CustomsOffice(
-          "GB000060", "Dover/Folkestone Eurotunnel Freight", "GB", Some("+44 (0)3000 515831"), List("DEP", "DES", "ENT", "EXP", "TRA")
+          "GB000060",
+          "Dover/Folkestone Eurotunnel Freight",
+          "GB",
+          Some("+44 (0)3000 515831"),
+          List("DEP", "DES", "ENT", "EXP", "TRA")
         )
       )
     }
@@ -125,7 +133,11 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
       service.getCustomsOfficesOfTheCountryP5("GB", List("DEP")) mustBe Seq(
         CustomsOffice(
-          "GB000060", "Dover/Folkestone Eurotunnel Freight", "GB", Some("+44 (0)3000 515831"), List("DEP", "DES", "ENT", "EXP", "TRA")
+          "GB000060",
+          "Dover/Folkestone Eurotunnel Freight",
+          "GB",
+          Some("+44 (0)3000 515831"),
+          List("DEP", "DES", "ENT", "EXP", "TRA")
         )
       )
     }
