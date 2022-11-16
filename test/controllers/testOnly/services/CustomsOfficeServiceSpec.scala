@@ -25,7 +25,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
   val officeId1 = "GB000040"
   val officeId2 = "AT530100"
-  val version = Some(P5)
+  val version   = Some(P5)
 
   val customsOffice1: CustomsOffice =
     CustomsOffice(officeId1, "Dover (OTS) Freight Clearance", "GB", Some("+44 (0)3000 575 988"), List("ENT", "EXP", "EXT"))
@@ -217,7 +217,6 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
     "must return an empty list where no match" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
-      
 
       service.getCustomsOfficesOfTheCountry("12", List("DEP"), version) mustBe empty
     }

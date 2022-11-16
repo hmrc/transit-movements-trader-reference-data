@@ -16,10 +16,15 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.{P5, Version, VersionHelper}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
+import play.api.mvc.Result
 
 import javax.inject.Inject
 
@@ -37,7 +42,7 @@ class CustomsOfficeController @Inject() (
     Action {
       request =>
         val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode , roles, version)))
+        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, roles, version)))
 
     }
 
