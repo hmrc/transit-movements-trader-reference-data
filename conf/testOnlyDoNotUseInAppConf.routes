@@ -12,7 +12,6 @@
 # microservice specific routes
 GET        /test-only/transit-movements-trader-reference-data/customs-offices                                   controllers.testOnly.CustomsOfficeController.customsOffices
 GET        /test-only/transit-movements-trader-reference-data/customs-offices/:code                             controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code, role: List[String] ?= Nil)
-GET        /test-only/transit-movements-trader-reference-data/customs-offices-p5/:code                          controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountryP5(code, role: List[String] ?= Nil)
 GET        /test-only/transit-movements-trader-reference-data/customs-office/:id                                controllers.testOnly.CustomsOfficeController.getCustomsOffice(id)
 
 GET        /test-only/transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)

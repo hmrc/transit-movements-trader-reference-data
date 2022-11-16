@@ -16,8 +16,10 @@
 
 package controllers.testOnly.services
 
+import controllers.testOnly.helpers.{P5, Version, VersionHelper}
 import controllers.testOnly.testmodels.CustomsOffice
 import play.api.Environment
+import play.api.libs.json.Json
 
 import javax.inject.Inject
 
@@ -32,7 +34,15 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     customsOffices.find(_.id == officeId)
 
-  def getCustomsOfficesOfTheCountry(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
+  def getCustomsOfficesOfTheCountry(countryId: String, roles: List[String], version: Option[Version] = None) = {
+    version.fold(getCustomsOfficesOfTheCountryExcluding(countryId, excludedRoles = roles))(v =>
+      if (v == P5)
+        getCustomsOfficesForCountryRoles(countryId, roles)
+      else
+        getCustomsOfficesOfTheCountryExcluding(countryId, excludedRoles = roles))
+  }
+
+  private def getCustomsOfficesOfTheCountryExcluding(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
     customsOffices
       .filter(_.countryId == countryId)
       .filter {
@@ -43,7 +53,7 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
           }
       }
 
-  def getCustomsOfficesOfTheCountryP5(countryId: String, roles: List[String]): Seq[CustomsOffice] =
+  private def getCustomsOfficesForCountryRoles(countryId: String, roles: List[String]): Seq[CustomsOffice] =
     customsOfficesP5.filter(_.countryId == countryId).filter(_.roles.exists(roles.contains _))
 
 }

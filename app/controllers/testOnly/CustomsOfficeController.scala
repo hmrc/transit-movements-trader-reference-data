@@ -16,11 +16,10 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.{P5, Version, VersionHelper}
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 
 import javax.inject.Inject
 
@@ -34,14 +33,13 @@ class CustomsOfficeController @Inject() (
       Ok(Json.toJson(customsOfficesService.customsOffices))
     }
 
-  def customsOfficesOfTheCountry(countryCode: String, excludedRoles: List[String]): Action[AnyContent] =
+  def customsOfficesOfTheCountry(countryCode: String, roles: List[String]): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode, excludedRoles)))
-    }
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(customsOfficesService.getCustomsOfficesOfTheCountry(countryCode , roles, version)))
 
-  def customsOfficesOfTheCountryP5(countryCode: String, roles: List[String]): Action[AnyContent] = getIfP5 {
-    customsOfficesService.getCustomsOfficesOfTheCountryP5(countryCode, roles)
-  }
+    }
 
   def getCustomsOffice(officeId: String): Action[AnyContent] =
     Action {
