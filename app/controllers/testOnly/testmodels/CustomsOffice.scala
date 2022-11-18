@@ -16,8 +16,6 @@
 
 package controllers.testOnly.testmodels
 
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
 import play.api.libs.json._
 
 case class CustomsOffice(
@@ -30,15 +28,7 @@ case class CustomsOffice(
 
 object CustomsOffice {
 
-  implicit val writes: OWrites[CustomsOffice] = Json.writes[CustomsOffice]
-
-  implicit val readFromFile: Reads[CustomsOffice] =
-    (
-      (__ \ "CUST_OFF_ID").read[String] and
-        (__ \ "CUST_OFF_NAM").read[String] and
-        (__ \ "COUNTRY_ID").read[String] and
-        (__ \ "PHONE_NUMBER").readNullable[String] and
-        (__ \ "CUSTOMS_OFFICE_ROLES").read[Seq[String]]
-    )(CustomsOffice.apply _)
+  implicit val readFromFile: Reads[CustomsOffice] = Json.reads[CustomsOffice]
+  implicit val writes: OWrites[CustomsOffice]     = Json.writes[CustomsOffice]
 
 }

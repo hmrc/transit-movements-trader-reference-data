@@ -1,23 +1,23 @@
 [
   {
-    "CUST_OFF_ID": "GB000040",
-    "CUST_OFF_NAM": "Dover (OTS) Freight Clearance",
-    "COUNTRY_ID": "GB",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "HARWICH",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "GB000040",
+    "name": "Dover (OTS) Freight Clearance",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "HARWICH",
+    "roles": [
       "ENT",
       "EXP",
       "EXT"
     ]
   },
   {
-    "CUST_OFF_ID": "GB000060",
-    "CUST_OFF_NAM": "Dover/Folkestone Eurotunnel Freight",
-    "COUNTRY_ID": "GB",
-    "PHONE_NUMBER": "+44 (0)3000 515831",
-    "CITY": "DOVER",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "GB000060",
+    "name": "Dover/Folkestone Eurotunnel Freight",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)3000 515831",
+    "city": "DOVER",
+    "roles": [
       "DEP",
       "DES",
       "ENT",
@@ -26,130 +26,130 @@
     ]
   },
   {
-    "CUST_OFF_ID": "GB000244",
-    "CUST_OFF_NAM": "BOSTON",
-    "COUNTRY_ID": "GB",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "HARWICH",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "GB000244",
+    "name": "BOSTON",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "HARWICH",
+    "roles": [
       "ENT",
       "EXP",
       "EXT"
     ]
   },
   {
-    "CUST_OFF_ID": "GB005010",
-    "CUST_OFF_NAM": "Appledore",
-    "COUNTRY_ID": "GB",
-    "PHONE_NUMBER": "+44 (0)1255 244725",
-    "CITY": "Harwich",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "GB005010",
+    "name": "Appledore",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)1255 244725",
+    "city": "Harwich",
+    "roles": [
       "RSS"
     ]
   },
   {
-    "CUST_OFF_ID": "GB003250",
-    "CUST_OFF_NAM": "Newhaven",
-    "COUNTRY_ID": "GB",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "Harwich",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "GB003250",
+    "name": "Newhaven",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Harwich",
+    "roles": [
       "ENT"
     ]
   },
   {
-    "CUST_OFF_ID": "GB000218",
-    "CUST_OFF_NAM": "Newcastle Airport",
-    "COUNTRY_ID": "GB",
-    "PHONE_NUMBER": "+44 (0)191 123 456",
-    "CITY": "Newcastle",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "GB000218",
+    "name": "Newcastle Airport",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)191 123 456",
+    "city": "Newcastle",
+    "roles": [
       "ENT"
     ]
   },
   {
-    "CUST_OFF_ID": "IT018105",
-    "CUST_OFF_NAM": "Roma",
-    "COUNTRY_ID": "IT",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "Rome",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "IT018105",
+    "name": "Roma",
+    "countryId": "IT",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Rome",
+    "roles": [
       "ENT"
     ]
   },
   {
-    "CUST_OFF_ID": "IT018100",
-    "CUST_OFF_NAM": "Bari",
-    "COUNTRY_ID": "IT",
-    "PHONE_NUMBER": "+44 (0)3000 575 989",
-    "CITY": "Bari",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "IT018100",
+    "name": "Bari",
+    "countryId": "IT",
+    "phoneNumber": "+44 (0)3000 575 989",
+    "city": "Bari",
+    "roles": [
       "ENT"
     ]
   },
   {
-    "CUST_OFF_ID": "AT530100",
-    "CUST_OFF_NAM": "Wels, Terminal Wels",
-    "COUNTRY_ID": "AT",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "Rome",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "AT530100",
+    "name": "Wels, Terminal Wels",
+    "countryId": "AT",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Rome",
+    "roles": [
       "ENT"
     ]
   },
   {
-    "CUST_OFF_ID": "FR001260",
-    "CUST_OFF_NAM": "Paris",
-    "COUNTRY_ID": "FR",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "Paris",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "FR001260",
+    "name": "Paris",
+    "countryId": "FR",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Paris",
+    "roles": [
       "ENT"
     ]
   },
   {
-    "CUST_OFF_ID": "XI000142",
-    "CUST_OFF_NAM": "Belfast EPU",
-    "COUNTRY_ID": "XI",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "BELFAST",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "XI000142",
+    "name": "Belfast EPU",
+    "countryId": "XI",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "BELFAST",
+    "roles": [
       "ENT",
       "EXP",
       "EXT"
     ]
   },
   {
-    "CUST_OFF_ID": "XI005160",
-    "CUST_OFF_NAM": "Warrenpoint",
-    "COUNTRY_ID": "XI",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "Warrenpoint",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "XI005160",
+    "name": "Warrenpoint",
+    "countryId": "XI",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Warrenpoint",
+    "roles": [
       "ENT",
       "EXP",
       "EXT"
     ]
   },
   {
-    "CUST_OFF_ID": "XI005220",
-    "CUST_OFF_NAM": "Larne",
-    "COUNTRY_ID": "XI",
-    "PHONE_NUMBER": "+44 (0)3000 575 988",
-    "CITY": "Larne",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "XI005220",
+    "name": "Larne",
+    "countryId": "XI",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Larne",
+    "roles": [
       "ENT",
       "EXP",
       "EXT"
     ]
   },
   {
-    "CUST_OFF_ID": "SM000001",
-    "CUST_OFF_NAM": "Ufficio Tributario Rep. San Marino",
-    "COUNTRY_ID": "SM",
-    "PHONE_NUMBER": "+378 0549 885095",
-    "CITY": "Borgo Maggiore",
-    "CUSTOMS_OFFICE_ROLES": [
+    "id": "SM000001",
+    "name": "Ufficio Tributario Rep. San Marino",
+    "countryId": "SM",
+    "phoneNumber": "+378 0549 885095",
+    "city": "Borgo Maggiore",
+    "roles": [
       "TRA"
     ]
   }
