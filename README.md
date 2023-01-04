@@ -1,12 +1,11 @@
 
 # transit-movements-trader-reference-data
 
-This is a placeholder README.md for a new repository
+This service provides a series of endpoints for fetching reference data.
 
 ### License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
-
 
 ### Steps to run transit-movements-trader-reference-data against the real reference data route
 1. Make sure customs-reference-data is running locally
