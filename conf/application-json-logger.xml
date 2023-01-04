@@ -7,11 +7,11 @@
 
     <logger name="uk.gov" level="WARN"/>
 
-    <logger name="application.api.controllers" level="${logger.controllers:-ERROR}"/>
-    <logger name="application.config" level="${logger.application.config:-INFO}"/>
-    <logger name="application.data" level="${logger.data:-ERROR}"/>
+    <logger name="application.api.controllers" level="ERROR"/>
+    <logger name="application.config" level="INFO"/>
+    <logger name="application.data" level="ERROR"/>
 
-    <root level="${logger.application:-WARN}">
+    <root level="WARN">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
