@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,9 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
-import controllers.testOnly.helpers.VersionHelper
+import controllers.testOnly.helpers.{P5, Version}
 import controllers.testOnly.testmodels.CustomsOffice
 import play.api.Environment
-import play.api.libs.json.Json
 
 import javax.inject.Inject
 
