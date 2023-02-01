@@ -49,6 +49,8 @@ GET        /test-only/transit-movements-trader-reference-data/document-types    
 
 GET        /test-only/transit-movements-trader-reference-data/un-locodes                                        controllers.testOnly.UnLocodeController.get
 
+GET        /test-only/transit-movements-trader-reference-data/currency-codes                                    controllers.testOnly.CurrencyController.getCurrencyCodes
+
 GET        /test-only/transit-movements-trader-reference-data/qualifier-of-identification-incident              controllers.testOnly.QualifierOfIdentificationIncidentController.get
 
 GET        /test-only/transit-movements-trader-reference-data/transport                                         controllers.testOnly.TransportModeController.getAggregate()
