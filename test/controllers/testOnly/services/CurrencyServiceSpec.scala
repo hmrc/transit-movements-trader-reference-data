@@ -28,7 +28,7 @@ class CurrencyServiceSpec extends SpecBaseWithAppPerSuite {
       "must return every currency code" in {
         val result = service.getCurrencyCodes
         result.length mustBe 9
-        result.head mustBe CurrencyCode("CHF","Swiss Franc")
+        result.head mustBe CurrencyCode("CHF", "Swiss Franc")
       }
     }
   }
