@@ -16,8 +16,8 @@
 
 package controllers.testOnly.testmodels
 
-import play.api.libs.json.{Format, Json}
-
+import play.api.libs.json.Format
+import play.api.libs.json.Json
 
 case class CurrencyCode(
   currency: String,

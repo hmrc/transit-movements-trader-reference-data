@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class CurrencyService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class CurrencyService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   def getCurrencyCodes: Seq[CurrencyCode] =
     getData[CurrencyCode](config.currencyCodes)

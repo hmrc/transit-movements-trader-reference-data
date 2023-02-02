@@ -17,11 +17,13 @@
 package controllers.testOnly
 
 import controllers.testOnly.services._
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 
 import javax.inject.Inject
 
-class CurrencyController @Inject()(
+class CurrencyController @Inject() (
   cc: ControllerComponents,
   currencyService: CurrencyService
 ) extends ReferenceDataController(cc) {
