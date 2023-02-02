@@ -104,4 +104,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val countryCodesCTC: String =
     config.get[String]("resourceFiles.countryCodesCTC")
 
+  val currencyCodes: String =
+    config.get[String]("resourceFiles.currencyCodes")
+
 }
