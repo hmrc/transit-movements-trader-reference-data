@@ -152,5 +152,51 @@
     "roles": [
       "TRA"
     ]
+  },
+  {
+    "id": "GB000001",
+    "name": "North Shields",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "North Shields",
+    "roles": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "id": "GB000002",
+    "name": "Whitley Bay",
+    "countryId": "GB",
+    "phoneNumber": "",
+    "city": "Whitley Bay",
+    "roles": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "id": "GB000003",
+    "name": "",
+    "countryId": "GB",
+    "phoneNumber": "+44 (0)3000 575 988",
+    "city": "Tynemouth",
+    "roles": [
+      "ENT",
+      "EXP",
+      "EXT"
+    ]
+  },
+  {
+    "id": "GB000004",
+    "name": "",
+    "countryId": "GB",
+    "phoneNumber": "",
+    "city": "Cullercoats",
+    "roles": [
+      "TRA"
+    ]
   }
 ]
