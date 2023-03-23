@@ -55,6 +55,8 @@ GET        /test-only/transit-movements-trader-reference-data/qualifier-of-ident
 
 GET        /test-only/transit-movements-trader-reference-data/transport                                         controllers.testOnly.TransportModeController.getAggregate()
 
+GET        /test-only/transit-movements-trader-reference-data/metrics                                           controllers.testOnly.MetricController.getMetrics
+
 # Add all the application routes to the prod.routes file
 ->         /transit-movements-trader-reference-data                                                             app.Routes
 ->         /                                                                                                    health.Routes
