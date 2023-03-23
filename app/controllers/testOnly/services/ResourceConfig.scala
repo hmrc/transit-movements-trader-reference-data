@@ -107,4 +107,6 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val currencyCodes: String =
     config.get[String]("resourceFiles.currencyCodes")
 
+  val metrics: String =
+    config.get[String]("resourceFiles.metrics")
 }
