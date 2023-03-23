@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class MetricService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class MetricService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val metrics: Seq[Metric] =
     getData[Metric](config.metrics)
