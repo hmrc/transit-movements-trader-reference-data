@@ -27,4 +27,6 @@ yarn-error.log
 .vscode
 project/metals.sbt
 .bsp/
+.DS_Store
+**/*.DS_Store
     
