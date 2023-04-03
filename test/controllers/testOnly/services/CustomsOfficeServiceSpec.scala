@@ -37,7 +37,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     val service = app.injector.instanceOf[CustomsOfficesService]
 
     val result = service.customsOffices
-    result.length mustBe 18
+    result.length mustBe 14
     result.head mustBe customsOffice1
   }
 
