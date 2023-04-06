@@ -18,7 +18,8 @@ package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.helpers._
-import controllers.testOnly.testmodels.{KindOfPackage, PackageType}
+import controllers.testOnly.testmodels.KindOfPackage
+import controllers.testOnly.testmodels.PackageType
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 

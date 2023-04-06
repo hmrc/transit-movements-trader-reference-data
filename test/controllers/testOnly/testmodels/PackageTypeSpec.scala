@@ -18,26 +18,27 @@ package controllers.testOnly.testmodels
 
 import base.SpecBase
 import controllers.testOnly.testmodels.PackageType._
-import play.api.libs.json.{JsString, Json}
+import play.api.libs.json.JsString
+import play.api.libs.json.Json
 
 class PackageTypeSpec extends SpecBase {
 
   "must deserialise" - {
 
     "when bulk" in {
-      val json = JsString("Bulk")
+      val json   = JsString("Bulk")
       val result = json.as[PackageType]
       result mustBe Bulk
     }
 
     "when unpacked" in {
-      val json = JsString("Unpacked")
+      val json   = JsString("Unpacked")
       val result = json.as[PackageType]
       result mustBe Unpacked
     }
 
     "when other" in {
-      val json = JsString("Other")
+      val json   = JsString("Other")
       val result = json.as[PackageType]
       result mustBe Other
     }
@@ -46,19 +47,19 @@ class PackageTypeSpec extends SpecBase {
   "must serialise" - {
     "when bulk" in {
       val packageType: PackageType = Bulk
-      val result = Json.toJson(packageType)
+      val result                   = Json.toJson(packageType)
       result mustBe JsString("Bulk")
     }
 
     "when unpacked" in {
       val packageType: PackageType = Unpacked
-      val result = Json.toJson(packageType)
+      val result                   = Json.toJson(packageType)
       result mustBe JsString("Unpacked")
     }
 
     "when other" in {
       val packageType: PackageType = Other
-      val result = Json.toJson(packageType)
+      val result                   = Json.toJson(packageType)
       result mustBe JsString("Other")
     }
   }
