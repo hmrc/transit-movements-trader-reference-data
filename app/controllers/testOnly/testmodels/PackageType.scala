@@ -16,16 +16,24 @@
 
 package controllers.testOnly.testmodels
 
-import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
+import play.api.libs.json._
 
-case class KindOfPackage(code: String, description: String, `type`: Option[PackageType])
+sealed trait PackageType
 
-object KindOfPackage {
+object PackageType {
 
-  implicit val writes: OWrites[KindOfPackage] = Json.writes[KindOfPackage]
+  case object Bulk     extends PackageType
+  case object Unpacked extends PackageType
+  case object Other    extends PackageType
 
-  implicit val readFromFile: Reads[KindOfPackage] = Json.reads[KindOfPackage]
+  implicit val reads: Reads[PackageType] = Reads {
+    case JsString("Bulk")     => JsSuccess(Bulk)
+    case JsString("Unpacked") => JsSuccess(Unpacked)
+    case JsString("Other")    => JsSuccess(Other)
+    case _                    => JsError("Invalid package type")
+  }
 
+  implicit val writes: Writes[PackageType] = Writes {
+    value => JsString(value.toString)
+  }
 }
