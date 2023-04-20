@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.testOnly
+package controllers.testOnly.testmodels
 
-import services._
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import play.api.libs.json.{Json, OWrites, Reads}
 
-import javax.inject.Inject
+case class AdditionalReference(documentType: String, description: String)
 
-class UnLocodeController @Inject() (
-  cc: ControllerComponents,
-  unLocodeService: UnLocodeService
-) extends ReferenceDataController(cc) {
+object AdditionalReference {
 
-  def get(): Action[AnyContent] = getIfP5 {
-    unLocodeService.get
-  }
+  implicit val writes: OWrites[AdditionalReference] = Json.writes[AdditionalReference]
+
+  implicit val readFromFile: Reads[AdditionalReference] = Json.reads[AdditionalReference]
 }

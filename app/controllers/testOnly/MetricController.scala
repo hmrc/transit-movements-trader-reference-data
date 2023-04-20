@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.MetricService
+import services.MetricService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent

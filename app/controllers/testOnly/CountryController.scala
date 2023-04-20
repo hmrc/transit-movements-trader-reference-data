@@ -16,9 +16,8 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.Version
-import controllers.testOnly.helpers.VersionHelper
-import controllers.testOnly.services.CountryService
+import helpers._
+import services.CountryService
 import models.requests.CountryQueryFilter
 import play.api.libs.json.Json
 import play.api.mvc.Action

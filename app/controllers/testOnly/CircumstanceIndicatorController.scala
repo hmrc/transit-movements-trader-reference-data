@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.CircumstanceIndicatorService
+import services.CircumstanceIndicatorService
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action

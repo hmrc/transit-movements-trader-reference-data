@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.OfficeOfTransitService
+import services.OfficeOfTransitService
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
