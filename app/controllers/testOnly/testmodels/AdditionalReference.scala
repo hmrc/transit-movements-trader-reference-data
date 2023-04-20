@@ -16,7 +16,9 @@
 
 package controllers.testOnly.testmodels
 
-import play.api.libs.json.{Json, OWrites, Reads}
+import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+import play.api.libs.json.Reads
 
 case class AdditionalReference(documentType: String, description: String)
 

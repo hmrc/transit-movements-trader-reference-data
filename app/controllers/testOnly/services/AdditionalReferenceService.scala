@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class AdditionalReferenceService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class AdditionalReferenceService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val additionalReference: Seq[AdditionalReference] =
     getData[AdditionalReference](config.additionalReference)

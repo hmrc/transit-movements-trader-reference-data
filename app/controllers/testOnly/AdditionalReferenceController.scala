@@ -44,9 +44,9 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import javax.inject.Inject
 
 class AdditionalReferenceController @Inject() (
-                                                  cc: ControllerComponents,
-                                                  additionalReferenceService: AdditionalReferenceService
-                                                ) extends BackendController(cc) {
+  cc: ControllerComponents,
+  additionalReferenceService: AdditionalReferenceService
+) extends BackendController(cc) {
 
   def additionalInformation(): Action[AnyContent] =
     Action {
