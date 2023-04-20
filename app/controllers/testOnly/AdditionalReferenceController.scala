@@ -16,9 +16,8 @@
 
 package controllers.testOnly
 
-import helpers._
+import services._
 import play.api.libs.json.Json
-import play.api.libs.json.Writes
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
@@ -26,14 +25,13 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
-class ReferenceDataController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
+class AdditionalReferenceController @Inject() (
+  cc: ControllerComponents,
+  additionalReferenceService: AdditionalReferenceService
+) extends BackendController(cc) {
 
-  def getIfP5[T](ts: => Seq[T])(implicit wts: Writes[T]): Action[AnyContent] = Action {
-    request =>
-      VersionHelper.getVersion(request) match {
-        case Some(P5) => Ok(Json.toJson(ts))
-        case _        => NoContent
-      }
-  }
-
+  def additionalReference(): Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(additionalReferenceService.additionalReference))
+    }
 }

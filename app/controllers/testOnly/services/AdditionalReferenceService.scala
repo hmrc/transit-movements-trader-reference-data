@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.testOnly
+package controllers.testOnly.services
 
-import services._
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import controllers.testOnly.testmodels.AdditionalReference
+import play.api.Environment
 
 import javax.inject.Inject
 
-class UnLocodeController @Inject() (
-  cc: ControllerComponents,
-  unLocodeService: UnLocodeService
-) extends ReferenceDataController(cc) {
+private[testOnly] class AdditionalReferenceService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def get(): Action[AnyContent] = getIfP5 {
-    unLocodeService.get
-  }
+  val additionalReference: Seq[AdditionalReference] =
+    getData[AdditionalReference](config.additionalReference)
 }

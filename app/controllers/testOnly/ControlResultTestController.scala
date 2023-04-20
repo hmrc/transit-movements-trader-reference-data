@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.ControlResultService
+import services.ControlResultService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent

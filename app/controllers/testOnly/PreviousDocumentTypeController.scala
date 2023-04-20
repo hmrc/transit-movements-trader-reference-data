@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.PreviousDocumentTypeService
+import services.PreviousDocumentTypeService
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
