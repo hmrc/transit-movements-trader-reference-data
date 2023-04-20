@@ -48,7 +48,7 @@ class AdditionalReferenceController @Inject() (
   additionalReferenceService: AdditionalReferenceService
 ) extends BackendController(cc) {
 
-  def additionalInformation(): Action[AnyContent] =
+  def additionalReference(): Action[AnyContent] =
     Action {
       Ok(Json.toJson(additionalReferenceService.additionalReference))
     }
