@@ -50,7 +50,7 @@ class ControlTypeSpec extends SpecBase with ScalaCheckPropertyChecks with ModelG
     "must fail to deserialize" in {
 
       val invalidJsonGenerator: Gen[JsObject] = for {
-        invalidKey   <- arbitrary[String]
+        invalidKey <- arbitrary[String]
         invalidValue <- arbitrary[String]
       } yield Json.obj(invalidKey -> invalidValue)
 
@@ -63,12 +63,13 @@ class ControlTypeSpec extends SpecBase with ScalaCheckPropertyChecks with ModelG
 
   def expectedControlTypeJson(controlType: ControlType = controlType): JsValue =
     Json.obj(
-      "code"          -> controlType.code,
-      "description"        -> controlType.description)
+      "code" -> controlType.code,
+      "description" -> controlType.description)
 
   def validControlTypeJson(controlType: ControlType): JsValue = {
 
-    Json.parse(s"""
+    Json.parse(
+      s"""
          |{
          |  "code":"${controlType.code}",
          |  "description":"${controlType.description}"
