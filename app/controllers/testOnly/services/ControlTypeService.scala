@@ -21,9 +21,8 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class ControlTypeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class ControlTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val getControlResults: Seq[ControlType] = {
+  val getControlResults: Seq[ControlType] =
     getData[ControlType](config.controlTypes)
-  }
 }

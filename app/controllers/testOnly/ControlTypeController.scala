@@ -18,11 +18,13 @@ package controllers.testOnly
 
 import controllers.testOnly.services.ControlTypeService
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 
 import javax.inject.Inject
 
-class ControlTypeController @Inject()(
+class ControlTypeController @Inject() (
   cc: ControllerComponents,
   controlTypeService: ControlTypeService
 ) extends ReferenceDataController(cc) {
