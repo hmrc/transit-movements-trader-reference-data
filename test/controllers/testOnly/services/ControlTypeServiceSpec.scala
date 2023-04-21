@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package controllers.testOnly
+package controllers.testOnly.services
 
-import controllers.testOnly.services.ControlTypeService
-import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.testmodels.ControlType
 
-import javax.inject.Inject
+class ControlTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
-class ControlTypeController @Inject()(
-  cc: ControllerComponents,
-  controlTypeService: ControlTypeService
-) extends ReferenceDataController(cc) {
 
-  def getControlTypes: Action[AnyContent] =
-    Action {
-      val controlTypes = controlTypeService.getControlResults
-      Ok(Json.toJson(controlTypes))
-    }
+  val controlType1: ControlType = ControlType("10", "Documentary controls")
+
+  val controlType2: ControlType = ControlType("44", "Non Intrusive")
+
+  "must return control type list" in {
+    val service = app.injector.instanceOf[ControlTypeService]
+
+    val result = service.getControlResults
+    result.length mustBe 10
+    result.head mustBe controlType1
+  }
 }
