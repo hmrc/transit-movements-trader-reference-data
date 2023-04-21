@@ -33,6 +33,8 @@ GET        /test-only/transit-movements-trader-reference-data/previous-document-
 GET        /test-only/transit-movements-trader-reference-data/circumstance-indicators                           controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
 GET        /test-only/transit-movements-trader-reference-data/circumstance-indicator/:code                      controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
 
+GET        /test-only/transit-movements-trader-reference-data/control-types                                     controllers.testOnly.ControlTypeController.getControlTypes
+
 GET        /test-only/transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
 GET        /test-only/transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)
 
