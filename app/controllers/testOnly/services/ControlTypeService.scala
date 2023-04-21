@@ -24,7 +24,6 @@ import javax.inject.Inject
 private[testOnly] class ControlTypeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val getControlResults: Seq[ControlType] = {
-    println(s"******Service**** ${getData[ControlType](config.controlTypes)}")
     getData[ControlType](config.controlTypes)
   }
 }
