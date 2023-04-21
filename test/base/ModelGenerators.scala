@@ -16,7 +16,11 @@
 
 package base
 
-import controllers.testOnly.testmodels.{ControlType, Country, CustomsOffice, DangerousGoodsCode, OfficeOfTransit}
+import controllers.testOnly.testmodels.ControlType
+import controllers.testOnly.testmodels.Country
+import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.DangerousGoodsCode
+import controllers.testOnly.testmodels.OfficeOfTransit
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 
@@ -25,18 +29,18 @@ trait ModelGenerators {
   implicit lazy val arbitraryCustomsOffice: Arbitrary[CustomsOffice] =
     Arbitrary {
       for {
-        id <- Gen.alphaNumStr
-        name <- Gen.alphaNumStr
+        id        <- Gen.alphaNumStr
+        name      <- Gen.alphaNumStr
         countryId <- Gen.alphaNumStr
         telephone <- Gen.option(Gen.alphaNumStr)
-        roles <- Gen.listOf(Gen.alphaNumStr)
+        roles     <- Gen.listOf(Gen.alphaNumStr)
       } yield CustomsOffice(id, name, countryId, telephone, roles)
     }
 
   implicit lazy val arbitraryOfficeOfTransit: Arbitrary[OfficeOfTransit] =
     Arbitrary {
       for {
-        id <- Gen.alphaNumStr
+        id   <- Gen.alphaNumStr
         name <- Gen.alphaNumStr
       } yield OfficeOfTransit(id, name)
     }
@@ -44,7 +48,7 @@ trait ModelGenerators {
   implicit lazy val arbitraryControlType: Arbitrary[ControlType] =
     Arbitrary {
       for {
-        code <- Gen.alphaNumStr
+        code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield ControlType(code, description)
     }
@@ -52,8 +56,8 @@ trait ModelGenerators {
   implicit lazy val arbitraryCountry: Arbitrary[Country] =
     Arbitrary {
       for {
-        state <- Gen.alphaNumStr
-        code <- Gen.alphaNumStr
+        state       <- Gen.alphaNumStr
+        code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield Country(state, code, description)
     }
@@ -61,7 +65,7 @@ trait ModelGenerators {
   implicit lazy val arbitraryDangerousGoodsCode: Arbitrary[DangerousGoodsCode] =
     Arbitrary {
       for {
-        code <- Gen.alphaNumStr
+        code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield DangerousGoodsCode(code, description)
     }
