@@ -16,15 +16,12 @@
 
 package controllers.testOnly.testmodels
 
+import play.api.libs.json.Format
 import play.api.libs.json.Json
-import play.api.libs.json.OWrites
-import play.api.libs.json.Reads
 
 case class ControlType(code: String, description: String)
 
 object ControlType {
 
-  implicit val writes: OWrites[ControlType] = Json.writes[ControlType]
-
-  implicit val readFromFile: Reads[ControlType] = Json.reads[ControlType]
+  implicit val format: Format[ControlType] = Json.format[ControlType]
 }

@@ -31,10 +31,12 @@ class ControlTypeController @Inject() (
 
   def getControlType(code: String): Action[AnyContent] =
     Action {
-      controlTypeService.getControlType(code: String).map {
-        customsOffice =>
-          Ok(Json.toJson(customsOffice))
-      }
+      controlTypeService
+        .getControlType(code: String)
+        .map {
+          customsOffice =>
+            Ok(Json.toJson(customsOffice))
+        }
         .getOrElse {
           NotFound
         }
