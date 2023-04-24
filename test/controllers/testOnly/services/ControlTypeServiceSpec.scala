@@ -26,11 +26,18 @@ class ControlTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
   val controlType2: ControlType = ControlType("44", "Non Intrusive")
 
-  "must return control type list" in {
+  "must return existing control type" in {
     val service = app.injector.instanceOf[ControlTypeService]
 
-    val result = service.getControlResults
-    result.length mustBe 10
-    result.head mustBe controlType1
+    val result = service.getControlType("10")
+    result.get.description mustBe "Documentary controls"
+    result mustBe Some(controlType1)
+  }
+
+  "must return None for control type that do not exist" in {
+    val service = app.injector.instanceOf[ControlTypeService]
+
+    val result = service.getControlType("11")
+    result mustBe None
   }
 }

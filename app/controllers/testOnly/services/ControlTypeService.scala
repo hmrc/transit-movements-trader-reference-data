@@ -23,6 +23,7 @@ import javax.inject.Inject
 
 private[testOnly] class ControlTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val getControlResults: Seq[ControlType] =
-    getData[ControlType](config.controlTypes)
+  def getControlType(code: String): Option[ControlType] = {
+    getData[ControlType](config.controlTypes).find(_.code == code)
+  }
 }

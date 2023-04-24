@@ -29,9 +29,14 @@ class ControlTypeController @Inject() (
   controlTypeService: ControlTypeService
 ) extends ReferenceDataController(cc) {
 
-  def getControlTypes: Action[AnyContent] =
+  def getControlType(code: String): Action[AnyContent] =
     Action {
-      val controlTypes = controlTypeService.getControlResults
-      Ok(Json.toJson(controlTypes))
+      controlTypeService.getControlType(code: String).map {
+        customsOffice =>
+          Ok(Json.toJson(customsOffice))
+      }
+        .getOrElse {
+          NotFound
+        }
     }
 }
