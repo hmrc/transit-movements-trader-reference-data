@@ -16,7 +16,11 @@
 
 package base
 
-import controllers.testOnly.testmodels.{ControlType, Country, CustomsOffice, DangerousGoodsCode, OfficeOfTransit}
+import controllers.testOnly.testmodels.ControlType
+import controllers.testOnly.testmodels.Country
+import controllers.testOnly.testmodels.CustomsOffice
+import controllers.testOnly.testmodels.DangerousGoodsCode
+import controllers.testOnly.testmodels.OfficeOfTransit
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 
@@ -44,7 +48,7 @@ trait ModelGenerators {
   implicit lazy val arbitraryControlType: Arbitrary[ControlType] =
     Arbitrary {
       for {
-        code <- Gen.alphaNumStr
+        code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield ControlType(code, description)
     }

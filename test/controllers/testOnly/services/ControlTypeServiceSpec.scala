@@ -21,7 +21,6 @@ import controllers.testOnly.testmodels.ControlType
 
 class ControlTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
-
   val controlType1: ControlType = ControlType("10", "Documentary controls")
 
   val controlType2: ControlType = ControlType("44", "Non Intrusive")
