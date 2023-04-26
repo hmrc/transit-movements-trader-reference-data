@@ -26,7 +26,7 @@ class FunctionalErrorServiceSpec extends SpecBaseWithAppPerSuite {
   "must return existing control type" in {
     val service = app.injector.instanceOf[FunctionalErrorService]
 
-    val result = service.getFunctionalErrorType("15")
+    val result = service.getFunctionalError("15")
     result.get.description mustBe "Condition violation (Not allowed)"
     result mustBe Some(functionalError1)
   }
@@ -34,7 +34,7 @@ class FunctionalErrorServiceSpec extends SpecBaseWithAppPerSuite {
   "must return None for control type that do not exist" in {
     val service = app.injector.instanceOf[FunctionalErrorService]
 
-    val result = service.getFunctionalErrorType("9999")
+    val result = service.getFunctionalError("9999")
     result mustBe None
   }
 }

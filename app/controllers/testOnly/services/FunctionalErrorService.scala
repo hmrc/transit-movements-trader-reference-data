@@ -21,8 +21,8 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class FunctionalErrorService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class FunctionalErrorService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def getFunctionalErrorType(code: String): Option[FunctionalError] =
-    getData[FunctionalError](config.functionalErrorTypes).find(_.code == code)
+  def getFunctionalError(code: String): Option[FunctionalError] =
+    getData[FunctionalError](config.functionalErrors).find(_.code == code)
 }

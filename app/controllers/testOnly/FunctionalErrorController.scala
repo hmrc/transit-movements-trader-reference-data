@@ -18,19 +18,21 @@ package controllers.testOnly
 
 import controllers.testOnly.services.FunctionalErrorService
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.Action
+import play.api.mvc.AnyContent
+import play.api.mvc.ControllerComponents
 
 import javax.inject.Inject
 
-class FunctionalErrorController @Inject()(
+class FunctionalErrorController @Inject() (
   cc: ControllerComponents,
-  functionalErrorTypeService: FunctionalErrorService
+  functionalErrorService: FunctionalErrorService
 ) extends ReferenceDataController(cc) {
 
   def getFunctionalError(code: String): Action[AnyContent] =
     Action {
-      functionalErrorTypeService
-        .getFunctionalErrorType(code: String)
+      functionalErrorService
+        .getFunctionalError(code: String)
         .map {
           functionalError =>
             Ok(Json.toJson(functionalError))
