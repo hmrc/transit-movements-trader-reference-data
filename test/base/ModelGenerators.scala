@@ -16,11 +16,7 @@
 
 package base
 
-import controllers.testOnly.testmodels.ControlType
-import controllers.testOnly.testmodels.Country
-import controllers.testOnly.testmodels.CustomsOffice
-import controllers.testOnly.testmodels.DangerousGoodsCode
-import controllers.testOnly.testmodels.OfficeOfTransit
+import controllers.testOnly.testmodels.{ControlType, Country, CustomsOffice, DangerousGoodsCode, FunctionalError, OfficeOfTransit}
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 
@@ -51,6 +47,14 @@ trait ModelGenerators {
         code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield ControlType(code, description)
+    }
+
+  implicit lazy val arbitraryFunctionalError: Arbitrary[FunctionalError] =
+    Arbitrary {
+      for {
+        code <- Gen.alphaNumStr
+        description <- Gen.alphaNumStr
+      } yield FunctionalError(code, description)
     }
 
   implicit lazy val arbitraryCountry: Arbitrary[Country] =

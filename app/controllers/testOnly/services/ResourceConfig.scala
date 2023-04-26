@@ -56,6 +56,9 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val controlTypes: String =
     config.get[String]("resourceFiles.controlTypes")
 
+  val functionalErrorTypes: String =
+    config.get[String]("resourceFiles.functionalErrorCodes")
+
   val dangerousGoodsCode: String =
     config.get[String]("resourceFiles.dangerousGoodsCode")
 
