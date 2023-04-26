@@ -16,6 +16,7 @@
 
 package base
 
+import controllers.testOnly.testmodels.ControlType
 import controllers.testOnly.testmodels.Country
 import controllers.testOnly.testmodels.CustomsOffice
 import controllers.testOnly.testmodels.DangerousGoodsCode
@@ -42,6 +43,14 @@ trait ModelGenerators {
         id   <- Gen.alphaNumStr
         name <- Gen.alphaNumStr
       } yield OfficeOfTransit(id, name)
+    }
+
+  implicit lazy val arbitraryControlType: Arbitrary[ControlType] =
+    Arbitrary {
+      for {
+        code        <- Gen.alphaNumStr
+        description <- Gen.alphaNumStr
+      } yield ControlType(code, description)
     }
 
   implicit lazy val arbitraryCountry: Arbitrary[Country] =
