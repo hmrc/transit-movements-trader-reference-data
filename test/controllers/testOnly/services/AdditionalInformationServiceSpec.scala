@@ -17,7 +17,8 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers.{P4, P5}
+import controllers.testOnly.helpers.P4
+import controllers.testOnly.helpers.P5
 import controllers.testOnly.testmodels.AdditionalInformation
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
@@ -40,7 +41,8 @@ class AdditionalInformationServiceSpec extends SpecBaseWithAppPerSuite with Scal
     "when P5" in {
       val service = app.injector.instanceOf[AdditionalInformationService]
 
-      val expectedFirstValue = AdditionalInformation("20100", "Export from one EFTA country subject to restriction or export from the Union subject to restriction")
+      val expectedFirstValue =
+        AdditionalInformation("20100", "Export from one EFTA country subject to restriction or export from the Union subject to restriction")
 
       service.additionalInformation(Some(P5)).head mustEqual expectedFirstValue
     }
