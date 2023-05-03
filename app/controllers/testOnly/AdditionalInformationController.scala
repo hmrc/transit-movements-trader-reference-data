@@ -16,11 +16,10 @@
 
 package controllers.testOnly
 
-import services._
+import controllers.testOnly.helpers.{Version, VersionHelper}
+import controllers.testOnly.services._
 import play.api.libs.json.Json
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
@@ -32,6 +31,8 @@ class AdditionalInformationController @Inject() (
 
   def additionalInformation(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(additionalInformationService.additionalInformation))
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(additionalInformationService.additionalInformation(version)))
     }
 }
