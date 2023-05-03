@@ -16,7 +16,9 @@
 
 package controllers.testOnly
 
-import services._
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.VersionHelper
+import controllers.testOnly.services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -32,6 +34,8 @@ class AdditionalInformationController @Inject() (
 
   def additionalInformation(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(additionalInformationService.additionalInformation))
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(additionalInformationService.additionalInformation(version)))
     }
 }

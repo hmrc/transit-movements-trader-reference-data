@@ -26,6 +26,9 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val additionalInformation: String =
     config.get[String]("resourceFiles.additionalInformation")
 
+  val additionalInformationP5: String =
+    config.get[String]("resourceFiles.additionalInformationP5")
+
   val additionalReference: String =
     config.get[String]("resourceFiles.additionalReference")
 
