@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.ControlTypeService
+import controllers.testOnly.services.FunctionalErrorService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -24,18 +24,18 @@ import play.api.mvc.ControllerComponents
 
 import javax.inject.Inject
 
-class ControlTypeController @Inject() (
+class FunctionalErrorController @Inject() (
   cc: ControllerComponents,
-  controlTypeService: ControlTypeService
+  functionalErrorService: FunctionalErrorService
 ) extends ReferenceDataController(cc) {
 
-  def getControlType(code: String): Action[AnyContent] =
+  def getFunctionalError(code: String): Action[AnyContent] =
     Action {
-      controlTypeService
-        .getControlType(code: String)
+      functionalErrorService
+        .getFunctionalError(code: String)
         .map {
-          controlType =>
-            Ok(Json.toJson(controlType))
+          functionalError =>
+            Ok(Json.toJson(functionalError))
         }
         .getOrElse {
           NotFound
