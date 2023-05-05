@@ -16,7 +16,8 @@
 
 package controllers.testOnly.testmodels
 
-import base.{ModelGenerators, SpecBase}
+import base.ModelGenerators
+import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
