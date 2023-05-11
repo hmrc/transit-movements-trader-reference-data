@@ -39,7 +39,7 @@ class DataImportRepositorySpec
     with GuiceOneAppPerSuite
     with DefaultPlayMongoRepositorySupport[DataImport] {
 
-  override protected def repository: DataImportRepository = new DataImportRepository(mongoComponent, stubClock)
+  override protected val repository: DataImportRepository = new DataImportRepository(mongoComponent, stubClock)
 
   private val stubClock: Clock = Clock.fixed(Instant.now, ZoneId.systemDefault)
 

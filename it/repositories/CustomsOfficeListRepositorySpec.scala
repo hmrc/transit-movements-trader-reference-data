@@ -40,7 +40,7 @@ class CustomsOfficeListRepositorySpec
     with OptionValues
     with DefaultPlayMongoRepositorySupport[JsObject] {
 
-  override protected def repository: ListRepository = new ListRepositoryProvider(mongoComponent).apply(CustomsOfficesList)
+  override protected val repository: ListRepository = new ListRepositoryProvider(mongoComponent).apply(CustomsOfficesList)
 
   class Setup {
 
