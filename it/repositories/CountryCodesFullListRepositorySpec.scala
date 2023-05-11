@@ -38,7 +38,7 @@ class CountryCodesFullListRepositorySpec
     with OptionValues
     with DefaultPlayMongoRepositorySupport[JsObject] {
 
-  override protected def repository: ListRepository = new ListRepositoryProvider(mongoComponent).apply(CountryCodesFullList)
+  override protected val repository: ListRepository = new ListRepositoryProvider(mongoComponent).apply(CountryCodesFullList)
 
   ".insert" - {
 

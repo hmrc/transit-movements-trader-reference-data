@@ -24,6 +24,7 @@ import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
 import java.time.Clock
 import java.time.Instant
+import java.time.ZoneId
 import javax.inject.Inject
 import javax.inject.Singleton
 import scala.concurrent.ExecutionContext
@@ -40,6 +41,8 @@ class DataImportRepository @Inject() (
       domainFormat = DataImport.format,
       indexes = DataImportRepository.indexes
     ) {
+
+  override lazy val requiresTtlIndex = false
 
   def insert(dataImport: DataImport): Future[Boolean] =
     collection

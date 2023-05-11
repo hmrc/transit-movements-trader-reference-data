@@ -26,7 +26,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class ImportIdRepositorySpec extends AnyFreeSpec with Matchers with ScalaFutures with OptionValues with DefaultPlayMongoRepositorySupport[ImportId] {
 
-  override protected def repository: ImportIdRepository = new ImportIdRepository(mongoComponent)
+  override protected val repository: ImportIdRepository = new ImportIdRepository(mongoComponent)
 
   "Import Id Repository" - {
 
