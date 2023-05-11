@@ -44,6 +44,7 @@ class CountryCodesFullListRepositorySpec
 
     "must insert records, adding the import id to them" in {
 
+
       val importId = ImportId(1)
       val data     = Seq(Json.obj("code" -> "GB"), Json.obj("code" -> "FR"))
 

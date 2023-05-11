@@ -87,6 +87,8 @@ object ListRepository {
 
   class ListRepositoryProvider @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext) {
 
+
+
     def apply(list: ReferenceDataList): ListRepository = list match {
       case CountryCodesFullList                          => new CountryCodesFullListRepository(mongoComponent)
       case CountryCodesCommonTransitList                 => new CountryCodesCommonTransitListRepository(mongoComponent)
@@ -106,6 +108,8 @@ object ListRepository {
     }
   }
 
+
+
   @Singleton
   private class CountryCodesFullListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
       extends ListRepository(
@@ -116,7 +120,9 @@ object ListRepository {
           IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
           IndexModel(compoundIndex(descending(Common.countryRegimeCode), ascending("code")), IndexOptions().name("countryRegimeCode-code-index"))
         )
-      )
+      ) {
+    override lazy val requiresTtlIndex = false
+  }
 
   @Singleton
   private class CountryCodesCommonTransitListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
@@ -138,7 +144,9 @@ object ListRepository {
           IndexModel(ascending("code"), IndexOptions().name("code-index")),
           IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
         )
-      )
+      ) {
+    override lazy val requiresTtlIndex = false
+  }
 
   @Singleton
   private class CustomsOfficesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
@@ -151,7 +159,9 @@ object ListRepository {
           IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
           IndexModel(ascending("roles.role"), IndexOptions().name("customs-role-index"))
         )
-      )
+      ) {
+    override lazy val requiresTtlIndex = false
+  }
 
   @Singleton
   private class DocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)

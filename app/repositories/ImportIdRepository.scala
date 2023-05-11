@@ -36,6 +36,8 @@ class ImportIdRepository @Inject() (
       indexes = ImportIdRepository.indexes
     ) {
 
+  override lazy val requiresTtlIndex = false
+
   def nextId: Future[ImportId] = {
     val filter = Filters.eq("_id", "last-id")
 
