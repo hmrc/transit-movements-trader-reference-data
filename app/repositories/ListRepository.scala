@@ -87,8 +87,6 @@ object ListRepository {
 
   class ListRepositoryProvider @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext) {
 
-
-
     def apply(list: ReferenceDataList): ListRepository = list match {
       case CountryCodesFullList                          => new CountryCodesFullListRepository(mongoComponent)
       case CountryCodesCommonTransitList                 => new CountryCodesCommonTransitListRepository(mongoComponent)
@@ -107,8 +105,6 @@ object ListRepository {
       case CountryCodesCustomsOfficeLists                => new CountryCodesCustomsOfficeListRepository(mongoComponent)
     }
   }
-
-
 
   @Singleton
   private class CountryCodesFullListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
