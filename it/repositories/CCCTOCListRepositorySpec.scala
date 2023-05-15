@@ -16,12 +16,12 @@
 
 package repositories
 
-import models.CountryCodesFullList
+import models.CountryCodesCommonTransitOutsideCommunityList
 import models.ReferenceDataList
 
-class CountryCodesFullListRepositorySpec extends ListRepositoryBehaviours {
+class CCCTOCListRepositorySpec extends ListRepositoryBehaviours {
 
-  override def referenceDataList: ReferenceDataList = CountryCodesFullList
+  override def referenceDataList: ReferenceDataList = CountryCodesCommonTransitOutsideCommunityList
 
   override val field: String = "code"
 

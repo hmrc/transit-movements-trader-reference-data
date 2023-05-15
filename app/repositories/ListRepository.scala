@@ -48,6 +48,8 @@ class ListRepository @Inject() (
     )
     with Logging {
 
+  override lazy val requiresTtlIndex = false
+
   def one[A <: ReferenceDataList, B <: A](selector: Selector[A], projection: Option[Projection[B]] = None): Future[Option[JsObject]] =
     collection
       .find(selector.expression)
@@ -116,9 +118,7 @@ object ListRepository {
           IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
           IndexModel(compoundIndex(descending(Common.countryRegimeCode), ascending("code")), IndexOptions().name("countryRegimeCode-code-index"))
         )
-      ) {
-    override lazy val requiresTtlIndex = false
-  }
+      )
 
   @Singleton
   private class CountryCodesCommonTransitListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
@@ -140,9 +140,7 @@ object ListRepository {
           IndexModel(ascending("code"), IndexOptions().name("code-index")),
           IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
         )
-      ) {
-    override lazy val requiresTtlIndex = false
-  }
+      )
 
   @Singleton
   private class CustomsOfficesListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
@@ -155,9 +153,7 @@ object ListRepository {
           IndexModel(ascending("importId"), IndexOptions().name("import-id-index")),
           IndexModel(ascending("roles.role"), IndexOptions().name("customs-role-index"))
         )
-      ) {
-    override lazy val requiresTtlIndex = false
-  }
+      )
 
   @Singleton
   private class DocumentTypeCommonListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
