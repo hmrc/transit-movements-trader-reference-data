@@ -16,27 +16,16 @@
 
 package controllers.testOnly.services
 
+import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.testmodels.Nationality
-import controllers.testOnly.testmodels.TransportAggregateData
-import play.api.Environment
 
-import javax.inject.Inject
-import javax.inject.Singleton
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
+class NationalityServiceSpec extends SpecBaseWithAppPerSuite {
 
-// TODO - remove
-@Singleton
-class TransportDataService @Inject() (override val env: Environment)(implicit ec: ExecutionContext) extends ResourceService {
+  "must return nationalities" in {
+    val service = app.injector.instanceOf[NationalityService]
 
-  val nationalities: Seq[Nationality] =
-    getData[Nationality]("resources/nationalities.json")
+    val expectedFirstItem = Nationality("AR", "Argentina")
 
-  def aggregateData: TransportAggregateData =
-    TransportAggregateData(nationalities.toList)
-
-  def getTransportAggregate: Future[TransportAggregateData] = Future {
-    aggregateData
+    service.nationalities.head mustEqual expectedFirstItem
   }
-
 }

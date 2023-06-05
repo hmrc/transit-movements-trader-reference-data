@@ -58,7 +58,9 @@ GET        /test-only/transit-movements-trader-reference-data/currency-codes    
 
 GET        /test-only/transit-movements-trader-reference-data/qualifier-of-identification-incident              controllers.testOnly.QualifierOfIdentificationIncidentController.get
 
+# TODO - remove /transport endpoint
 GET        /test-only/transit-movements-trader-reference-data/transport                                         controllers.testOnly.TransportModeController.getAggregate()
+GET        /test-only/transit-movements-trader-reference-data/nationalities                                     controllers.testOnly.NationalityController.nationalities()
 
 GET        /test-only/transit-movements-trader-reference-data/metrics                                           controllers.testOnly.MetricController.getMetrics
 
