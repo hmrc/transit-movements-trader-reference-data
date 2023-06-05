@@ -16,7 +16,7 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.services.TransportModeService
+import controllers.testOnly.services.NationalityService
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -24,29 +24,14 @@ import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class TransportModeController @Inject() (
+class NationalityController @Inject() (
   cc: ControllerComponents,
-  transportModeService: TransportModeService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+  nationalityService: NationalityService
+) extends BackendController(cc) {
 
-  def transportModes(): Action[AnyContent] =
+  def nationalities(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(transportModeService.transportModes))
-    }
-
-  def getTransportMode(code: String): Action[AnyContent] =
-    Action {
-      transportModeService
-        .getTransportModeByCode(code)
-        .map {
-          transportMode =>
-            Ok(Json.toJson(transportMode))
-        }
-        .getOrElse {
-          NotFound
-        }
+      Ok(Json.toJson(nationalityService.nationalities))
     }
 }

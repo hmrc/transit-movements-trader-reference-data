@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.testmodels
+package controllers.testOnly.services
 
-import play.api.libs.json.Format
-import play.api.libs.json.Json
+import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.testmodels.Nationality
 
-case class Nationality(code: String, desc: String)
+class NationalityServiceSpec extends SpecBaseWithAppPerSuite {
 
-object Nationality {
-  implicit val format: Format[Nationality] = Json.format[Nationality]
-}
+  "must return nationalities" in {
+    val service = app.injector.instanceOf[NationalityService]
 
-case class TransportAggregateData(nationalities: List[Nationality])
+    val expectedFirstItem = Nationality("AR", "Argentina")
 
-object TransportAggregateData {
-
-  implicit val format: Format[TransportAggregateData] = Json.format[TransportAggregateData]
+    service.nationalities.head mustEqual expectedFirstItem
+  }
 }

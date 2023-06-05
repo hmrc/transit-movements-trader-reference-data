@@ -1,18 +1,18 @@
 [
   {
     "code": "AR",
-    "desc": "Argentina"
+    "description": "Argentina"
   },
   {
     "code": "AU",
-    "desc": "Australia"
+    "description": "Australia"
   },
   {
     "code": "FR",
-    "desc": "France"
+    "description": "France"
   },
   {
     "code": "GB",
-    "desc": "United Kingdom"
+    "description": "United Kingdom"
   }
 ]

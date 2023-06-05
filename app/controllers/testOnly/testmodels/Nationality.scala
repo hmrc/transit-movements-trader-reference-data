@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-package controllers.testOnly.services
+package controllers.testOnly.testmodels
 
-import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.Nationality
+import play.api.libs.json.Format
+import play.api.libs.json.Json
 
-class TransportDataServiceSpec extends SpecBaseWithAppPerSuite {
-  private val service     = app.injector.instanceOf[TransportDataService]
-  private val nationality = Nationality("AR", "Argentina")
+case class Nationality(code: String, description: String)
 
-  "TransportModeService" - {
-
-    "must return transport nationalities" in {
-      service.aggregateData.nationalities.head mustBe nationality
-    }
-
-  }
+object Nationality {
+  implicit val format: Format[Nationality] = Json.format[Nationality]
 }
