@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class NationalityService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class NationalityService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val nationalities: Seq[Nationality] =
     getData[Nationality](config.nationalities)

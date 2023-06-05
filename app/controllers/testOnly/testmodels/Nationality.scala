@@ -19,15 +19,8 @@ package controllers.testOnly.testmodels
 import play.api.libs.json.Format
 import play.api.libs.json.Json
 
-case class Nationality(code: String, desc: String)
+case class Nationality(code: String, description: String)
 
 object Nationality {
   implicit val format: Format[Nationality] = Json.format[Nationality]
-}
-
-case class TransportAggregateData(nationalities: List[Nationality])
-
-object TransportAggregateData {
-
-  implicit val format: Format[TransportAggregateData] = Json.format[TransportAggregateData]
 }
