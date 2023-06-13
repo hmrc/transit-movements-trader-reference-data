@@ -16,16 +16,28 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.DocumentType
 import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.helpers._
+import controllers.testOnly.testmodels.DocumentType
+import org.scalacheck.Gen
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
+class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite with ScalaCheckPropertyChecks {
 
-  "must return document types" in {
-    val service = app.injector.instanceOf[DocumentTypeService]
+  private val service = app.injector.instanceOf[DocumentTypeService]
 
-    val expectedFirstItem = DocumentType("18", "Movement certificate A.TR.1", transportDocument = false)
+  "must return document types" - {
+    "when P4" in {
+      forAll(Gen.oneOf(Some(P4), None)) {
+        version =>
+          val expectedFirstItem = DocumentType("18", "Movement certificate A.TR.1", transportDocument = false)
 
-    service.documentTypes.head mustEqual expectedFirstItem
+          service.documentTypes(version).head mustEqual expectedFirstItem
+      }
+    }
+
+    "when P5" in {
+      service.documentTypes(Some(P5)).head.code mustEqual "C085"
+    }
   }
 }

@@ -16,12 +16,19 @@
 
 package controllers.testOnly.services
 
+import controllers.testOnly.helpers.{P5, Version}
 import controllers.testOnly.testmodels.DocumentType
+
 import javax.inject.Inject
 import play.api.Environment
 
 private[testOnly] class DocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val documentTypes: Seq[DocumentType] =
-    getData[DocumentType](config.documentTypes)
+  def documentTypes(version: Option[Version]): Seq[DocumentType] = {
+    val resource = version match {
+      case Some(P5) => config.documentTypesP5
+      case _        => config.documentTypes
+    }
+    getData[DocumentType](resource)
+  }
 }

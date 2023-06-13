@@ -16,6 +16,7 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.{Version, VersionHelper}
 import services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -32,6 +33,8 @@ class DocumentTypeController @Inject() (
 
   def documentTypes(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(documentTypeService.documentTypes))
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(documentTypeService.documentTypes(version)))
     }
 }

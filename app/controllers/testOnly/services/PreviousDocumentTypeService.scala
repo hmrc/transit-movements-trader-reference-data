@@ -16,6 +16,7 @@
 
 package controllers.testOnly.services
 
+import controllers.testOnly.helpers.{P5, Version}
 import controllers.testOnly.testmodels.PreviousDocumentType
 import play.api.Environment
 
@@ -23,9 +24,14 @@ import javax.inject.Inject
 
 private[testOnly] class PreviousDocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  val previousDocumentTypes: Seq[PreviousDocumentType] =
-    getData[PreviousDocumentType](config.previousDocumentTypes)
+  def previousDocumentTypes(version: Option[Version] = None): Seq[PreviousDocumentType] = {
+    val resource = version match {
+      case Some(P5) => config.previousDocumentTypesP5
+      case _        => config.previousDocumentTypes
+    }
+    getData[PreviousDocumentType](resource)
+  }
 
   def getPreviousDocumentTypeByCode(code: String): Option[PreviousDocumentType] =
-    previousDocumentTypes.find(_.code == code)
+    previousDocumentTypes().find(_.code == code)
 }
