@@ -16,7 +16,8 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.{P5, Version}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.PreviousDocumentType
 import play.api.Environment
 

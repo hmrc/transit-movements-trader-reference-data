@@ -16,7 +16,8 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.{Version, VersionHelper}
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.VersionHelper
 import services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
