@@ -41,6 +41,9 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val documentTypes: String =
     config.get[String]("resourceFiles.documentTypes")
 
+  val documentTypesP5: String =
+    config.get[String]("resourceFiles.documentTypesP5")
+
   val transportModes: String =
     config.get[String]("resourceFiles.transportModes")
 
@@ -52,6 +55,9 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val previousDocumentTypes: String =
     config.get[String]("resourceFiles.previousDocumentTypes")
+
+  val previousDocumentTypesP5: String =
+    config.get[String]("resourceFiles.previousDocumentTypesP5")
 
   val methodOfPayment: String =
     config.get[String]("resourceFiles.methodOfPayment")

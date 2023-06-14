@@ -24,13 +24,11 @@ import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class TransportModeController @Inject() (
   cc: ControllerComponents,
   transportModeService: TransportModeService
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc) {
+) extends BackendController(cc) {
 
   def transportModes(): Action[AnyContent] =
     Action {

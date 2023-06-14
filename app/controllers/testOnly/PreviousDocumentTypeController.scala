@@ -16,7 +16,10 @@
 
 package controllers.testOnly
 
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.helpers.VersionHelper
 import services.PreviousDocumentTypeService
+
 import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.Action
@@ -31,7 +34,9 @@ class PreviousDocumentTypeController @Inject() (
 
   def previousDocumentTypes(): Action[AnyContent] =
     Action {
-      Ok(Json.toJson(previousDocumentTypeService.previousDocumentTypes))
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(previousDocumentTypeService.previousDocumentTypes(version)))
     }
 
   def getPreviousDocumentType(code: String): Action[AnyContent] =

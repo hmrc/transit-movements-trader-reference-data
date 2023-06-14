@@ -18,8 +18,11 @@ package controllers.testOnly.services
 
 import controllers.testOnly.testmodels.PreviousDocumentType
 import base.SpecBaseWithAppPerSuite
+import controllers.testOnly.helpers._
+import org.scalacheck.Gen
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-class PreviousDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
+class PreviousDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite with ScalaCheckPropertyChecks {
 
   val service               = app.injector.instanceOf[PreviousDocumentTypeService]
   private val documentType1 = PreviousDocumentType("T1", Some("Document T1"))
@@ -27,9 +30,19 @@ class PreviousDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
   private val documentType3 = PreviousDocumentType("821", None)
 
   "PreviousDocumentTypeService" - {
-    "must return previous document types" in {
-      service.previousDocumentTypes.headOption.value mustBe documentType1
-      service.previousDocumentTypes.lastOption.value mustBe documentType3
+    "must return previous document types" - {
+      "when P4" in {
+        forAll(Gen.oneOf(Some(P4), None)) {
+          version =>
+            service.previousDocumentTypes(version).headOption.value mustBe documentType1
+            service.previousDocumentTypes(version).lastOption.value mustBe documentType3
+        }
+      }
+
+      "when P5" in {
+        service.previousDocumentTypes(Some(P5)).headOption.value.code mustBe "C512"
+        service.previousDocumentTypes(Some(P5)).lastOption.value.code mustBe "NMRN"
+      }
     }
 
     "getPreviousDocumentTypeByCode" - {
