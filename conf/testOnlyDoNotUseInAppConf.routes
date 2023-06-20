@@ -27,8 +27,11 @@ GET        /test-only/transit-movements-trader-reference-data/office-transit/:id
 GET        /test-only/transit-movements-trader-reference-data/transport-modes                                   controllers.testOnly.TransportModeController.transportModes
 GET        /test-only/transit-movements-trader-reference-data/transport-mode/:code                              controllers.testOnly.TransportModeController.getTransportMode(code)
 
-GET        /test-only/transit-movements-trader-reference-data/previous-document-types                           controllers.testOnly.PreviousDocumentTypeController.previousDocumentTypes
-GET        /test-only/transit-movements-trader-reference-data/previous-document-type/:code                      controllers.testOnly.PreviousDocumentTypeController.getPreviousDocumentType(code)
+GET        /test-only/transit-movements-trader-reference-data/document-types                                    controllers.testOnly.DocumentTypeController.documentTypes
+GET        /test-only/transit-movements-trader-reference-data/previous-document-types                           controllers.testOnly.DocumentTypeController.previousDocumentTypes
+GET        /test-only/transit-movements-trader-reference-data/previous-document-type/:code                      controllers.testOnly.DocumentTypeController.getPreviousDocumentType(code)
+GET        /test-only/transit-movements-trader-reference-data/supporting-document-types                         controllers.testOnly.DocumentTypeController.supportingDocumentTypes
+GET        /test-only/transit-movements-trader-reference-data/transport-document-types                          controllers.testOnly.DocumentTypeController.transportDocumentTypes
 
 GET        /test-only/transit-movements-trader-reference-data/circumstance-indicators                           controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
 GET        /test-only/transit-movements-trader-reference-data/circumstance-indicator/:code                      controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
@@ -47,8 +50,6 @@ GET        /test-only/transit-movements-trader-reference-data/dangerous-goods-co
 GET        /test-only/transit-movements-trader-reference-data/additional-information                            controllers.testOnly.AdditionalInformationController.additionalInformation
 
 GET        /test-only/transit-movements-trader-reference-data/kinds-of-package                                  controllers.testOnly.KindOfPackageController.kindsOfPackage
-
-GET        /test-only/transit-movements-trader-reference-data/document-types                                    controllers.testOnly.DocumentTypeController.documentTypes
 
 GET        /test-only/transit-movements-trader-reference-data/additional-references                             controllers.testOnly.AdditionalReferenceController.additionalReference
 

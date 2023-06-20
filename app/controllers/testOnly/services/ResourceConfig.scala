@@ -44,6 +44,12 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val documentTypesP5: String =
     config.get[String]("resourceFiles.documentTypesP5")
 
+  val supportingDocumentTypesP5: String =
+    config.get[String]("resourceFiles.supportingDocumentTypesP5")
+
+  val transportDocumentTypesP5: String =
+    config.get[String]("resourceFiles.transportDocumentTypesP5")
+
   val transportModes: String =
     config.get[String]("resourceFiles.transportModes")
 
