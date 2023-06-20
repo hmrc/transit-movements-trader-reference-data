@@ -31,12 +31,12 @@ object DocumentType {
     (__ \ "code").read[String] and
       (__ \ "description").readNullable[String] and
       (__ \ "transportDocument").readNullable[Boolean]
-    ).apply {
+  ).apply {
     (code, description, isTransportDocument) =>
       isTransportDocument match {
-        case Some(true) => TransportDocumentType(code, description)
+        case Some(true)  => TransportDocumentType(code, description)
         case Some(false) => SupportingDocumentType(code, description)
-        case None => PreviousDocumentType(code, description)
+        case None        => PreviousDocumentType(code, description)
       }
   }
 

@@ -16,8 +16,12 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.{P5, Version}
-import controllers.testOnly.testmodels.{DocumentType, PreviousDocumentType, SupportingDocumentType, TransportDocumentType}
+import controllers.testOnly.helpers.P5
+import controllers.testOnly.helpers.Version
+import controllers.testOnly.testmodels.DocumentType
+import controllers.testOnly.testmodels.PreviousDocumentType
+import controllers.testOnly.testmodels.SupportingDocumentType
+import controllers.testOnly.testmodels.TransportDocumentType
 import play.api.Environment
 
 import javax.inject.Inject
