@@ -25,8 +25,7 @@ class DocumentTypeSpec extends SpecBase {
 
     "when reading P4 data" - {
       "when previous" in {
-        val json = Json.parse(
-          """
+        val json = Json.parse("""
             |{
             |  "code" : "pCode",
             |  "description" : "pDescription"
@@ -39,8 +38,7 @@ class DocumentTypeSpec extends SpecBase {
       }
 
       "when supporting" in {
-        val json = Json.parse(
-          """
+        val json = Json.parse("""
             |{
             |  "code" : "sCode",
             |  "description" : "sDescription",
@@ -54,8 +52,7 @@ class DocumentTypeSpec extends SpecBase {
       }
 
       "when transport" in {
-        val json = Json.parse(
-          """
+        val json = Json.parse("""
             |{
             |  "code" : "tCode",
             |  "description" : "tDescription",
@@ -76,8 +73,7 @@ class DocumentTypeSpec extends SpecBase {
 
       val result = Json.toJson[DocumentType](document)
 
-      result mustBe Json.parse(
-        """
+      result mustBe Json.parse("""
           |{
           |  "code" : "pCode",
           |  "description" : "pDescription"
@@ -90,8 +86,7 @@ class DocumentTypeSpec extends SpecBase {
 
       val result = Json.toJson[DocumentType](document)
 
-      result mustBe Json.parse(
-        """
+      result mustBe Json.parse("""
           |{
           |  "code" : "sCode",
           |  "description" : "sDescription",
@@ -105,8 +100,7 @@ class DocumentTypeSpec extends SpecBase {
 
       val result = Json.toJson[DocumentType](document)
 
-      result mustBe Json.parse(
-        """
+      result mustBe Json.parse("""
           |{
           |  "code" : "tCode",
           |  "description" : "tDescription",
