@@ -18,19 +18,18 @@ package controllers.testOnly
 
 import controllers.testOnly.helpers.Version
 import controllers.testOnly.helpers.VersionHelper
-import services._
+import controllers.testOnly.services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
 import play.api.mvc.ControllerComponents
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class DocumentTypeController @Inject() (
   cc: ControllerComponents,
   documentTypeService: DocumentTypeService
-) extends BackendController(cc) {
+) extends ReferenceDataController(cc) {
 
   def documentTypes(): Action[AnyContent] =
     Action {
@@ -38,4 +37,32 @@ class DocumentTypeController @Inject() (
         val version: Option[Version] = VersionHelper.getVersion(request)
         Ok(Json.toJson(documentTypeService.documentTypes(version)))
     }
+
+  def previousDocumentTypes(): Action[AnyContent] =
+    Action {
+      request =>
+        val version: Option[Version] = VersionHelper.getVersion(request)
+        Ok(Json.toJson(documentTypeService.previousDocumentTypes(version)))
+    }
+
+  def getPreviousDocumentType(code: String): Action[AnyContent] =
+    Action {
+      documentTypeService
+        .getPreviousDocumentTypeByCode(code)
+        .map {
+          documentType =>
+            Ok(Json.toJson(documentType))
+        }
+        .getOrElse {
+          NotFound
+        }
+    }
+
+  def supportingDocumentTypes(): Action[AnyContent] = getIfP5 {
+    documentTypeService.supportingDocumentTypes()
+  }
+
+  def transportDocumentTypes(): Action[AnyContent] = getIfP5 {
+    documentTypeService.transportDocumentTypes()
+  }
 }
