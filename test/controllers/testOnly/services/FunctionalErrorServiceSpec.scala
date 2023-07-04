@@ -16,7 +16,8 @@
 
 package controllers.testOnly.services
 
-import base.{ModelGenerators, SpecBaseWithAppPerSuite}
+import base.ModelGenerators
+import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.testmodels.FunctionalError
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks.forAll
 import org.scalacheck.Arbitrary.arbitrary

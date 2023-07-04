@@ -27,8 +27,6 @@ import org.scalacheck.Gen
 
 trait ModelGenerators {
 
-
-
   implicit lazy val arbitraryCustomsOffice: Arbitrary[CustomsOffice] =
     Arbitrary {
       for {
@@ -73,7 +71,7 @@ trait ModelGenerators {
       )
 
       for {
-        functionalError        <- Gen.oneOf(functionalErrorList)
+        functionalError <- Gen.oneOf(functionalErrorList)
       } yield functionalError
     }
 
