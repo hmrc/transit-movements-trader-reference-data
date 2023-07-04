@@ -16,25 +16,42 @@
 
 package controllers.testOnly.services
 
-import base.SpecBaseWithAppPerSuite
+import base.{ModelGenerators, SpecBaseWithAppPerSuite}
 import controllers.testOnly.testmodels.FunctionalError
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks.forAll
+import org.scalacheck.Arbitrary.arbitrary
 
-class FunctionalErrorServiceSpec extends SpecBaseWithAppPerSuite {
+class FunctionalErrorServiceSpec extends SpecBaseWithAppPerSuite with ModelGenerators {
 
   val functionalError1: FunctionalError = FunctionalError("15", "Condition violation (Not allowed)")
 
-  "must return existing control type" in {
-    val service = app.injector.instanceOf[FunctionalErrorService]
+  "getFunctionalError" - {
+    "must return existing control type" in {
+      val service = app.injector.instanceOf[FunctionalErrorService]
 
-    val result = service.getFunctionalError("15")
-    result.get.description mustBe "Condition violation (Not allowed)"
-    result mustBe Some(functionalError1)
+      val result = service.getFunctionalError("15")
+      result.get.description mustBe "Condition violation (Not allowed)"
+      result mustBe Some(functionalError1)
+    }
+
+    "must return None for control type that do not exist" in {
+      val service = app.injector.instanceOf[FunctionalErrorService]
+
+      val result = service.getFunctionalError("9999")
+      result mustBe None
+    }
   }
 
-  "must return None for control type that do not exist" in {
-    val service = app.injector.instanceOf[FunctionalErrorService]
+  "getAllErrorCodes" - {
+    "must return sequence of functional errors" in {
+      val service = app.injector.instanceOf[FunctionalErrorService]
 
-    val result = service.getFunctionalError("9999")
-    result mustBe None
+      val result = service.getAllErrorCodes
+
+      forAll(arbitrary[FunctionalError]) {
+        functionalError =>
+          result.contains(functionalError) mustBe true
+      }
+    }
   }
 }
