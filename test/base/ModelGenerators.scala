@@ -56,10 +56,23 @@ trait ModelGenerators {
 
   implicit lazy val arbitraryFunctionalError: Arbitrary[FunctionalError] =
     Arbitrary {
+      val functionalErrorList = Seq(
+        FunctionalError("12", "Codelist violation"),
+        FunctionalError("13", "Condition violation (Missing)"),
+        FunctionalError("14", "Rule violation"),
+        FunctionalError("15", "Condition violation (Not allowed)"),
+        FunctionalError("26", "Duplicate Message ID"),
+        FunctionalError("50", "Transitional constraint violation"),
+        FunctionalError("51", "EDI violation post downgrade"),
+        FunctionalError("52", "Functional violation post downgrade"),
+        FunctionalError("90", "Unknown MRN"),
+        FunctionalError("92", "Message out of sequence"),
+        FunctionalError("93", "Invalid MRN")
+      )
+
       for {
-        code        <- Gen.alphaNumStr
-        description <- Gen.alphaNumStr
-      } yield FunctionalError(code, description)
+        functionalError <- Gen.oneOf(functionalErrorList)
+      } yield functionalError
     }
 
   implicit lazy val arbitraryCountry: Arbitrary[Country] =

@@ -38,6 +38,7 @@ GET        /test-only/transit-movements-trader-reference-data/circumstance-indic
 
 GET        /test-only/transit-movements-trader-reference-data/control-type/:code                                controllers.testOnly.ControlTypeController.getControlType(code)
 GET        /test-only/transit-movements-trader-reference-data/functional-error-type/:code                       controllers.testOnly.FunctionalErrorController.getFunctionalError(code)
+GET        /test-only/transit-movements-trader-reference-data/get-all-functional-error-codes                    controllers.testOnly.FunctionalErrorController.fetchFunctionalErrorList
 
 GET        /test-only/transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
 GET        /test-only/transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)

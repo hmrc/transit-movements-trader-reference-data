@@ -41,4 +41,9 @@ class FunctionalErrorController @Inject() (
           NotFound
         }
     }
+
+  def fetchFunctionalErrorList: Action[AnyContent] =
+    Action {
+      Ok(Json.toJson(functionalErrorService.getAllErrorCodes))
+    }
 }

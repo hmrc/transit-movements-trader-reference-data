@@ -25,4 +25,7 @@ private[testOnly] class FunctionalErrorService @Inject() (override val env: Envi
 
   def getFunctionalError(code: String): Option[FunctionalError] =
     getData[FunctionalError](config.functionalErrors).find(_.code == code)
+
+  def getAllErrorCodes: Seq[FunctionalError] =
+    getData[FunctionalError](config.functionalErrors)
 }
