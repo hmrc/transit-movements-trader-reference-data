@@ -19,13 +19,14 @@ package controllers.testOnly
 import controllers.testOnly.services.CustomsOfficesService
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class CustomsOfficeController @Inject() (
   cc: ControllerComponents,
   customsOfficesService: CustomsOfficesService
-) extends ReferenceDataController(cc) {
+) extends BackendController(cc) {
 
   def customsOffices(): Action[AnyContent] =
     Action {

@@ -19,13 +19,14 @@ package controllers.testOnly
 import controllers.testOnly.services._
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class DocumentTypeController @Inject() (
   cc: ControllerComponents,
   documentTypeService: DocumentTypeService
-) extends ReferenceDataController(cc) {
+) extends BackendController(cc) {
 
   def documentTypes(): Action[AnyContent] =
     Action {

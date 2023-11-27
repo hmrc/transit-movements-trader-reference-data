@@ -20,13 +20,14 @@ import controllers.testOnly.services.CountryService
 import models.requests.CountryQueryFilter
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
 
 class CountryController @Inject() (
   cc: ControllerComponents,
   countryService: CountryService
-) extends ReferenceDataController(cc) {
+) extends BackendController(cc) {
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action {
