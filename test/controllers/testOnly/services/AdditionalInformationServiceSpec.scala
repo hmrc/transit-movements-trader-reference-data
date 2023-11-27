@@ -17,35 +17,16 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers.P4
-import controllers.testOnly.helpers.P5
 import controllers.testOnly.testmodels.AdditionalInformation
-import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class AdditionalInformationServiceSpec extends SpecBaseWithAppPerSuite with ScalaCheckPropertyChecks {
 
-  "must return additional information types" - {
+  "must return additional information types" in {
+    val service = app.injector.instanceOf[AdditionalInformationService]
 
-    "when P4" in {
-      forAll(Gen.oneOf(Some(P4), None)) {
-        version =>
-          val service = app.injector.instanceOf[AdditionalInformationService]
+    val expectedFirstValue = AdditionalInformation("10600", "Negotiable Bill of lading 'to order blank endorsed'")
 
-          val expectedFirstValue = AdditionalInformation("10600", "Negotiable Bill of lading 'to order blank endorsed'")
-
-          service.additionalInformation(version).head mustEqual expectedFirstValue
-      }
-    }
-
-    "when P5" in {
-      val service = app.injector.instanceOf[AdditionalInformationService]
-
-      val expectedFirstValue =
-        AdditionalInformation("20100", "Export from one EFTA country subject to restriction or export from the Union subject to restriction")
-
-      service.additionalInformation(Some(P5)).head mustEqual expectedFirstValue
-    }
-
+    service.additionalInformation().head mustEqual expectedFirstValue
   }
 }

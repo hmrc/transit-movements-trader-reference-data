@@ -16,40 +16,21 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
-import controllers.testOnly.testmodels.DocumentType
-import controllers.testOnly.testmodels.PreviousDocumentType
-import controllers.testOnly.testmodels.SupportingDocumentType
-import controllers.testOnly.testmodels.TransportDocumentType
+import controllers.testOnly.testmodels.{DocumentType, PreviousDocumentType}
 import play.api.Environment
 
 import javax.inject.Inject
 
 private[testOnly] class DocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def documentTypes(version: Option[Version]): Seq[DocumentType] = {
-    val resource = version match {
-      case Some(P5) => config.documentTypesP5
-      case _        => config.documentTypes
-    }
-    getData[DocumentType](resource)
+  def documentTypes(): Seq[DocumentType] = {
+    getData[DocumentType](config.documentTypes)
   }
 
-  def previousDocumentTypes(version: Option[Version] = None): Seq[PreviousDocumentType] = {
-    val resource = version match {
-      case Some(P5) => config.previousDocumentTypesP5
-      case _        => config.previousDocumentTypes
-    }
-    getData[PreviousDocumentType](resource)
+  def previousDocumentTypes(): Seq[PreviousDocumentType] = {
+    getData[PreviousDocumentType](config.previousDocumentTypes)
   }
 
   def getPreviousDocumentTypeByCode(code: String): Option[PreviousDocumentType] =
     previousDocumentTypes().find(_.code == code)
-
-  def supportingDocumentTypes(): Seq[SupportingDocumentType] =
-    getData[SupportingDocumentType](config.supportingDocumentTypesP5)
-
-  def transportDocumentTypes(): Seq[TransportDocumentType] =
-    getData[TransportDocumentType](config.transportDocumentTypesP5)
 }

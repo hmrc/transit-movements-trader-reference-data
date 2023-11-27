@@ -17,14 +17,9 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers.P4
-import controllers.testOnly.helpers.P5
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.CtcMember
-import models.requests.CountryMembership.EuMember
-import models.requests.CountryMembership.NonEuMember
+import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
 import models.requests.CountryQueryFilter
-import org.scalacheck.Gen
 
 class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
@@ -44,139 +39,36 @@ class CountryServiceSpec extends SpecBaseWithAppPerSuite {
 
   "filterCountries" - {
 
-    "For P4" - {
+    val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM", "AE")
 
-      val version = Gen.oneOf(Some(P4), None).sample.value
+    "ctc member" - {
+      "returns the list of countries" in {
+        val filter = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
+        val result = service.filterCountries(filter)
 
-      val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM", "AE")
-
-      "ctc member" - {
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
-          val result = service.filterCountries(filter, version)
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
-      }
-
-      "EU member" - {
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, Some(EuMember))
-          val result = service.filterCountries(filter, version)
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
-      }
-
-      "Non EU member" - {
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
-          val result = service.filterCountries(filter, version)
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
+        result.length mustBe expectedIds.length
+        expectedIds.map(result.toString.contains(_) mustBe true)
       }
     }
 
-    "For P5" - {
+    "EU member" - {
+      "returns the list of countries" in {
+        val filter = CountryQueryFilter(None, Seq.empty, Some(EuMember))
+        val result = service.filterCountries(filter)
 
-      val version = Some(P5)
-
-      "ctc member" - {
-
-        val expectedIds = Seq("AD", "FR", "GB", "IT", "AT", "SM")
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, Some(CtcMember))
-          val result = service.filterCountries(filter, version)
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
+        result.length mustBe expectedIds.length
+        expectedIds.map(result.toString.contains(_) mustBe true)
       }
+    }
 
-      "EU member" - {
+    "Non EU member" - {
+      "returns the list of countries" in {
+        val filter = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
+        val result = service.filterCountries(filter)
 
-        val expectedIds = Seq("FR", "IT", "AT")
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, Some(EuMember))
-          val result = service.filterCountries(filter, version)
-
-          println(result.toString())
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
-      }
-
-      "Non EU member" - {
-
-        val expectedIds = Seq("AD", "AR", "AU", "FR", "GB", "IT", "AT", "SM")
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, Some(NonEuMember))
-          val result = service.filterCountries(filter, version)
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
-      }
-
-      "None" - {
-
-        val expectedIds = Seq("AD", "AE", "AR", "AU", "FR", "GB", "IT", "AT", "SM", "DE")
-
-        "returns the P4 list of countries" in {
-          val filter = CountryQueryFilter(None, Seq.empty, None)
-          val result = service.filterCountries(filter, version)
-
-          result.length mustBe expectedIds.length
-          expectedIds.map(result.toString.contains(_) mustBe true)
-        }
+        result.length mustBe expectedIds.length
+        expectedIds.map(result.toString.contains(_) mustBe true)
       }
     }
   }
-
-  "countryCustomsOfficeSecurityAgreementArea" - {
-    "must return the customs office security agreement areas" in {
-      val result = service.countryCustomsOfficeSecurityAgreementArea
-      result.length mustBe 5
-      result.head mustBe Country("valid", "FR", "France")
-    }
-  }
-
-  "countryAddressPostcodeBased" - {
-    "must return the countries whose addresses are postcode based" in {
-      val result = service.countryAddressPostcodeBased
-      result.length mustBe 2
-      result mustBe Seq(
-        Country("valid", "IE", "Ireland"),
-        Country("valid", "NL", "Netherlands")
-      )
-    }
-  }
-
-  "countryCodesCTC" - {
-    "must return the CTC countries" in {
-      val result = service.countryCodesCTC
-      result.length mustBe 7
-      result.head mustBe Country("valid", "CH", "Switzerland")
-    }
-  }
-
-  "countryCodesCTC" - {
-    "must return the countries without zip" in {
-      val result = service.countriesWithoutZip
-      result.length mustBe 14
-      result.head mustBe "AE"
-    }
-  }
-
 }

@@ -16,13 +16,10 @@
 
 package controllers.testOnly
 
-import helpers._
-import services.CountryService
+import controllers.testOnly.services.CountryService
 import models.requests.CountryQueryFilter
 import play.api.libs.json.Json
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 
 import javax.inject.Inject
 
@@ -33,26 +30,9 @@ class CountryController @Inject() (
 
   def get(countryQueryFilter: CountryQueryFilter): Action[AnyContent] =
     Action {
-      request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(countryService.filterCountries(countryQueryFilter, version)))
+      _ =>
+        Ok(Json.toJson(countryService.filterCountries(countryQueryFilter)))
     }
-
-  def getCountryCustomsOfficeSecurityAgreementArea(): Action[AnyContent] = getIfP5 {
-    countryService.countryCustomsOfficeSecurityAgreementArea
-  }
-
-  def getCountryAddressPostcodeBased(): Action[AnyContent] = getIfP5 {
-    countryService.countryAddressPostcodeBased
-  }
-
-  def getCountryCodesCTC(): Action[AnyContent] = getIfP5 {
-    countryService.countryCodesCTC
-  }
-
-  def getCountriesWithoutZip(): Action[AnyContent] = getIfP5 {
-    countryService.countriesWithoutZip
-  }
 
   def getCountry(code: String): Action[AnyContent] =
     Action {

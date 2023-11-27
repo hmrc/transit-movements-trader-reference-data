@@ -16,14 +16,8 @@
 
 package base
 
-import controllers.testOnly.testmodels.ControlType
-import controllers.testOnly.testmodels.Country
-import controllers.testOnly.testmodels.CustomsOffice
-import controllers.testOnly.testmodels.DangerousGoodsCode
-import controllers.testOnly.testmodels.FunctionalError
-import controllers.testOnly.testmodels.OfficeOfTransit
-import org.scalacheck.Arbitrary
-import org.scalacheck.Gen
+import controllers.testOnly.testmodels._
+import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
@@ -52,27 +46,6 @@ trait ModelGenerators {
         code        <- Gen.alphaNumStr
         description <- Gen.alphaNumStr
       } yield ControlType(code, description)
-    }
-
-  implicit lazy val arbitraryFunctionalError: Arbitrary[FunctionalError] =
-    Arbitrary {
-      val functionalErrorList = Seq(
-        FunctionalError("12", "Codelist violation"),
-        FunctionalError("13", "Condition violation (Missing)"),
-        FunctionalError("14", "Rule violation"),
-        FunctionalError("15", "Condition violation (Not allowed)"),
-        FunctionalError("26", "Duplicate Message ID"),
-        FunctionalError("50", "Transitional constraint violation"),
-        FunctionalError("51", "EDI violation post downgrade"),
-        FunctionalError("52", "Functional violation post downgrade"),
-        FunctionalError("90", "Unknown MRN"),
-        FunctionalError("92", "Message out of sequence"),
-        FunctionalError("93", "Invalid MRN")
-      )
-
-      for {
-        functionalError <- Gen.oneOf(functionalErrorList)
-      } yield functionalError
     }
 
   implicit lazy val arbitraryCountry: Arbitrary[Country] =

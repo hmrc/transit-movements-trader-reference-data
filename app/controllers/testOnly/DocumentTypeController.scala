@@ -16,13 +16,9 @@
 
 package controllers.testOnly
 
-import controllers.testOnly.helpers.Version
-import controllers.testOnly.helpers.VersionHelper
 import controllers.testOnly.services._
 import play.api.libs.json.Json
-import play.api.mvc.Action
-import play.api.mvc.AnyContent
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
 
 import javax.inject.Inject
 
@@ -33,16 +29,14 @@ class DocumentTypeController @Inject() (
 
   def documentTypes(): Action[AnyContent] =
     Action {
-      request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(documentTypeService.documentTypes(version)))
+      _ =>
+        Ok(Json.toJson(documentTypeService.documentTypes()))
     }
 
   def previousDocumentTypes(): Action[AnyContent] =
     Action {
-      request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(documentTypeService.previousDocumentTypes(version)))
+      _ =>
+        Ok(Json.toJson(documentTypeService.previousDocumentTypes()))
     }
 
   def getPreviousDocumentType(code: String): Action[AnyContent] =
@@ -57,12 +51,4 @@ class DocumentTypeController @Inject() (
           NotFound
         }
     }
-
-  def supportingDocumentTypes(): Action[AnyContent] = getIfP5 {
-    documentTypeService.supportingDocumentTypes()
-  }
-
-  def transportDocumentTypes(): Action[AnyContent] = getIfP5 {
-    documentTypeService.transportDocumentTypes()
-  }
 }

@@ -16,8 +16,6 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.AdditionalInformation
 import play.api.Environment
 
@@ -25,11 +23,7 @@ import javax.inject.Inject
 
 private[testOnly] class AdditionalInformationService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def additionalInformation(version: Option[Version]): Seq[AdditionalInformation] = {
-    val resource = version match {
-      case Some(P5) => config.additionalInformationP5
-      case _        => config.additionalInformation
-    }
-    getData[AdditionalInformation](resource)
+  def additionalInformation(): Seq[AdditionalInformation] = {
+    getData[AdditionalInformation](config.additionalInformation)
   }
 }

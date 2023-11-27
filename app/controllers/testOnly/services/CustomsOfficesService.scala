@@ -16,8 +16,6 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.CustomsOffice
 import play.api.Environment
 
@@ -28,33 +26,12 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   val customsOffices: Seq[CustomsOffice] =
     getData[CustomsOffice](config.customsOffice)
 
-  val customsOfficesP5: Seq[CustomsOffice] =
-    getData[CustomsOffice](config.customsOfficeP5)
-
   def getCustomsOffice(officeId: String): Option[CustomsOffice] =
     customsOffices.find(_.id == officeId)
 
-  def getCustomsOfficesOfTheCountry(countryId: String, roles: List[String], version: Option[Version] = None) =
-    version.fold(getCustomsOfficesOfTheCountryExcluding(countryId, excludedRoles = roles))(
-      v =>
-        if (v == P5)
-          getCustomsOfficesForCountryRoles(countryId, roles)
-        else
-          getCustomsOfficesOfTheCountryExcluding(countryId, excludedRoles = roles)
-    )
-
-  private def getCustomsOfficesOfTheCountryExcluding(countryId: String, excludedRoles: List[String]): Seq[CustomsOffice] =
+  def getCustomsOfficesOfTheCountry(countryId: String, roles: List[String]): Seq[CustomsOffice] =
     customsOffices
       .filter(_.countryId == countryId)
-      .filter {
-        x =>
-          (countryId, excludedRoles) match {
-            case ("SM", List("TRA")) => !x.roles.contains("TRA")
-            case _                   => true
-          }
-      }
-
-  private def getCustomsOfficesForCountryRoles(countryId: String, roles: List[String]): Seq[CustomsOffice] =
-    customsOfficesP5.filter(_.countryId == countryId).filter(_.roles.exists(roles.contains _))
+      .filter(customsOffice => roles.forall(customsOffice.roles.contains))
 
 }
