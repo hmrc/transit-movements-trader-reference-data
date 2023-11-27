@@ -17,8 +17,8 @@
 package controllers.testOnly.services
 
 import play.api.Configuration
-import javax.inject.Inject
-import javax.inject.Singleton
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
@@ -56,15 +56,6 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
   val countryCodes: String =
     config.get[String]("resourceFiles.countryCodesFullList")
 
-  val countryCodesWithCustomsOffices: String =
-    config.get[String]("resourceFiles.countryCodesCustomsOfficeLists")
-
-  val nonEuCountryList: String =
-    config.get[String]("resourceFiles.nonEuCountryList")
-
   val controlResult: String =
     config.get[String]("resourceFiles.controlResult")
-
-  val transitCountryCodes: String =
-    config.get[String]("resourceFiles.transitCountryCodesFullList")
 }
