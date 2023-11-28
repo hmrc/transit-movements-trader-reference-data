@@ -17,8 +17,6 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers._
-import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite with ScalaCheckPropertyChecks {
@@ -27,29 +25,9 @@ class DocumentTypeServiceSpec extends SpecBaseWithAppPerSuite with ScalaCheckPro
 
   "must return document types" - {
 
-    "when previousDocumentTypes" - {
-      "when P4" in {
-        forAll(Gen.oneOf(Some(P4), None)) {
-          version =>
-            service.previousDocumentTypes(version).head.code mustBe "T1"
-            service.previousDocumentTypes(version).last.code mustBe "821"
-        }
-      }
-
-      "when P5" in {
-        service.previousDocumentTypes(Some(P5)).head.code mustBe "C512"
-        service.previousDocumentTypes(Some(P5)).last.code mustBe "NMRN"
-      }
-    }
-
-    "when supportingDocumentTypes" in {
-      service.supportingDocumentTypes().head.code mustEqual "C085"
-      service.supportingDocumentTypes().last.code mustEqual "NZZZ"
-    }
-
-    "when transportDocumentTypes" in {
-      service.transportDocumentTypes().head.code mustEqual "N235"
-      service.transportDocumentTypes().last.code mustEqual "N955"
+    "when previousDocumentTypes" in {
+      service.previousDocumentTypes().head.code mustBe "T1"
+      service.previousDocumentTypes().last.code mustBe "821"
     }
   }
 }

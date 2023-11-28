@@ -16,8 +16,6 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.helpers.P5
-import controllers.testOnly.helpers.Version
 import controllers.testOnly.testmodels.KindOfPackage
 import play.api.Environment
 
@@ -25,11 +23,6 @@ import javax.inject.Inject
 
 private[testOnly] class KindOfPackageService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def kindsOfPackage(version: Option[Version]): Seq[KindOfPackage] = {
-    val resource = version match {
-      case Some(P5) => config.kindsOfPackageP5
-      case _        => config.kindsOfPackage
-    }
-    getData[KindOfPackage](resource)
-  }
+  def kindsOfPackage(): Seq[KindOfPackage] =
+    getData[KindOfPackage](config.kindsOfPackage)
 }

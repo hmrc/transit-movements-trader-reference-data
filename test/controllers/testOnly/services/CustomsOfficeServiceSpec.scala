@@ -17,15 +17,12 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers.P5
 import controllers.testOnly.testmodels.CustomsOffice
-import org.scalacheck.Gen
 
 class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
   val officeId1 = "GB000040"
   val officeId2 = "AT530100"
-  val version   = Some(P5)
 
   val customsOffice1: CustomsOffice =
     CustomsOffice(officeId1, "Dover (OTS) Freight Clearance", "GB", Some("+44 (0)3000 575 988"), List("ENT", "EXP", "EXT"))
@@ -56,225 +53,120 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
     }
   }
 
-  "customsOfficeExit" - {
+  "customsOfficeExit (EXT)" - {
 
     "get customs office of exit based on country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("GB", List("EXT"), version).head mustBe
+      service.getCustomsOfficesOfTheCountry("GB", List("EXT")).head mustBe
         CustomsOffice(
-          "GB000011",
-          "Birmingham Airport",
+          "GB000040",
+          "Dover (OTS) Freight Clearance",
           "GB",
-          Some("+44 (0)121 781 7850"),
-          List("DEP", "DEP", "DES", "DES", "ENT", "EXP", "EXP", "EXT", "EXT", "TRA", "TRA")
+          Some("+44 (0)3000 575 988"),
+          List("ENT", "EXP", "EXT")
         )
     }
 
     "must return empty list for invalid country code" in {
       val service            = app.injector.instanceOf[CustomsOfficesService]
-      val version            = Gen.oneOf(Some(P5), None).sample.value
       val invalidCountryCode = "123"
 
-      service.getCustomsOfficesOfTheCountry(invalidCountryCode, List("EXT"), version) mustBe empty
+      service.getCustomsOfficesOfTheCountry(invalidCountryCode, List("EXT")) mustBe empty
     }
 
     "must only return list of customs offices from country code provided" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("XI", List("EXT"), version) mustBe Seq(
+      service.getCustomsOfficesOfTheCountry("XI", List("EXT")) mustBe Seq(
         CustomsOffice(
           "XI000142",
           "Belfast EPU",
           "XI",
-          Some("+44 (0)02896 931537"),
-          List("DEP", "AUT", "DEP", "DEP", "DES", "DES", "DES", "ENT", "ENT", "EXT", "EXT", "EXT", "TRA", "TRA", "TRA")
+          Some("+44 (0)3000 575 988"),
+          List("ENT", "EXP", "EXT")
         ),
         CustomsOffice(
-          "XIREX001",
-          "Implementation of IE/NI protocol",
+          "XI005160",
+          "Warrenpoint",
           "XI",
-          None,
-          List(
-            "RRG",
-            "RRG",
-            "RRG",
-            "RRG",
-            "DEP",
-            "RCA",
-            "DEP",
-            "DEP",
-            "DES",
-            "DES",
-            "DES",
-            "ENT",
-            "EXP",
-            "EXP",
-            "EXT",
-            "EXT",
-            "TRA",
-            "TRA",
-            "TRA",
-            "ACE",
-            "ACP",
-            "ACR",
-            "ACT",
-            "AUT",
-            "AWB",
-            "BTI",
-            "CAE",
-            "CAU",
-            "CCA",
-            "CCD",
-            "CCL",
-            "CGU",
-            "CND",
-            "CVA",
-            "CWP",
-            "DIS",
-            "DPO",
-            "EIN",
-            "EIR",
-            "ENL",
-            "ENQ",
-            "ETD",
-            "EUS",
-            "EXC",
-            "EXL",
-            "GUA",
-            "INC",
-            "INC",
-            "IPO",
-            "MCA",
-            "OPO",
-            "PLA",
-            "PRT",
-            "RAC",
-            "REC",
-            "REG",
-            "RFC",
-            "RSS",
-            "SAS",
-            "SCO",
-            "SDE",
-            "SSE",
-            "TEA",
-            "TRD",
-            "TST",
-            "TXT"
-          )
+          Some("+44 (0)3000 575 988"),
+          List("ENT", "EXP", "EXT")
+        ),
+        CustomsOffice(
+          "XI005220",
+          "Larne",
+          "XI",
+          Some("+44 (0)3000 575 988"),
+          List("ENT", "EXP", "EXT")
         )
       )
     }
   }
 
-  "customsOfficeTransit" - {
+  "customsOfficeTransit (TRA)" - {
 
     "must return the offices of transit for a given country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("GB", List("TRA"), version).head mustBe
-        CustomsOffice("GB000001", "Central Community Transit Office.", "GB", Some("+44 01268666688"), List("AUT", "RCA", "TRA", "CAU", "ENQ", "GUA", "REC"))
+      service.getCustomsOfficesOfTheCountry("GB", List("TRA")).head mustBe
+        CustomsOffice(
+          "GB000060",
+          "Dover/Folkestone Eurotunnel Freight",
+          "GB",
+          Some("+44 (0)3000 515831"),
+          List("DEP", "DES", "ENT", "EXP", "TRA")
+        )
     }
 
     "must return an empty list where no match" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("12", List("TRA"), version) mustBe empty
+      service.getCustomsOfficesOfTheCountry("12", List("TRA")) mustBe empty
     }
   }
 
-  "customsOfficeDestination" - {
+  "customsOfficeDestination (DES)" - {
 
     "must return the offices of destination for a given country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("GB", List("DES"), version).head mustBe
+      service.getCustomsOfficesOfTheCountry("GB", List("DES")).head mustBe
         CustomsOffice(
-          "GB000011",
-          "Birmingham Airport",
+          "GB000060",
+          "Dover/Folkestone Eurotunnel Freight",
           "GB",
-          Some("+44 (0)121 781 7850"),
-          List("DEP", "DEP", "DES", "DES", "ENT", "EXP", "EXP", "EXT", "EXT", "TRA", "TRA")
+          Some("+44 (0)3000 515831"),
+          List("DEP", "DES", "ENT", "EXP", "TRA")
         )
     }
 
     "must return an empty list where no match" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("12", List("DES"), version) mustBe empty
+      service.getCustomsOfficesOfTheCountry("12", List("DES")) mustBe empty
     }
   }
 
-  "customsOfficeDeparture" - {
+  "customsOfficeDeparture (DEP)" - {
 
     "get customs office of departure based on country code" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("GB", List("DEP"), version).head mustBe
-        CustomsOffice("GB000008", "Heysham", "GB", Some("03000599436"), List("DEP"))
+      service.getCustomsOfficesOfTheCountry("GB", List("DEP")).head mustBe
+        CustomsOffice(
+          "GB000060",
+          "Dover/Folkestone Eurotunnel Freight",
+          "GB",
+          Some("+44 (0)3000 515831"),
+          List("DEP", "DES", "ENT", "EXP", "TRA")
+        )
     }
 
     "must return an empty list where no match" in {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
-      service.getCustomsOfficesOfTheCountry("12", List("DEP"), version) mustBe empty
-    }
-  }
-
-  "customsOfficeTransitExit" - {
-
-    "get customs office of transit exit based on country code" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
-
-      service.getCustomsOfficesOfTheCountry("CY", List("TXT"), version).head mustBe
-        CustomsOffice(
-          "CY000440",
-          "LARNACA AIRPORT",
-          "CY",
-          Some("00357.24.816057"),
-          List(
-            "CAE",
-            "TXT",
-            "PLA",
-            "DIS",
-            "RFC",
-            "SCO",
-            "CAU",
-            "CAU",
-            "CAU",
-            "DEP",
-            "DEP",
-            "DES",
-            "DES",
-            "EIN",
-            "ENL",
-            "ENL",
-            "ENL",
-            "ENQ",
-            "ENT",
-            "ENT",
-            "ENT",
-            "EXC",
-            "EXC",
-            "EXL",
-            "EXL",
-            "EXL",
-            "EXP",
-            "EXP",
-            "EXT",
-            "EXT",
-            "GUA",
-            "GUA",
-            "REC"
-          )
-        )
-    }
-
-    "must return an empty list when no match" in {
-      val service = app.injector.instanceOf[CustomsOfficesService]
-
-      service.getCustomsOfficesOfTheCountry("12", List("TXT"), version) mustBe empty
+      service.getCustomsOfficesOfTheCountry("12", List("DEP")) mustBe empty
     }
   }
 }

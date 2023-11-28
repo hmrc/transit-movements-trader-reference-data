@@ -9,6 +9,9 @@
 # !!!WARNING!!! Every route defined in this file MUST be prefixed with "/test-only/". This is because NGINX is blocking every uri containing the string "test-only" in production.
 # Failing to follow this rule may result in test routes deployed in production.
 
+# Add all the application routes to the prod.routes file
+->         /                                                                                                    prod.Routes
+
 # microservice specific routes
 GET        /test-only/transit-movements-trader-reference-data/customs-offices                                   controllers.testOnly.CustomsOfficeController.customsOffices
 GET        /test-only/transit-movements-trader-reference-data/customs-offices/:code                             controllers.testOnly.CustomsOfficeController.customsOfficesOfTheCountry(code, role: List[String] ?= Nil)
@@ -16,10 +19,6 @@ GET        /test-only/transit-movements-trader-reference-data/customs-office/:id
 
 GET        /test-only/transit-movements-trader-reference-data/countries                                         controllers.testOnly.CountryController.get(countryQueryFilter: CountryQueryFilter)
 GET        /test-only/transit-movements-trader-reference-data/countries/:code                                   controllers.testOnly.CountryController.getCountry(code)
-GET        /test-only/transit-movements-trader-reference-data/country-customs-office-security-agreement-area    controllers.testOnly.CountryController.getCountryCustomsOfficeSecurityAgreementArea
-GET        /test-only/transit-movements-trader-reference-data/country-address-postcode-based                    controllers.testOnly.CountryController.getCountryAddressPostcodeBased
-GET        /test-only/transit-movements-trader-reference-data/country-codes-ctc                                 controllers.testOnly.CountryController.getCountryCodesCTC
-GET        /test-only/transit-movements-trader-reference-data/country-without-zip                               controllers.testOnly.CountryController.getCountriesWithoutZip
 
 GET        /test-only/transit-movements-trader-reference-data/office-transit                                    controllers.testOnly.OfficeOfTransitController.officesOfTransit
 GET        /test-only/transit-movements-trader-reference-data/office-transit/:id                                controllers.testOnly.OfficeOfTransitController.getOfficeOfTransit(id)
@@ -30,15 +29,9 @@ GET        /test-only/transit-movements-trader-reference-data/transport-mode/:co
 GET        /test-only/transit-movements-trader-reference-data/document-types                                    controllers.testOnly.DocumentTypeController.documentTypes
 GET        /test-only/transit-movements-trader-reference-data/previous-document-types                           controllers.testOnly.DocumentTypeController.previousDocumentTypes
 GET        /test-only/transit-movements-trader-reference-data/previous-document-type/:code                      controllers.testOnly.DocumentTypeController.getPreviousDocumentType(code)
-GET        /test-only/transit-movements-trader-reference-data/supporting-document-types                         controllers.testOnly.DocumentTypeController.supportingDocumentTypes
-GET        /test-only/transit-movements-trader-reference-data/transport-document-types                          controllers.testOnly.DocumentTypeController.transportDocumentTypes
 
 GET        /test-only/transit-movements-trader-reference-data/circumstance-indicators                           controllers.testOnly.CircumstanceIndicatorController.circumstanceIndicators
 GET        /test-only/transit-movements-trader-reference-data/circumstance-indicator/:code                      controllers.testOnly.CircumstanceIndicatorController.getCircumstanceIndicator(code)
-
-GET        /test-only/transit-movements-trader-reference-data/control-type/:code                                controllers.testOnly.ControlTypeController.getControlType(code)
-GET        /test-only/transit-movements-trader-reference-data/functional-error-type/:code                       controllers.testOnly.FunctionalErrorController.getFunctionalError(code)
-GET        /test-only/transit-movements-trader-reference-data/get-all-functional-error-codes                    controllers.testOnly.FunctionalErrorController.fetchFunctionalErrorList
 
 GET        /test-only/transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
 GET        /test-only/transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)
@@ -51,21 +44,3 @@ GET        /test-only/transit-movements-trader-reference-data/dangerous-goods-co
 GET        /test-only/transit-movements-trader-reference-data/additional-information                            controllers.testOnly.AdditionalInformationController.additionalInformation
 
 GET        /test-only/transit-movements-trader-reference-data/kinds-of-package                                  controllers.testOnly.KindOfPackageController.kindsOfPackage
-
-GET        /test-only/transit-movements-trader-reference-data/additional-references                             controllers.testOnly.AdditionalReferenceController.additionalReference
-
-GET        /test-only/transit-movements-trader-reference-data/un-locodes                                        controllers.testOnly.UnLocodeController.get
-
-GET        /test-only/transit-movements-trader-reference-data/currency-codes                                    controllers.testOnly.CurrencyController.getCurrencyCodes
-
-GET        /test-only/transit-movements-trader-reference-data/qualifier-of-identification-incident              controllers.testOnly.QualifierOfIdentificationIncidentController.get
-
-GET        /test-only/transit-movements-trader-reference-data/nationalities                                     controllers.testOnly.NationalityController.nationalities()
-
-GET        /test-only/transit-movements-trader-reference-data/metrics                                           controllers.testOnly.MetricController.getMetrics
-
-# Add all the application routes to the prod.routes file
-->         /transit-movements-trader-reference-data                                                             app.Routes
-->         /                                                                                                    health.Routes
-
-GET        /admin/metrics             com.kenshoo.play.metrics.MetricsController.metrics

@@ -17,34 +17,16 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.helpers._
 import controllers.testOnly.testmodels.KindOfPackage
-import controllers.testOnly.testmodels.PackageType
-import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class KindOfPackageServiceSpec extends SpecBaseWithAppPerSuite with ScalaCheckPropertyChecks {
 
-  "must return kinds of package" - {
+  "must return kinds of package" in {
+    val service = app.injector.instanceOf[KindOfPackageService]
 
-    "when P4" in {
-      forAll(Gen.oneOf(Some(P4), None)) {
-        version =>
-          val service = app.injector.instanceOf[KindOfPackageService]
+    val expectedFirstValue = KindOfPackage("1A", "Drum, steel", None)
 
-          val expectedFirstValue = KindOfPackage("1A", "Drum, steel", None)
-
-          service.kindsOfPackage(version).head mustEqual expectedFirstValue
-      }
-    }
-
-    "when P5" in {
-      val service = app.injector.instanceOf[KindOfPackageService]
-
-      val expectedFirstValue = KindOfPackage("1A", "Drum, steel", Some(PackageType.Other))
-
-      service.kindsOfPackage(Some(P5)).head mustEqual expectedFirstValue
-    }
-
+    service.kindsOfPackage().head mustEqual expectedFirstValue
   }
 }

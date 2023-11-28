@@ -16,8 +16,7 @@
 
 package controllers.testOnly
 
-import helpers._
-import services._
+import controllers.testOnly.services._
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.AnyContent
@@ -33,8 +32,7 @@ class KindOfPackageController @Inject() (
 
   def kindsOfPackage(): Action[AnyContent] =
     Action {
-      request =>
-        val version: Option[Version] = VersionHelper.getVersion(request)
-        Ok(Json.toJson(kindOfPackageService.kindsOfPackage(version)))
+      _ =>
+        Ok(Json.toJson(kindOfPackageService.kindsOfPackage()))
     }
 }
