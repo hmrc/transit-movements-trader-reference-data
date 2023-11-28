@@ -16,20 +16,19 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.{DocumentType, PreviousDocumentType}
+import controllers.testOnly.testmodels.DocumentType
+import controllers.testOnly.testmodels.PreviousDocumentType
 import play.api.Environment
 
 import javax.inject.Inject
 
 private[testOnly] class DocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def documentTypes(): Seq[DocumentType] = {
+  def documentTypes(): Seq[DocumentType] =
     getData[DocumentType](config.documentTypes)
-  }
 
-  def previousDocumentTypes(): Seq[PreviousDocumentType] = {
+  def previousDocumentTypes(): Seq[PreviousDocumentType] =
     getData[PreviousDocumentType](config.previousDocumentTypes)
-  }
 
   def getPreviousDocumentTypeByCode(code: String): Option[PreviousDocumentType] =
     previousDocumentTypes().find(_.code == code)

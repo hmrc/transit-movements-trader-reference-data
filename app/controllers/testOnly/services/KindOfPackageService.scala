@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 private[testOnly] class KindOfPackageService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def kindsOfPackage(): Seq[KindOfPackage] = {
+  def kindsOfPackage(): Seq[KindOfPackage] =
     getData[KindOfPackage](config.kindsOfPackage)
-  }
 }

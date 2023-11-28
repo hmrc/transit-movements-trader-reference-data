@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 private[testOnly] class AdditionalInformationService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
-  def additionalInformation(): Seq[AdditionalInformation] = {
+  def additionalInformation(): Seq[AdditionalInformation] =
     getData[AdditionalInformation](config.additionalInformation)
-  }
 }

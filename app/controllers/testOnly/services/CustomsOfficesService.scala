@@ -32,6 +32,8 @@ private[testOnly] class CustomsOfficesService @Inject() (override val env: Envir
   def getCustomsOfficesOfTheCountry(countryId: String, roles: List[String]): Seq[CustomsOffice] =
     customsOffices
       .filter(_.countryId == countryId)
-      .filter(customsOffice => roles.forall(customsOffice.roles.contains))
+      .filter(
+        customsOffice => roles.forall(customsOffice.roles.contains)
+      )
 
 }

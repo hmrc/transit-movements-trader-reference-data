@@ -17,7 +17,8 @@
 package base
 
 import controllers.testOnly.testmodels._
-import org.scalacheck.{Arbitrary, Gen}
+import org.scalacheck.Arbitrary
+import org.scalacheck.Gen
 
 trait ModelGenerators {
 

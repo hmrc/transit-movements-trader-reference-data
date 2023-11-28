@@ -18,7 +18,9 @@ package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
 import controllers.testOnly.testmodels.Country
-import models.requests.CountryMembership.{CtcMember, EuMember, NonEuMember}
+import models.requests.CountryMembership.CtcMember
+import models.requests.CountryMembership.EuMember
+import models.requests.CountryMembership.NonEuMember
 import models.requests.CountryQueryFilter
 
 class CountryServiceSpec extends SpecBaseWithAppPerSuite {

@@ -18,7 +18,8 @@ package controllers.testOnly.services
 
 import play.api.Configuration
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
