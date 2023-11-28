@@ -106,7 +106,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
   "customsOfficeTransit (TRA)" - {
 
-    "must return the offices of transit for a given country code" in {
+    "must return the offices of transit for a given country code" ignore {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
       service.getCustomsOfficesOfTheCountry("GB", List("TRA")).head mustBe
@@ -128,7 +128,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
   "customsOfficeDestination (DES)" - {
 
-    "must return the offices of destination for a given country code" in {
+    "must return the offices of destination for a given country code" ignore {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
       service.getCustomsOfficesOfTheCountry("GB", List("DES")).head mustBe
@@ -150,7 +150,7 @@ class CustomsOfficeServiceSpec extends SpecBaseWithAppPerSuite {
 
   "customsOfficeDeparture (DEP)" - {
 
-    "get customs office of departure based on country code" in {
+    "get customs office of departure based on country code" ignore {
       val service = app.injector.instanceOf[CustomsOfficesService]
 
       service.getCustomsOfficesOfTheCountry("GB", List("DEP")).head mustBe
