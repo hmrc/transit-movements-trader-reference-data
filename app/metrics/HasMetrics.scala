@@ -19,7 +19,6 @@ package metrics
 import java.util.concurrent.atomic.AtomicBoolean
 
 import com.codahale.metrics.MetricRegistry
-import com.kenshoo.play.metrics.Metrics
 import play.api.mvc.Action
 import play.api.mvc.BaseController
 import play.api.mvc.Result
@@ -47,9 +46,9 @@ trait HasActionMetrics extends HasMetrics {
 }
 
 trait HasMetrics {
-  def metrics: Metrics
+  def metrics: MetricRegistry
 
-  lazy val registry: MetricRegistry = metrics.defaultRegistry
+  lazy val registry: MetricRegistry = metrics
 
   def histo(metricKey: String) =
     registry.histogram(metricKey)

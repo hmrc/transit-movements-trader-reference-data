@@ -16,19 +16,19 @@
 
 package base
 
+import com.codahale.metrics.MetricRegistry
 import org.scalatest.TestSuite
 import org.scalatestplus.play.FakeApplicationFactory
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject._
-import com.kenshoo.play.metrics.Metrics
 
 private[base] trait TestWithApplication {
   this: TestSuite with FakeApplicationFactory =>
 
   final override def fakeApplication(): Application =
     guiceApplicationBuilder
-      .overrides(bind[Metrics].toInstance(new TestMetric))
+      .overrides(bind[MetricRegistry].toInstance(new TestMetric))
       .build()
 
   /** An overrideable hook that allows for the extension of the [[GuiceApplicationBuilder]] or

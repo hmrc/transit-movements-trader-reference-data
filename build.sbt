@@ -17,7 +17,7 @@ lazy val microservice = Project(appName, file("."))
     ThisBuild / scalafmtOnCompile := false,
     ThisBuild / useSuperShell := false
   )
-  .settings(scalaVersion := "2.13.8")
+  .settings(scalaVersion := "2.13.12")
   .settings(inConfig(Test)(testSettings): _*)
   .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(itSettings): _*)
