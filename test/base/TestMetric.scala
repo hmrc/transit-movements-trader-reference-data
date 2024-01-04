@@ -19,6 +19,6 @@ package base
 import com.codahale.metrics.MetricRegistry
 
 class TestMetric extends MetricRegistry {
-   def defaultRegistry: MetricRegistry = new MetricRegistry
-   def toJson: String                  = ""
+  def defaultRegistry: MetricRegistry = new MetricRegistry
+  def toJson: String                  = ""
 }
