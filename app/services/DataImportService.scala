@@ -48,13 +48,18 @@ class DataImportService @Inject() (
     } yield updateResult
 
   private def insertData(list: ReferenceDataList, importId: ImportId, data: Seq[JsObject]): Future[Boolean] =
-    listRepositoryProvider(list)
-      .insert(importId, data)
-      .recover {
-        case e: Exception =>
-          logger.error(s"Error inserting ${list.listName} data", e)
-          false
-      }
+    if (data.nonEmpty) {
+      listRepositoryProvider(list)
+        .insert(importId, data)
+        .recover {
+          case e: Exception =>
+            logger.error(s"Error inserting ${list.listName} data", e)
+            false
+        }
+    } else {
+      logger.error(s"data for ${list.listName} is empty")
+      Future.successful(false)
+    }
 
   private def cleanUp(list: ReferenceDataList, currentImportId: ImportId, importStatus: ImportStatus): Future[Boolean] =
     if (importStatus == ImportStatus.Complete) {
