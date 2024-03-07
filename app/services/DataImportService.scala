@@ -47,8 +47,8 @@ class DataImportService @Inject() (
       _            <- cleanUp(list, importId, importStatus)
     } yield updateResult
 
-  private def insertData(list: ReferenceDataList, importId: ImportId, data: Seq[JsObject]): Future[Boolean] = {
-    if(data.nonEmpty) {
+  private def insertData(list: ReferenceDataList, importId: ImportId, data: Seq[JsObject]): Future[Boolean] =
+    if (data.nonEmpty) {
       listRepositoryProvider(list)
         .insert(importId, data)
         .recover {
@@ -60,7 +60,6 @@ class DataImportService @Inject() (
       logger.error(s"data for ${list.listName} is empty")
       Future.successful(false)
     }
-  }
 
   private def cleanUp(list: ReferenceDataList, currentImportId: ImportId, importStatus: ImportStatus): Future[Boolean] =
     if (importStatus == ImportStatus.Complete) {
