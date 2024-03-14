@@ -57,7 +57,7 @@ class DataImportService @Inject() (
             false
         }
     } else {
-      logger.error(s"data for ${list.listName} is empty")
+      logger.warn(s"data for ${list.listName} is empty")
       Future.successful(false)
     }
 
