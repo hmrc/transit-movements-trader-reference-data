@@ -95,6 +95,7 @@ object ListRepository {
       case CountryCodesCommunityList                     => new CountryCodesCommunityListRepository(mongoComponent)
       case CustomsOfficesList                            => new CustomsOfficesListRepository(mongoComponent)
       case DocumentTypeCommonList                        => new DocumentTypeCommonListRepository(mongoComponent)
+      case RequestedDocumentTypeList                     => new RequestedDocumentTypeListRepository(mongoComponent)
       case PreviousDocumentTypeCommonList                => new PreviousDocumentTypeCommonListRepository(mongoComponent)
       case KindOfPackagesList                            => new KindOfPackagesListRepository(mongoComponent)
       case TransportModeList                             => new TransportModeListRepository(mongoComponent)

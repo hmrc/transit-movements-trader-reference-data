@@ -28,7 +28,7 @@ class RequestedDocumentTypeSpec extends SpecBase with ScalaCheckPropertyChecks w
 
   "Customs Office model" - {
     "must deserialize from json to a valid model" in {
-      val result = validRequestedDocumentTypeJson(requestedDocumentType).as[ControlType]
+      val result = validRequestedDocumentTypeJson(requestedDocumentType).as[RequestedDocumentType]
 
       result mustBe requestedDocumentType
     }
@@ -64,11 +64,11 @@ class RequestedDocumentTypeSpec extends SpecBase with ScalaCheckPropertyChecks w
   def expectedRequestedDocumentTypeJson(requestedDocumentType: RequestedDocumentType = requestedDocumentType): JsValue =
     Json.obj("code" -> requestedDocumentType.code, "description" -> requestedDocumentType.description)
 
-  def validRequestedDocumentTypeJson(controlType: RequestedDocumentType): JsValue =
+  def validRequestedDocumentTypeJson(requestedDocumentType: RequestedDocumentType): JsValue =
     Json.parse(s"""
          |{
-         |  "code":"${controlType.code}",
-         |  "description":"${controlType.description}"
+         |  "code":"${requestedDocumentType.code}",
+         |  "description":"${requestedDocumentType.description}"
          |  }
          |""".stripMargin)
 

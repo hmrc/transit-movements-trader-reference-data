@@ -36,6 +36,9 @@ GET        /test-only/transit-movements-trader-reference-data/circumstance-indic
 GET        /test-only/transit-movements-trader-reference-data/control-results                                   controllers.testOnly.ControlResultTestController.getAll()
 GET        /test-only/transit-movements-trader-reference-data/control-results/:code                             controllers.testOnly.ControlResultTestController.getControlResult(code)
 
+GET        /test-only/transit-movements-trader-reference-data/requested-document-type                           controllers.testOnly.RequestedDocumentTypeTestController.getAll()
+GET        /test-only/transit-movements-trader-reference-data/requested-document-type/:code                     controllers.testOnly.RequestedDocumentTypeTestController.getRequestedDocumentType(code)
+
 GET        /test-only/transit-movements-trader-reference-data/method-of-payment                                 controllers.testOnly.MethodOfPaymentController.methodOfPayment
 
 GET        /test-only/transit-movements-trader-reference-data/dangerous-goods-codes                             controllers.testOnly.DangerousGoodsCodeController.dangerousGoodsCodes
