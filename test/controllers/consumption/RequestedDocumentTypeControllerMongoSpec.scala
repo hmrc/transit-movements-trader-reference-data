@@ -18,13 +18,18 @@ package controllers.consumption
 
 import base.SpecBaseWithAppPerSuite
 import models.RequestedDocumentTypeList
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{eq => eqTo}
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, contentAsJson, route, status, _}
+import play.api.test.Helpers.GET
+import play.api.test.Helpers.contentAsJson
+import play.api.test.Helpers.route
+import play.api.test.Helpers.status
+import play.api.test.Helpers._
 import repositories.Selector
 import services.ReferenceDataService
 

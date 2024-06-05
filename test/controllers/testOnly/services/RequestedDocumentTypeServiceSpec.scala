@@ -21,9 +21,11 @@ import controllers.testOnly.testmodels.RequestedDocumentType
 
 class RequestedDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
-  val code                              = "Y031"
-  val firstRequestedDocumentType: RequestedDocumentType = RequestedDocumentType("Y031", "This certificate code may be used to indicate that shipments are coming from or going to an Authorised Economic Operator…")
-  val lastRequestedDocumentType: RequestedDocumentType  = RequestedDocumentType("C085", "Common Health Entry Document for Plants and Plant Products…")
+  val code = "Y031"
+
+  val firstRequestedDocumentType: RequestedDocumentType =
+    RequestedDocumentType("Y031", "This certificate code may be used to indicate that shipments are coming from or going to an Authorised Economic Operator…")
+  val lastRequestedDocumentType: RequestedDocumentType = RequestedDocumentType("C085", "Common Health Entry Document for Plants and Plant Products…")
 
   "RequestedDocumentTypeService" - {
     "requestedDocumentTypes" - {

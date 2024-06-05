@@ -16,7 +16,8 @@
 
 package controllers.testOnly.testmodels
 
-import base.{ModelGenerators, SpecBase}
+import base.ModelGenerators
+import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
@@ -24,7 +25,8 @@ import play.api.libs.json._
 
 class RequestedDocumentTypeSpec extends SpecBase with ScalaCheckPropertyChecks with ModelGenerators {
 
-  private val requestedDocumentType = RequestedDocumentType("Y031", "This certificate code may be used to indicate that shipments are coming from or going to an Authorised Economic Operator…")
+  private val requestedDocumentType =
+    RequestedDocumentType("Y031", "This certificate code may be used to indicate that shipments are coming from or going to an Authorised Economic Operator…")
 
   "Customs Office model" - {
     "must deserialize from json to a valid model" in {
