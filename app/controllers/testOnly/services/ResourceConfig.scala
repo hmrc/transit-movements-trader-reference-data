@@ -59,4 +59,7 @@ private[testOnly] class ResourceConfig @Inject() (config: Configuration) {
 
   val controlResult: String =
     config.get[String]("resourceFiles.controlResult")
+
+  val requestedDocumentType: String =
+    config.get[String]("resourceFiles.requestedDocumentType")
 }

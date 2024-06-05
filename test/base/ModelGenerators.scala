@@ -49,6 +49,14 @@ trait ModelGenerators {
       } yield ControlType(code, description)
     }
 
+  implicit lazy val arbitraryRequestedDocumentType: Arbitrary[RequestedDocumentType] =
+    Arbitrary {
+      for {
+        code        <- Gen.alphaNumStr
+        description <- Gen.alphaNumStr
+      } yield RequestedDocumentType(code, description)
+    }
+
   implicit lazy val arbitraryCountry: Arbitrary[Country] =
     Arbitrary {
       for {

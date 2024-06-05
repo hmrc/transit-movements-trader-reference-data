@@ -132,6 +132,14 @@ class ListRepositorySpec extends SpecBaseWithAppPerSuite {
       }
     }
 
+    "when given RequestedDocumentTypeList" - {
+      "must return instance of RequestedDocumentTypeListRepository" in {
+        val repo = new ListRepositoryProvider(mongoComponent).apply(RequestedDocumentTypeList)
+        repo.collectionName mustBe "RequestedDocumentType"
+        repo.indexes.size mustBe 2
+      }
+    }
+
     "when given CountryCodesCommonTransitOutsideCommunityList" - {
       "must return instance of CountryCodesCommonTransitOutsideCommunityListRepository" in {
         val repo = new ListRepositoryProvider(mongoComponent).apply(CountryCodesCommonTransitOutsideCommunityList)
