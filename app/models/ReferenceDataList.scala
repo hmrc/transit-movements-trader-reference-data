@@ -39,6 +39,7 @@ object SpecificCircumstanceIndicatorList             extends ReferenceDataList("
 object UnDangerousGoodsCodeList                      extends ReferenceDataList("UnDangerousGoodsCode")
 object TransportChargesMethodOfPaymentList           extends ReferenceDataList("TransportChargesMethodOfPayment")
 object ControlResultList                             extends ReferenceDataList("ControlResult")
+object RequestedDocumentTypeList                     extends ReferenceDataList("RequestedDocumentType")
 object CountryCodesCommonTransitOutsideCommunityList extends ReferenceDataList("CountryCodesCommonTransitOutsideCommunity")
 object CountryCodesCustomsOfficeLists                extends ReferenceDataList("CountryCodesCustomsOfficeLists")
 
@@ -59,6 +60,7 @@ object ReferenceDataList {
       UnDangerousGoodsCodeList,
       TransportChargesMethodOfPaymentList,
       ControlResultList,
+      RequestedDocumentTypeList,
       CountryCodesCommonTransitOutsideCommunityList,
       CountryCodesCustomsOfficeLists
     )
