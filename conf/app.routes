@@ -29,4 +29,7 @@ GET   /circumstance-indicator/:code    controllers.consumption.CircumstanceIndic
 GET   /control-results                 controllers.consumption.ControlResultController.getAll()
 GET   /control-results/:code           controllers.consumption.ControlResultController.getControlResult(code)
 
+GET   /requested-docmuent-type         controllers.consumption.RequestedDocumentTypeController.getAll()
+GET   /requested-docmuent-type/:code   controllers.consumption.RequestedDocumentTypeController.getRequestedDocumentType(code)
+
 POST  /data/:list                      controllers.ingestion.DataImportController.post(list: ReferenceDataList)

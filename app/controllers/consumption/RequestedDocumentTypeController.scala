@@ -31,7 +31,7 @@ import scala.concurrent.ExecutionContext
 
 trait RequestedDocumentTypeController {
   def getAll: Action[AnyContent]
-  def getRequestedDocument(code: String): Action[AnyContent]
+  def getRequestedDocumentType(code: String): Action[AnyContent]
 }
 
 class RequestedDocumentTypeControllerMongo @Inject() (
@@ -52,7 +52,7 @@ class RequestedDocumentTypeControllerMongo @Inject() (
       }
     }
 
-  def getRequestedDocument(code: String): Action[AnyContent] =
+  def getRequestedDocumentType(code: String): Action[AnyContent] =
     Action.async {
       referenceData.one(RequestedDocumentTypeList, Selector.ByCode(code)).map {
         case Some(data) => Ok(data)
