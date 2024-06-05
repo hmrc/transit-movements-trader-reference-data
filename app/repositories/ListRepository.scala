@@ -257,14 +257,14 @@ object ListRepository {
 
   @Singleton
   private class RequestedDocumentTypeListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
-    extends ListRepository(
-      mongoComponent = mongoComponent,
-      referenceDataList = RequestedDocumentTypeList,
-      indexes = Seq(
-        IndexModel(ascending("code"), IndexOptions().name("code-index")),
-        IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+      extends ListRepository(
+        mongoComponent = mongoComponent,
+        referenceDataList = RequestedDocumentTypeList,
+        indexes = Seq(
+          IndexModel(ascending("code"), IndexOptions().name("code-index")),
+          IndexModel(ascending("importId"), IndexOptions().name("import-id-index"))
+        )
       )
-    )
 
   @Singleton
   private class CountryCodesCommonTransitOutsideCommunityListRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)

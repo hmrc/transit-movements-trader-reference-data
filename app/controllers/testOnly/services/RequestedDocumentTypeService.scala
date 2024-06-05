@@ -21,7 +21,7 @@ import play.api.Environment
 
 import javax.inject.Inject
 
-private[testOnly] class RequestedDocumentTypeService @Inject()(override val env: Environment, config: ResourceConfig) extends ResourceService {
+private[testOnly] class RequestedDocumentTypeService @Inject() (override val env: Environment, config: ResourceConfig) extends ResourceService {
 
   val requestedDocumentTypes: Seq[RequestedDocumentType] =
     getData[RequestedDocumentType](config.requestedDocumentType)
