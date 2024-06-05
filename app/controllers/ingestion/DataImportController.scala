@@ -16,7 +16,9 @@
 
 package controllers.ingestion
 
+import com.codahale.metrics.MetricRegistry
 import services.DataImportService
+
 import javax.inject.Inject
 import logging.Logging
 import models.ReferenceDataList
@@ -24,17 +26,17 @@ import play.api.libs.json.JsObject
 import play.api.mvc.Action
 import play.api.mvc.ControllerComponents
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import com.kenshoo.play.metrics.Metrics
 import scala.concurrent.ExecutionContext
 import java.util.UUID
 import metrics.HasActionMetrics
 import play.api.mvc.Request
+
 import scala.util.control.NonFatal
 
 class DataImportController @Inject() (
   cc: ControllerComponents,
   loadDataService: DataImportService,
-  val metrics: Metrics
+  val metrics: MetricRegistry
 )(implicit ec: ExecutionContext)
     extends BackendController(cc)
     with Logging
