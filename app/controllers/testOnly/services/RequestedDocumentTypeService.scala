@@ -16,7 +16,7 @@
 
 package controllers.testOnly.services
 
-import controllers.testOnly.testmodels.{ControlResult, RequestedDocumentType}
+import controllers.testOnly.testmodels.RequestedDocumentType
 import play.api.Environment
 
 import javax.inject.Inject

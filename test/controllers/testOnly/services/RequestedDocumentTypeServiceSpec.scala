@@ -17,7 +17,7 @@
 package controllers.testOnly.services
 
 import base.SpecBaseWithAppPerSuite
-import controllers.testOnly.testmodels.{ControlResult, RequestedDocumentType}
+import controllers.testOnly.testmodels.RequestedDocumentType
 
 class RequestedDocumentTypeServiceSpec extends SpecBaseWithAppPerSuite {
 
