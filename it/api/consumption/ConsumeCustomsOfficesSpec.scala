@@ -30,13 +30,20 @@ import play.api.libs.ws.WSClient
 import play.api.libs.ws.WSResponse
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
+import uk.gov.hmrc.mongo.test.CleanMongoCollectionSupport
 
 import java.time.Instant
-import scala.concurrent.duration.Duration
 import scala.concurrent.Await
 import scala.concurrent.Future
+import scala.concurrent.duration.Duration
 
-class ConsumeCustomsOfficesSpec extends AnyFreeSpec with Matchers with ScalaFutures with OptionValues with GuiceOneServerPerSuite {
+class ConsumeCustomsOfficesSpec
+    extends AnyFreeSpec
+    with Matchers
+    with ScalaFutures
+    with OptionValues
+    with GuiceOneServerPerSuite
+    with CleanMongoCollectionSupport {
 
   class Setup {
 
