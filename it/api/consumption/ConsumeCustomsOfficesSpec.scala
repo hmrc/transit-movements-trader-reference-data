@@ -22,21 +22,17 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
-import play.api.libs.json.JsArray
-import play.api.libs.json.JsObject
-import play.api.libs.json.JsValue
-import play.api.libs.json.Json
-import play.api.libs.ws.WSClient
-import play.api.libs.ws.WSResponse
+import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
+import play.api.libs.ws.{WSClient, WSResponse}
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
+import uk.gov.hmrc.mongo.test.CleanMongoCollectionSupport
 
 import java.time.Instant
+import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
-import scala.concurrent.Await
-import scala.concurrent.Future
 
-class ConsumeCustomsOfficesSpec extends AnyFreeSpec with Matchers with ScalaFutures with OptionValues with GuiceOneServerPerSuite {
+class ConsumeCustomsOfficesSpec extends AnyFreeSpec with Matchers with ScalaFutures with OptionValues with GuiceOneServerPerSuite with CleanMongoCollectionSupport {
 
   class Setup {
 

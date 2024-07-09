@@ -17,50 +17,24 @@
 package services
 
 import models.ReferenceDataList
-import org.mongodb.scala.MongoClient
 import org.scalacheck.Gen
 import org.scalactic.Uniformity
-import org.scalatest.concurrent.IntegrationPatience
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.OptionValues
+import org.scalatest.{BeforeAndAfterEach, OptionValues}
+import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.JsObject
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers.running
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
+import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.test.CleanMongoCollectionSupport
 
 import java.time.Instant
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndAfterEach with ScalaFutures with IntegrationPatience with OptionValues {
-
-  private def dropDatabases(): Unit = {
-    val client = MongoClient()
-
-    def dropDatabase(name: String): Unit =
-      client
-        .getDatabase(name)
-        .drop()
-        .toFuture()
-        .map {
-          _ => ()
-        }
-        .recover {
-          case _: Throwable => ()
-        }
-        .futureValue
-
-    client.listDatabaseNames().map(dropDatabase).toFuture().futureValue
-  }
-
-  override def beforeEach(): Unit = {
-    dropDatabases()
-    super.beforeEach()
-  }
+class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndAfterEach with ScalaFutures with IntegrationPatience with OptionValues with CleanMongoCollectionSupport {
 
   private val madeMongoIdAgnostic: Uniformity[JsObject] = new Uniformity[JsObject] {
 
@@ -94,7 +68,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"))
             val import2Data = Seq(Json.obj("id" -> "1", "value" -> "import 2 value"))
 
-            val app = new GuiceApplicationBuilder().build()
+            val app = new GuiceApplicationBuilder()
+              .overrides(bind[MongoComponent].toInstance(mongoComponent))
+              .build()
 
             running(app) {
 
@@ -127,7 +103,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
             val import2     = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"))
 
-            val app = new GuiceApplicationBuilder().build()
+            val app = new GuiceApplicationBuilder()
+              .overrides(bind[MongoComponent].toInstance(mongoComponent))
+              .build()
 
             running(app) {
 
@@ -157,7 +135,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
           val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
           val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"))
 
-          val app = new GuiceApplicationBuilder().build()
+          val app = new GuiceApplicationBuilder()
+            .overrides(bind[MongoComponent].toInstance(mongoComponent))
+            .build()
 
           running(app) {
 
@@ -183,7 +163,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
 
         val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-        val app = new GuiceApplicationBuilder().build()
+        val app = new GuiceApplicationBuilder()
+          .overrides(bind[MongoComponent].toInstance(mongoComponent))
+          .build()
 
         running(app) {
 
@@ -214,7 +196,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
             val import2Data = Seq(Json.obj("id" -> "1", "value" -> "import 2 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
 
-            val app = new GuiceApplicationBuilder().build()
+            val app = new GuiceApplicationBuilder()
+              .overrides(bind[MongoComponent].toInstance(mongoComponent))
+              .build()
 
             running(app) {
 
@@ -249,7 +233,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
             val import2     = DataImport(ImportId(2), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
             val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
 
-            val app = new GuiceApplicationBuilder().build()
+            val app = new GuiceApplicationBuilder()
+              .overrides(bind[MongoComponent].toInstance(mongoComponent))
+              .build()
 
             running(app) {
 
@@ -279,7 +265,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
           val import1     = DataImport(ImportId(1), list, 1, ImportStatus.Complete, Instant.now, Some(Instant.now))
           val import1Data = Seq(Json.obj("id" -> "1", "value" -> "import 1 value"), Json.obj("id" -> "2", "value" -> "import 1 value"))
 
-          val app = new GuiceApplicationBuilder().build()
+          val app = new GuiceApplicationBuilder()
+            .overrides(bind[MongoComponent].toInstance(mongoComponent))
+            .build()
 
           running(app) {
 
@@ -305,7 +293,9 @@ class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndA
 
         val list = Gen.oneOf(ReferenceDataList.values.toList).sample.value
 
-        val app = new GuiceApplicationBuilder().build()
+        val app = new GuiceApplicationBuilder()
+          .overrides(bind[MongoComponent].toInstance(mongoComponent))
+          .build()
 
         running(app) {
 
