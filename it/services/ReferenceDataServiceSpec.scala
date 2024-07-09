@@ -19,13 +19,16 @@ package services
 import models.ReferenceDataList
 import org.scalacheck.Gen
 import org.scalactic.Uniformity
-import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatest.concurrent.IntegrationPatience
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.{BeforeAndAfterEach, OptionValues}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.OptionValues
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.JsObject
+import play.api.libs.json.Json
 import play.api.test.Helpers.running
 import repositories.ListRepository.ListRepositoryProvider
 import repositories._
@@ -34,7 +37,14 @@ import uk.gov.hmrc.mongo.test.CleanMongoCollectionSupport
 
 import java.time.Instant
 
-class ReferenceDataServiceSpec extends AnyFreeSpec with Matchers with BeforeAndAfterEach with ScalaFutures with IntegrationPatience with OptionValues with CleanMongoCollectionSupport {
+class ReferenceDataServiceSpec
+    extends AnyFreeSpec
+    with Matchers
+    with BeforeAndAfterEach
+    with ScalaFutures
+    with IntegrationPatience
+    with OptionValues
+    with CleanMongoCollectionSupport {
 
   private val madeMongoIdAgnostic: Uniformity[JsObject] = new Uniformity[JsObject] {
 
